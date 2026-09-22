@@ -66,7 +66,7 @@ if __name__ == '__main__':
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
 
-    with open(os.path.join(PROJ_DIR, 'results', 'clean', 'lstm_clean_ece_pooled.json')) as f:
+    with open(os.path.join(RESULTS_DIR, 'step0c_leakfree_ece_agg.json')) as f:
         existing = json.load(f)
     print("\n=== comparison against existing step0c_leakfree_ece_agg.json ===")
     all_match = True

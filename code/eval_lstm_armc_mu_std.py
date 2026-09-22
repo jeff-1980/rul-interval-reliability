@@ -1,7 +1,7 @@
 """
 STEP 5l：机制诊断表2（臂C下 μ̂ 跨样本 std 相对 clean 的变化率），leakfree。
 
-与 an earlier version of this analysis (not included; superseded) 同一统计口径（NLL模型，5 seeds×5 trials池化，
+与本脚本的历史版本同一统计口径（NLL模型，5 seeds×5 trials池化，
 mu_std_across_samples + 相对clean变化率），改用 checkpoints_leakfree +
 canonical_splits.json 的逐seed scaler。
 """
@@ -46,6 +46,7 @@ if __name__ == '__main__':
         print(f"\n{'=' * 20} {ds} (Arm C, leakfree) {'=' * 20}")
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
 
         models_by_seed, scalers_by_seed = {}, {}
         for seed in C.SEEDS:

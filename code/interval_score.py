@@ -80,6 +80,7 @@ def get_aleatory_var(backbone, ds, seed):
 
 
 if __name__ == '__main__':
+    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}")
 
@@ -118,7 +119,8 @@ if __name__ == '__main__':
 
                 mc_model = T2.load_checkpoint_mc_model_t2(backbone, T2.mc_ckpt_path(backbone, ds, seed), device)
                 aleatory_var = get_aleatory_var(backbone, ds, seed)
-                mu_mc, sigma_mc = E.infer_mc_dropout(mc_model, X_t, T=50, aleatory_var=aleatory_var)
+                mc_seed = C.stable_seed(ds, backbone, seed, 'r8b5_mc_dropout_terminal')
+                mu_mc, sigma_mc = E.infer_mc_dropout(mc_model, X_t, T=50, aleatory_var=aleatory_var, seed=mc_seed)
                 is_all['MC_Dropout_fixed'].append(interval_score(y_test, mu_mc, sigma_mc, C.Z_SCORE))
                 wis_all['MC_Dropout_fixed'].append(wis(y_test, mu_mc, sigma_mc, C.Z_SCORE))
 

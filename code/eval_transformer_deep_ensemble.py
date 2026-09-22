@@ -76,6 +76,7 @@ def run_dataset(ds, device):
 
 
 if __name__ == '__main__':
+    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}  Backbone=Transformer  Deep Ensemble (clean)")
 

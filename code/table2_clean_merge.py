@@ -92,7 +92,7 @@ if __name__ == '__main__':
         json.dump(result, fp, indent=2, default=float)
     print(f"Saved -> {out_path}")
 
-    with open(os.path.join(PROJ_DIR, 'results', 'clean', 'table2_clean_full.json')) as f:
+    with open(os.path.join(R2_DIR, 'table2_clean_full.json')) as f:
         existing = json.load(f)
 
     print("\n=== comparison against existing table2_clean_full.json (tol 1e-6) ===")

@@ -58,6 +58,7 @@ def summarize_compliance(engine_picp_dict):
 
 
 if __name__ == '__main__':
+    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}")
 
@@ -79,7 +80,7 @@ if __name__ == '__main__':
                 calib_units = canon[ds][str(seed)]['calib_units']
                 train_df, test_df, true_ruls, feat_cols, scaler = C.load_and_process_leakfree(ds, fit_units)
 
-                # calib-based aleatory var (same as fair_calibration_sigma_fixed)
+                # calib-based aleatory var (same as fair_calibration_sigma_fixed.py)
                 X_calib, y_calib_raw = sequences_for_units(train_df[train_df['unit_nr'].isin(calib_units)],
                                                              feat_cols, calib_units)
                 y_calib = np.clip(y_calib_raw, 0, C.MAX_RUL)
@@ -93,7 +94,8 @@ if __name__ == '__main__':
                 X_test, y_test = C.create_sequences(test_df, feat_cols, mode='test', true_ruls=true_ruls)
                 X_t = torch.tensor(X_test, dtype=torch.float32).to(device)
 
-                mu_mc, sigma_mc = E.infer_mc_dropout(mc_model, X_t, T=50, aleatory_var=aleatory_var_calib)
+                mc_seed = C.stable_seed(ds, backbone, seed, 'r8b5_mc_dropout_terminal')
+                mu_mc, sigma_mc = E.infer_mc_dropout(mc_model, X_t, T=50, aleatory_var=aleatory_var_calib, seed=mc_seed)
                 p_mc, w_mc = E.picp_mpiw(y_test, mu_mc, sigma_mc, Z_SCORE)
                 ece_mc = C.compute_ece(mu_mc, sigma_mc, y_test)
                 picp_all['MC_Dropout_fixed'].append(p_mc); mpiw_all['MC_Dropout_fixed'].append(w_mc)
@@ -112,7 +114,8 @@ if __name__ == '__main__':
                 # per-engine (full trajectory), calib-based sigma
                 X_full, y_full, u_full = C.create_full_trajectory_test_windows(test_df, feat_cols, true_ruls)
                 X_full_t = torch.tensor(X_full, dtype=torch.float32).to(device)
-                mu_mc_f, sigma_mc_f = E.infer_mc_dropout(mc_model, X_full_t, T=50, aleatory_var=aleatory_var_calib)
+                mc_seed_f = C.stable_seed(ds, backbone, seed, 'r8b5_mc_dropout_full_traj')
+                mu_mc_f, sigma_mc_f = E.infer_mc_dropout(mc_model, X_full_t, T=50, aleatory_var=aleatory_var_calib, seed=mc_seed_f)
                 covered_mc_f = (y_full >= mu_mc_f - Z_SCORE * sigma_mc_f) & (y_full <= mu_mc_f + Z_SCORE * sigma_mc_f)
                 engine_picp_mc_per_seed.append(per_engine_picp(covered_mc_f, u_full))
 

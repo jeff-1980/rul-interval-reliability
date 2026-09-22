@@ -46,6 +46,7 @@ def save_all(all_out):
 def run_one(backbone, degradation, ds, device):
     train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
+    full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
     scalers_by_seed = PA.scalers_for_ds(ds)
 
     if degradation == 'bias':

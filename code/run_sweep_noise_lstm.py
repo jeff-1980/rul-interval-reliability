@@ -297,6 +297,7 @@ if __name__ == '__main__':
             _, _, _, _, scaler = V4.load_raw_train_test_and_scaler_leakfree(ds, fit_units)
             scalers_by_seed[seed] = scaler
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
 
         if ds == 'FD001':
             print("  --- main+extended SNR grid (single condition: A==B) ---")
@@ -307,6 +308,8 @@ if __name__ == '__main__':
                                  'note': 'FD001 single condition; per-condition degenerates to pooled'}
         else:
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
+            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
             print("  --- main+extended SNR grid, arm=A_percondition ---")
             main_a = run_dataset_arm(ds, 'A_percondition', test_df_raw, true_ruls, feat_cols, device,
                                       SNR_LEVELS_ALL, is_pct=False, km=km, cond_std=cond_std, scalers_by_seed=scalers_by_seed)

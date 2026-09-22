@@ -17,6 +17,8 @@ DST = os.path.join(PROJ_DIR, 'results')
 mapping = {
  'clean': [
    ('canonical_splits.json', None),  # actually top-level, handled separately
+   ('leakfree_r8/table1_2x2_per_seed.json', 'table1_2x2_per_seed.json'),
+   ('leakfree_r8/table1_2x2_summary.json', 'table1_2x2_summary.json'),
    ('step0c_leakfree_results.json', 'lstm_clean_per_seed.json'),
    ('step0c_leakfree_ece_agg.json', 'lstm_clean_ece_pooled.json'),
    ('mcdropout_fixed_leakfree.json', 'lstm_mcdropout_per_seed.json'),
@@ -65,6 +67,7 @@ mapping = {
    ('leakfree/shap_spearman_leakfree_ns800.json', 'shap_spearman_ns800.json'),
  ],
  'degradation': [
+   ('leakfree_r8/joint_setting_sensor_perturbation_control.json', 'joint_setting_sensor_perturbation_control.json'),
    ('noise_sensitivity_leakfree.json', 'lstm_noise_main_arm.json'),
    ('noise_sensitivity_leakfree_armC.json', 'lstm_noise_armc.json'),
    ('noise_sensitivity_leakfree_FD003.json', 'lstm_fd003_noise_main_arm.json'),
@@ -123,6 +126,10 @@ mapping = {
    ('leakfree_r4/samesplit_ensemble.json', 'samesplit_ensemble_control.json'),
    ('leakfree_r3/A2_fd004_msweep_IS.json', 'ensemble_size_sweep_fd004_interval_score.json'),
    ('leakfree_r3/E_ensemble_independent_replication.json', 'ensemble_independent_replication.json'),
+ ],
+ 'diagnostics': [
+   ('leakfree_r8/A1_perturbation_target_diagnostic.json', 'A1_perturbation_target_diagnostic.json'),
+   ('leakfree_r8/A2_target_alignment_diagnostic.json', 'A2_target_alignment_diagnostic.json'),
  ],
 }
 

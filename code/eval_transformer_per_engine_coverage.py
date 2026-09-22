@@ -66,7 +66,8 @@ def run_dataset(ds, device):
 
         mc_model = T2.load_checkpoint_mc_model_t2('Transformer', T2.mc_ckpt_path('Transformer', ds, seed), device)
         aleatory_var = mc_by_seed[str(seed)]['T50']['kendall_gal_full']['aleatory_var']
-        mu_mc, sigma_mc = E.infer_mc_dropout(mc_model, X_full_t, T=50, aleatory_var=aleatory_var)
+        mc_seed = C.stable_seed(ds, 'transformer', seed, 'r8b5_mc_dropout_full_traj')
+        mu_mc, sigma_mc = E.infer_mc_dropout(mc_model, X_full_t, T=50, aleatory_var=aleatory_var, seed=mc_seed)
         covered_mc = (y_full >= mu_mc - Z_SCORE * sigma_mc) & (y_full <= mu_mc + Z_SCORE * sigma_mc)
         picp_mc_per_seed.append(per_engine_picp(covered_mc, u_full))
 
@@ -111,6 +112,7 @@ def run_dataset(ds, device):
 
 
 if __name__ == '__main__':
+    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}  Backbone=Transformer  per-engine coverage")
 

@@ -1,6 +1,7 @@
 """
 STEP 2/3/4/5 共用：数据加载 + HeteroscedasticLSTM 定义 + checkpoint 加载。
-与 the original pre-audit training script (not included; superseded) / E3_run_save_ece.py 的超参、预处理逐字一致，
+与 code/superseded/train_lstm_leaked_test_select_whole_file_scaler.py 及本项目
+最早的主实验训练脚本的超参、预处理逐字一致，
 保证从 checkpoint 恢复出来的模型行为与训练时完全对应。
 """
 import os
@@ -53,10 +54,7 @@ def stable_seed(*parts):
     return int(hashlib.sha256(s.encode()).hexdigest()[:8], 16)
 
 
-DATA_DIR = os.environ.get(
-    'RUL_DATA_DIR',
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data'),
-)  # NASA C-MAPSS train_*/test_*/RUL_*.txt; not redistributed here, see README.md
+DATA_DIR = '/home/jeffwork/rul_project/data'
 SEEDS = [42, 2024, 7, 888, 123]
 DATASETS = ['FD001', 'FD002', 'FD004']
 SEQUENCE_LENGTH = 30
@@ -141,7 +139,11 @@ def create_sequences(df, feature_cols, mode='train', true_ruls=None, return_unit
         elif mode == 'test':
             if len(unit_data) >= SEQUENCE_LENGTH:
                 X_list.append(unit_data[-SEQUENCE_LENGTH:])
-                y_list.append(min(true_ruls.iloc[unit - 1].item(), 125))
+                # R8-B2 (2026-09-2x)：官方 RUL_FD00X.txt 与训练标签
+                # (max_cycles-time_cycles，最后一行=0) 的计数起点相差1个
+                # 周期（R8-A2 诊断已核实差异幅度小但方向一致），改用
+                # min(官方RUL-1, 125) 与训练/校准同一惯例。
+                y_list.append(min(true_ruls.iloc[unit - 1].item() - 1, 125))
                 u_list.append(unit)
     X = np.array(X_list)
     y = np.array(y_list)
@@ -165,7 +167,7 @@ def create_full_trajectory_test_windows(test_df, feature_cols, true_ruls):
         n = len(unit_data)
         if n < SEQUENCE_LENGTH:
             continue
-        rul_at_last_row = min(true_ruls.iloc[unit - 1].item(), MAX_RUL)
+        rul_at_last_row = min(true_ruls.iloc[unit - 1].item() - 1, MAX_RUL)  # R8-B2, see create_sequences
         last_row_idx = n - 1
         for i in range(n - SEQUENCE_LENGTH + 1):
             end_row_idx = i + SEQUENCE_LENGTH - 1

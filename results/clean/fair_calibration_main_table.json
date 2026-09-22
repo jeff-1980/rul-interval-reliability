@@ -2,196 +2,196 @@
   "LSTM": {
     "FD001": {
       "MSE_fixed": {
-        "picp_mean": 0.8700000000000001,
-        "picp_std": 0.042426406871192854,
+        "picp_mean": 0.8699999999999999,
+        "picp_std": 0.0447213595499958,
         "mpiw_mean": 47.82411422729492,
         "mpiw_std": 3.563956591649887,
-        "ece_mean": 0.07189473684210525,
-        "ece_std": 0.023776428654379227,
-        "per_engine_compliance": 0.54,
-        "interval_score_mean": 69.83211566925048,
-        "wis_mean": 5.97234270731608
+        "ece_mean": 0.0623157894736842,
+        "ece_std": 0.0199847587355327,
+        "per_engine_compliance": 0.55,
+        "interval_score_mean": 70.8221156692505,
+        "wis_mean": 6.10892895380656
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.8979999999999999,
-        "picp_std": 0.03563705936241091,
-        "mpiw_mean": 50.29645309448242,
-        "mpiw_std": 3.343370244579305,
-        "ece_mean": 0.07989473684210524,
-        "ece_std": 0.028395212424679222,
-        "per_engine_compliance": 0.61,
-        "interval_score_mean": 68.96645185089112,
-        "wis_mean": 5.938607942771911
+        "picp_mean": 0.89,
+        "picp_std": 0.033911649915626375,
+        "mpiw_mean": 50.30608596801758,
+        "mpiw_std": 3.3235303305747768,
+        "ece_mean": 0.07168421052631577,
+        "ece_std": 0.026232499772635625,
+        "per_engine_compliance": 0.62,
+        "interval_score_mean": 69.23408750915527,
+        "wis_mean": 6.038590959676107
       }
     },
     "FD002": {
       "MSE_fixed": {
-        "picp_mean": 0.9162055335968379,
-        "picp_std": 0.021900229529162162,
+        "picp_mean": 0.9122529644268773,
+        "picp_std": 0.02080268358409608,
         "mpiw_mean": 60.91634521484375,
         "mpiw_std": 2.3974716815099555,
-        "ece_mean": 0.05717079259413351,
-        "ece_std": 0.011606201751799817,
-        "per_engine_compliance": 0.6086956521739131,
-        "interval_score_mean": 73.6689172737212,
-        "wis_mean": 6.793574267426341
+        "ece_mean": 0.05921364676513415,
+        "ece_std": 0.008432062593778435,
+        "per_engine_compliance": 0.6007905138339921,
+        "interval_score_mean": 74.12267221443267,
+        "wis_mean": 6.808044728793017
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.9264822134387352,
-        "picp_std": 0.020270168229182744,
-        "mpiw_mean": 62.82616195678711,
-        "mpiw_std": 2.3603542213255793,
-        "ece_mean": 0.06546702725192424,
-        "ece_std": 0.012315478833906355,
-        "per_engine_compliance": 0.6521739130434783,
-        "interval_score_mean": 74.18821542008592,
-        "wis_mean": 6.818440127479543
+        "picp_mean": 0.9272727272727274,
+        "picp_std": 0.01988106931218859,
+        "mpiw_mean": 62.81946716308594,
+        "mpiw_std": 2.386042299362653,
+        "ece_mean": 0.06746827543166213,
+        "ece_std": 0.009498935744267044,
+        "per_engine_compliance": 0.6403162055335968,
+        "interval_score_mean": 74.32776725377019,
+        "wis_mean": 6.816170171019823
       }
     },
     "FD003": {
       "MSE_fixed": {
-        "picp_mean": 0.882,
-        "picp_std": 0.017888543819998333,
+        "picp_mean": 0.876,
+        "picp_std": 0.027018512172212617,
         "mpiw_mean": 46.79837188720703,
         "mpiw_std": 5.672548677403562,
-        "ece_mean": 0.10442105263157894,
-        "ece_std": 0.025900940634690707,
+        "ece_mean": 0.10399999999999998,
+        "ece_std": 0.024947590494236973,
         "per_engine_compliance": 0.7,
-        "interval_score_mean": 70.85037267303467,
-        "wis_mean": 5.640363600126903
+        "interval_score_mean": 72.35037267303467,
+        "wis_mean": 5.743369811089833
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.8939999999999999,
-        "picp_std": 0.02073644135332774,
-        "mpiw_mean": 49.14616470336914,
-        "mpiw_std": 5.188683612462815,
-        "ece_mean": 0.1149473684210526,
-        "ece_std": 0.026461700751240446,
-        "per_engine_compliance": 0.7,
-        "interval_score_mean": 69.64416268920898,
-        "wis_mean": 5.5915779868284865
+        "picp_mean": 0.89,
+        "picp_std": 0.023452078799117166,
+        "mpiw_mean": 49.147797393798825,
+        "mpiw_std": 5.138359244616528,
+        "ece_mean": 0.11357894736842104,
+        "ece_std": 0.022065754166246107,
+        "per_engine_compliance": 0.72,
+        "interval_score_mean": 70.95179912567139,
+        "wis_mean": 5.6981031757990515
       }
     },
     "FD004": {
       "MSE_fixed": {
-        "picp_mean": 0.8827004219409282,
-        "picp_std": 0.013141275529449294,
+        "picp_mean": 0.8767932489451475,
+        "picp_std": 0.012798102015276844,
         "mpiw_mean": 60.930623626708986,
         "mpiw_std": 2.4532738116371506,
-        "ece_mean": 0.05576726626693314,
-        "ece_std": 0.016140823862584426,
-        "per_engine_compliance": 0.6877637130801688,
-        "interval_score_mean": 87.22683030140551,
-        "wis_mean": 7.551908302508326
+        "ece_mean": 0.05054852320675104,
+        "ece_std": 0.01595570400349222,
+        "per_engine_compliance": 0.679324894514768,
+        "interval_score_mean": 87.83358135625782,
+        "wis_mean": 7.646538858413695
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.8928270042194093,
-        "picp_std": 0.012156000245475036,
-        "mpiw_mean": 63.06589965820312,
-        "mpiw_std": 2.252485906177901,
-        "ece_mean": 0.06281590051077057,
-        "ece_std": 0.016549157481919402,
-        "per_engine_compliance": 0.7172995780590717,
-        "interval_score_mean": 86.90302902736744,
-        "wis_mean": 7.5443843060740265
+        "picp_mean": 0.8860759493670886,
+        "picp_std": 0.01033539975857881,
+        "mpiw_mean": 63.06610641479492,
+        "mpiw_std": 2.249013340388718,
+        "ece_mean": 0.05570064401510103,
+        "ece_std": 0.015139062017216216,
+        "per_engine_compliance": 0.7046413502109705,
+        "interval_score_mean": 87.35893453927986,
+        "wis_mean": 7.640251065708917
       }
     }
   },
   "Transformer": {
     "FD001": {
       "MSE_fixed": {
-        "picp_mean": 0.884,
-        "picp_std": 0.01816590212458497,
+        "picp_mean": 0.876,
+        "picp_std": 0.028809720581775892,
         "mpiw_mean": 45.26062088012695,
         "mpiw_std": 4.066762723846844,
-        "ece_mean": 0.08063157894736842,
-        "ece_std": 0.02347981982593075,
+        "ece_mean": 0.07873684210526315,
+        "ece_std": 0.01902615199754785,
         "per_engine_compliance": 0.61,
-        "interval_score_mean": 66.71861846160888,
-        "wis_mean": 5.56300181270043
+        "interval_score_mean": 67.91261846160889,
+        "wis_mean": 5.663554813595613
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.9200000000000002,
-        "picp_std": 0.012247448713915856,
-        "mpiw_mean": 48.7872802734375,
-        "mpiw_std": 4.00197323556498,
-        "ece_mean": 0.09863157894736838,
-        "ece_std": 0.02388105335074803,
-        "per_engine_compliance": 0.73,
-        "interval_score_mean": 62.24328158569336,
-        "wis_mean": 5.307597018225988
+        "picp_mean": 0.9139999999999999,
+        "picp_std": 0.01673320053068148,
+        "mpiw_mean": 48.84817276000977,
+        "mpiw_std": 4.077389438669777,
+        "ece_mean": 0.0932631578947368,
+        "ece_std": 0.0274250426433382,
+        "per_engine_compliance": 0.72,
+        "interval_score_mean": 62.94417523956299,
+        "wis_mean": 5.383244959227244
       }
     },
     "FD002": {
       "MSE_fixed": {
-        "picp_mean": 0.917786561264822,
-        "picp_std": 0.010967934328467665,
+        "picp_mean": 0.9185770750988143,
+        "picp_std": 0.0059943679399617165,
         "mpiw_mean": 58.90788345336914,
         "mpiw_std": 1.6474014118049054,
-        "ece_mean": 0.07955065529436234,
-        "ece_std": 0.02279359084190764,
-        "per_engine_compliance": 0.6363636363636364,
-        "interval_score_mean": 72.48812115032212,
-        "wis_mean": 6.404789480658859
+        "ece_mean": 0.0802829207405866,
+        "ece_std": 0.017716223635377684,
+        "per_engine_compliance": 0.6284584980237155,
+        "interval_score_mean": 72.92606581435373,
+        "wis_mean": 6.419221097702094
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.9217391304347826,
-        "picp_std": 0.011658404113638447,
-        "mpiw_mean": 60.50236358642578,
-        "mpiw_std": 1.7494495067402662,
-        "ece_mean": 0.08169336384439355,
-        "ece_std": 0.019291568015238757,
-        "per_engine_compliance": 0.6561264822134387,
-        "interval_score_mean": 71.5331943707975,
-        "wis_mean": 6.429433083892339
+        "picp_mean": 0.9193675889328062,
+        "picp_std": 0.007180198468215403,
+        "mpiw_mean": 60.51766357421875,
+        "mpiw_std": 1.789043536446693,
+        "ece_mean": 0.07857707509881418,
+        "ece_std": 0.021437022180886292,
+        "per_engine_compliance": 0.6324110671936759,
+        "interval_score_mean": 71.75481683783852,
+        "wis_mean": 6.47320811891116
       }
     },
     "FD003": {
       "MSE_fixed": {
-        "picp_mean": 0.858,
-        "picp_std": 0.03346640106136305,
+        "picp_mean": 0.842,
+        "picp_std": 0.032710854467592226,
         "mpiw_mean": 42.709356689453124,
         "mpiw_std": 5.072287290464342,
-        "ece_mean": 0.08536842105263158,
-        "ece_std": 0.03399608906951151,
+        "ece_mean": 0.09042105263157896,
+        "ece_std": 0.027816175369528524,
         "per_engine_compliance": 0.67,
-        "interval_score_mean": 68.47935828399658,
-        "wis_mean": 5.592656414731343
+        "interval_score_mean": 70.53535828399659,
+        "wis_mean": 5.689806737836202
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.892,
-        "picp_std": 0.03420526275297417,
-        "mpiw_mean": 45.30608901977539,
-        "mpiw_std": 4.987887845625222,
-        "ece_mean": 0.09031578947368418,
-        "ece_std": 0.02965778966030046,
+        "picp_mean": 0.8879999999999999,
+        "picp_std": 0.02863564212655273,
+        "mpiw_mean": 45.28956604003906,
+        "mpiw_std": 4.993070997863616,
+        "ece_mean": 0.08821052631578946,
+        "ece_std": 0.026956926758757327,
         "per_engine_compliance": 0.72,
-        "interval_score_mean": 61.00008807373047,
-        "wis_mean": 5.223109933916727
+        "interval_score_mean": 62.39956633758545,
+        "wis_mean": 5.330381744448345
       }
     },
     "FD004": {
       "MSE_fixed": {
-        "picp_mean": 0.8556962025316455,
-        "picp_std": 0.02010317172923474,
+        "picp_mean": 0.8531645569620252,
+        "picp_std": 0.022604380145112006,
         "mpiw_mean": 55.53334045410156,
         "mpiw_std": 6.055752613773386,
-        "ece_mean": 0.07604263824117255,
-        "ece_std": 0.014484849842743132,
-        "per_engine_compliance": 0.70042194092827,
-        "interval_score_mean": 87.29367533172736,
-        "wis_mean": 7.228297141403085
+        "ece_mean": 0.07413280035531866,
+        "ece_std": 0.01341788801845127,
+        "per_engine_compliance": 0.6835443037974683,
+        "interval_score_mean": 88.43713524733917,
+        "wis_mean": 7.312607624195464
       },
       "MC_Dropout_fixed": {
-        "picp_mean": 0.8877637130801688,
-        "picp_std": 0.017549902399228202,
-        "mpiw_mean": 57.69947280883789,
-        "mpiw_std": 6.202561776103925,
-        "ece_mean": 0.041288030202087475,
-        "ece_std": 0.012692198573514491,
-        "per_engine_compliance": 0.7552742616033755,
-        "interval_score_mean": 79.92394708882907,
-        "wis_mean": 7.203796745117873
+        "picp_mean": 0.881012658227848,
+        "picp_std": 0.015036733908190256,
+        "mpiw_mean": 57.66201629638672,
+        "mpiw_std": 6.18877481457487,
+        "ece_mean": 0.03800133244503664,
+        "ece_std": 0.008303724227266043,
+        "per_engine_compliance": 0.7383966244725738,
+        "interval_score_mean": 80.98775524670565,
+        "wis_mean": 7.356732979518284
       }
     }
   }

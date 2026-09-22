@@ -89,7 +89,7 @@ def extract_raw_windows_with_uncapped(test_df_raw, feature_cols, true_ruls, mode
             continue
         if mode == 'test':
             X_list.append(unit_data[-C.SEQUENCE_LENGTH:])
-            raw_val = true_ruls.iloc[unit - 1].item()
+            raw_val = true_ruls.iloc[unit - 1].item() - 1  # R8-B2, see common.create_sequences
             y_list.append(min(raw_val, C.MAX_RUL))
             y_uncapped_list.append(raw_val)
             u_list.append(unit)
@@ -150,6 +150,7 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw_probe, _, _, feat_cols_probe, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw_probe, feat_cols_probe)
+            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)  # R8-B1
 
             scalers_by_seed = {}
             aleatory_var_by_seed = {}

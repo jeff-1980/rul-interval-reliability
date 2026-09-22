@@ -5,23 +5,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.007373685425685457,
+          "target_rel_co": 0.0054722045855378765,
           "actual_feat_oob": 0.003023809523809524
         },
-        "C_mu0_sigma0": 0.8640000000000001,
-        "C_mu1_sigma0": 0.826,
-        "C_mu0_sigma1": 0.8540000000000001,
-        "C_mu1_sigma1": 0.806,
-        "total_delta": -0.05800000000000005,
+        "C_mu0_sigma0": 0.8639999999999999,
+        "C_mu1_sigma0": 0.828,
+        "C_mu0_sigma1": 0.8560000000000001,
+        "C_mu1_sigma1": 0.8039999999999999,
+        "total_delta": -0.05999999999999994,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.038000000000000145,
-          "sigma_effect": -0.019999999999999907
+          "mu_effect": -0.03599999999999992,
+          "sigma_effect": -0.02400000000000002
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.010000000000000009,
-          "mu_effect": -0.04800000000000004
+          "sigma_effect": -0.007999999999999785,
+          "mu_effect": -0.05200000000000016
         },
-        "interaction": 0.009999999999999898,
+        "interaction": 0.016000000000000236,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -30,23 +30,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.0061905959509552504,
+          "target_rel_co": 0.008477276995305157,
           "actual_feat_oob": 0.003023809523809524
         },
-        "C_mu0_sigma0": 0.8939999999999999,
-        "C_mu1_sigma0": 0.8539999999999999,
-        "C_mu0_sigma1": 0.874,
-        "C_mu1_sigma1": 0.8240000000000001,
-        "total_delta": -0.06999999999999984,
+        "C_mu0_sigma0": 0.8779999999999999,
+        "C_mu1_sigma0": 0.8460000000000001,
+        "C_mu0_sigma1": 0.8700000000000001,
+        "C_mu1_sigma1": 0.818,
+        "total_delta": -0.05999999999999994,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.040000000000000036,
-          "sigma_effect": -0.029999999999999805
+          "mu_effect": -0.031999999999999806,
+          "sigma_effect": -0.028000000000000136
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.019999999999999907,
-          "mu_effect": -0.04999999999999993
+          "sigma_effect": -0.007999999999999785,
+          "mu_effect": -0.05200000000000016
         },
-        "interaction": 0.009999999999999898,
+        "interaction": 0.02000000000000035,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -57,23 +57,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "0",
-          "target_rel_co": 0.014301702996386587,
-          "actual_feat_oob": 0.016101888449714538
+          "target_rel_co": 0.008654369784804565,
+          "actual_feat_oob": 0.009426438296003514
         },
-        "C_mu0_sigma0": 0.917786561264822,
-        "C_mu1_sigma0": 0.7675889328063241,
-        "C_mu0_sigma1": 0.8719367588932805,
-        "C_mu1_sigma1": 0.7533596837944663,
+        "C_mu0_sigma0": 0.9130434782608695,
+        "C_mu1_sigma0": 0.7636363636363636,
+        "C_mu0_sigma1": 0.8743083003952569,
+        "C_mu1_sigma1": 0.7486166007905137,
         "total_delta": -0.16442687747035578,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.15019762845849793,
-          "sigma_effect": -0.014229249011857847
+          "mu_effect": -0.14940711462450595,
+          "sigma_effect": -0.015019762845849827
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.04584980237154157,
-          "mu_effect": -0.11857707509881421
+          "sigma_effect": -0.03873517786561265,
+          "mu_effect": -0.12569169960474313
         },
-        "interaction": -0.03162055335968372,
+        "interaction": -0.02371541501976282,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -82,23 +82,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.01387873678672214,
-          "actual_feat_oob": 0.011934123847167325
+          "target_rel_co": 0.008229379058631905,
+          "actual_feat_oob": 0.007239350021958717
         },
-        "C_mu0_sigma0": 0.9343873517786561,
-        "C_mu1_sigma0": 0.8948616600790515,
-        "C_mu0_sigma1": 0.9138339920948617,
-        "C_mu1_sigma1": 0.8790513833992095,
-        "total_delta": -0.05533596837944654,
+        "C_mu0_sigma0": 0.9320158102766797,
+        "C_mu1_sigma0": 0.891699604743083,
+        "C_mu0_sigma1": 0.9090909090909092,
+        "C_mu1_sigma1": 0.88300395256917,
+        "total_delta": -0.04901185770750971,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.039525691699604515,
-          "sigma_effect": -0.015810276679842028
+          "mu_effect": -0.040316205533596716,
+          "sigma_effect": -0.008695652173912993
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.020553359683794348,
-          "mu_effect": -0.034782608695652195
+          "sigma_effect": -0.022924901185770508,
+          "mu_effect": -0.026086956521739202
         },
-        "interaction": -0.00474308300395232,
+        "interaction": -0.014229249011857514,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -107,25 +107,25 @@
     "FD003": {
       "NLL": {
         "grid_point_used": {
-          "kind": "mainarm",
+          "kind": "armc",
           "level_key": "5",
-          "target_rel_co": 0.003084583333333308,
-          "actual_feat_oob": 0.004686666666666667
+          "target_rel_co": 0.0024422734254992335,
+          "actual_feat_oob": 0.0010247619047619046
         },
         "C_mu0_sigma0": 0.858,
-        "C_mu1_sigma0": 0.74,
-        "C_mu0_sigma1": 0.836,
-        "C_mu1_sigma1": 0.75,
-        "total_delta": -0.10799999999999998,
+        "C_mu1_sigma0": 0.806,
+        "C_mu0_sigma1": 0.844,
+        "C_mu1_sigma1": 0.8100000000000002,
+        "total_delta": -0.04799999999999982,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.118,
-          "sigma_effect": 0.010000000000000009
+          "mu_effect": -0.051999999999999935,
+          "sigma_effect": 0.004000000000000115
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.02200000000000002,
-          "mu_effect": -0.08599999999999997
+          "sigma_effect": -0.014000000000000012,
+          "mu_effect": -0.03399999999999981
         },
-        "interaction": -0.03200000000000003,
+        "interaction": -0.018000000000000127,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -134,23 +134,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.004773931178310755,
+          "target_rel_co": 0.0062932994541690275,
           "actual_feat_oob": 0.004686666666666667
         },
-        "C_mu0_sigma0": 0.9099999999999999,
-        "C_mu1_sigma0": 0.828,
-        "C_mu0_sigma1": 0.8779999999999999,
-        "C_mu1_sigma1": 0.818,
-        "total_delta": -0.09199999999999997,
+        "C_mu0_sigma0": 0.8960000000000001,
+        "C_mu1_sigma0": 0.8220000000000001,
+        "C_mu0_sigma1": 0.874,
+        "C_mu1_sigma1": 0.8200000000000001,
+        "total_delta": -0.07600000000000007,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.08199999999999996,
-          "sigma_effect": -0.010000000000000009
+          "mu_effect": -0.07400000000000007,
+          "sigma_effect": -0.0020000000000000018
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.03200000000000003,
-          "mu_effect": -0.05999999999999994
+          "sigma_effect": -0.02200000000000013,
+          "mu_effect": -0.05399999999999994
         },
-        "interaction": -0.02200000000000002,
+        "interaction": -0.02000000000000013,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -160,24 +160,24 @@
       "NLL": {
         "grid_point_used": {
           "kind": "mainarm",
-          "level_key": "0",
-          "target_rel_co": 0.012013376178224133,
-          "actual_feat_oob": 0.012019378027816847
+          "level_key": "-5",
+          "target_rel_co": 0.011689131851380074,
+          "actual_feat_oob": 0.016783559931239256
         },
-        "C_mu0_sigma0": 0.8919831223628693,
-        "C_mu1_sigma0": 0.7721518987341772,
-        "C_mu0_sigma1": 0.8565400843881857,
-        "C_mu1_sigma1": 0.80084388185654,
-        "total_delta": -0.09113924050632927,
+        "C_mu0_sigma0": 0.8818565400843881,
+        "C_mu1_sigma0": 0.6691983122362869,
+        "C_mu0_sigma1": 0.830379746835443,
+        "C_mu1_sigma1": 0.6759493670886076,
+        "total_delta": -0.20590717299578043,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.11983122362869203,
-          "sigma_effect": 0.028691983122362763
+          "mu_effect": -0.21265822784810118,
+          "sigma_effect": 0.006751054852320748
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.03544303797468351,
-          "mu_effect": -0.055696202531645755
+          "sigma_effect": -0.05147679324894505,
+          "mu_effect": -0.15443037974683538
         },
-        "interaction": -0.06413502109704627,
+        "interaction": -0.0582278481012658,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -185,24 +185,24 @@
       "CP_norm": {
         "grid_point_used": {
           "kind": "mainarm",
-          "level_key": "0",
-          "target_rel_co": 0.011577444962103436,
-          "actual_feat_oob": 0.012019378027816847
+          "level_key": "-5",
+          "target_rel_co": 0.011855452910111908,
+          "actual_feat_oob": 0.016783559931239256
         },
-        "C_mu0_sigma0": 0.889451476793249,
-        "C_mu1_sigma0": 0.7637130801687764,
-        "C_mu0_sigma1": 0.8523206751054853,
-        "C_mu1_sigma1": 0.7949367088607595,
-        "total_delta": -0.09451476793248947,
+        "C_mu0_sigma0": 0.8818565400843882,
+        "C_mu1_sigma0": 0.6616033755274262,
+        "C_mu0_sigma1": 0.8244725738396624,
+        "C_mu1_sigma1": 0.670042194092827,
+        "total_delta": -0.21181434599156124,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.12573839662447261,
-          "sigma_effect": 0.03122362869198314
+          "mu_effect": -0.22025316455696198,
+          "sigma_effect": 0.00843881856540074
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.037130801687763726,
-          "mu_effect": -0.05738396624472575
+          "sigma_effect": -0.05738396624472575,
+          "mu_effect": -0.1544303797468355
         },
-        "interaction": -0.06835443037974687,
+        "interaction": -0.06582278481012649,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -215,23 +215,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.008591302785265053,
+          "target_rel_co": 0.008929794842838318,
           "actual_feat_oob": 0.0030780952380952374
         },
-        "C_mu0_sigma0": 0.8859999999999999,
-        "C_mu1_sigma0": 0.834,
-        "C_mu0_sigma1": 0.882,
-        "C_mu1_sigma1": 0.8400000000000001,
-        "total_delta": -0.04599999999999982,
+        "C_mu0_sigma0": 0.8800000000000001,
+        "C_mu1_sigma0": 0.8320000000000001,
+        "C_mu0_sigma1": 0.8799999999999999,
+        "C_mu1_sigma1": 0.8320000000000001,
+        "total_delta": -0.04800000000000004,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.051999999999999935,
-          "sigma_effect": 0.006000000000000116
+          "mu_effect": -0.04800000000000004,
+          "sigma_effect": 0.0
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.0039999999999998925,
-          "mu_effect": -0.041999999999999926
+          "sigma_effect": -2.220446049250313e-16,
+          "mu_effect": -0.04799999999999982
         },
-        "interaction": -0.010000000000000009,
+        "interaction": -2.220446049250313e-16,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -240,23 +240,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.006465921325051756,
+          "target_rel_co": 0.006337394848990156,
           "actual_feat_oob": 0.0030780952380952374
         },
-        "C_mu0_sigma0": 0.8939999999999999,
-        "C_mu1_sigma0": 0.836,
-        "C_mu0_sigma1": 0.8880000000000001,
-        "C_mu1_sigma1": 0.8379999999999999,
-        "total_delta": -0.05600000000000005,
+        "C_mu0_sigma0": 0.892,
+        "C_mu1_sigma0": 0.826,
+        "C_mu0_sigma1": 0.876,
+        "C_mu1_sigma1": 0.834,
+        "total_delta": -0.05800000000000005,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.05799999999999994,
-          "sigma_effect": 0.0019999999999998908
+          "mu_effect": -0.06600000000000006,
+          "sigma_effect": 0.008000000000000007
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.005999999999999783,
-          "mu_effect": -0.050000000000000266
+          "sigma_effect": -0.016000000000000014,
+          "mu_effect": -0.04200000000000004
         },
-        "interaction": -0.007999999999999674,
+        "interaction": -0.02400000000000002,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -267,23 +267,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.013343045151588245,
-          "actual_feat_oob": 0.012012882447665057
+          "target_rel_co": 0.007931659854137296,
+          "actual_feat_oob": 0.00720245937637242
         },
-        "C_mu0_sigma0": 0.883794466403162,
+        "C_mu0_sigma0": 0.891699604743083,
         "C_mu1_sigma0": 0.790513833992095,
-        "C_mu0_sigma1": 0.8616600790513835,
-        "C_mu1_sigma1": 0.8,
-        "total_delta": -0.0837944664031619,
+        "C_mu0_sigma1": 0.8687747035573123,
+        "C_mu1_sigma1": 0.808695652173913,
+        "total_delta": -0.08300395256916993,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.09328063241106699,
-          "sigma_effect": 0.009486166007905084
+          "mu_effect": -0.101185770750988,
+          "sigma_effect": 0.018181818181818077
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.022134387351778417,
-          "mu_effect": -0.06166007905138349
+          "sigma_effect": -0.02292490118577062,
+          "mu_effect": -0.06007905138339931
         },
-        "interaction": -0.0316205533596835,
+        "interaction": -0.041106719367588695,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -292,23 +292,23 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.013425083375130892,
-          "actual_feat_oob": 0.012012882447665057
+          "target_rel_co": 0.00791242208238256,
+          "actual_feat_oob": 0.00720245937637242
         },
-        "C_mu0_sigma0": 0.9027667984189722,
-        "C_mu1_sigma0": 0.8079051383399211,
-        "C_mu0_sigma1": 0.8790513833992095,
-        "C_mu1_sigma1": 0.8158102766798419,
-        "total_delta": -0.08695652173913038,
+        "C_mu0_sigma0": 0.9114624505928853,
+        "C_mu1_sigma0": 0.8142292490118577,
+        "C_mu0_sigma1": 0.8837944664031621,
+        "C_mu1_sigma1": 0.825296442687747,
+        "total_delta": -0.08616600790513829,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.09486166007905117,
-          "sigma_effect": 0.007905138339920792
+          "mu_effect": -0.09723320158102766,
+          "sigma_effect": 0.011067193675889375
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.02371541501976271,
-          "mu_effect": -0.06324110671936767
+          "sigma_effect": -0.02766798418972327,
+          "mu_effect": -0.058498023715415015
         },
-        "interaction": -0.0316205533596835,
+        "interaction": -0.03873517786561265,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -319,23 +319,23 @@
         "grid_point_used": {
           "kind": "armc",
           "level_key": "5",
-          "target_rel_co": 0.0011637177280550805,
+          "target_rel_co": 0.0011491644204851717,
           "actual_feat_oob": 0.0012114285714285714
         },
-        "C_mu0_sigma0": 0.8700000000000001,
-        "C_mu1_sigma0": 0.7440000000000001,
-        "C_mu0_sigma1": 0.852,
-        "C_mu1_sigma1": 0.756,
-        "total_delta": -0.1140000000000001,
+        "C_mu0_sigma0": 0.8699999999999999,
+        "C_mu1_sigma0": 0.748,
+        "C_mu0_sigma1": 0.844,
+        "C_mu1_sigma1": 0.758,
+        "total_delta": -0.11199999999999988,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.126,
-          "sigma_effect": 0.0119999999999999
+          "mu_effect": -0.12199999999999989,
+          "sigma_effect": 0.010000000000000009
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.018000000000000127,
-          "mu_effect": -0.09599999999999997
+          "sigma_effect": -0.025999999999999912,
+          "mu_effect": -0.08599999999999997
         },
-        "interaction": -0.030000000000000027,
+        "interaction": -0.03599999999999992,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -344,23 +344,23 @@
         "grid_point_used": {
           "kind": "armc",
           "level_key": "5",
-          "target_rel_co": 0.002072539682539674,
+          "target_rel_co": 0.00263033404406539,
           "actual_feat_oob": 0.0012114285714285714
         },
-        "C_mu0_sigma0": 0.8860000000000001,
-        "C_mu1_sigma0": 0.782,
-        "C_mu0_sigma1": 0.868,
-        "C_mu1_sigma1": 0.7819999999999999,
-        "total_delta": -0.1040000000000002,
+        "C_mu0_sigma0": 0.876,
+        "C_mu1_sigma0": 0.784,
+        "C_mu0_sigma1": 0.8640000000000001,
+        "C_mu1_sigma1": 0.792,
+        "total_delta": -0.08399999999999996,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.10400000000000009,
-          "sigma_effect": -1.1102230246251565e-16
+          "mu_effect": -0.09199999999999997,
+          "sigma_effect": 0.008000000000000007
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.018000000000000127,
-          "mu_effect": -0.08600000000000008
+          "sigma_effect": -0.0119999999999999,
+          "mu_effect": -0.07200000000000006
         },
-        "interaction": -0.018000000000000016,
+        "interaction": -0.019999999999999907,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -370,24 +370,24 @@
       "NLL": {
         "grid_point_used": {
           "kind": "mainarm",
-          "level_key": "5",
-          "target_rel_co": 0.0071072073223971965,
-          "actual_feat_oob": 0.007437412095639944
+          "level_key": "0",
+          "target_rel_co": 0.004474103683963777,
+          "actual_feat_oob": 0.00529395218002813
         },
-        "C_mu0_sigma0": 0.8565400843881857,
-        "C_mu1_sigma0": 0.7417721518987341,
-        "C_mu0_sigma1": 0.8236286919831223,
-        "C_mu1_sigma1": 0.7358649789029535,
-        "total_delta": -0.12067510548523219,
+        "C_mu0_sigma0": 0.8573839662447258,
+        "C_mu1_sigma0": 0.6059071729957806,
+        "C_mu0_sigma1": 0.8185654008438819,
+        "C_mu1_sigma1": 0.6,
+        "total_delta": -0.2573839662447258,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.11476793248945161,
+          "mu_effect": -0.25147679324894523,
           "sigma_effect": -0.005907172995780585
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.032911392405063467,
-          "mu_effect": -0.08776371308016873
+          "sigma_effect": -0.03881856540084394,
+          "mu_effect": -0.21856540084388187
         },
-        "interaction": -0.02700421940928288,
+        "interaction": -0.032911392405063356,
         "mean_dominant_order_A": true,
         "mean_dominant_order_B": true,
         "mean_dominant_both_orders": true
@@ -395,27 +395,27 @@
       "CP_norm": {
         "grid_point_used": {
           "kind": "mainarm",
-          "level_key": "5",
-          "target_rel_co": 0.007283159150913976,
-          "actual_feat_oob": 0.007437412095639944
+          "level_key": "inf",
+          "target_rel_co": 0.004446006698734766,
+          "actual_feat_oob": 0.0036099390529770277
         },
-        "C_mu0_sigma0": 0.8556962025316455,
-        "C_mu1_sigma0": 0.7561181434599156,
-        "C_mu0_sigma1": 0.8329113924050633,
-        "C_mu1_sigma1": 0.7459915611814346,
-        "total_delta": -0.10970464135021085,
+        "C_mu0_sigma0": 0.8573839662447258,
+        "C_mu1_sigma0": 0.8573839662447258,
+        "C_mu0_sigma1": 0.8573839662447258,
+        "C_mu1_sigma1": 0.8573839662447258,
+        "total_delta": 0.0,
         "order_A_freeze_sigma_first": {
-          "mu_effect": -0.0995780590717299,
-          "sigma_effect": -0.010126582278480956
+          "mu_effect": 0.0,
+          "sigma_effect": 0.0
         },
         "order_B_freeze_mu_first": {
-          "sigma_effect": -0.022784810126582178,
-          "mu_effect": -0.08691983122362867
+          "sigma_effect": 0.0,
+          "mu_effect": 0.0
         },
-        "interaction": -0.012658227848101222,
-        "mean_dominant_order_A": true,
-        "mean_dominant_order_B": true,
-        "mean_dominant_both_orders": true
+        "interaction": 0.0,
+        "mean_dominant_order_A": false,
+        "mean_dominant_order_B": false,
+        "mean_dominant_both_orders": false
       }
     }
   }

@@ -55,6 +55,8 @@ if __name__ == '__main__':
                             'note': 'single condition; A_percondition degenerates to B_pooled'}
         else:
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
+            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
             arm_a = E.run_snr_sweep(ds, 'Transformer', 'per_condition', SNR_LEVELS_ALL, device,
                                      scalers_by_seed, km=km, cond_std=cond_std)
             arm_b = E.run_snr_sweep(ds, 'Transformer', 'global', SNR_LEVELS_ALL, device,

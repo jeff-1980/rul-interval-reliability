@@ -123,6 +123,7 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
+            full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
             scalers_by_seed = scalers_for(ds, canon)
             channel_idx = int(np.argmax(full_scale))
             print(f"  singlech representative channel: {feat_cols[channel_idx]} (largest full_scale={full_scale[channel_idx]:.2f})")

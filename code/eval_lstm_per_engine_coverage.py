@@ -55,7 +55,9 @@ def infer_nll_full(model, X_t, batch=8192):
     return np.clip(mu, 0, 125), sigma
 
 
-def infer_mc_dropout_full(mc_model, X_t, T, aleatory_var, batch=4096):
+def infer_mc_dropout_full(mc_model, X_t, T, aleatory_var, batch=4096, seed=None):
+    if seed is not None:
+        torch.manual_seed(seed)
     all_samples = []
     mc_model.train()
     with torch.no_grad():
@@ -70,6 +72,7 @@ def infer_mc_dropout_full(mc_model, X_t, T, aleatory_var, batch=4096):
 
 
 if __name__ == '__main__':
+    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     with open(os.path.join(RESULTS_DIR, 'mcdropout_fixed_leakfree.json')) as f:
@@ -111,7 +114,8 @@ if __name__ == '__main__':
             mc_model = S1.MC_LSTM(ckpt['input_dim'], ckpt['hidden_dim'], ckpt['dropout']).to(device)
             mc_model.load_state_dict(ckpt['state_dict'])
             aleatory_var = mc_json[ds][si]['T50']['kendall_gal_full']['aleatory_var']
-            mu_mc, sigma_mc = infer_mc_dropout_full(mc_model, X_full_t, T=50, aleatory_var=aleatory_var)
+            mc_seed = C.stable_seed(ds, seed, 'r8b5_mc_dropout_full_traj')
+            mu_mc, sigma_mc = infer_mc_dropout_full(mc_model, X_full_t, T=50, aleatory_var=aleatory_var, seed=mc_seed)
             covered_mc = (y_full >= mu_mc - Z_SCORE * sigma_mc) & (y_full <= mu_mc + Z_SCORE * sigma_mc)
             picp_mc_per_seed.append(per_engine_picp(covered_mc, u_full))
             del mc_model

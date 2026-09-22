@@ -1,0 +1,2983 @@
+{
+  "note": "R8-B4 control: snapshot of the decision-stress-test drift5pct/gaussian1pct results as they stood BEFORE the R8-B1 fix (i.e., under the OLD joint 18-dim perturbation on FD002/FD004, which also corrupted the 3 operating-condition setting columns alongside the 15 sensor columns). Taken from leakfree_r3/C_maintenance_full_onesided.json (current one-sided-95% protocol) and leakfree_r2/maintenance_decision.json (superseded two-sided-90% protocol, kept for completeness) before either file was regenerated under the R8-B1 sensor-only perturbation. FD001/FD003 have no setting columns and are therefore identical between joint and sensor-only perturbation -- not included here.",
+  "one_sided_95pct_protocol": {
+    "LSTM": {
+      "FD002": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7233201581027668,
+              "true_rul_at_trigger": 90.04262295081968,
+              "excess_over_L": 80.04262295081968,
+              "cost_by_ratio": {
+                "5": 0.7233201581027668,
+                "20": 0.7233201581027668,
+                "100": 0.7233201581027668
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6996047430830039,
+              "true_rul_at_trigger": 95.57062146892656,
+              "excess_over_L": 75.57062146892656,
+              "cost_by_ratio": {
+                "5": 0.6996047430830039,
+                "20": 0.6996047430830039,
+                "100": 0.6996047430830039
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6513833992094862,
+              "true_rul_at_trigger": 99.65412621359224,
+              "excess_over_L": 69.65412621359224,
+              "cost_by_ratio": {
+                "5": 0.6513833992094862,
+                "20": 0.6513833992094862,
+                "100": 0.6513833992094862
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7557312252964427,
+              "true_rul_at_trigger": 91.24476987447699,
+              "excess_over_L": 81.24476987447699,
+              "cost_by_ratio": {
+                "5": 0.7557312252964427,
+                "20": 0.7557312252964427,
+                "100": 0.7557312252964427
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.7019762845849803,
+              "true_rul_at_trigger": 95.67004504504504,
+              "excess_over_L": 75.67004504504504,
+              "cost_by_ratio": {
+                "5": 0.7019762845849803,
+                "20": 0.7019762845849803,
+                "100": 0.7019762845849803
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7557312252964427,
+              "true_rul_at_trigger": 91.24476987447699,
+              "excess_over_L": 81.24476987447699,
+              "cost_by_ratio": {
+                "5": 0.7557312252964427,
+                "20": 0.7557312252964427,
+                "100": 0.7557312252964427
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.7019762845849803,
+              "true_rul_at_trigger": 95.67004504504504,
+              "excess_over_L": 75.67004504504504,
+              "cost_by_ratio": {
+                "5": 0.7019762845849803,
+                "20": 0.7019762845849803,
+                "100": 0.7019762845849803
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 22,
+              "premature_rate": 0.7430830039525692,
+              "true_rul_at_trigger": 90.73936170212765,
+              "excess_over_L": 80.73936170212765,
+              "cost_by_ratio": {
+                "5": 0.7430830039525692,
+                "20": 0.7430830039525692,
+                "100": 0.7430830039525692
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 53,
+              "premature_rate": 0.6996047430830039,
+              "true_rul_at_trigger": 95.57062146892656,
+              "excess_over_L": 75.57062146892656,
+              "cost_by_ratio": {
+                "5": 0.6996047430830039,
+                "20": 0.6996047430830039,
+                "100": 0.6996047430830039
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 61,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7193675889328063,
+              "true_rul_at_trigger": 89.91318681318681,
+              "excess_over_L": 79.91318681318681,
+              "cost_by_ratio": {
+                "5": 0.7193675889328063,
+                "20": 0.7193675889328063,
+                "100": 0.7193675889328063
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6980237154150197,
+              "true_rul_at_trigger": 95.5039637599094,
+              "excess_over_L": 75.5039637599094,
+              "cost_by_ratio": {
+                "5": 0.6980237154150197,
+                "20": 0.6980237154150197,
+                "100": 0.6980237154150197
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6513833992094862,
+              "true_rul_at_trigger": 99.65412621359224,
+              "excess_over_L": 69.65412621359224,
+              "cost_by_ratio": {
+                "5": 0.6513833992094862,
+                "20": 0.6513833992094862,
+                "100": 0.6513833992094862
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.0020553359683794467,
+              "conditional_unrecognised_rate": 0.023636363636363636,
+              "n_at_risk": 550,
+              "premature_rate": 0.009011857707509882,
+              "true_rul_at_trigger": 41.3859649122807,
+              "excess_over_L": 31.385964912280702,
+              "cost_by_ratio": {
+                "5": 0.019288537549407115,
+                "20": 0.050118577075098814,
+                "100": 0.21454545454545454
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0023715415019762848,
+              "conditional_unrecognised_rate": 0.011320754716981131,
+              "n_at_risk": 1325,
+              "premature_rate": 0.05059288537549407,
+              "true_rul_at_trigger": 58.01875,
+              "excess_over_L": 38.01875,
+              "cost_by_ratio": {
+                "5": 0.062450592885375494,
+                "20": 0.09802371541501977,
+                "100": 0.28774703557312253
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.00031620553359683795,
+              "conditional_unrecognised_rate": 0.0013114754098360656,
+              "n_at_risk": 1525,
+              "premature_rate": 0.0932806324110672,
+              "true_rul_at_trigger": 78.3271186440678,
+              "excess_over_L": 48.327118644067795,
+              "cost_by_ratio": {
+                "5": 0.09486166007905139,
+                "20": 0.09960474308300396,
+                "100": 0.12490118577075099
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 550,
+              "premature_rate": 0.0782608695652174,
+              "true_rul_at_trigger": 46.90707070707071,
+              "excess_over_L": 36.90707070707071,
+              "cost_by_ratio": {
+                "5": 0.0782608695652174,
+                "20": 0.0782608695652174,
+                "100": 0.0782608695652174
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.00031620553359683795,
+              "conditional_unrecognised_rate": 0.0015094339622641509,
+              "n_at_risk": 1325,
+              "premature_rate": 0.08679841897233202,
+              "true_rul_at_trigger": 57.91074681238616,
+              "excess_over_L": 37.91074681238616,
+              "cost_by_ratio": {
+                "5": 0.08837944664031622,
+                "20": 0.09312252964426879,
+                "100": 0.11841897233201581
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.00015810276679841898,
+              "conditional_unrecognised_rate": 0.0006557377049180328,
+              "n_at_risk": 1525,
+              "premature_rate": 0.0833201581027668,
+              "true_rul_at_trigger": 72.78747628083491,
+              "excess_over_L": 42.787476280834916,
+              "cost_by_ratio": {
+                "5": 0.08411067193675889,
+                "20": 0.08648221343873518,
+                "100": 0.09913043478260869
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 550,
+              "premature_rate": 0.08126482213438735,
+              "true_rul_at_trigger": 47.1284046692607,
+              "excess_over_L": 37.1284046692607,
+              "cost_by_ratio": {
+                "5": 0.08126482213438735,
+                "20": 0.08126482213438735,
+                "100": 0.08126482213438735
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.00031620553359683795,
+              "conditional_unrecognised_rate": 0.0015094339622641509,
+              "n_at_risk": 1325,
+              "premature_rate": 0.0883794466403162,
+              "true_rul_at_trigger": 58.01610017889087,
+              "excess_over_L": 38.01610017889087,
+              "cost_by_ratio": {
+                "5": 0.0899604743083004,
+                "20": 0.09470355731225297,
+                "100": 0.12
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.00015810276679841898,
+              "conditional_unrecognised_rate": 0.0006557377049180328,
+              "n_at_risk": 1525,
+              "premature_rate": 0.0850592885375494,
+              "true_rul_at_trigger": 72.94795539033457,
+              "excess_over_L": 42.94795539033457,
+              "cost_by_ratio": {
+                "5": 0.0858498023715415,
+                "20": 0.08822134387351778,
+                "100": 0.1008695652173913
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0015810276679841897,
+              "conditional_unrecognised_rate": 0.01818181818181818,
+              "n_at_risk": 110,
+              "premature_rate": 0.016600790513833993,
+              "true_rul_at_trigger": 39.23809523809524,
+              "excess_over_L": 29.238095238095237,
+              "cost_by_ratio": {
+                "5": 0.02450592885375494,
+                "20": 0.048221343873517786,
+                "100": 0.17470355731225296
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0007905138339920949,
+              "conditional_unrecognised_rate": 0.0037735849056603774,
+              "n_at_risk": 265,
+              "premature_rate": 0.06877470355731226,
+              "true_rul_at_trigger": 57.88505747126437,
+              "excess_over_L": 37.88505747126437,
+              "cost_by_ratio": {
+                "5": 0.07272727272727274,
+                "20": 0.08458498023715416,
+                "100": 0.14782608695652175
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.108300395256917,
+              "true_rul_at_trigger": 78.48175182481752,
+              "excess_over_L": 48.481751824817515,
+              "cost_by_ratio": {
+                "5": 0.108300395256917,
+                "20": 0.108300395256917,
+                "100": 0.108300395256917
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.0023715415019762848,
+              "conditional_unrecognised_rate": 0.02727272727272727,
+              "n_at_risk": 550,
+              "premature_rate": 0.01675889328063241,
+              "true_rul_at_trigger": 47.886792452830186,
+              "excess_over_L": 37.886792452830186,
+              "cost_by_ratio": {
+                "5": 0.028616600790513834,
+                "20": 0.0641897233201581,
+                "100": 0.2539130434782609
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0018972332015810276,
+              "conditional_unrecognised_rate": 0.009056603773584906,
+              "n_at_risk": 1325,
+              "premature_rate": 0.06719367588932806,
+              "true_rul_at_trigger": 63.28470588235294,
+              "excess_over_L": 43.28470588235294,
+              "cost_by_ratio": {
+                "5": 0.0766798418972332,
+                "20": 0.10513833992094862,
+                "100": 0.2569169960474308
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.00015810276679841898,
+              "conditional_unrecognised_rate": 0.0006557377049180328,
+              "n_at_risk": 1525,
+              "premature_rate": 0.10308300395256917,
+              "true_rul_at_trigger": 79.4478527607362,
+              "excess_over_L": 49.4478527607362,
+              "cost_by_ratio": {
+                "5": 0.10387351778656126,
+                "20": 0.10624505928853754,
+                "100": 0.11889328063241106
+              }
+            }
+          }
+        }
+      },
+      "FD004": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.6725738396624472,
+              "true_rul_at_trigger": 90.50062735257215,
+              "excess_over_L": 80.50062735257215,
+              "cost_by_ratio": {
+                "5": 0.6725738396624472,
+                "20": 0.6725738396624472,
+                "100": 0.6725738396624472
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.6928270042194092,
+              "true_rul_at_trigger": 98.27771010962242,
+              "excess_over_L": 78.27771010962242,
+              "cost_by_ratio": {
+                "5": 0.6928270042194092,
+                "20": 0.6928270042194092,
+                "100": 0.6928270042194092
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6556962025316456,
+              "true_rul_at_trigger": 102.38095238095238,
+              "excess_over_L": 72.38095238095238,
+              "cost_by_ratio": {
+                "5": 0.6556962025316456,
+                "20": 0.6556962025316456,
+                "100": 0.6556962025316456
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.740084388185654,
+              "true_rul_at_trigger": 91.8460661345496,
+              "excess_over_L": 81.8460661345496,
+              "cost_by_ratio": {
+                "5": 0.740084388185654,
+                "20": 0.740084388185654,
+                "100": 0.740084388185654
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.6919831223628692,
+              "true_rul_at_trigger": 98.2,
+              "excess_over_L": 78.2,
+              "cost_by_ratio": {
+                "5": 0.6919831223628692,
+                "20": 0.6919831223628692,
+                "100": 0.6919831223628692
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6531645569620254,
+              "true_rul_at_trigger": 102.31524547803618,
+              "excess_over_L": 72.31524547803618,
+              "cost_by_ratio": {
+                "5": 0.6531645569620254,
+                "20": 0.6531645569620254,
+                "100": 0.6531645569620254
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.7409282700421941,
+              "true_rul_at_trigger": 91.88382687927107,
+              "excess_over_L": 81.88382687927107,
+              "cost_by_ratio": {
+                "5": 0.7409282700421941,
+                "20": 0.7409282700421941,
+                "100": 0.7409282700421941
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.6919831223628692,
+              "true_rul_at_trigger": 98.2,
+              "excess_over_L": 78.2,
+              "cost_by_ratio": {
+                "5": 0.6919831223628692,
+                "20": 0.6919831223628692,
+                "100": 0.6919831223628692
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6540084388185654,
+              "true_rul_at_trigger": 102.34451612903226,
+              "excess_over_L": 72.34451612903226,
+              "cost_by_ratio": {
+                "5": 0.6540084388185654,
+                "20": 0.6540084388185654,
+                "100": 0.6540084388185654
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 14,
+              "premature_rate": 0.759493670886076,
+              "true_rul_at_trigger": 92.56111111111112,
+              "excess_over_L": 82.56111111111112,
+              "cost_by_ratio": {
+                "5": 0.759493670886076,
+                "20": 0.759493670886076,
+                "100": 0.759493670886076
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 40,
+              "premature_rate": 0.70042194092827,
+              "true_rul_at_trigger": 98.47590361445783,
+              "excess_over_L": 78.47590361445783,
+              "cost_by_ratio": {
+                "5": 0.70042194092827,
+                "20": 0.70042194092827,
+                "100": 0.70042194092827
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 53,
+              "premature_rate": 0.6624472573839663,
+              "true_rul_at_trigger": 102.61146496815287,
+              "excess_over_L": 72.61146496815287,
+              "cost_by_ratio": {
+                "5": 0.6624472573839663,
+                "20": 0.6624472573839663,
+                "100": 0.6624472573839663
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.739240506329114,
+              "true_rul_at_trigger": 92.12785388127854,
+              "excess_over_L": 82.12785388127854,
+              "cost_by_ratio": {
+                "5": 0.739240506329114,
+                "20": 0.739240506329114,
+                "100": 0.739240506329114
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.7021097046413503,
+              "true_rul_at_trigger": 98.53966346153847,
+              "excess_over_L": 78.53966346153847,
+              "cost_by_ratio": {
+                "5": 0.7021097046413503,
+                "20": 0.7021097046413503,
+                "100": 0.7021097046413503
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.659915611814346,
+              "true_rul_at_trigger": 102.52557544757033,
+              "excess_over_L": 72.52557544757033,
+              "cost_by_ratio": {
+                "5": 0.659915611814346,
+                "20": 0.659915611814346,
+                "100": 0.659915611814346
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.00540084388185654,
+              "conditional_unrecognised_rate": 0.09142857142857143,
+              "n_at_risk": 350,
+              "premature_rate": 0.04945147679324895,
+              "true_rul_at_trigger": 47.563139931740615,
+              "excess_over_L": 37.563139931740615,
+              "cost_by_ratio": {
+                "5": 0.07645569620253165,
+                "20": 0.15746835443037976,
+                "100": 0.5895358649789029
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.002869198312236287,
+              "conditional_unrecognised_rate": 0.017,
+              "n_at_risk": 1000,
+              "premature_rate": 0.06936708860759494,
+              "true_rul_at_trigger": 65.97323600973236,
+              "excess_over_L": 45.97323600973236,
+              "cost_by_ratio": {
+                "5": 0.08371308016877638,
+                "20": 0.1267510548523207,
+                "100": 0.3562869198312236
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.002869198312236287,
+              "conditional_unrecognised_rate": 0.012830188679245283,
+              "n_at_risk": 1325,
+              "premature_rate": 0.09654008438818565,
+              "true_rul_at_trigger": 81.8409090909091,
+              "excess_over_L": 51.84090909090909,
+              "cost_by_ratio": {
+                "5": 0.11088607594936709,
+                "20": 0.1539240506329114,
+                "100": 0.38345991561181436
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0008438818565400844,
+              "conditional_unrecognised_rate": 0.014285714285714285,
+              "n_at_risk": 350,
+              "premature_rate": 0.07780590717299578,
+              "true_rul_at_trigger": 45.53145336225597,
+              "excess_over_L": 35.53145336225597,
+              "cost_by_ratio": {
+                "5": 0.0820253164556962,
+                "20": 0.09468354430379747,
+                "100": 0.1621940928270042
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.00270042194092827,
+              "conditional_unrecognised_rate": 0.016,
+              "n_at_risk": 1000,
+              "premature_rate": 0.06261603375527426,
+              "true_rul_at_trigger": 61.2911051212938,
+              "excess_over_L": 41.2911051212938,
+              "cost_by_ratio": {
+                "5": 0.0761181434599156,
+                "20": 0.11662447257383966,
+                "100": 0.33265822784810123
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.00540084388185654,
+              "conditional_unrecognised_rate": 0.024150943396226414,
+              "n_at_risk": 1325,
+              "premature_rate": 0.06565400843881856,
+              "true_rul_at_trigger": 78.47814910025707,
+              "excess_over_L": 48.47814910025707,
+              "cost_by_ratio": {
+                "5": 0.09265822784810127,
+                "20": 0.17367088607594938,
+                "100": 0.6057383966244725
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0006751054852320675,
+              "conditional_unrecognised_rate": 0.011428571428571429,
+              "n_at_risk": 350,
+              "premature_rate": 0.08016877637130802,
+              "true_rul_at_trigger": 45.91368421052631,
+              "excess_over_L": 35.91368421052631,
+              "cost_by_ratio": {
+                "5": 0.08354430379746836,
+                "20": 0.09367088607594937,
+                "100": 0.14767932489451477
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.002362869198312236,
+              "conditional_unrecognised_rate": 0.014,
+              "n_at_risk": 1000,
+              "premature_rate": 0.06430379746835443,
+              "true_rul_at_trigger": 61.83727034120735,
+              "excess_over_L": 41.83727034120735,
+              "cost_by_ratio": {
+                "5": 0.07611814345991562,
+                "20": 0.11156118143459916,
+                "100": 0.30059071729957804
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.005569620253164557,
+              "conditional_unrecognised_rate": 0.02490566037735849,
+              "n_at_risk": 1325,
+              "premature_rate": 0.06818565400843882,
+              "true_rul_at_trigger": 78.8069306930693,
+              "excess_over_L": 48.806930693069305,
+              "cost_by_ratio": {
+                "5": 0.0960337552742616,
+                "20": 0.17957805907172997,
+                "100": 0.6251476793248945
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0033755274261603376,
+              "conditional_unrecognised_rate": 0.05714285714285714,
+              "n_at_risk": 70,
+              "premature_rate": 0.05569620253164557,
+              "true_rul_at_trigger": 45.72727272727273,
+              "excess_over_L": 35.72727272727273,
+              "cost_by_ratio": {
+                "5": 0.07257383966244726,
+                "20": 0.12320675105485232,
+                "100": 0.39324894514767933
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0016877637130801688,
+              "conditional_unrecognised_rate": 0.01,
+              "n_at_risk": 200,
+              "premature_rate": 0.0810126582278481,
+              "true_rul_at_trigger": 64.71875,
+              "excess_over_L": 44.71875,
+              "cost_by_ratio": {
+                "5": 0.08945147679324894,
+                "20": 0.11476793248945148,
+                "100": 0.24978902953586496
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0008438818565400844,
+              "conditional_unrecognised_rate": 0.0037735849056603774,
+              "n_at_risk": 265,
+              "premature_rate": 0.1021097046413502,
+              "true_rul_at_trigger": 81.36363636363636,
+              "excess_over_L": 51.36363636363637,
+              "cost_by_ratio": {
+                "5": 0.10632911392405063,
+                "20": 0.1189873417721519,
+                "100": 0.18649789029535863
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.002531645569620253,
+              "conditional_unrecognised_rate": 0.04285714285714286,
+              "n_at_risk": 350,
+              "premature_rate": 0.08607594936708861,
+              "true_rul_at_trigger": 55.5078431372549,
+              "excess_over_L": 45.5078431372549,
+              "cost_by_ratio": {
+                "5": 0.09873417721518987,
+                "20": 0.13670886075949368,
+                "100": 0.33924050632911396
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0015189873417721519,
+              "conditional_unrecognised_rate": 0.009,
+              "n_at_risk": 1000,
+              "premature_rate": 0.1041350210970464,
+              "true_rul_at_trigger": 71.97568881685575,
+              "excess_over_L": 51.97568881685575,
+              "cost_by_ratio": {
+                "5": 0.11172995780590717,
+                "20": 0.13451476793248945,
+                "100": 0.2560337552742616
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0010126582278481013,
+              "conditional_unrecognised_rate": 0.004528301886792453,
+              "n_at_risk": 1325,
+              "premature_rate": 0.13063291139240507,
+              "true_rul_at_trigger": 84.48708010335918,
+              "excess_over_L": 54.487080103359176,
+              "cost_by_ratio": {
+                "5": 0.13569620253164558,
+                "20": 0.1508860759493671,
+                "100": 0.2318987341772152
+              }
+            }
+          }
+        }
+      }
+    },
+    "Transformer": {
+      "FD002": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7264822134387352,
+              "true_rul_at_trigger": 89.99564744287268,
+              "excess_over_L": 79.99564744287268,
+              "cost_by_ratio": {
+                "5": 0.7264822134387352,
+                "20": 0.7264822134387352,
+                "100": 0.7264822134387352
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.7011857707509881,
+              "true_rul_at_trigger": 95.6369785794814,
+              "excess_over_L": 75.6369785794814,
+              "cost_by_ratio": {
+                "5": 0.7011857707509881,
+                "20": 0.7011857707509881,
+                "100": 0.7011857707509881
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7581027667984189,
+              "true_rul_at_trigger": 91.35036496350365,
+              "excess_over_L": 81.35036496350365,
+              "cost_by_ratio": {
+                "5": 0.7581027667984189,
+                "20": 0.7581027667984189,
+                "100": 0.7581027667984189
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.7035573122529645,
+              "true_rul_at_trigger": 95.73595505617978,
+              "excess_over_L": 75.73595505617978,
+              "cost_by_ratio": {
+                "5": 0.7035573122529645,
+                "20": 0.7035573122529645,
+                "100": 0.7035573122529645
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7573122529644268,
+              "true_rul_at_trigger": 91.3152400835073,
+              "excess_over_L": 81.3152400835073,
+              "cost_by_ratio": {
+                "5": 0.7573122529644268,
+                "20": 0.7573122529644268,
+                "100": 0.7573122529644268
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.7035573122529645,
+              "true_rul_at_trigger": 95.73595505617978,
+              "excess_over_L": 75.73595505617978,
+              "cost_by_ratio": {
+                "5": 0.7035573122529645,
+                "20": 0.7035573122529645,
+                "100": 0.7035573122529645
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 22,
+              "premature_rate": 0.7470355731225297,
+              "true_rul_at_trigger": 90.85185185185185,
+              "excess_over_L": 80.85185185185185,
+              "cost_by_ratio": {
+                "5": 0.7470355731225297,
+                "20": 0.7470355731225297,
+                "100": 0.7470355731225297
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 53,
+              "premature_rate": 0.7035573122529645,
+              "true_rul_at_trigger": 95.73595505617978,
+              "excess_over_L": 75.73595505617978,
+              "cost_by_ratio": {
+                "5": 0.7035573122529645,
+                "20": 0.7035573122529645,
+                "100": 0.7035573122529645
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 61,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.7328063241106719,
+              "true_rul_at_trigger": 90.31823085221143,
+              "excess_over_L": 80.31823085221143,
+              "cost_by_ratio": {
+                "5": 0.7328063241106719,
+                "20": 0.7328063241106719,
+                "100": 0.7328063241106719
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.7019762845849803,
+              "true_rul_at_trigger": 95.67004504504504,
+              "excess_over_L": 75.67004504504504,
+              "cost_by_ratio": {
+                "5": 0.7019762845849803,
+                "20": 0.7019762845849803,
+                "100": 0.7019762845849803
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.6521739130434783,
+              "true_rul_at_trigger": 99.68484848484849,
+              "excess_over_L": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.0007905138339920949,
+              "conditional_unrecognised_rate": 0.00909090909090909,
+              "n_at_risk": 550,
+              "premature_rate": 0.00758893280632411,
+              "true_rul_at_trigger": 36.1875,
+              "excess_over_L": 26.1875,
+              "cost_by_ratio": {
+                "5": 0.011541501976284584,
+                "20": 0.023399209486166007,
+                "100": 0.0866403162055336
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0022134387351778655,
+              "conditional_unrecognised_rate": 0.010566037735849057,
+              "n_at_risk": 1325,
+              "premature_rate": 0.03114624505928854,
+              "true_rul_at_trigger": 57.74111675126903,
+              "excess_over_L": 37.74111675126903,
+              "cost_by_ratio": {
+                "5": 0.04221343873517787,
+                "20": 0.07541501976284584,
+                "100": 0.2524901185770751
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 1525,
+              "premature_rate": 0.08221343873517786,
+              "true_rul_at_trigger": 78.56538461538462,
+              "excess_over_L": 48.565384615384616,
+              "cost_by_ratio": {
+                "5": 0.08221343873517786,
+                "20": 0.08221343873517786,
+                "100": 0.08221343873517786
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 550,
+              "premature_rate": 0.0716205533596838,
+              "true_rul_at_trigger": 47.81677704194261,
+              "excess_over_L": 37.81677704194261,
+              "cost_by_ratio": {
+                "5": 0.0716205533596838,
+                "20": 0.0716205533596838,
+                "100": 0.0716205533596838
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 1325,
+              "premature_rate": 0.08395256916996048,
+              "true_rul_at_trigger": 61.698681732580035,
+              "excess_over_L": 41.698681732580035,
+              "cost_by_ratio": {
+                "5": 0.08395256916996048,
+                "20": 0.08395256916996048,
+                "100": 0.08395256916996048
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 1525,
+              "premature_rate": 0.08964426877470355,
+              "true_rul_at_trigger": 74.62610229276896,
+              "excess_over_L": 44.62610229276896,
+              "cost_by_ratio": {
+                "5": 0.08964426877470355,
+                "20": 0.08964426877470355,
+                "100": 0.08964426877470355
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 550,
+              "premature_rate": 0.06703557312252964,
+              "true_rul_at_trigger": 46.261792452830186,
+              "excess_over_L": 36.261792452830186,
+              "cost_by_ratio": {
+                "5": 0.06703557312252964,
+                "20": 0.06703557312252964,
+                "100": 0.06703557312252964
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 1325,
+              "premature_rate": 0.08316205533596838,
+              "true_rul_at_trigger": 61.454372623574145,
+              "excess_over_L": 41.454372623574145,
+              "cost_by_ratio": {
+                "5": 0.08316205533596838,
+                "20": 0.08316205533596838,
+                "100": 0.08316205533596838
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 1525,
+              "premature_rate": 0.09264822134387352,
+              "true_rul_at_trigger": 74.74061433447099,
+              "excess_over_L": 44.74061433447099,
+              "cost_by_ratio": {
+                "5": 0.09264822134387352,
+                "20": 0.09264822134387352,
+                "100": 0.09264822134387352
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 110,
+              "premature_rate": 0.010276679841897233,
+              "true_rul_at_trigger": 40.23076923076923,
+              "excess_over_L": 30.23076923076923,
+              "cost_by_ratio": {
+                "5": 0.010276679841897233,
+                "20": 0.010276679841897233,
+                "100": 0.010276679841897233
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0007905138339920949,
+              "conditional_unrecognised_rate": 0.0037735849056603774,
+              "n_at_risk": 265,
+              "premature_rate": 0.039525691699604744,
+              "true_rul_at_trigger": 58.26,
+              "excess_over_L": 38.26,
+              "cost_by_ratio": {
+                "5": 0.043478260869565216,
+                "20": 0.05533596837944664,
+                "100": 0.11857707509881424
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 305,
+              "premature_rate": 0.09249011857707509,
+              "true_rul_at_trigger": 77.57264957264957,
+              "excess_over_L": 47.572649572649574,
+              "cost_by_ratio": {
+                "5": 0.09249011857707509,
+                "20": 0.09249011857707509,
+                "100": 0.09249011857707509
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.0011067193675889327,
+              "conditional_unrecognised_rate": 0.012727272727272728,
+              "n_at_risk": 550,
+              "premature_rate": 0.01517786561264822,
+              "true_rul_at_trigger": 42.239583333333336,
+              "excess_over_L": 32.239583333333336,
+              "cost_by_ratio": {
+                "5": 0.020711462450592882,
+                "20": 0.037312252964426876,
+                "100": 0.1258498023715415
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0023715415019762848,
+              "conditional_unrecognised_rate": 0.011320754716981131,
+              "n_at_risk": 1325,
+              "premature_rate": 0.04743083003952569,
+              "true_rul_at_trigger": 63.553333333333335,
+              "excess_over_L": 43.553333333333335,
+              "cost_by_ratio": {
+                "5": 0.05928853754940711,
+                "20": 0.09486166007905139,
+                "100": 0.2845849802371542
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.00015810276679841898,
+              "conditional_unrecognised_rate": 0.0006557377049180328,
+              "n_at_risk": 1525,
+              "premature_rate": 0.09881422924901186,
+              "true_rul_at_trigger": 79.272,
+              "excess_over_L": 49.272,
+              "cost_by_ratio": {
+                "5": 0.09960474308300395,
+                "20": 0.10197628458498023,
+                "100": 0.11462450592885376
+              }
+            }
+          }
+        }
+      },
+      "FD004": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.6464135021097046,
+              "true_rul_at_trigger": 88.6579634464752,
+              "excess_over_L": 78.6579634464752,
+              "cost_by_ratio": {
+                "5": 0.6464135021097046,
+                "20": 0.6464135021097046,
+                "100": 0.6464135021097046
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.6827004219409283,
+              "true_rul_at_trigger": 97.91965389369592,
+              "excess_over_L": 77.91965389369592,
+              "cost_by_ratio": {
+                "5": 0.6827004219409283,
+                "20": 0.6827004219409283,
+                "100": 0.6827004219409283
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6565400843881857,
+              "true_rul_at_trigger": 102.41773778920309,
+              "excess_over_L": 72.41773778920309,
+              "cost_by_ratio": {
+                "5": 0.6565400843881857,
+                "20": 0.6565400843881857,
+                "100": 0.6565400843881857
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0008438818565400844,
+              "conditional_unrecognised_rate": 0.014285714285714285,
+              "n_at_risk": 70,
+              "premature_rate": 0.7518987341772152,
+              "true_rul_at_trigger": 92.47923681257015,
+              "excess_over_L": 82.47923681257015,
+              "cost_by_ratio": {
+                "5": 0.7561181434599156,
+                "20": 0.7687763713080169,
+                "100": 0.8362869198312236
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0008438818565400844,
+              "conditional_unrecognised_rate": 0.005,
+              "n_at_risk": 200,
+              "premature_rate": 0.6962025316455697,
+              "true_rul_at_trigger": 98.51030303030304,
+              "excess_over_L": 78.51030303030304,
+              "cost_by_ratio": {
+                "5": 0.70042194092827,
+                "20": 0.7130801687763714,
+                "100": 0.7805907172995781
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0008438818565400844,
+              "conditional_unrecognised_rate": 0.0037735849056603774,
+              "n_at_risk": 265,
+              "premature_rate": 0.6556962025316456,
+              "true_rul_at_trigger": 102.44144144144144,
+              "excess_over_L": 72.44144144144144,
+              "cost_by_ratio": {
+                "5": 0.659915611814346,
+                "20": 0.6725738396624473,
+                "100": 0.740084388185654
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.7375527426160338,
+              "true_rul_at_trigger": 91.8283752860412,
+              "excess_over_L": 81.8283752860412,
+              "cost_by_ratio": {
+                "5": 0.7375527426160338,
+                "20": 0.7375527426160338,
+                "100": 0.7375527426160338
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.6911392405063291,
+              "true_rul_at_trigger": 98.23443223443223,
+              "excess_over_L": 78.23443223443223,
+              "cost_by_ratio": {
+                "5": 0.6911392405063291,
+                "20": 0.6911392405063291,
+                "100": 0.6911392405063291
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6531645569620254,
+              "true_rul_at_trigger": 102.3359173126615,
+              "excess_over_L": 72.3359173126615,
+              "cost_by_ratio": {
+                "5": 0.6531645569620254,
+                "20": 0.6531645569620254,
+                "100": 0.6531645569620254
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 14,
+              "premature_rate": 0.7172995780590717,
+              "true_rul_at_trigger": 91.05294117647058,
+              "excess_over_L": 81.05294117647058,
+              "cost_by_ratio": {
+                "5": 0.7172995780590717,
+                "20": 0.7172995780590717,
+                "100": 0.7172995780590717
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 40,
+              "premature_rate": 0.7046413502109705,
+              "true_rul_at_trigger": 98.63473053892216,
+              "excess_over_L": 78.63473053892216,
+              "cost_by_ratio": {
+                "5": 0.7046413502109705,
+                "20": 0.7046413502109705,
+                "100": 0.7046413502109705
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 53,
+              "premature_rate": 0.6624472573839663,
+              "true_rul_at_trigger": 102.61146496815287,
+              "excess_over_L": 72.61146496815287,
+              "cost_by_ratio": {
+                "5": 0.6624472573839663,
+                "20": 0.6624472573839663,
+                "100": 0.6624472573839663
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.6691983122362869,
+              "true_rul_at_trigger": 90.04791929382094,
+              "excess_over_L": 80.04791929382094,
+              "cost_by_ratio": {
+                "5": 0.6691983122362869,
+                "20": 0.6691983122362869,
+                "100": 0.6691983122362869
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.679324894514768,
+              "true_rul_at_trigger": 97.84844720496895,
+              "excess_over_L": 77.84844720496895,
+              "cost_by_ratio": {
+                "5": 0.679324894514768,
+                "20": 0.679324894514768,
+                "100": 0.679324894514768
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.6540084388185654,
+              "true_rul_at_trigger": 102.36903225806452,
+              "excess_over_L": 72.36903225806452,
+              "cost_by_ratio": {
+                "5": 0.6540084388185654,
+                "20": 0.6540084388185654,
+                "100": 0.6540084388185654
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "overall_unrecognised_rate": 0.00033755274261603374,
+              "conditional_unrecognised_rate": 0.005714285714285714,
+              "n_at_risk": 350,
+              "premature_rate": 0.04,
+              "true_rul_at_trigger": 45.983122362869196,
+              "excess_over_L": 35.983122362869196,
+              "cost_by_ratio": {
+                "5": 0.04168776371308017,
+                "20": 0.04675105485232067,
+                "100": 0.07375527426160337
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 1000,
+              "premature_rate": 0.05113924050632911,
+              "true_rul_at_trigger": 65.54785478547855,
+              "excess_over_L": 45.54785478547855,
+              "cost_by_ratio": {
+                "5": 0.05113924050632911,
+                "20": 0.05113924050632911,
+                "100": 0.05113924050632911
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0010126582278481013,
+              "conditional_unrecognised_rate": 0.004528301886792453,
+              "n_at_risk": 1325,
+              "premature_rate": 0.0779746835443038,
+              "true_rul_at_trigger": 79.17099567099567,
+              "excess_over_L": 49.17099567099567,
+              "cost_by_ratio": {
+                "5": 0.0830379746835443,
+                "20": 0.09822784810126582,
+                "100": 0.17924050632911392
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.00033755274261603374,
+              "conditional_unrecognised_rate": 0.005714285714285714,
+              "n_at_risk": 350,
+              "premature_rate": 0.0751054852320675,
+              "true_rul_at_trigger": 46.36629213483146,
+              "excess_over_L": 36.36629213483146,
+              "cost_by_ratio": {
+                "5": 0.07679324894514768,
+                "20": 0.08185654008438818,
+                "100": 0.10886075949367088
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0005063291139240507,
+              "conditional_unrecognised_rate": 0.003,
+              "n_at_risk": 1000,
+              "premature_rate": 0.06565400843881856,
+              "true_rul_at_trigger": 64.17223650385604,
+              "excess_over_L": 44.17223650385604,
+              "cost_by_ratio": {
+                "5": 0.06818565400843882,
+                "20": 0.07578059071729958,
+                "100": 0.11628691983122363
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.002869198312236287,
+              "conditional_unrecognised_rate": 0.012830188679245283,
+              "n_at_risk": 1325,
+              "premature_rate": 0.07172995780590717,
+              "true_rul_at_trigger": 78.37647058823529,
+              "excess_over_L": 48.37647058823529,
+              "cost_by_ratio": {
+                "5": 0.08607594936708861,
+                "20": 0.1291139240506329,
+                "100": 0.35864978902953587
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "overall_unrecognised_rate": 0.0005063291139240507,
+              "conditional_unrecognised_rate": 0.008571428571428572,
+              "n_at_risk": 350,
+              "premature_rate": 0.05670886075949367,
+              "true_rul_at_trigger": 43.401785714285715,
+              "excess_over_L": 33.401785714285715,
+              "cost_by_ratio": {
+                "5": 0.05924050632911392,
+                "20": 0.06683544303797469,
+                "100": 0.10734177215189875
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0006751054852320675,
+              "conditional_unrecognised_rate": 0.004,
+              "n_at_risk": 1000,
+              "premature_rate": 0.051645569620253164,
+              "true_rul_at_trigger": 59.87581699346405,
+              "excess_over_L": 39.87581699346405,
+              "cost_by_ratio": {
+                "5": 0.0550210970464135,
+                "20": 0.06514767932489451,
+                "100": 0.11915611814345992
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.002869198312236287,
+              "conditional_unrecognised_rate": 0.012830188679245283,
+              "n_at_risk": 1325,
+              "premature_rate": 0.06329113924050633,
+              "true_rul_at_trigger": 76.85066666666667,
+              "excess_over_L": 46.85066666666667,
+              "cost_by_ratio": {
+                "5": 0.07763713080168777,
+                "20": 0.12067510548523208,
+                "100": 0.350210970464135
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 70,
+              "premature_rate": 0.05063291139240506,
+              "true_rul_at_trigger": 46.95,
+              "excess_over_L": 36.95,
+              "cost_by_ratio": {
+                "5": 0.05063291139240506,
+                "20": 0.05063291139240506,
+                "100": 0.05063291139240506
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 200,
+              "premature_rate": 0.06160337552742616,
+              "true_rul_at_trigger": 65.94520547945206,
+              "excess_over_L": 45.945205479452056,
+              "cost_by_ratio": {
+                "5": 0.06160337552742616,
+                "20": 0.06160337552742616,
+                "100": 0.06160337552742616
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 265,
+              "premature_rate": 0.0919831223628692,
+              "true_rul_at_trigger": 80.28440366972477,
+              "excess_over_L": 50.28440366972477,
+              "cost_by_ratio": {
+                "5": 0.0919831223628692,
+                "20": 0.0919831223628692,
+                "100": 0.0919831223628692
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "overall_unrecognised_rate": 0.00016877637130801687,
+              "conditional_unrecognised_rate": 0.002857142857142857,
+              "n_at_risk": 350,
+              "premature_rate": 0.06632911392405064,
+              "true_rul_at_trigger": 50.3765903307888,
+              "excess_over_L": 40.3765903307888,
+              "cost_by_ratio": {
+                "5": 0.06717299578059072,
+                "20": 0.06970464135021097,
+                "100": 0.08320675105485233
+              }
+            },
+            "20": {
+              "overall_unrecognised_rate": 0.0,
+              "conditional_unrecognised_rate": 0.0,
+              "n_at_risk": 1000,
+              "premature_rate": 0.08455696202531646,
+              "true_rul_at_trigger": 69.6626746506986,
+              "excess_over_L": 49.662674650698605,
+              "cost_by_ratio": {
+                "5": 0.08455696202531646,
+                "20": 0.08455696202531646,
+                "100": 0.08455696202531646
+              }
+            },
+            "30": {
+              "overall_unrecognised_rate": 0.0010126582278481013,
+              "conditional_unrecognised_rate": 0.004528301886792453,
+              "n_at_risk": 1325,
+              "premature_rate": 0.11493670886075949,
+              "true_rul_at_trigger": 83.10866372980911,
+              "excess_over_L": 53.1086637298091,
+              "cost_by_ratio": {
+                "5": 0.12,
+                "20": 0.1351898734177215,
+                "100": 0.21620253164556963
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "two_sided_90pct_protocol_superseded": {
+    "LSTM": {
+      "FD002": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7233201581027667,
+              "wasted_life_mean": 80.01950728842796,
+              "cost_by_ratio": {
+                "5": 0.7233201581027667,
+                "20": 0.7233201581027667,
+                "100": 0.7233201581027667
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6996047430830039,
+              "wasted_life_mean": 75.56948775289968,
+              "cost_by_ratio": {
+                "5": 0.6996047430830039,
+                "20": 0.6996047430830039,
+                "100": 0.6996047430830039
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6513833992094862,
+              "wasted_life_mean": 69.6539763488544,
+              "cost_by_ratio": {
+                "5": 0.6513833992094862,
+                "20": 0.6513833992094862,
+                "100": 0.6513833992094862
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7557312252964427,
+              "wasted_life_mean": 81.24425208964821,
+              "cost_by_ratio": {
+                "5": 0.7557312252964427,
+                "20": 0.7557312252964427,
+                "100": 0.7557312252964427
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7019762845849802,
+              "wasted_life_mean": 75.66982162127849,
+              "cost_by_ratio": {
+                "5": 0.7019762845849802,
+                "20": 0.7019762845849802,
+                "100": 0.7019762845849802
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7557312252964427,
+              "wasted_life_mean": 81.24425208964821,
+              "cost_by_ratio": {
+                "5": 0.7557312252964427,
+                "20": 0.7557312252964427,
+                "100": 0.7557312252964427
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7019762845849802,
+              "wasted_life_mean": 75.66982162127849,
+              "cost_by_ratio": {
+                "5": 0.7019762845849802,
+                "20": 0.7019762845849802,
+                "100": 0.7019762845849802
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7430830039525692,
+              "wasted_life_mean": 80.73936170212765,
+              "cost_by_ratio": {
+                "5": 0.7430830039525692,
+                "20": 0.7430830039525692,
+                "100": 0.7430830039525692
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6996047430830039,
+              "wasted_life_mean": 75.57062146892656,
+              "cost_by_ratio": {
+                "5": 0.6996047430830039,
+                "20": 0.6996047430830039,
+                "100": 0.6996047430830039
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7201581027667985,
+              "wasted_life_mean": 79.88587047044977,
+              "cost_by_ratio": {
+                "5": 0.7201581027667985,
+                "20": 0.7201581027667985,
+                "100": 0.7201581027667985
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6980237154150197,
+              "wasted_life_mean": 75.50297855984554,
+              "cost_by_ratio": {
+                "5": 0.6980237154150197,
+                "20": 0.6980237154150197,
+                "100": 0.6980237154150197
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6513833992094862,
+              "wasted_life_mean": 69.6539763488544,
+              "cost_by_ratio": {
+                "5": 0.6513833992094862,
+                "20": 0.6513833992094862,
+                "100": 0.6513833992094862
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.0020553359683794462,
+              "early_rate": 0.00901185770750988,
+              "wasted_life_mean": 29.420454545454547,
+              "cost_by_ratio": {
+                "5": 0.01928853754940711,
+                "20": 0.05011857707509881,
+                "100": 0.21454545454545448
+              }
+            },
+            "20": {
+              "late_rate": 0.0023715415019762843,
+              "early_rate": 0.050592885375494084,
+              "wasted_life_mean": 37.83843917846859,
+              "cost_by_ratio": {
+                "5": 0.06245059288537551,
+                "20": 0.09802371541501978,
+                "100": 0.28774703557312253
+              }
+            },
+            "30": {
+              "late_rate": 0.0003162055335968379,
+              "early_rate": 0.09328063241106717,
+              "wasted_life_mean": 48.08832792202192,
+              "cost_by_ratio": {
+                "5": 0.09486166007905136,
+                "20": 0.09960474308300393,
+                "100": 0.12490118577075096
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.0782608695652174,
+              "wasted_life_mean": 36.68801576246616,
+              "cost_by_ratio": {
+                "5": 0.0782608695652174,
+                "20": 0.0782608695652174,
+                "100": 0.0782608695652174
+              }
+            },
+            "20": {
+              "late_rate": 0.0003162055335968379,
+              "early_rate": 0.08679841897233201,
+              "wasted_life_mean": 37.29899713438922,
+              "cost_by_ratio": {
+                "5": 0.0883794466403162,
+                "20": 0.09312252964426877,
+                "100": 0.1184189723320158
+              }
+            },
+            "30": {
+              "late_rate": 0.00015810276679841895,
+              "early_rate": 0.0833201581027668,
+              "wasted_life_mean": 42.277881686320434,
+              "cost_by_ratio": {
+                "5": 0.08411067193675889,
+                "20": 0.08648221343873518,
+                "100": 0.09913043478260869
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.08126482213438735,
+              "wasted_life_mean": 36.85144638904197,
+              "cost_by_ratio": {
+                "5": 0.08126482213438735,
+                "20": 0.08126482213438735,
+                "100": 0.08126482213438735
+              }
+            },
+            "20": {
+              "late_rate": 0.0003162055335968379,
+              "early_rate": 0.08837944664031619,
+              "wasted_life_mean": 37.41866182167095,
+              "cost_by_ratio": {
+                "5": 0.08996047430830038,
+                "20": 0.09470355731225295,
+                "100": 0.11999999999999998
+              }
+            },
+            "30": {
+              "late_rate": 0.00015810276679841895,
+              "early_rate": 0.08505928853754942,
+              "wasted_life_mean": 42.442949086756265,
+              "cost_by_ratio": {
+                "5": 0.08584980237154151,
+                "20": 0.0882213438735178,
+                "100": 0.10086956521739132
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.0015810276679841897,
+              "early_rate": 0.01660079051383399,
+              "wasted_life_mean": 30.293333333333333,
+              "cost_by_ratio": {
+                "5": 0.024505928853754938,
+                "20": 0.048221343873517786,
+                "100": 0.17470355731225296
+              }
+            },
+            "20": {
+              "late_rate": 0.0007905138339920949,
+              "early_rate": 0.06877470355731226,
+              "wasted_life_mean": 37.53575794690345,
+              "cost_by_ratio": {
+                "5": 0.07272727272727274,
+                "20": 0.08458498023715416,
+                "100": 0.14782608695652175
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.108300395256917,
+              "wasted_life_mean": 48.2478774509804,
+              "cost_by_ratio": {
+                "5": 0.108300395256917,
+                "20": 0.108300395256917,
+                "100": 0.108300395256917
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.002529644268774703,
+              "early_rate": 0.014071146245059287,
+              "wasted_life_mean": 36.888333333333335,
+              "cost_by_ratio": {
+                "5": 0.026719367588932803,
+                "20": 0.06466403162055336,
+                "100": 0.2670355731225296
+              }
+            },
+            "20": {
+              "late_rate": 0.0011067193675889327,
+              "early_rate": 0.06229249011857708,
+              "wasted_life_mean": 40.13874840912975,
+              "cost_by_ratio": {
+                "5": 0.06782608695652174,
+                "20": 0.08442687747035574,
+                "100": 0.17296442687747035
+              }
+            },
+            "30": {
+              "late_rate": 0.0004743083003952569,
+              "early_rate": 0.1043478260869565,
+              "wasted_life_mean": 48.976263292772636,
+              "cost_by_ratio": {
+                "5": 0.10671936758893279,
+                "20": 0.11383399209486164,
+                "100": 0.1517786561264822
+              }
+            }
+          }
+        }
+      },
+      "FD004": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.6725738396624472,
+              "wasted_life_mean": 79.4395485644668,
+              "cost_by_ratio": {
+                "5": 0.6725738396624472,
+                "20": 0.6725738396624472,
+                "100": 0.6725738396624472
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6928270042194093,
+              "wasted_life_mean": 78.26310037352206,
+              "cost_by_ratio": {
+                "5": 0.6928270042194093,
+                "20": 0.6928270042194093,
+                "100": 0.6928270042194093
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6556962025316455,
+              "wasted_life_mean": 72.37921736801226,
+              "cost_by_ratio": {
+                "5": 0.6556962025316455,
+                "20": 0.6556962025316455,
+                "100": 0.6556962025316455
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.740084388185654,
+              "wasted_life_mean": 81.79310836238089,
+              "cost_by_ratio": {
+                "5": 0.740084388185654,
+                "20": 0.740084388185654,
+                "100": 0.740084388185654
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6919831223628692,
+              "wasted_life_mean": 78.18731550992128,
+              "cost_by_ratio": {
+                "5": 0.6919831223628692,
+                "20": 0.6919831223628692,
+                "100": 0.6919831223628692
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6531645569620255,
+              "wasted_life_mean": 72.31155309668556,
+              "cost_by_ratio": {
+                "5": 0.6531645569620255,
+                "20": 0.6531645569620255,
+                "100": 0.6531645569620255
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7409282700421941,
+              "wasted_life_mean": 81.83415484085252,
+              "cost_by_ratio": {
+                "5": 0.7409282700421941,
+                "20": 0.7409282700421941,
+                "100": 0.7409282700421941
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6919831223628692,
+              "wasted_life_mean": 78.18731550992128,
+              "cost_by_ratio": {
+                "5": 0.6919831223628692,
+                "20": 0.6919831223628692,
+                "100": 0.6919831223628692
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6540084388185654,
+              "wasted_life_mean": 72.34124497343626,
+              "cost_by_ratio": {
+                "5": 0.6540084388185654,
+                "20": 0.6540084388185654,
+                "100": 0.6540084388185654
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.759493670886076,
+              "wasted_life_mean": 82.56111111111112,
+              "cost_by_ratio": {
+                "5": 0.759493670886076,
+                "20": 0.759493670886076,
+                "100": 0.759493670886076
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.70042194092827,
+              "wasted_life_mean": 78.47590361445783,
+              "cost_by_ratio": {
+                "5": 0.70042194092827,
+                "20": 0.70042194092827,
+                "100": 0.70042194092827
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6624472573839663,
+              "wasted_life_mean": 72.61146496815287,
+              "cost_by_ratio": {
+                "5": 0.6624472573839663,
+                "20": 0.6624472573839663,
+                "100": 0.6624472573839663
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.6767932489451477,
+              "wasted_life_mean": 79.72451248240493,
+              "cost_by_ratio": {
+                "5": 0.6767932489451477,
+                "20": 0.6767932489451477,
+                "100": 0.6767932489451477
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6945147679324896,
+              "wasted_life_mean": 78.29829393043875,
+              "cost_by_ratio": {
+                "5": 0.6945147679324896,
+                "20": 0.6945147679324896,
+                "100": 0.6945147679324896
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6548523206751055,
+              "wasted_life_mean": 72.37284179966325,
+              "cost_by_ratio": {
+                "5": 0.6548523206751055,
+                "20": 0.6548523206751055,
+                "100": 0.6548523206751055
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.00540084388185654,
+              "early_rate": 0.04945147679324895,
+              "wasted_life_mean": 36.75151753818936,
+              "cost_by_ratio": {
+                "5": 0.07645569620253165,
+                "20": 0.15746835443037976,
+                "100": 0.5895358649789029
+              }
+            },
+            "20": {
+              "late_rate": 0.002869198312236287,
+              "early_rate": 0.06936708860759493,
+              "wasted_life_mean": 45.49618451713255,
+              "cost_by_ratio": {
+                "5": 0.08371308016877636,
+                "20": 0.12675105485232066,
+                "100": 0.3562869198312236
+              }
+            },
+            "30": {
+              "late_rate": 0.002869198312236287,
+              "early_rate": 0.09654008438818565,
+              "wasted_life_mean": 51.59875911607849,
+              "cost_by_ratio": {
+                "5": 0.11088607594936709,
+                "20": 0.1539240506329114,
+                "100": 0.38345991561181436
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.0008438818565400844,
+              "early_rate": 0.07780590717299578,
+              "wasted_life_mean": 35.42105985364451,
+              "cost_by_ratio": {
+                "5": 0.0820253164556962,
+                "20": 0.09468354430379747,
+                "100": 0.1621940928270042
+              }
+            },
+            "20": {
+              "late_rate": 0.00270042194092827,
+              "early_rate": 0.06261603375527426,
+              "wasted_life_mean": 40.598495351054176,
+              "cost_by_ratio": {
+                "5": 0.0761181434599156,
+                "20": 0.11662447257383966,
+                "100": 0.33265822784810123
+              }
+            },
+            "30": {
+              "late_rate": 0.00540084388185654,
+              "early_rate": 0.06565400843881856,
+              "wasted_life_mean": 47.451643111824545,
+              "cost_by_ratio": {
+                "5": 0.09265822784810127,
+                "20": 0.17367088607594938,
+                "100": 0.6057383966244725
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0006751054852320675,
+              "early_rate": 0.08016877637130802,
+              "wasted_life_mean": 35.88383099462868,
+              "cost_by_ratio": {
+                "5": 0.08354430379746836,
+                "20": 0.09367088607594937,
+                "100": 0.14767932489451477
+              }
+            },
+            "20": {
+              "late_rate": 0.002362869198312236,
+              "early_rate": 0.06430379746835442,
+              "wasted_life_mean": 41.17823123934888,
+              "cost_by_ratio": {
+                "5": 0.0761181434599156,
+                "20": 0.11156118143459914,
+                "100": 0.30059071729957804
+              }
+            },
+            "30": {
+              "late_rate": 0.005569620253164555,
+              "early_rate": 0.06818565400843882,
+              "wasted_life_mean": 47.74398436420671,
+              "cost_by_ratio": {
+                "5": 0.0960337552742616,
+                "20": 0.1795780590717299,
+                "100": 0.6251476793248943
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.003375527426160337,
+              "early_rate": 0.05569620253164557,
+              "wasted_life_mean": 35.57230220759632,
+              "cost_by_ratio": {
+                "5": 0.07257383966244725,
+                "20": 0.12320675105485232,
+                "100": 0.39324894514767933
+              }
+            },
+            "20": {
+              "late_rate": 0.0016877637130801686,
+              "early_rate": 0.08101265822784812,
+              "wasted_life_mean": 44.29632034632034,
+              "cost_by_ratio": {
+                "5": 0.08945147679324895,
+                "20": 0.1147679324894515,
+                "100": 0.249789029535865
+              }
+            },
+            "30": {
+              "late_rate": 0.0008438818565400843,
+              "early_rate": 0.1021097046413502,
+              "wasted_life_mean": 51.06900284900285,
+              "cost_by_ratio": {
+                "5": 0.10632911392405063,
+                "20": 0.1189873417721519,
+                "100": 0.18649789029535863
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.0069198312236286915,
+              "early_rate": 0.044219409282700434,
+              "wasted_life_mean": 38.269009630891986,
+              "cost_by_ratio": {
+                "5": 0.07881856540084389,
+                "20": 0.18261603375527427,
+                "100": 0.7362025316455696
+              }
+            },
+            "20": {
+              "late_rate": 0.0032067510548523205,
+              "early_rate": 0.06717299578059072,
+              "wasted_life_mean": 46.05308243122398,
+              "cost_by_ratio": {
+                "5": 0.08320675105485231,
+                "20": 0.13130801687763713,
+                "100": 0.38784810126582275
+              }
+            },
+            "30": {
+              "late_rate": 0.00270042194092827,
+              "early_rate": 0.09468354430379748,
+              "wasted_life_mean": 51.568844116517,
+              "cost_by_ratio": {
+                "5": 0.10818565400843883,
+                "20": 0.14869198312236287,
+                "100": 0.3647257383966245
+              }
+            }
+          }
+        }
+      }
+    },
+    "Transformer": {
+      "FD002": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7264822134387352,
+              "wasted_life_mean": 79.9571925501779,
+              "cost_by_ratio": {
+                "5": 0.7264822134387352,
+                "20": 0.7264822134387352,
+                "100": 0.7264822134387352
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7011857707509881,
+              "wasted_life_mean": 75.63675490382784,
+              "cost_by_ratio": {
+                "5": 0.7011857707509881,
+                "20": 0.7011857707509881,
+                "100": 0.7011857707509881
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7581027667984189,
+              "wasted_life_mean": 81.35021815008727,
+              "cost_by_ratio": {
+                "5": 0.7581027667984189,
+                "20": 0.7581027667984189,
+                "100": 0.7581027667984189
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7035573122529645,
+              "wasted_life_mean": 75.73595505617978,
+              "cost_by_ratio": {
+                "5": 0.7035573122529645,
+                "20": 0.7035573122529645,
+                "100": 0.7035573122529645
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7573122529644268,
+              "wasted_life_mean": 81.31464912280703,
+              "cost_by_ratio": {
+                "5": 0.7573122529644268,
+                "20": 0.7573122529644268,
+                "100": 0.7573122529644268
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7035573122529645,
+              "wasted_life_mean": 75.73595505617978,
+              "cost_by_ratio": {
+                "5": 0.7035573122529645,
+                "20": 0.7035573122529645,
+                "100": 0.7035573122529645
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7470355731225297,
+              "wasted_life_mean": 80.85185185185185,
+              "cost_by_ratio": {
+                "5": 0.7470355731225297,
+                "20": 0.7470355731225297,
+                "100": 0.7470355731225297
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7035573122529645,
+              "wasted_life_mean": 75.73595505617978,
+              "cost_by_ratio": {
+                "5": 0.7035573122529645,
+                "20": 0.7035573122529645,
+                "100": 0.7035573122529645
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7296442687747036,
+              "wasted_life_mean": 80.08260336253304,
+              "cost_by_ratio": {
+                "5": 0.7296442687747036,
+                "20": 0.7296442687747036,
+                "100": 0.7296442687747036
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7011857707509881,
+              "wasted_life_mean": 75.63675490382784,
+              "cost_by_ratio": {
+                "5": 0.7011857707509881,
+                "20": 0.7011857707509881,
+                "100": 0.7011857707509881
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6521739130434783,
+              "wasted_life_mean": 69.68484848484849,
+              "cost_by_ratio": {
+                "5": 0.6521739130434783,
+                "20": 0.6521739130434783,
+                "100": 0.6521739130434783
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.0007905138339920947,
+              "early_rate": 0.00758893280632411,
+              "wasted_life_mean": 25.90942028985507,
+              "cost_by_ratio": {
+                "5": 0.011541501976284584,
+                "20": 0.023399209486166007,
+                "100": 0.08664031620553359
+              }
+            },
+            "20": {
+              "late_rate": 0.0022134387351778655,
+              "early_rate": 0.031146245059288535,
+              "wasted_life_mean": 35.75947496947497,
+              "cost_by_ratio": {
+                "5": 0.04221343873517786,
+                "20": 0.07541501976284584,
+                "100": 0.2524901185770751
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.08221343873517788,
+              "wasted_life_mean": 47.69959622551748,
+              "cost_by_ratio": {
+                "5": 0.08221343873517788,
+                "20": 0.08221343873517788,
+                "100": 0.08221343873517788
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.0716205533596838,
+              "wasted_life_mean": 37.48441249520883,
+              "cost_by_ratio": {
+                "5": 0.0716205533596838,
+                "20": 0.0716205533596838,
+                "100": 0.0716205533596838
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.08395256916996048,
+              "wasted_life_mean": 41.7537681694708,
+              "cost_by_ratio": {
+                "5": 0.08395256916996048,
+                "20": 0.08395256916996048,
+                "100": 0.08395256916996048
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.08964426877470354,
+              "wasted_life_mean": 44.38900427090987,
+              "cost_by_ratio": {
+                "5": 0.08964426877470354,
+                "20": 0.08964426877470354,
+                "100": 0.08964426877470354
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.06703557312252964,
+              "wasted_life_mean": 35.93132422610219,
+              "cost_by_ratio": {
+                "5": 0.06703557312252964,
+                "20": 0.06703557312252964,
+                "100": 0.06703557312252964
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.08316205533596838,
+              "wasted_life_mean": 41.44309121304952,
+              "cost_by_ratio": {
+                "5": 0.08316205533596838,
+                "20": 0.08316205533596838,
+                "100": 0.08316205533596838
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.09264822134387352,
+              "wasted_life_mean": 44.57688317988507,
+              "cost_by_ratio": {
+                "5": 0.09264822134387352,
+                "20": 0.09264822134387352,
+                "100": 0.09264822134387352
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.010276679841897233,
+              "wasted_life_mean": 28.983333333333338,
+              "cost_by_ratio": {
+                "5": 0.010276679841897233,
+                "20": 0.010276679841897233,
+                "100": 0.010276679841897233
+              }
+            },
+            "20": {
+              "late_rate": 0.0007905138339920949,
+              "early_rate": 0.039525691699604744,
+              "wasted_life_mean": 37.47358974358975,
+              "cost_by_ratio": {
+                "5": 0.043478260869565216,
+                "20": 0.05533596837944664,
+                "100": 0.11857707509881424
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.09249011857707509,
+              "wasted_life_mean": 47.40975757575758,
+              "cost_by_ratio": {
+                "5": 0.09249011857707509,
+                "20": 0.09249011857707509,
+                "100": 0.09249011857707509
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.0009486166007905138,
+              "early_rate": 0.008221343873517787,
+              "wasted_life_mean": 26.2280303030303,
+              "cost_by_ratio": {
+                "5": 0.012964426877470354,
+                "20": 0.027193675889328063,
+                "100": 0.10308300395256917
+              }
+            },
+            "20": {
+              "late_rate": 0.0017391304347826085,
+              "early_rate": 0.03715415019762846,
+              "wasted_life_mean": 37.33160556110556,
+              "cost_by_ratio": {
+                "5": 0.0458498023715415,
+                "20": 0.07193675889328063,
+                "100": 0.21106719367588933
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.09470355731225297,
+              "wasted_life_mean": 49.45225081713091,
+              "cost_by_ratio": {
+                "5": 0.09470355731225297,
+                "20": 0.09470355731225297,
+                "100": 0.09470355731225297
+              }
+            }
+          }
+        }
+      },
+      "FD004": {
+        "drift5pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.6464135021097046,
+              "wasted_life_mean": 78.11224382669985,
+              "cost_by_ratio": {
+                "5": 0.6464135021097046,
+                "20": 0.6464135021097046,
+                "100": 0.6464135021097046
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6827004219409283,
+              "wasted_life_mean": 77.8536653426152,
+              "cost_by_ratio": {
+                "5": 0.6827004219409283,
+                "20": 0.6827004219409283,
+                "100": 0.6827004219409283
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6565400843881857,
+              "wasted_life_mean": 72.41278660527618,
+              "cost_by_ratio": {
+                "5": 0.6565400843881857,
+                "20": 0.6565400843881857,
+                "100": 0.6565400843881857
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.0008438818565400843,
+              "early_rate": 0.7518987341772151,
+              "wasted_life_mean": 82.45225299580456,
+              "cost_by_ratio": {
+                "5": 0.7561181434599155,
+                "20": 0.7687763713080168,
+                "100": 0.8362869198312235
+              }
+            },
+            "20": {
+              "late_rate": 0.0008438818565400843,
+              "early_rate": 0.6962025316455696,
+              "wasted_life_mean": 78.50557619405579,
+              "cost_by_ratio": {
+                "5": 0.7004219409282699,
+                "20": 0.7130801687763713,
+                "100": 0.780590717299578
+              }
+            },
+            "30": {
+              "late_rate": 0.0008438818565400843,
+              "early_rate": 0.6556962025316455,
+              "wasted_life_mean": 72.43967770136615,
+              "cost_by_ratio": {
+                "5": 0.6599156118143459,
+                "20": 0.6725738396624472,
+                "100": 0.7400843881856539
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7375527426160338,
+              "wasted_life_mean": 81.79179157945431,
+              "cost_by_ratio": {
+                "5": 0.7375527426160338,
+                "20": 0.7375527426160338,
+                "100": 0.7375527426160338
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.6911392405063291,
+              "wasted_life_mean": 78.22062811540486,
+              "cost_by_ratio": {
+                "5": 0.6911392405063291,
+                "20": 0.6911392405063291,
+                "100": 0.6911392405063291
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6531645569620254,
+              "wasted_life_mean": 72.33040083907599,
+              "cost_by_ratio": {
+                "5": 0.6531645569620254,
+                "20": 0.6531645569620254,
+                "100": 0.6531645569620254
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.7172995780590717,
+              "wasted_life_mean": 81.05294117647058,
+              "cost_by_ratio": {
+                "5": 0.7172995780590717,
+                "20": 0.7172995780590717,
+                "100": 0.7172995780590717
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.7046413502109705,
+              "wasted_life_mean": 78.63473053892216,
+              "cost_by_ratio": {
+                "5": 0.7046413502109705,
+                "20": 0.7046413502109705,
+                "100": 0.7046413502109705
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6624472573839663,
+              "wasted_life_mean": 72.61146496815287,
+              "cost_by_ratio": {
+                "5": 0.6624472573839663,
+                "20": 0.6624472573839663,
+                "100": 0.6624472573839663
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.649789029535865,
+              "wasted_life_mean": 78.16247052324482,
+              "cost_by_ratio": {
+                "5": 0.649789029535865,
+                "20": 0.649789029535865,
+                "100": 0.649789029535865
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.680168776371308,
+              "wasted_life_mean": 77.74222153604748,
+              "cost_by_ratio": {
+                "5": 0.680168776371308,
+                "20": 0.680168776371308,
+                "100": 0.680168776371308
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.6548523206751055,
+              "wasted_life_mean": 72.39067006676335,
+              "cost_by_ratio": {
+                "5": 0.6548523206751055,
+                "20": 0.6548523206751055,
+                "100": 0.6548523206751055
+              }
+            }
+          }
+        },
+        "gaussian1pct": {
+          "NLL": {
+            "10": {
+              "late_rate": 0.00033755274261603374,
+              "early_rate": 0.04,
+              "wasted_life_mean": 35.65264020190336,
+              "cost_by_ratio": {
+                "5": 0.04168776371308017,
+                "20": 0.04675105485232067,
+                "100": 0.07375527426160337
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.05113924050632911,
+              "wasted_life_mean": 44.2666094894098,
+              "cost_by_ratio": {
+                "5": 0.05113924050632911,
+                "20": 0.05113924050632911,
+                "100": 0.05113924050632911
+              }
+            },
+            "30": {
+              "late_rate": 0.0010126582278481011,
+              "early_rate": 0.0779746835443038,
+              "wasted_life_mean": 47.872291161993004,
+              "cost_by_ratio": {
+                "5": 0.0830379746835443,
+                "20": 0.09822784810126582,
+                "100": 0.17924050632911392
+              }
+            }
+          },
+          "MSE_fixed": {
+            "10": {
+              "late_rate": 0.00033755274261603374,
+              "early_rate": 0.0751054852320675,
+              "wasted_life_mean": 35.2832980225978,
+              "cost_by_ratio": {
+                "5": 0.07679324894514768,
+                "20": 0.08185654008438818,
+                "100": 0.10886075949367088
+              }
+            },
+            "20": {
+              "late_rate": 0.0005063291139240506,
+              "early_rate": 0.06565400843881858,
+              "wasted_life_mean": 42.36244346606266,
+              "cost_by_ratio": {
+                "5": 0.06818565400843883,
+                "20": 0.07578059071729959,
+                "100": 0.11628691983122363
+              }
+            },
+            "30": {
+              "late_rate": 0.002869198312236286,
+              "early_rate": 0.07172995780590717,
+              "wasted_life_mean": 47.0742508726224,
+              "cost_by_ratio": {
+                "5": 0.0860759493670886,
+                "20": 0.12911392405063288,
+                "100": 0.3586497890295358
+              }
+            }
+          },
+          "MC_Dropout_fixed": {
+            "10": {
+              "late_rate": 0.0005063291139240506,
+              "early_rate": 0.05670886075949367,
+              "wasted_life_mean": 32.67525443184267,
+              "cost_by_ratio": {
+                "5": 0.05924050632911392,
+                "20": 0.06683544303797467,
+                "100": 0.10734177215189872
+              }
+            },
+            "20": {
+              "late_rate": 0.0006751054852320675,
+              "early_rate": 0.051645569620253164,
+              "wasted_life_mean": 38.66746260172577,
+              "cost_by_ratio": {
+                "5": 0.0550210970464135,
+                "20": 0.06514767932489451,
+                "100": 0.11915611814345992
+              }
+            },
+            "30": {
+              "late_rate": 0.002869198312236287,
+              "early_rate": 0.06329113924050633,
+              "wasted_life_mean": 44.9406534607807,
+              "cost_by_ratio": {
+                "5": 0.07763713080168777,
+                "20": 0.12067510548523208,
+                "100": 0.350210970464135
+              }
+            }
+          },
+          "Deep_Ensemble": {
+            "10": {
+              "late_rate": 0.0,
+              "early_rate": 0.05063291139240507,
+              "wasted_life_mean": 37.05814185814186,
+              "cost_by_ratio": {
+                "5": 0.05063291139240507,
+                "20": 0.05063291139240507,
+                "100": 0.05063291139240507
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.06160337552742616,
+              "wasted_life_mean": 45.00482938114517,
+              "cost_by_ratio": {
+                "5": 0.06160337552742616,
+                "20": 0.06160337552742616,
+                "100": 0.06160337552742616
+              }
+            },
+            "30": {
+              "late_rate": 0.0,
+              "early_rate": 0.0919831223628692,
+              "wasted_life_mean": 50.0608888888889,
+              "cost_by_ratio": {
+                "5": 0.0919831223628692,
+                "20": 0.0919831223628692,
+                "100": 0.0919831223628692
+              }
+            }
+          },
+          "CP_norm": {
+            "10": {
+              "late_rate": 0.00033755274261603374,
+              "early_rate": 0.04523206751054852,
+              "wasted_life_mean": 36.25374368029631,
+              "cost_by_ratio": {
+                "5": 0.04691983122362869,
+                "20": 0.0519831223628692,
+                "100": 0.07898734177215189
+              }
+            },
+            "20": {
+              "late_rate": 0.0,
+              "early_rate": 0.05350210970464135,
+              "wasted_life_mean": 44.824090601186256,
+              "cost_by_ratio": {
+                "5": 0.05350210970464135,
+                "20": 0.05350210970464135,
+                "100": 0.05350210970464135
+              }
+            },
+            "30": {
+              "late_rate": 0.001181434599156118,
+              "early_rate": 0.0810126582278481,
+              "wasted_life_mean": 47.86976439641401,
+              "cost_by_ratio": {
+                "5": 0.08691983122362869,
+                "20": 0.10464135021097046,
+                "100": 0.1991561181434599
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

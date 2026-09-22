@@ -1,0 +1,250 @@
+{
+  "FD001": {
+    "LSTM": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 15.12287160545418,
+          "picp": 0.8640000000000001,
+          "interval_score_mean": 66.7594649887085,
+          "premature_rate_L20": 0.0
+        },
+        "RULminus1_train_convention": {
+          "rmse": 15.420806858551156,
+          "picp": 0.8639999999999999,
+          "interval_score_mean": 67.74316106414796,
+          "premature_rate_L20": 0.0
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 24.785572327706927,
+          "picp": 0.628,
+          "interval_score_mean": 169.6929989318848,
+          "premature_rate_L20": 0.026000000000000002
+        },
+        "RULminus1_train_convention": {
+          "rmse": 24.29438839045024,
+          "picp": 0.6439999999999999,
+          "interval_score_mean": 164.34740293884278,
+          "premature_rate_L20": 0.026000000000000002
+        }
+      }
+    },
+    "Transformer": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 14.332701431884185,
+          "picp": 0.8859999999999999,
+          "interval_score_mean": 65.35031591415405,
+          "premature_rate_L20": 0.0
+        },
+        "RULminus1_train_convention": {
+          "rmse": 14.581133434957337,
+          "picp": 0.8800000000000001,
+          "interval_score_mean": 65.91135049057007,
+          "premature_rate_L20": 0.0
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 24.391786764443854,
+          "picp": 0.608,
+          "interval_score_mean": 147.08531382369998,
+          "premature_rate_L20": 0.024
+        },
+        "RULminus1_train_convention": {
+          "rmse": 23.843148116063503,
+          "picp": 0.642,
+          "interval_score_mean": 141.39396384048462,
+          "premature_rate_L20": 0.024
+        }
+      }
+    }
+  },
+  "FD002": {
+    "LSTM": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 16.36743320371599,
+          "picp": 0.917786561264822,
+          "interval_score_mean": 61.96064953709779,
+          "premature_rate_L20": 0.03715415019762845
+        },
+        "RULminus1_train_convention": {
+          "rmse": 16.472333980358304,
+          "picp": 0.9130434782608695,
+          "interval_score_mean": 62.41082557708379,
+          "premature_rate_L20": 0.03715415019762845
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 76.8498882712948,
+          "picp": 0.028458498023715417,
+          "interval_score_mean": 1158.278383226357,
+          "premature_rate_L20": 0.6996047430830039
+        },
+        "RULminus1_train_convention": {
+          "rmse": 76.27907942073145,
+          "picp": 0.04189723320158103,
+          "interval_score_mean": 1143.5956322123411,
+          "premature_rate_L20": 0.6956521739130435
+        }
+      }
+    },
+    "Transformer": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 15.85681431651189,
+          "picp": 0.883794466403162,
+          "interval_score_mean": 65.06676148878256,
+          "premature_rate_L20": 0.015019762845849802
+        },
+        "RULminus1_train_convention": {
+          "rmse": 15.897295930019443,
+          "picp": 0.891699604743083,
+          "interval_score_mean": 64.8019897611716,
+          "premature_rate_L20": 0.015019762845849802
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 80.56663505723341,
+          "picp": 0.022134387351778657,
+          "interval_score_mean": 1234.148588727868,
+          "premature_rate_L20": 0.7011857707509881
+        },
+        "RULminus1_train_convention": {
+          "rmse": 79.98315803972511,
+          "picp": 0.028458498023715417,
+          "interval_score_mean": 1219.2338204048367,
+          "premature_rate_L20": 0.6972332015810276
+        }
+      }
+    }
+  },
+  "FD003": {
+    "LSTM": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 13.676079626095799,
+          "picp": 0.858,
+          "interval_score_mean": 61.066093063354494,
+          "premature_rate_L20": 0.0
+        },
+        "RULminus1_train_convention": {
+          "rmse": 13.98384007004555,
+          "picp": 0.858,
+          "interval_score_mean": 62.797977981567385,
+          "premature_rate_L20": 0.0
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 41.9713274468959,
+          "picp": 0.186,
+          "interval_score_mean": 500.07758025741566,
+          "premature_rate_L20": 0.154
+        },
+        "RULminus1_train_convention": {
+          "rmse": 41.34598497434966,
+          "picp": 0.21400000000000002,
+          "interval_score_mean": 487.173381099701,
+          "premature_rate_L20": 0.138
+        }
+      }
+    },
+    "Transformer": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 14.021639128158878,
+          "picp": 0.8700000000000001,
+          "interval_score_mean": 62.19769696426391,
+          "premature_rate_L20": 0.0
+        },
+        "RULminus1_train_convention": {
+          "rmse": 14.271637023073632,
+          "picp": 0.8699999999999999,
+          "interval_score_mean": 63.451571918487545,
+          "premature_rate_L20": 0.0
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 45.76425868462716,
+          "picp": 0.08,
+          "interval_score_mean": 588.7064863395691,
+          "premature_rate_L20": 0.194
+        },
+        "RULminus1_train_convention": {
+          "rmse": 45.12324514348577,
+          "picp": 0.09600000000000002,
+          "interval_score_mean": 573.7832340011596,
+          "premature_rate_L20": 0.17400000000000002
+        }
+      }
+    }
+  },
+  "FD004": {
+    "LSTM": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 19.79629220736698,
+          "picp": 0.8919831223628693,
+          "interval_score_mean": 79.57865286235567,
+          "premature_rate_L20": 0.04725738396624472
+        },
+        "RULminus1_train_convention": {
+          "rmse": 20.07798889378335,
+          "picp": 0.8818565400843881,
+          "interval_score_mean": 80.70194388119982,
+          "premature_rate_L20": 0.03881856540084388
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 66.20848828107395,
+          "picp": 0.1848101265822785,
+          "interval_score_mean": 776.6706088504711,
+          "premature_rate_L20": 0.6928270042194093
+        },
+        "RULminus1_train_convention": {
+          "rmse": 65.68404507874155,
+          "picp": 0.19578059071729959,
+          "interval_score_mean": 765.5162363543288,
+          "premature_rate_L20": 0.6801687763713081
+        }
+      }
+    },
+    "Transformer": {
+      "clean": {
+        "official_RUL_current": {
+          "rmse": 18.165551520799614,
+          "picp": 0.8565400843881857,
+          "interval_score_mean": 83.62406581926949,
+          "premature_rate_L20": 0.0379746835443038
+        },
+        "RULminus1_train_convention": {
+          "rmse": 18.29826979198426,
+          "picp": 0.8573839662447258,
+          "interval_score_mean": 84.11373526496726,
+          "premature_rate_L20": 0.028691983122362867
+        }
+      },
+      "drift5pct": {
+        "official_RUL_current": {
+          "rmse": 75.12818428136059,
+          "picp": 0.0810126582278481,
+          "interval_score_mean": 1081.6012215513722,
+          "premature_rate_L20": 0.6827004219409283
+        },
+        "RULminus1_train_convention": {
+          "rmse": 74.57864811750088,
+          "picp": 0.08354430379746836,
+          "interval_score_mean": 1068.6050648749629,
+          "premature_rate_L20": 0.670042194092827
+        }
+      }
+    }
+  }
+}

@@ -224,9 +224,12 @@ if __name__ == '__main__':
         print(f"\n{'=' * 20} {ds} {'=' * 20}")
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
         scalers_by_seed = PA.scalers_for_ds(ds)
         if ds in ('FD002', 'FD004'):
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
+            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
         else:
             km, cond_std = None, None
             global_std = np.std(train_df_raw[feat_cols].values, axis=0)

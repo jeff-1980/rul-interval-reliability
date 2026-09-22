@@ -87,6 +87,23 @@ def fit_fullscale_range(train_df_raw, feature_cols):
     return vals.max(axis=0) - vals.min(axis=0)
 
 
+def sensor_only_scale(feature_cols, scale):
+    """R8-B1：把一个逐通道噪声/漂移/偏置/增益尺度数组（full_scale_range /
+    global_std / cond_std[c]）在"工况设定"列上置零，使下游 inject_* 函数
+    不再对这些列注入任何扰动——工况设定是指令量（commanded operating
+    regime），不是传感器读数，物理上不该被"传感器退化"污染。R8-A1 诊断
+    已确认：把FD002/FD004的扰动限制到只剩15个传感器列，L=20提前触发率
+    与当前(18列联合)口径同量级（比值0.79-1.00，远不到"减半"），不是本
+    结论的成因，但仍是应该修的口径问题。FD001/FD003 的 feature_cols 本来
+    就不含工况设定列，这里是no-op，不受影响。不改动任何 inject_* 函数
+    本身，也不改动 fit_fullscale_range/fit_condition_model 本身（那两个
+    函数的原始、未过滤输出仍用于 R8-B4 的"18维联合扰动"对照）。"""
+    is_setting = np.array([c in C.SETTING_NAMES for c in feature_cols])
+    scale = np.array(scale, dtype=np.float64, copy=True)
+    scale[..., is_setting] = 0.0
+    return scale
+
+
 def inject_noise(test_df_raw, feature_cols, scaler, snr_db, rng, scheme,
                   global_std=None, km=None, cond_std=None):
     """scheme: 'global' (train-set pooled std, 臂B) or 'per_condition' (train-set per-cluster std, 臂A)"""
@@ -195,10 +212,10 @@ def extract_raw_windows(test_df_raw, feature_cols, true_ruls, mode='test'):
             continue
         if mode == 'test':
             X_list.append(unit_data[-C.SEQUENCE_LENGTH:])
-            y_list.append(min(true_ruls.iloc[unit - 1].item(), C.MAX_RUL))
+            y_list.append(min(true_ruls.iloc[unit - 1].item() - 1, C.MAX_RUL))  # R8-B2, see common.create_sequences
             u_list.append(unit)
         elif mode == 'full_trajectory':
-            rul_at_last_row = min(true_ruls.iloc[unit - 1].item(), C.MAX_RUL)
+            rul_at_last_row = min(true_ruls.iloc[unit - 1].item() - 1, C.MAX_RUL)  # R8-B2
             last_row_idx = n - 1
             for i in range(n - C.SEQUENCE_LENGTH + 1):
                 end_row_idx = i + C.SEQUENCE_LENGTH - 1

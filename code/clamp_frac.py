@@ -74,7 +74,7 @@ def run_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct,
                 cp_ls_pool.append(ls_c)
                 # 2026-09-21（本轮）：此前只在 seed==C.SEEDS[0] 时记一次，且用整段轨迹
                 # scaled_feat——同一类此前漏掉的旧bug，见 threshold_crossover_refinement.py
-                # refinement.py 同日同条注释。改成5个seed各自在窗口化X_test上算，取平均。
+                # 同日同条注释。改成5个seed各自在窗口化X_test上算，取平均。
                 fo_this_trial_per_seed.append(float(np.mean((X_test < -1.0) | (X_test > 1.0))))
             feat_oob_trials.append(float(np.mean(fo_this_trial_per_seed)))
 
@@ -108,6 +108,7 @@ if __name__ == '__main__':
             _, _, _, _, scaler = V4.load_raw_train_test_and_scaler_leakfree(ds, fit_units)
             scalers_by_seed[seed] = scaler
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
 
         if ds == 'FD001':
             print("  --- arm B_pooled (single condition, A==B) ---")
@@ -117,6 +118,8 @@ if __name__ == '__main__':
             main_results[ds] = {'A_percondition': r, 'B_pooled': r}
         else:
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
+            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
             print("  --- arm A_percondition ---")
             ra = run_arm(ds, 'A_percondition', test_df_raw, true_ruls, feat_cols, device, SNR_LEVELS_ALL,
                          is_pct=False, km=km, cond_std=cond_std, scalers_by_seed=scalers_by_seed)

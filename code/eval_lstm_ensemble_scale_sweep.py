@@ -1,7 +1,7 @@
 """
 STEP 2d：集成规模扫描 M∈{2,3,5,10}，leakfree协议，15-seed池（5原始+10额外）。
 
-与 an earlier version of this sweep (not included; superseded) 同一 disjoint 分组/臂A噪声注入逻辑，
+与本脚本的历史（非leakfree协议）版本同一 disjoint 分组/臂A噪声注入逻辑，
 唯一区别：checkpoint来自 checkpoints_leakfree/，且组内每个成员用**自己的**
 canonical fit_units scaler（leakfree下scaler逐seed不同，组内不能共享一份
 scaler）。噪声本身（原始未标准化的扰动）在一个snr/trial内跨组内全部成员
@@ -82,6 +82,8 @@ if __name__ == '__main__':
             scheme = 'global'
         else:
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
+            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
             scheme = 'per_condition'
 
         # per-seed leakfree scaler for all 15 seeds

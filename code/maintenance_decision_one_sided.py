@@ -122,6 +122,7 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw_probe, _, _, feat_cols_probe, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw_probe, feat_cols_probe)
+            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)  # R8-B1
 
             scalers_by_seed = {}
             aleatory_var_by_seed = {}

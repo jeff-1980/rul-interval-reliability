@@ -48,6 +48,7 @@ if __name__ == '__main__':
 
     train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(DS)
     full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
+    full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
     X_raw_clean, y_ref, _ = V4.extract_raw_windows(test_df_raw, feat_cols, true_ruls, mode='test')
 
     result = {}
