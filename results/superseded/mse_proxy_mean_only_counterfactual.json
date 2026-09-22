@@ -1,0 +1,92 @@
+{
+  "FD001": {
+    "NLL": {
+      "crossover_feat_oob": 0.016894546456334508,
+      "picp_clean_method": 0.9272000000000001,
+      "picp_clean_MSE_baseline": 0.8852000000000001,
+      "picp_MSE_interp_at_crossover": 0.7747914825746143,
+      "MSE_interpolation_extrapolated_beyond_measured_range": false,
+      "delta_picp_total": 0.1272000000000001,
+      "delta_picp_mu_only_MSE_proxy": 0.11040851742538582,
+      "delta_picp_clamp_excess": 0.01679148257461427,
+      "clamp_contribution_fraction": 0.13200851080671586,
+      "n_grid_points_for_correlation": 16,
+      "excess_vs_clampfrac_pearson_r": 0.976586357239901,
+      "excess_vs_clampfrac_pearson_p": 9.723029045390552e-11
+    },
+    "CP_norm": {
+      "crossover_feat_oob": 0.011785198983266743,
+      "picp_clean_method": 0.9120000000000001,
+      "picp_clean_MSE_baseline": 0.8852000000000001,
+      "picp_MSE_interp_at_crossover": 0.7881679550203093,
+      "MSE_interpolation_extrapolated_beyond_measured_range": false,
+      "delta_picp_total": 0.1120000000000001,
+      "delta_picp_mu_only_MSE_proxy": 0.09703204497969076,
+      "delta_picp_clamp_excess": 0.014967955020309343,
+      "clamp_contribution_fraction": 0.13364245553847615,
+      "n_grid_points_for_correlation": 16,
+      "excess_vs_clampfrac_pearson_r": 0.959415906512619,
+      "excess_vs_clampfrac_pearson_p": 4.366964993380391e-09
+    }
+  },
+  "FD002": {
+    "NLL": {
+      "crossover_feat_oob": 0.015781982104106168,
+      "picp_clean_method": 0.9304347826086956,
+      "picp_clean_MSE_baseline": 0.8790513833992095,
+      "picp_MSE_interp_at_crossover": 0.8044877031214439,
+      "MSE_interpolation_extrapolated_beyond_measured_range": false,
+      "delta_picp_total": 0.13043478260869557,
+      "delta_picp_mu_only_MSE_proxy": 0.07456368027776561,
+      "delta_picp_clamp_excess": 0.055871102330929956,
+      "clamp_contribution_fraction": 0.42834511787046325,
+      "n_grid_points_for_correlation": 26,
+      "excess_vs_clampfrac_pearson_r": 0.903677823895082,
+      "excess_vs_clampfrac_pearson_p": 2.5553824383616967e-10
+    },
+    "CP_norm": {
+      "crossover_feat_oob": 0.015627418347825363,
+      "picp_clean_method": 0.9272727272727272,
+      "picp_clean_MSE_baseline": 0.8790513833992095,
+      "picp_MSE_interp_at_crossover": 0.8068023782069764,
+      "MSE_interpolation_extrapolated_beyond_measured_range": false,
+      "delta_picp_total": 0.1272727272727272,
+      "delta_picp_mu_only_MSE_proxy": 0.0722490051922331,
+      "delta_picp_clamp_excess": 0.05502372208049411,
+      "clamp_contribution_fraction": 0.4323292449181682,
+      "n_grid_points_for_correlation": 26,
+      "excess_vs_clampfrac_pearson_r": 0.9197919949082406,
+      "excess_vs_clampfrac_pearson_p": 3.092373715868324e-11
+    }
+  },
+  "FD004": {
+    "NLL": {
+      "crossover_feat_oob": 0.008506658311201525,
+      "picp_clean_method": 0.8962025316455697,
+      "picp_clean_MSE_baseline": 0.8438818565400844,
+      "picp_MSE_interp_at_crossover": 0.762379785769923,
+      "MSE_interpolation_extrapolated_beyond_measured_range": false,
+      "delta_picp_total": 0.09620253164556969,
+      "delta_picp_mu_only_MSE_proxy": 0.08150207077016136,
+      "delta_picp_clamp_excess": 0.014700460875408328,
+      "clamp_contribution_fraction": 0.15280742225753383,
+      "n_grid_points_for_correlation": 26,
+      "excess_vs_clampfrac_pearson_r": 0.8452157220552083,
+      "excess_vs_clampfrac_pearson_p": 5.535729579480503e-08
+    },
+    "CP_norm": {
+      "crossover_feat_oob": 0.007844591149990589,
+      "picp_clean_method": 0.8725738396624472,
+      "picp_clean_MSE_baseline": 0.8438818565400844,
+      "picp_MSE_interp_at_crossover": 0.7748557823808527,
+      "MSE_interpolation_extrapolated_beyond_measured_range": false,
+      "delta_picp_total": 0.07257383966244713,
+      "delta_picp_mu_only_MSE_proxy": 0.06902607415923168,
+      "delta_picp_clamp_excess": 0.00354776550321545,
+      "clamp_contribution_fraction": 0.04888490838732925,
+      "n_grid_points_for_correlation": 26,
+      "excess_vs_clampfrac_pearson_r": 0.9199307028982652,
+      "excess_vs_clampfrac_pearson_p": 3.031017181634587e-11
+    }
+  }
+}

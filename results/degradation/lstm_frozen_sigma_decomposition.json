@@ -1,0 +1,68 @@
+{
+  "FD001": {
+    "NLL": {
+      "crossover_feat_oob": 0.00252563909774436,
+      "picp_clean_real": 0.8639999999999999,
+      "picp_clean_frozen_sigma_counterfactual": 0.8639999999999999,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.8209263157894736,
+      "delta_picp_total": 0.06399999999999983,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.043073684210526264,
+      "delta_picp_sigma_contribution": 0.02092631578947357,
+      "sigma_contribution_fraction": 0.32697368421052536
+    },
+    "CP_norm": {
+      "crossover_feat_oob": 0.004494103222127196,
+      "picp_clean_real": 0.894,
+      "picp_clean_frozen_sigma_counterfactual": 0.894,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.816855089820359,
+      "delta_picp_total": 0.09399999999999997,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.07714491017964098,
+      "delta_picp_sigma_contribution": 0.016855089820358993,
+      "sigma_contribution_fraction": 0.1793094661740319
+    }
+  },
+  "FD002": {
+    "NLL": {
+      "crossover_feat_oob": 0.01546228101070976,
+      "picp_clean_real": 0.9177865612648222,
+      "picp_clean_frozen_sigma_counterfactual": 0.9177865612648222,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.8126286541697649,
+      "delta_picp_total": 0.11778656126482212,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.10515790709505723,
+      "delta_picp_sigma_contribution": 0.012628654169764886,
+      "sigma_contribution_fraction": 0.10721642634062135
+    },
+    "CP_norm": {
+      "crossover_feat_oob": 0.016132111164085448,
+      "picp_clean_real": 0.9343873517786563,
+      "picp_clean_frozen_sigma_counterfactual": 0.9343873517786563,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.8185300133802926,
+      "delta_picp_total": 0.13438735177865624,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.11585733839836365,
+      "delta_picp_sigma_contribution": 0.018530013380292587,
+      "sigma_contribution_fraction": 0.13788509956511824
+    }
+  },
+  "FD004": {
+    "NLL": {
+      "crossover_feat_oob": 0.011443200466916457,
+      "picp_clean_real": 0.8919831223628693,
+      "picp_clean_frozen_sigma_counterfactual": 0.8919831223628693,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.7887470480923121,
+      "delta_picp_total": 0.09198312236286921,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.10323607427055714,
+      "delta_picp_sigma_contribution": -0.011252951907687936,
+      "sigma_contribution_fraction": -0.1223371377120202
+    },
+    "CP_norm": {
+      "crossover_feat_oob": 0.010840889852581123,
+      "picp_clean_real": 0.8894514767932491,
+      "picp_clean_frozen_sigma_counterfactual": 0.8894514767932491,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.7915312939521802,
+      "delta_picp_total": 0.08945147679324905,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.09792018284106885,
+      "delta_picp_sigma_contribution": -0.008468706047819796,
+      "sigma_contribution_fraction": -0.0946737421383627
+    }
+  }
+}

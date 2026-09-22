@@ -1,0 +1,21 @@
+{
+  "FD003": {
+    "method": "deep_ensemble",
+    "M": 5,
+    "variant": "option_A_single_ensemble_no_seed_variance_leakfree",
+    "rmse": 12.759228526743152,
+    "score": 315.9531728092187,
+    "picp": 0.91,
+    "mpiw": 40.631229400634766,
+    "ece": 0.09315789473684206,
+    "latency_ms_per_sample": 2.627863883972168,
+    "member_seeds": [
+      42,
+      2024,
+      7,
+      888,
+      123
+    ],
+    "note": "each member scaled by its OWN seed-specific fit_units scaler (leakfree protocol)"
+  }
+}

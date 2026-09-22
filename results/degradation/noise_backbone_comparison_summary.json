@@ -1,0 +1,117 @@
+{
+  "variance_sign_agreement": "6/8",
+  "halflife_ordering_agreement": "0/4",
+  "per_dataset_ordering": {
+    "FD001": {
+      "t2_order": [
+        "MC_Dropout_fixed",
+        "MSE_fixed",
+        "CP_norm",
+        "NLL",
+        "Deep_Ensemble"
+      ],
+      "lstm_order": [
+        "NLL",
+        "CP_norm",
+        "Deep_Ensemble",
+        "MSE_fixed",
+        "MC_Dropout_fixed"
+      ],
+      "identical": false
+    },
+    "FD002": {
+      "t2_order": [
+        "NLL",
+        "CP_norm",
+        "Deep_Ensemble",
+        "MSE_fixed",
+        "MC_Dropout_fixed"
+      ],
+      "lstm_order": [
+        "CP_norm",
+        "Deep_Ensemble",
+        "NLL",
+        "MSE_fixed",
+        "MC_Dropout_fixed"
+      ],
+      "identical": false
+    },
+    "FD003": {
+      "t2_order": [
+        "NLL",
+        "CP_norm",
+        "MSE_fixed",
+        "MC_Dropout_fixed",
+        "Deep_Ensemble"
+      ],
+      "lstm_order": [
+        "MSE_fixed",
+        "MC_Dropout_fixed",
+        "NLL",
+        "CP_norm",
+        "Deep_Ensemble"
+      ],
+      "identical": false
+    },
+    "FD004": {
+      "t2_order": [
+        "NLL",
+        "CP_norm",
+        "MSE_fixed",
+        "Deep_Ensemble",
+        "MC_Dropout_fixed"
+      ],
+      "lstm_order": [
+        "MSE_fixed",
+        "MC_Dropout_fixed",
+        "CP_norm",
+        "NLL",
+        "Deep_Ensemble"
+      ],
+      "identical": false
+    }
+  },
+  "lstm_relative_decomposition_recomputed": {
+    "FD001": {
+      "NLL": {
+        "crossover_feat_oob_relative": 0.006205137596402111,
+        "sigma_contribution_fraction": 0.3688282828282808
+      },
+      "CP_norm": {
+        "crossover_feat_oob_relative": 0.007011565676593322,
+        "sigma_contribution_fraction": 0.34793782383419575
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "crossover_feat_oob_relative": 0.015142125493640104,
+        "sigma_contribution_fraction": 0.07598248625916738
+      },
+      "CP_norm": {
+        "crossover_feat_oob_relative": 0.014995309215838172,
+        "sigma_contribution_fraction": 0.07984189723320047
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "crossover_feat_oob_relative": 0.013209680226200454,
+        "sigma_contribution_fraction": -0.11463931109124029
+      },
+      "CP_norm": {
+        "crossover_feat_oob_relative": 0.013001704757776606,
+        "sigma_contribution_fraction": -0.15613244654222982
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "crossover_feat_oob_relative": 0.004247952204044651,
+        "sigma_contribution_fraction": -0.023862068965517798
+      },
+      "CP_norm": {
+        "crossover_feat_oob_relative": 0.004298892666943072,
+        "sigma_contribution_fraction": 0.05600000000000051
+      }
+    }
+  },
+  "note": "LSTM frozen-sigma decomposition recomputed at relative threshold in this script for apples-to-apples comparison; pre-existing frozen_sigma_decomposition_leakfree.json uses absolute threshold despite paper caption saying relative -- flagged to user separately."
+}

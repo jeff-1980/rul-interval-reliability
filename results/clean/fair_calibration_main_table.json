@@ -1,0 +1,198 @@
+{
+  "LSTM": {
+    "FD001": {
+      "MSE_fixed": {
+        "picp_mean": 0.8700000000000001,
+        "picp_std": 0.042426406871192854,
+        "mpiw_mean": 47.82411422729492,
+        "mpiw_std": 3.563956591649887,
+        "ece_mean": 0.07189473684210525,
+        "ece_std": 0.023776428654379227,
+        "per_engine_compliance": 0.54,
+        "interval_score_mean": 69.83211566925048,
+        "wis_mean": 5.97234270731608
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.8979999999999999,
+        "picp_std": 0.03563705936241091,
+        "mpiw_mean": 50.29645309448242,
+        "mpiw_std": 3.343370244579305,
+        "ece_mean": 0.07989473684210524,
+        "ece_std": 0.028395212424679222,
+        "per_engine_compliance": 0.61,
+        "interval_score_mean": 68.96645185089112,
+        "wis_mean": 5.938607942771911
+      }
+    },
+    "FD002": {
+      "MSE_fixed": {
+        "picp_mean": 0.9162055335968379,
+        "picp_std": 0.021900229529162162,
+        "mpiw_mean": 60.91634521484375,
+        "mpiw_std": 2.3974716815099555,
+        "ece_mean": 0.05717079259413351,
+        "ece_std": 0.011606201751799817,
+        "per_engine_compliance": 0.6086956521739131,
+        "interval_score_mean": 73.6689172737212,
+        "wis_mean": 6.793574267426341
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.9264822134387352,
+        "picp_std": 0.020270168229182744,
+        "mpiw_mean": 62.82616195678711,
+        "mpiw_std": 2.3603542213255793,
+        "ece_mean": 0.06546702725192424,
+        "ece_std": 0.012315478833906355,
+        "per_engine_compliance": 0.6521739130434783,
+        "interval_score_mean": 74.18821542008592,
+        "wis_mean": 6.818440127479543
+      }
+    },
+    "FD003": {
+      "MSE_fixed": {
+        "picp_mean": 0.882,
+        "picp_std": 0.017888543819998333,
+        "mpiw_mean": 46.79837188720703,
+        "mpiw_std": 5.672548677403562,
+        "ece_mean": 0.10442105263157894,
+        "ece_std": 0.025900940634690707,
+        "per_engine_compliance": 0.7,
+        "interval_score_mean": 70.85037267303467,
+        "wis_mean": 5.640363600126903
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.8939999999999999,
+        "picp_std": 0.02073644135332774,
+        "mpiw_mean": 49.14616470336914,
+        "mpiw_std": 5.188683612462815,
+        "ece_mean": 0.1149473684210526,
+        "ece_std": 0.026461700751240446,
+        "per_engine_compliance": 0.7,
+        "interval_score_mean": 69.64416268920898,
+        "wis_mean": 5.5915779868284865
+      }
+    },
+    "FD004": {
+      "MSE_fixed": {
+        "picp_mean": 0.8827004219409282,
+        "picp_std": 0.013141275529449294,
+        "mpiw_mean": 60.930623626708986,
+        "mpiw_std": 2.4532738116371506,
+        "ece_mean": 0.05576726626693314,
+        "ece_std": 0.016140823862584426,
+        "per_engine_compliance": 0.6877637130801688,
+        "interval_score_mean": 87.22683030140551,
+        "wis_mean": 7.551908302508326
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.8928270042194093,
+        "picp_std": 0.012156000245475036,
+        "mpiw_mean": 63.06589965820312,
+        "mpiw_std": 2.252485906177901,
+        "ece_mean": 0.06281590051077057,
+        "ece_std": 0.016549157481919402,
+        "per_engine_compliance": 0.7172995780590717,
+        "interval_score_mean": 86.90302902736744,
+        "wis_mean": 7.5443843060740265
+      }
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "MSE_fixed": {
+        "picp_mean": 0.884,
+        "picp_std": 0.01816590212458497,
+        "mpiw_mean": 45.26062088012695,
+        "mpiw_std": 4.066762723846844,
+        "ece_mean": 0.08063157894736842,
+        "ece_std": 0.02347981982593075,
+        "per_engine_compliance": 0.61,
+        "interval_score_mean": 66.71861846160888,
+        "wis_mean": 5.56300181270043
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.9200000000000002,
+        "picp_std": 0.012247448713915856,
+        "mpiw_mean": 48.7872802734375,
+        "mpiw_std": 4.00197323556498,
+        "ece_mean": 0.09863157894736838,
+        "ece_std": 0.02388105335074803,
+        "per_engine_compliance": 0.73,
+        "interval_score_mean": 62.24328158569336,
+        "wis_mean": 5.307597018225988
+      }
+    },
+    "FD002": {
+      "MSE_fixed": {
+        "picp_mean": 0.917786561264822,
+        "picp_std": 0.010967934328467665,
+        "mpiw_mean": 58.90788345336914,
+        "mpiw_std": 1.6474014118049054,
+        "ece_mean": 0.07955065529436234,
+        "ece_std": 0.02279359084190764,
+        "per_engine_compliance": 0.6363636363636364,
+        "interval_score_mean": 72.48812115032212,
+        "wis_mean": 6.404789480658859
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.9217391304347826,
+        "picp_std": 0.011658404113638447,
+        "mpiw_mean": 60.50236358642578,
+        "mpiw_std": 1.7494495067402662,
+        "ece_mean": 0.08169336384439355,
+        "ece_std": 0.019291568015238757,
+        "per_engine_compliance": 0.6561264822134387,
+        "interval_score_mean": 71.5331943707975,
+        "wis_mean": 6.429433083892339
+      }
+    },
+    "FD003": {
+      "MSE_fixed": {
+        "picp_mean": 0.858,
+        "picp_std": 0.03346640106136305,
+        "mpiw_mean": 42.709356689453124,
+        "mpiw_std": 5.072287290464342,
+        "ece_mean": 0.08536842105263158,
+        "ece_std": 0.03399608906951151,
+        "per_engine_compliance": 0.67,
+        "interval_score_mean": 68.47935828399658,
+        "wis_mean": 5.592656414731343
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.892,
+        "picp_std": 0.03420526275297417,
+        "mpiw_mean": 45.30608901977539,
+        "mpiw_std": 4.987887845625222,
+        "ece_mean": 0.09031578947368418,
+        "ece_std": 0.02965778966030046,
+        "per_engine_compliance": 0.72,
+        "interval_score_mean": 61.00008807373047,
+        "wis_mean": 5.223109933916727
+      }
+    },
+    "FD004": {
+      "MSE_fixed": {
+        "picp_mean": 0.8556962025316455,
+        "picp_std": 0.02010317172923474,
+        "mpiw_mean": 55.53334045410156,
+        "mpiw_std": 6.055752613773386,
+        "ece_mean": 0.07604263824117255,
+        "ece_std": 0.014484849842743132,
+        "per_engine_compliance": 0.70042194092827,
+        "interval_score_mean": 87.29367533172736,
+        "wis_mean": 7.228297141403085
+      },
+      "MC_Dropout_fixed": {
+        "picp_mean": 0.8877637130801688,
+        "picp_std": 0.017549902399228202,
+        "mpiw_mean": 57.69947280883789,
+        "mpiw_std": 6.202561776103925,
+        "ece_mean": 0.041288030202087475,
+        "ece_std": 0.012692198573514491,
+        "per_engine_compliance": 0.7552742616033755,
+        "interval_score_mean": 79.92394708882907,
+        "wis_mean": 7.203796745117873
+      }
+    }
+  }
+}

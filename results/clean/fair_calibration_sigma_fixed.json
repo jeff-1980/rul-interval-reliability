@@ -1,0 +1,382 @@
+{
+  "LSTM": {
+    "FD001": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 3384,
+          "aleatory_var_train_fit": 194.25701074257856,
+          "aleatory_var_calib": 215.44500989996718,
+          "sigma_fixed_train_fit": 13.937611371486097,
+          "sigma_fixed_calib": 14.678045166164573
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 3677,
+          "aleatory_var_train_fit": 176.7514945170529,
+          "aleatory_var_calib": 181.76373625102246,
+          "sigma_fixed_train_fit": 13.29479200728815,
+          "sigma_fixed_calib": 13.481978202438338
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 3618,
+          "aleatory_var_train_fit": 111.2797535961318,
+          "aleatory_var_calib": 234.93122691233123,
+          "sigma_fixed_train_fit": 10.54892191629703,
+          "sigma_fixed_calib": 15.327466421830167
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 3454,
+          "aleatory_var_train_fit": 89.72133281466412,
+          "aleatory_var_calib": 179.2014581054913,
+          "sigma_fixed_train_fit": 9.472134543737443,
+          "sigma_fixed_calib": 13.386614885978132
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 3592,
+          "aleatory_var_train_fit": 128.28373647757672,
+          "aleatory_var_calib": 249.85878013856123,
+          "sigma_fixed_train_fit": 11.32624105683685,
+          "sigma_fixed_calib": 15.806921905879122
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 11.715940179129115,
+      "mean_sigma_fixed_calib": 14.536205316458066,
+      "mean_ratio_calib_over_train": 1.2407203429011184
+    },
+    "FD002": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 9061,
+          "aleatory_var_train_fit": 298.68946271355765,
+          "aleatory_var_calib": 359.97942457932794,
+          "sigma_fixed_train_fit": 17.282634715620116,
+          "sigma_fixed_calib": 18.973123743319864
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 9382,
+          "aleatory_var_train_fit": 256.65262592178755,
+          "aleatory_var_calib": 347.10483758718175,
+          "sigma_fixed_train_fit": 16.02038157853263,
+          "sigma_fixed_calib": 18.630749785963573
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 8982,
+          "aleatory_var_train_fit": 260.84549599588667,
+          "aleatory_var_calib": 371.6461192659573,
+          "sigma_fixed_train_fit": 16.15071193464507,
+          "sigma_fixed_calib": 19.278125408502696
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 8878,
+          "aleatory_var_train_fit": 268.647225312927,
+          "aleatory_var_calib": 302.238995055423,
+          "sigma_fixed_train_fit": 16.390461412447394,
+          "sigma_fixed_calib": 17.385022147107637
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 8773,
+          "aleatory_var_train_fit": 271.6675608742931,
+          "aleatory_var_calib": 335.29332794605614,
+          "sigma_fixed_train_fit": 16.482340879689787,
+          "sigma_fixed_calib": 18.311016573256005
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 16.465306104187,
+      "mean_sigma_fixed_calib": 18.515607531629957,
+      "mean_ratio_calib_over_train": 1.1245225211404712
+    },
+    "FD003": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 4230,
+          "aleatory_var_train_fit": 116.49738054978872,
+          "aleatory_var_calib": 210.9280563280927,
+          "sigma_fixed_train_fit": 10.793395228091516,
+          "sigma_fixed_calib": 14.523362431892027
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 4068,
+          "aleatory_var_train_fit": 126.02720494694933,
+          "aleatory_var_calib": 175.76839298291875,
+          "sigma_fixed_train_fit": 11.226183899569316,
+          "sigma_fixed_calib": 13.257767269903283
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 4708,
+          "aleatory_var_train_fit": 107.60832468500804,
+          "aleatory_var_calib": 143.53657922284162,
+          "sigma_fixed_train_fit": 10.373443241518606,
+          "sigma_fixed_calib": 11.9806752406883
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 4633,
+          "aleatory_var_train_fit": 72.30141169947606,
+          "aleatory_var_calib": 274.6671719701237,
+          "sigma_fixed_train_fit": 8.503023679813909,
+          "sigma_fixed_calib": 16.573085770915558
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 4533,
+          "aleatory_var_train_fit": 126.52137314755724,
+          "aleatory_var_calib": 218.66298868275962,
+          "sigma_fixed_train_fit": 11.248171991375187,
+          "sigma_fixed_calib": 14.787257645782724
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 10.428843608073707,
+      "mean_sigma_fixed_calib": 14.22442967183638,
+      "mean_ratio_calib_over_train": 1.363950808584783
+    },
+    "FD004": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 10541,
+          "aleatory_var_train_fit": 306.1749383944197,
+          "aleatory_var_calib": 326.0727528261678,
+          "sigma_fixed_train_fit": 17.497855251270646,
+          "sigma_fixed_calib": 18.05748467606072
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 10790,
+          "aleatory_var_train_fit": 276.81485254983426,
+          "aleatory_var_calib": 322.30173017602266,
+          "sigma_fixed_train_fit": 16.637753831266835,
+          "sigma_fixed_calib": 17.952763858972318
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 11029,
+          "aleatory_var_train_fit": 292.7570934399974,
+          "aleatory_var_calib": 332.822049364613,
+          "sigma_fixed_train_fit": 17.110145921060912,
+          "sigma_fixed_calib": 18.2434111219534
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 11483,
+          "aleatory_var_train_fit": 264.42599776960344,
+          "aleatory_var_calib": 391.60807268133635,
+          "sigma_fixed_train_fit": 16.26118070035517,
+          "sigma_fixed_calib": 19.789089738574038
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 10547,
+          "aleatory_var_train_fit": 270.9192375217626,
+          "aleatory_var_calib": 344.36185244368545,
+          "sigma_fixed_train_fit": 16.459624464785417,
+          "sigma_fixed_calib": 18.556989315179482
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 16.793312033747796,
+      "mean_sigma_fixed_calib": 18.51994774214799,
+      "mean_ratio_calib_over_train": 1.1028168657219226
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 3384,
+          "aleatory_var_train_fit": 172.0167804139158,
+          "aleatory_var_calib": 203.76261245360507,
+          "sigma_fixed_train_fit": 13.115516780284176,
+          "sigma_fixed_calib": 14.274544211763999
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 3677,
+          "aleatory_var_train_fit": 183.01993563546824,
+          "aleatory_var_calib": 162.6297691207194,
+          "sigma_fixed_train_fit": 13.52848608069167,
+          "sigma_fixed_calib": 12.752637731885878
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 3618,
+          "aleatory_var_train_fit": 159.38351559247894,
+          "aleatory_var_calib": 217.46310469316018,
+          "sigma_fixed_train_fit": 12.624718436166367,
+          "sigma_fixed_calib": 14.746630282649667
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 3454,
+          "aleatory_var_train_fit": 154.71133458964772,
+          "aleatory_var_calib": 147.38236555589125,
+          "sigma_fixed_train_fit": 12.438301113482007,
+          "sigma_fixed_calib": 12.140113902097099
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 3592,
+          "aleatory_var_train_fit": 144.41932340595625,
+          "aleatory_var_calib": 221.15282659905114,
+          "sigma_fixed_train_fit": 12.01745910772973,
+          "sigma_fixed_calib": 14.871207973767671
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 12.744896303670789,
+      "mean_sigma_fixed_calib": 13.757026820432865,
+      "mean_ratio_calib_over_train": 1.0794145744811248
+    },
+    "FD002": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 9061,
+          "aleatory_var_train_fit": 253.94330659060884,
+          "aleatory_var_calib": 318.3497903525563,
+          "sigma_fixed_train_fit": 15.935598720807727,
+          "sigma_fixed_calib": 17.8423594390584
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 9382,
+          "aleatory_var_train_fit": 282.75142020429917,
+          "aleatory_var_calib": 323.0738001981448,
+          "sigma_fixed_train_fit": 16.81521395059543,
+          "sigma_fixed_calib": 17.97425381478032
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 8982,
+          "aleatory_var_train_fit": 267.5703725053401,
+          "aleatory_var_calib": 350.32949406544645,
+          "sigma_fixed_train_fit": 16.35757844258557,
+          "sigma_fixed_calib": 18.717090961617043
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 8878,
+          "aleatory_var_train_fit": 285.1790736171971,
+          "aleatory_var_calib": 305.8421208951263,
+          "sigma_fixed_train_fit": 16.88724588608803,
+          "sigma_fixed_calib": 17.48834242846149
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 8773,
+          "aleatory_var_train_fit": 275.44795366157734,
+          "aleatory_var_calib": 306.3765055635387,
+          "sigma_fixed_train_fit": 16.596624767150015,
+          "sigma_fixed_calib": 17.503614071486457
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 16.518452353445355,
+      "mean_sigma_fixed_calib": 17.905132143080742,
+      "mean_ratio_calib_over_train": 1.0839473190323523
+    },
+    "FD003": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 4230,
+          "aleatory_var_train_fit": 91.22861958674906,
+          "aleatory_var_calib": 177.93790929035467,
+          "sigma_fixed_train_fit": 9.55136741973363,
+          "sigma_fixed_calib": 13.339336913443436
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 4068,
+          "aleatory_var_train_fit": 113.39725679435641,
+          "aleatory_var_calib": 159.45225679359376,
+          "sigma_fixed_train_fit": 10.64881480702695,
+          "sigma_fixed_calib": 12.627440627205251
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 4708,
+          "aleatory_var_train_fit": 109.7619020977915,
+          "aleatory_var_calib": 112.58868469591089,
+          "sigma_fixed_train_fit": 10.47673146061268,
+          "sigma_fixed_calib": 10.61078153087278
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 4633,
+          "aleatory_var_train_fit": 94.59109841773055,
+          "aleatory_var_calib": 219.33969567562318,
+          "sigma_fixed_train_fit": 9.725795515932388,
+          "sigma_fixed_calib": 14.81012139300766
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 4533,
+          "aleatory_var_train_fit": 144.563753189171,
+          "aleatory_var_calib": 182.79470482301403,
+          "sigma_fixed_train_fit": 12.023466770826582,
+          "sigma_fixed_calib": 13.520159201097227
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 10.485235194826446,
+      "mean_sigma_fixed_calib": 12.981567933125271,
+      "mean_ratio_calib_over_train": 1.2380807575523485
+    },
+    "FD004": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "n_calib_windows": 10541,
+          "aleatory_var_train_fit": 186.10378492820155,
+          "aleatory_var_calib": 218.78421869212178,
+          "sigma_fixed_train_fit": 13.641986106436319,
+          "sigma_fixed_calib": 14.791356215442915
+        },
+        {
+          "seed": 2024,
+          "n_calib_windows": 10790,
+          "aleatory_var_train_fit": 197.1833257890557,
+          "aleatory_var_calib": 258.25374618257683,
+          "sigma_fixed_train_fit": 14.042198039803301,
+          "sigma_fixed_calib": 16.07027523667771
+        },
+        {
+          "seed": 7,
+          "n_calib_windows": 11029,
+          "aleatory_var_train_fit": 217.11431820383925,
+          "aleatory_var_calib": 252.7034609059216,
+          "sigma_fixed_train_fit": 14.734799564427039,
+          "sigma_fixed_calib": 15.896649360979238
+        },
+        {
+          "seed": 888,
+          "n_calib_windows": 11483,
+          "aleatory_var_train_fit": 210.38280803956837,
+          "aleatory_var_calib": 359.7812932655684,
+          "sigma_fixed_train_fit": 14.504578864605769,
+          "sigma_fixed_calib": 18.967901656893112
+        },
+        {
+          "seed": 123,
+          "n_calib_windows": 10547,
+          "aleatory_var_train_fit": 235.20484721440658,
+          "aleatory_var_calib": 348.6058494709239,
+          "sigma_fixed_train_fit": 15.33638964079899,
+          "sigma_fixed_calib": 18.670989515045097
+        }
+      ],
+      "mean_sigma_fixed_train_fit": 14.451990443214282,
+      "mean_sigma_fixed_calib": 16.879434397007614,
+      "mean_ratio_calib_over_train": 1.167966064143995
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "FD001": {
+    "groups": [
+      {
+        "group_seeds": [
+          16713,
+          90270,
+          40016,
+          123,
+          40967
+        ],
+        "picp": 0.94,
+        "mpiw": 45.35135269165039,
+        "is_mean": 55.23134887695313,
+        "wis_mean": 5.102922313372293
+      },
+      {
+        "group_seeds": [
+          21852,
+          19906,
+          51778,
+          8601,
+          7
+        ],
+        "picp": 0.93,
+        "mpiw": 46.50775909423828,
+        "is_mean": 57.35775791168213,
+        "wis_mean": 5.25357610575358
+      },
+      {
+        "group_seeds": [
+          2024,
+          38466,
+          52287,
+          888,
+          42
+        ],
+        "picp": 0.92,
+        "mpiw": 47.073184967041016,
+        "is_mean": 57.81318115234375,
+        "wis_mean": 5.2570923833847045
+      }
+    ],
+    "single_model_seed42_IS_mean": 62.0712557220459,
+    "is_across_groups_mean": 56.80076264699301,
+    "is_across_groups_std": 1.3780955221706381,
+    "bootstrap_single_nll_minus_ensemble_group0": {
+      "mean_diff": 6.839906845092774,
+      "ci95_lo": -0.34673729705810546,
+      "ci95_hi": 15.003822700023647,
+      "note": "positive means single-model NLL has HIGHER (worse) IS than the ensemble"
+    }
+  },
+  "FD002": {
+    "groups": [
+      {
+        "group_seeds": [
+          51778,
+          52287,
+          40967,
+          16713,
+          123
+        ],
+        "picp": 0.9604743083003953,
+        "mpiw": 54.03570556640625,
+        "is_mean": 58.84597837877839,
+        "wis_mean": 5.729627765434376
+      },
+      {
+        "group_seeds": [
+          40016,
+          888,
+          21852,
+          90270,
+          8601
+        ],
+        "picp": 0.9762845849802372,
+        "mpiw": 55.17576217651367,
+        "is_mean": 57.329911755950086,
+        "wis_mean": 5.789728386882736
+      },
+      {
+        "group_seeds": [
+          42,
+          19906,
+          2024,
+          7,
+          38466
+        ],
+        "picp": 0.9644268774703557,
+        "mpiw": 54.59843826293945,
+        "is_mean": 58.531248311280265,
+        "wis_mean": 5.879381621967663
+      }
+    ],
+    "single_model_seed42_IS_mean": 64.00771365712282,
+    "is_across_groups_mean": 58.23571281533625,
+    "is_across_groups_std": 0.8000752609821546,
+    "bootstrap_single_nll_minus_ensemble_group0": {
+      "mean_diff": 5.1617352783444375,
+      "ci95_lo": -0.7897220696385199,
+      "ci95_hi": 12.4851510340046,
+      "note": "positive means single-model NLL has HIGHER (worse) IS than the ensemble"
+    }
+  },
+  "FD003": {
+    "groups": [
+      {
+        "group_seeds": [
+          90270,
+          21852,
+          19906,
+          2024,
+          52287
+        ],
+        "picp": 0.92,
+        "mpiw": 39.74403381347656,
+        "is_mean": 57.03403211593628,
+        "wis_mean": 4.84962180964152
+      },
+      {
+        "group_seeds": [
+          51778,
+          123,
+          888,
+          7,
+          42
+        ],
+        "picp": 0.92,
+        "mpiw": 41.42869186401367,
+        "is_mean": 52.958694286346436,
+        "wis_mean": 4.672734916051229
+      },
+      {
+        "group_seeds": [
+          40016,
+          40967,
+          8601,
+          16713,
+          38466
+        ],
+        "picp": 0.93,
+        "mpiw": 38.49077224731445,
+        "is_mean": 51.940772457122804,
+        "wis_mean": 4.602733267784118
+      }
+    ],
+    "single_model_seed42_IS_mean": 52.45763896942139,
+    "is_across_groups_mean": 53.97783295313517,
+    "is_across_groups_std": 2.69523768982109,
+    "bootstrap_single_nll_minus_ensemble_group0": {
+      "mean_diff": -4.576393146514892,
+      "ci95_lo": -10.501501942157745,
+      "ci95_hi": 0.8978897309303224,
+      "note": "positive means single-model NLL has HIGHER (worse) IS than the ensemble"
+    }
+  },
+  "FD004": {
+    "groups": [
+      {
+        "group_seeds": [
+          38466,
+          51778,
+          90270,
+          123,
+          21852
+        ],
+        "picp": 0.9282700421940928,
+        "mpiw": 61.56312942504883,
+        "is_mean": 73.12852816843282,
+        "wis_mean": 7.250668856195592
+      },
+      {
+        "group_seeds": [
+          2024,
+          42,
+          19906,
+          8601,
+          16713
+        ],
+        "picp": 0.9282700421940928,
+        "mpiw": 61.66048049926758,
+        "is_mean": 73.92208618453786,
+        "wis_mean": 7.345377286275227
+      },
+      {
+        "group_seeds": [
+          888,
+          40016,
+          40967,
+          52287,
+          7
+        ],
+        "picp": 0.9071729957805907,
+        "mpiw": 59.55931854248047,
+        "is_mean": 75.93906299574968,
+        "wis_mean": 7.227988432764839
+      }
+    ],
+    "single_model_seed42_IS_mean": 80.08616824894514,
+    "is_across_groups_mean": 74.32989244957345,
+    "is_across_groups_std": 1.448967206751747,
+    "bootstrap_single_nll_minus_ensemble_group0": {
+      "mean_diff": 6.957640080512324,
+      "ci95_lo": 1.080717369473936,
+      "ci95_hi": 14.224444500605262,
+      "note": "positive means single-model NLL has HIGHER (worse) IS than the ensemble"
+    }
+  }
+}

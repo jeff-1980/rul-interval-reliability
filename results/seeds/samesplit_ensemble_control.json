@@ -1,0 +1,566 @@
+{
+  "LSTM": {
+    "FD001": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.87,
+          "mpiw": 43.08125305175781,
+          "ece": 0.03526315789473683,
+          "is_mean": 62.0712557220459,
+          "is_std": 67.71409880451206,
+          "wis_mean": 5.462386232693989
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.92,
+          "mpiw": 47.5944709777832,
+          "ece": 0.06052631578947366,
+          "is_mean": 57.54447153091431,
+          "is_std": 47.64328061726522,
+          "wis_mean": 5.166730641682943
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.87,
+          "mpiw": 40.90183639526367,
+          "ece": 0.028947368421052628,
+          "is_mean": 58.181835651397705,
+          "is_std": 73.30345552128873,
+          "wis_mean": 5.23225896835327
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.88,
+          "mpiw": 43.640377044677734,
+          "ece": 0.029999999999999975,
+          "is_mean": 62.20037502288818,
+          "is_std": 67.57236370905828,
+          "wis_mean": 5.446026301066081
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.88,
+          "mpiw": 42.010650634765625,
+          "ece": 0.0357894736842105,
+          "is_mean": 59.32064891815185,
+          "is_std": 66.12840858059525,
+          "wis_mean": 5.232298268000283
+        }
+      ],
+      "single_model_is_mean_across_inits": 59.86371736907959,
+      "single_model_is_std_across_inits": 2.1700083688451564,
+      "ensemble_same_split": {
+        "picp": 0.9,
+        "mpiw": 44.3017463684082,
+        "ece": 0.05105263157894734,
+        "is_mean": 57.88174562454223,
+        "is_std": 58.79727656497823,
+        "wis_mean": 5.167909391721089,
+        "per_engine_compliance_rate_ge_090": 0.83,
+        "n_engines": 100
+      }
+    },
+    "FD002": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.8814229249011858,
+          "mpiw": 50.7152214050293,
+          "ece": 0.04191803619721244,
+          "is_mean": 64.00771365712282,
+          "is_std": 62.15688951653329,
+          "wis_mean": 6.595729795494884
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.8616600790513834,
+          "mpiw": 50.7057991027832,
+          "ece": 0.0523195340128979,
+          "is_mean": 69.14848857623315,
+          "is_std": 68.91817384753553,
+          "wis_mean": 6.8485736626724325
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.9130434782608695,
+          "mpiw": 48.986270904541016,
+          "ece": 0.0192219679633867,
+          "is_mean": 57.75702199822829,
+          "is_std": 43.414281007958095,
+          "wis_mean": 5.9501237744870386
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.8972332015810277,
+          "mpiw": 48.875675201416016,
+          "ece": 0.015539837736634102,
+          "is_mean": 62.10887982817035,
+          "is_std": 57.13893651761403,
+          "wis_mean": 6.308640852715815
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.8972332015810277,
+          "mpiw": 47.746551513671875,
+          "ece": 0.02248803827751195,
+          "is_mean": 65.60821098960906,
+          "is_std": 73.78860170187343,
+          "wis_mean": 6.252509132581266
+        }
+      ],
+      "single_model_is_mean_across_inits": 63.72606300987273,
+      "single_model_is_std_across_inits": 4.221055530590523,
+      "ensemble_same_split": {
+        "picp": 0.9288537549407114,
+        "mpiw": 51.46782302856445,
+        "ece": 0.01936758893280628,
+        "is_mean": 58.902609203172766,
+        "is_std": 44.33923936030292,
+        "wis_mean": 6.1001032657145835,
+        "per_engine_compliance_rate_ge_090": 0.766798418972332,
+        "n_engines": 253
+      }
+    },
+    "FD003": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.89,
+          "mpiw": 35.89763641357422,
+          "ece": 0.02736842105263158,
+          "is_mean": 52.45763896942139,
+          "is_std": 59.364558241886634,
+          "wis_mean": 4.748288869539897
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.83,
+          "mpiw": 33.94865417480469,
+          "ece": 0.03631578947368423,
+          "is_mean": 64.36865449905396,
+          "is_std": 96.73808559186521,
+          "wis_mean": 5.380195075988769
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.89,
+          "mpiw": 43.30552291870117,
+          "ece": 0.041578947368421035,
+          "is_mean": 63.32551725387573,
+          "is_std": 88.44029386483577,
+          "wis_mean": 5.567781544685365
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.91,
+          "mpiw": 39.34283447265625,
+          "ece": 0.058421052631578915,
+          "is_mean": 57.30283580780029,
+          "is_std": 77.93496387276095,
+          "wis_mean": 4.999863353093465
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.88,
+          "mpiw": 40.768028259277344,
+          "ece": 0.05526315789473681,
+          "is_mean": 61.308033351898196,
+          "is_std": 74.20658107562694,
+          "wis_mean": 5.25087617969513
+        }
+      ],
+      "single_model_is_mean_across_inits": 59.75253597640991,
+      "single_model_is_std_across_inits": 4.891596640362576,
+      "ensemble_same_split": {
+        "picp": 0.92,
+        "mpiw": 41.08763122558594,
+        "ece": 0.08894736842105261,
+        "is_mean": 56.36763366699219,
+        "is_std": 66.069169796625,
+        "wis_mean": 4.886442174593607,
+        "per_engine_compliance_rate_ge_090": 0.79,
+        "n_engines": 100
+      }
+    },
+    "FD004": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.9240506329113924,
+          "mpiw": 65.62625122070312,
+          "ece": 0.057073062402842496,
+          "is_mean": 80.08616824894514,
+          "is_std": 82.608361363552,
+          "wis_mean": 8.035420534211708
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.8860759493670886,
+          "mpiw": 57.42435073852539,
+          "ece": 0.022807017543859633,
+          "is_mean": 75.63954448297557,
+          "is_std": 89.33009041864166,
+          "wis_mean": 7.368721632816619
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.9113924050632911,
+          "mpiw": 59.68980026245117,
+          "ece": 0.030313124583610882,
+          "is_mean": 82.66026821216954,
+          "is_std": 107.61127003233497,
+          "wis_mean": 7.669846286049372
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.9029535864978903,
+          "mpiw": 59.63542556762695,
+          "ece": 0.047523872973573154,
+          "is_mean": 84.94344337881869,
+          "is_std": 102.98950773279333,
+          "wis_mean": 8.124822937419479
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.9493670886075949,
+          "mpiw": 66.1349868774414,
+          "ece": 0.050344214967799214,
+          "is_mean": 79.33752106614254,
+          "is_std": 88.24754146152323,
+          "wis_mean": 7.553799127023431
+        }
+      ],
+      "single_model_is_mean_across_inits": 80.5333890778103,
+      "single_model_is_std_across_inits": 3.5196596241508016,
+      "ensemble_same_split": {
+        "picp": 0.9409282700421941,
+        "mpiw": 63.798423767089844,
+        "ece": 0.053320008882966875,
+        "is_mean": 76.54103662997862,
+        "is_std": 83.31239676743918,
+        "wis_mean": 7.526941440812981,
+        "per_engine_compliance_rate_ge_090": 0.810126582278481,
+        "n_engines": 237
+      }
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.92,
+          "mpiw": 45.70009231567383,
+          "ece": 0.05473684210526314,
+          "is_mean": 60.93009555816651,
+          "is_std": 70.68367582183252,
+          "wis_mean": 5.330894649187724
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.93,
+          "mpiw": 44.791019439697266,
+          "ece": 0.07368421052631575,
+          "is_mean": 59.11101194381714,
+          "is_std": 65.70619509899656,
+          "wis_mean": 5.172852662722271
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.87,
+          "mpiw": 40.792808532714844,
+          "ece": 0.023684210526315835,
+          "is_mean": 60.97280517578125,
+          "is_std": 79.17032864387689,
+          "wis_mean": 5.415425015608471
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.87,
+          "mpiw": 44.77288055419922,
+          "ece": 0.038421052631578946,
+          "is_mean": 66.89288356781006,
+          "is_std": 78.1585786662431,
+          "wis_mean": 5.572333407958348
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.9,
+          "mpiw": 44.61251449584961,
+          "ece": 0.06105263157894733,
+          "is_mean": 59.2525146484375,
+          "is_std": 64.88912351965287,
+          "wis_mean": 5.1684073948860165
+        }
+      ],
+      "single_model_is_mean_across_inits": 61.43186217880249,
+      "single_model_is_std_across_inits": 3.178881845718122,
+      "ensemble_same_split": {
+        "picp": 0.93,
+        "mpiw": 45.046958923339844,
+        "ece": 0.06578947368421051,
+        "is_mean": 59.42695686340332,
+        "is_std": 67.38839991870468,
+        "wis_mean": 5.166600915431976,
+        "per_engine_compliance_rate_ge_090": 0.81,
+        "n_engines": 100
+      }
+    },
+    "FD002": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.9130434782608695,
+          "mpiw": 51.26841354370117,
+          "ece": 0.017120865404618237,
+          "is_mean": 65.28422140038532,
+          "is_std": 63.54217524086787,
+          "wis_mean": 6.2740509496533035
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.9011857707509882,
+          "mpiw": 48.652652740478516,
+          "ece": 0.01133763261909712,
+          "is_mean": 60.79099510403961,
+          "is_std": 54.315700322037614,
+          "wis_mean": 5.889721292210191
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.841897233201581,
+          "mpiw": 47.73360061645508,
+          "ece": 0.059704597462034575,
+          "is_mean": 70.18024038231891,
+          "is_std": 76.8556054545792,
+          "wis_mean": 6.701075792210532
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.7905138339920948,
+          "mpiw": 49.680721282958984,
+          "ece": 0.0820678177657583,
+          "is_mean": 79.2419861654048,
+          "is_std": 100.0236818668549,
+          "wis_mean": 7.3111273869852464
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.9130434782608695,
+          "mpiw": 50.04876708984375,
+          "ece": 0.0383191179529852,
+          "is_mean": 65.16339053278384,
+          "is_std": 66.0962474765794,
+          "wis_mean": 6.016305941052744
+        }
+      ],
+      "single_model_is_mean_across_inits": 68.13216671698649,
+      "single_model_is_std_across_inits": 7.043435225869163,
+      "ensemble_same_split": {
+        "picp": 0.9130434782608695,
+        "mpiw": 51.44236755371094,
+        "ece": 0.024152277928021597,
+        "is_mean": 62.75857349440985,
+        "is_std": 54.20124270428481,
+        "wis_mean": 6.102207234348705,
+        "per_engine_compliance_rate_ge_090": 0.766798418972332,
+        "n_engines": 253
+      }
+    },
+    "FD003": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.9,
+          "mpiw": 40.155426025390625,
+          "ece": 0.04157894736842103,
+          "is_mean": 58.48542642593384,
+          "is_std": 79.36313461733918,
+          "wis_mean": 4.995010068416595
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.81,
+          "mpiw": 35.308807373046875,
+          "ece": 0.0415789473684211,
+          "is_mean": 64.46880924224854,
+          "is_std": 83.87492056373232,
+          "wis_mean": 5.392375723163287
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.82,
+          "mpiw": 35.18770980834961,
+          "ece": 0.06421052631578951,
+          "is_mean": 72.66771438598633,
+          "is_std": 108.5349066449349,
+          "wis_mean": 5.954242121338845
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.89,
+          "mpiw": 40.730533599853516,
+          "ece": 0.01842105263157895,
+          "is_mean": 56.710534172058104,
+          "is_std": 70.82444388320688,
+          "wis_mean": 5.082229347785314
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.85,
+          "mpiw": 34.77821731567383,
+          "ece": 0.025263157894736838,
+          "is_mean": 63.048221054077146,
+          "is_std": 82.87280946391147,
+          "wis_mean": 5.180803010145824
+        }
+      ],
+      "single_model_is_mean_across_inits": 63.07614105606079,
+      "single_model_is_std_across_inits": 6.235667465548358,
+      "ensemble_same_split": {
+        "picp": 0.93,
+        "mpiw": 39.71287536621094,
+        "ece": 0.041578947368421014,
+        "is_mean": 54.1928769493103,
+        "is_std": 67.68445911707182,
+        "wis_mean": 4.788386350552241,
+        "per_engine_compliance_rate_ge_090": 0.84,
+        "n_engines": 100
+      }
+    },
+    "FD004": {
+      "split_seed": 42,
+      "init_seeds": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "gate_check": "PASS: fit/val/calib pairwise disjoint (runtime-asserted), checkpoint selection + early stop both on val_units only, scaler fit only on fit_units (split_seed=42)",
+      "single_models": [
+        {
+          "init_seed": 42,
+          "picp": 0.8649789029535865,
+          "mpiw": 45.176551818847656,
+          "ece": 0.027825893848545457,
+          "is_mean": 82.18499135367477,
+          "is_std": 132.11118971185357,
+          "wis_mean": 6.883298828296687
+        },
+        {
+          "init_seed": 2024,
+          "picp": 0.8607594936708861,
+          "mpiw": 46.792144775390625,
+          "ece": 0.023761936486786588,
+          "is_mean": 75.37020255141117,
+          "is_std": 100.66012202534405,
+          "wis_mean": 6.637952878471836
+        },
+        {
+          "init_seed": 7,
+          "picp": 0.8481012658227848,
+          "mpiw": 50.50584411621094,
+          "ece": 0.03171219187208529,
+          "is_mean": 80.99529375003863,
+          "is_std": 107.32379188526106,
+          "wis_mean": 7.064085987885122
+        },
+        {
+          "init_seed": 888,
+          "picp": 0.8481012658227848,
+          "mpiw": 53.653045654296875,
+          "ece": 0.032644903397734876,
+          "is_mean": 87.9315261518905,
+          "is_std": 118.66021653675321,
+          "wis_mean": 7.576682679663227
+        },
+        {
+          "init_seed": 123,
+          "picp": 0.8523206751054853,
+          "mpiw": 45.86512756347656,
+          "ece": 0.021230290917166335,
+          "is_mean": 83.19846205570526,
+          "is_std": 125.73452684832888,
+          "wis_mean": 6.923581301076167
+        }
+      ],
+      "single_model_is_mean_across_inits": 81.93609517254406,
+      "single_model_is_std_across_inits": 4.516546393917207,
+      "ensemble_same_split": {
+        "picp": 0.890295358649789,
+        "mpiw": 52.4193229675293,
+        "ece": 0.04605818343326668,
+        "is_mean": 74.80751213846328,
+        "is_std": 94.75962499206732,
+        "wis_mean": 6.593994135326808,
+        "per_engine_compliance_rate_ge_090": 0.7763713080168776,
+        "n_engines": 237
+      }
+    }
+  }
+}

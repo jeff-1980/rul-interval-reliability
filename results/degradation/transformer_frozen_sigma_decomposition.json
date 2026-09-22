@@ -1,0 +1,90 @@
+{
+  "FD001": {
+    "NLL": {
+      "crossover_feat_oob_relative": 0.008591302785265053,
+      "picp_clean_real": 0.8859999999999999,
+      "picp_clean_frozen_sigma_counterfactual": 0.8859999999999999,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.8030490566037736,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.08295094339622633,
+      "delta_picp_sigma_contribution": 0.01704905660377365,
+      "sigma_contribution_fraction": 0.17049056603773652
+    },
+    "CP_norm": {
+      "crossover_feat_oob_relative": 0.006465921325051756,
+      "picp_clean_real": 0.894,
+      "picp_clean_frozen_sigma_counterfactual": 0.894,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.8081391304347826,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.08586086956521743,
+      "delta_picp_sigma_contribution": 0.014139130434782543,
+      "sigma_contribution_fraction": 0.14139130434782546
+    }
+  },
+  "FD002": {
+    "NLL": {
+      "crossover_feat_oob_relative": 0.013343045151588245,
+      "picp_clean_real": 0.8837944664031622,
+      "picp_clean_frozen_sigma_counterfactual": 0.8837944664031622,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.7965042432776989,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.0872902231254633,
+      "delta_picp_sigma_contribution": 0.012709776874536671,
+      "sigma_contribution_fraction": 0.12709776874536674
+    },
+    "CP_norm": {
+      "crossover_feat_oob_relative": 0.013425083375130892,
+      "picp_clean_real": 0.9027667984189722,
+      "picp_clean_frozen_sigma_counterfactual": 0.9027667984189722,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.8140287047236441,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.08873809369532815,
+      "delta_picp_sigma_contribution": 0.011261906304671832,
+      "sigma_contribution_fraction": 0.11261906304671834
+    }
+  },
+  "FD003": {
+    "NLL": {
+      "crossover_feat_oob_relative": 0.0011637177280550805,
+      "picp_clean_real": 0.8699999999999999,
+      "picp_clean_frozen_sigma_counterfactual": 0.8699999999999999,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.7700867469879518,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.09991325301204812,
+      "delta_picp_sigma_contribution": 8.674698795185787e-05,
+      "sigma_contribution_fraction": 0.0008674698795185789
+    },
+    "CP_norm": {
+      "crossover_feat_oob_relative": 0.002072539682539674,
+      "picp_clean_real": 0.8860000000000001,
+      "picp_clean_frozen_sigma_counterfactual": 0.8860000000000001,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.7911623188405797,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.09483768115942037,
+      "delta_picp_sigma_contribution": 0.005162318840579605,
+      "sigma_contribution_fraction": 0.051623188405796064
+    }
+  },
+  "FD004": {
+    "NLL": {
+      "crossover_feat_oob_relative": 0.0071072073223971965,
+      "picp_clean_real": 0.8565400843881856,
+      "picp_clean_frozen_sigma_counterfactual": 0.8565400843881856,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.7592276511263854,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.09731243326180028,
+      "delta_picp_sigma_contribution": 0.002687566738199698,
+      "sigma_contribution_fraction": 0.02687566738199699
+    },
+    "CP_norm": {
+      "crossover_feat_oob_relative": 0.007283159150913976,
+      "picp_clean_real": 0.8556962025316457,
+      "picp_clean_frozen_sigma_counterfactual": 0.8556962025316457,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.7619649526578243,
+      "delta_picp_total": 0.09999999999999998,
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.09373124987382142,
+      "delta_picp_sigma_contribution": 0.006268750126178557,
+      "sigma_contribution_fraction": 0.06268750126178559
+    }
+  }
+}

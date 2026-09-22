@@ -1,0 +1,15 @@
+Rank,Sensor,Mean |SHAP|,Std |SHAP|,Physical Meaning
+1,s_11,0.053176,0.016483,Static pressure HPC outlet (psia)
+2,s_15,0.052908,0.016417,Bypass ratio
+3,s_9,0.039173,0.01467,Physical core speed (rpm)
+4,s_7,0.038271,0.010692,Total pressure HPC outlet (psia)
+5,s_8,0.037506,0.013873,Physical fan speed (rpm)
+6,s_14,0.035747,0.007479,Corrected core speed (rpm)
+7,s_4,0.034915,0.006991,Total temperature HPC outlet (°R)
+8,s_2,0.032795,0.007057,Total temperature fan inlet (°R)
+9,s_12,0.030912,0.007229,Fuel flow ratio (pps/psi)
+10,s_13,0.028145,0.008737,Corrected fan speed (rpm)
+11,s_20,0.023448,0.002805,HPT cool air flow
+12,s_21,0.023392,0.008347,LPT cool air flow
+13,s_3,0.021885,0.006026,Total temperature LPC outlet (°R)
+14,s_17,0.020787,0.012094,Bleed enthalpy

@@ -1,0 +1,59 @@
+{
+  "FD001": {
+    "method": "deep_ensemble",
+    "M": 5,
+    "variant": "option_A_single_ensemble_no_seed_variance_leakfree",
+    "rmse": 14.277738644504643,
+    "score": 423.7371741288104,
+    "picp": 0.91,
+    "mpiw": 45.054500579833984,
+    "ece": 0.04947368421052628,
+    "latency_ms_per_sample": 1.1542057991027832,
+    "member_seeds": [
+      42,
+      2024,
+      7,
+      888,
+      123
+    ],
+    "note": "each member scaled by its OWN seed-specific fit_units scaler (leakfree protocol)"
+  },
+  "FD002": {
+    "method": "deep_ensemble",
+    "M": 5,
+    "variant": "option_A_single_ensemble_no_seed_variance_leakfree",
+    "rmse": 15.502599682757344,
+    "score": 1027.472879261025,
+    "picp": 0.9683794466403162,
+    "mpiw": 54.62656021118164,
+    "ece": 0.05373413771583104,
+    "latency_ms_per_sample": 0.061566650631870674,
+    "member_seeds": [
+      42,
+      2024,
+      7,
+      888,
+      123
+    ],
+    "note": "each member scaled by its OWN seed-specific fit_units scaler (leakfree protocol)"
+  },
+  "FD004": {
+    "method": "deep_ensemble",
+    "M": 5,
+    "variant": "option_A_single_ensemble_no_seed_variance_leakfree",
+    "rmse": 19.106817241180977,
+    "score": 2697.384075890985,
+    "picp": 0.9324894514767933,
+    "mpiw": 61.46781921386719,
+    "ece": 0.0449033977348434,
+    "latency_ms_per_sample": 0.06056435500519185,
+    "member_seeds": [
+      42,
+      2024,
+      7,
+      888,
+      123
+    ],
+    "note": "each member scaled by its OWN seed-specific fit_units scaler (leakfree protocol)"
+  }
+}

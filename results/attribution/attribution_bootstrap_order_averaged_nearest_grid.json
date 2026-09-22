@@ -1,0 +1,262 @@
+{
+  "LSTM": {
+    "FD001": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.050000000000000044,
+          0.040000000000000036,
+          0.06000000000000005,
+          0.020000000000000018,
+          -0.029999999999999916
+        ],
+        "mean": 0.028000000000000046,
+        "bootstrap_mean": 0.028041000000000045,
+        "ci95_lo": -0.001999999999999935,
+        "ci95_hi": 0.052000000000000046,
+        "mean_dominant_by_ci": 0.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.050000000000000044,
+          0.040000000000000036,
+          0.040000000000000036,
+          0.0,
+          -0.030000000000000027
+        ],
+        "mean": 0.020000000000000018,
+        "bootstrap_mean": 0.019969000000000015,
+        "ci95_lo": -0.008000000000000007,
+        "ci95_hi": 0.04400000000000004,
+        "mean_dominant_by_ci": 0.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.07114624505928857,
+          0.13438735177865613,
+          0.08695652173913038,
+          0.1106719367588932,
+          0.11857707509881421
+        ],
+        "mean": 0.1043478260869565,
+        "bootstrap_mean": 0.10442213438735176,
+        "ci95_lo": 0.08379446640316209,
+        "ci95_hi": 0.12332015810276678,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.02371541501976282,
+          0.011857707509881354,
+          0.007905138339920903,
+          0.035573122529644285,
+          0.015810276679841917
+        ],
+        "mean": 0.018972332015810257,
+        "bootstrap_mean": 0.01901897233201579,
+        "ci95_lo": 0.01106719367588931,
+        "ci95_hi": 0.027687747035573033,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.12,
+          0.08000000000000007,
+          0.07999999999999996,
+          0.07000000000000006,
+          0.08000000000000007
+        ],
+        "mean": 0.08600000000000003,
+        "bootstrap_mean": 0.08582800000000003,
+        "ci95_lo": 0.07400000000000007,
+        "ci95_hi": 0.10400000000000001,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.07999999999999996,
+          0.040000000000000036,
+          0.07999999999999996,
+          0.010000000000000009,
+          0.040000000000000036
+        ],
+        "mean": 0.05,
+        "bootstrap_mean": 0.050613,
+        "ci95_lo": 0.028000000000000025,
+        "ci95_hi": 0.07199999999999998,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.06329113924050633,
+          0.07594936708860756,
+          0.06751054852320681,
+          0.09704641350210974,
+          0.05063291139240511
+        ],
+        "mean": 0.0708860759493671,
+        "bootstrap_mean": 0.07104303797468356,
+        "ci95_lo": 0.05822784810126584,
+        "ci95_hi": 0.08523206751054857,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.10126582278481011,
+          0.07594936708860756,
+          0.09704641350210974,
+          0.06751054852320681,
+          0.04641350210970463
+        ],
+        "mean": 0.07763713080168777,
+        "bootstrap_mean": 0.07783839662447258,
+        "ci95_lo": 0.06075949367088609,
+        "ci95_hi": 0.09451476793248945,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.06000000000000005,
+          0.009999999999999898,
+          0.050000000000000044,
+          0.030000000000000027,
+          0.05999999999999994
+        ],
+        "mean": 0.041999999999999996,
+        "bootstrap_mean": 0.042149,
+        "ci95_lo": 0.02399999999999993,
+        "ci95_hi": 0.05800000000000001,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.040000000000000036,
+          0.040000000000000036,
+          0.030000000000000027,
+          0.06000000000000005,
+          0.050000000000000044
+        ],
+        "mean": 0.04400000000000004,
+        "bootstrap_mean": 0.044040000000000044,
+        "ci95_lo": 0.03600000000000003,
+        "ci95_hi": 0.05400000000000005,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.10671936758893275,
+          0.08695652173913049,
+          0.06324110671936756,
+          0.055335968379446654,
+          0.03952569169960474
+        ],
+        "mean": 0.07035573122529644,
+        "bootstrap_mean": 0.0705490118577075,
+        "ci95_lo": 0.05059288537549407,
+        "ci95_hi": 0.09249011857707508,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.1106719367588932,
+          0.08695652173913038,
+          0.04743083003952575,
+          0.055335968379446654,
+          0.055335968379446654
+        ],
+        "mean": 0.07114624505928853,
+        "bootstrap_mean": 0.071198418972332,
+        "ci95_lo": 0.05217391304347829,
+        "ci95_hi": 0.09486166007905132,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.07999999999999996,
+          0.09999999999999998,
+          0.08999999999999997,
+          0.12,
+          0.06000000000000005
+        ],
+        "mean": 0.09,
+        "bootstrap_mean": 0.090045,
+        "ci95_lo": 0.07200000000000002,
+        "ci95_hi": 0.10799999999999998,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.12,
+          0.08999999999999997,
+          0.09999999999999998,
+          0.030000000000000027,
+          0.06000000000000005
+        ],
+        "mean": 0.08,
+        "bootstrap_mean": 0.07961300000000002,
+        "ci95_lo": 0.050000000000000024,
+        "ci95_hi": 0.10599999999999998,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.08016877637130804,
+          0.05485232067510548,
+          0.09704641350210974,
+          0.09704641350210963,
+          0.08016877637130804
+        ],
+        "mean": 0.08185654008438818,
+        "bootstrap_mean": 0.08215611814345991,
+        "ci95_lo": 0.06835443037974683,
+        "ci95_hi": 0.09367088607594938,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      },
+      "CP_norm": {
+        "per_seed_diff_absmu_minus_abssigma": [
+          0.06329113924050633,
+          0.05485232067510548,
+          0.09282700421940926,
+          0.06329113924050633,
+          0.08438818565400852
+        ],
+        "mean": 0.07172995780590719,
+        "bootstrap_mean": 0.07173206751054853,
+        "ci95_lo": 0.059915611814345994,
+        "ci95_hi": 0.08523206751054853,
+        "mean_dominant_by_ci": 1.0,
+        "caveat": "computed at the nearest-grid-point (same operating point as frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), NOT the exact-interpolation point used by G/H"
+      }
+    }
+  }
+}

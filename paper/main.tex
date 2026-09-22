@@ -1,0 +1,390 @@
+%% Paper 2 -- IEEE Transactions on Reliability submission draft
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amssymb,booktabs,multirow,graphicx,xcolor,url,cite}
+\newcommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\muh}{\hat{\mu}}\newcommand{\sigh}{\hat{\sigma}}
+\newcommand{\PICP}{\mathrm{PICP}}\newcommand{\MPIW}{\mathrm{MPIW}}\newcommand{\ECE}{\mathrm{ECE}}
+\newcommand{\IS}{\mathrm{IS}}\newcommand{\WIS}{\mathrm{WIS}}\newcommand{\foob}{f_{\mathrm{oob}}}
+\begin{document}
+\title{Reliability Failure of Remaining-Useful-Life Prediction Intervals under Sensor Degradation: A Leakage-Audited Evaluation, Mean--Scale Attribution, and Maintenance-Decision Consequences}
+\author{Yi~Wang%
+\thanks{Y. Wang is with the College of Engineering, Lishui University, Lishui 323000, China (e-mail: jefflsxy@lsu.edu.cn).}}
+\markboth{IEEE Transactions on Reliability}{Wang: Reliability Failure of RUL Prediction Intervals under Sensor Degradation}
+\maketitle
+
+\begin{abstract}
+Prediction intervals on remaining useful life (RUL) feed maintenance decisions, so the reliability question is when they fail and what the failure costs. We evaluate five interval mechanisms (fixed variance, heteroscedastic likelihood, MC Dropout, deep ensemble, split conformal prediction) on two backbones and all four C-MAPSS sub-datasets under a leakage-audited protocol with engine-level training, validation and calibration sets. A $2\times2$ retraining experiment shows that test-set checkpoint selection and normaliser scope together move RMSE by 10--18\% and the NASA score by 16--113\%, with a non-additive interaction. Under fair calibration, coverage rankings do not transfer between backbones; by interval score the deep ensemble is best in all eight backbone--dataset combinations in sample, with independent replication supporting the margin on one sub-dataset. Under additive noise a four-way frozen-output decomposition attributes coverage loss predominantly to mean error in all 16 backbone--dataset--mechanism cases by point estimate, regardless of decomposition order, with a per-seed paired bootstrap excluding zero in 31 of the 32 order-specific cells. Structured degradation gives two separate findings: on single-condition data a within-window drift damages coverage at near-zero input excursion (below $10^{-4}$), and on six-condition data drift and bias produce comparable excursion with very different consequences. Six controls support a monotone within-window trend as the damaging feature, strongly for the recurrent backbone and partially for the Transformer. In a terminal-instant decision stress test the errors are asymmetric: drift triggers premature maintenance on 65--73\% of six-condition engines, with a mean true remaining life among those triggers of about 106--108 cycles, whereas bias produces unrecognised maintenance needs, and cost rankings between mechanisms reverse across cost ratios in 34 of 96 conditions. A single excursion statistic does not characterise these risks.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Remaining useful life, prediction intervals, uncertainty quantification, sensor degradation, data leakage, conformal prediction, maintenance decisions, C-MAPSS.
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{A}{prediction} interval on remaining useful life (RUL) is an engineering commitment: a maintenance planner who reads a 90\% lower bound of twenty cycles will schedule work on that basis. For the commitment to be reliable, three things must hold that are usually assessed separately or not at all. The interval must be calibrated on the data it was validated on; the validation must not have leaked information from the test set into the model; and the interval must degrade gracefully, or at least detectably, when the sensors that feed it degrade. This paper assesses all three on the NASA C-MAPSS benchmark \cite{saxena2008}, for five interval mechanisms and two backbone architectures, and then asks what the observed failures cost in maintenance terms.
+
+The motivation is that the RUL literature has reached a state in which evaluation protocol matters as much as method. Point-prediction accuracy on C-MAPSS has plateaued, with new architectures separated by a few percent \cite{tang2025,chen2024,deng2024,ruvaifa2026}, and a growing number of methods report intervals \cite{basora2025,zhan2024,peng2019,ayed2025,piao2025,mao2024}. Yet the protocol behind a C-MAPSS result is rarely stated at the level needed to reproduce it. A recent audit shows that window-level splitting alone can move accuracy on this benchmark from modest to near-perfect \cite{shamim2026}. We show below that two further choices, how the checkpoint is selected and where the normaliser is fitted, move RMSE by more than the margins that distinguish published methods. Uncertainty comparisons inherit this problem and add one of their own: mechanisms that estimate their scale from training residuals are compared against mechanisms that use held-out calibration data, so that a difference in calibration resource is read as a difference in method.
+
+Sensor degradation is the second reliability concern and the one this paper spends most of its effort on. Prognostic models are certified on healthy sensing chains and then operated, sometimes for years, on chains whose sensors drift, acquire offsets and lose gain. The reliability literature has long treated sensor and system degradation jointly \cite{hachem2024,chen2027}, but the uncertainty-quantification literature has evaluated intervals almost exclusively on clean inputs, and where robustness is studied it is under additive noise. We find that additive noise is the least informative of the degradations we test.
+
+The paper makes four contributions.
+\begin{enumerate}
+\item A leakage-audited protocol for interval evaluation on C-MAPSS (Section~\ref{sec:protocol}), with a $2\times2$ retraining experiment quantifying the two most consequential protocol choices and their interaction.
+\item A fairly calibrated benchmark of five mechanisms on two backbones (Section~\ref{sec:clean}), scored by proper interval scores rather than coverage alone, showing which rankings transfer between backbones and which do not.
+\item An order-robust attribution of coverage loss under degradation to mean error versus learned scale (Section~\ref{sec:attribution}), using a four-way frozen-output decomposition.
+\item An account of structured sensor degradation (Section~\ref{sec:structured}) in which within-window drift is shown, through six controls, to damage intervals through its temporal structure, and its maintenance consequence is quantified as premature rather than unrecognised maintenance (Section~\ref{sec:decision}).
+\end{enumerate}
+The paper proposes no new architecture. The audit of our own earlier pipeline, which motivated the protocol, is recorded in Appendix~\ref{app:audit} rather than in the main text.
+
+\section{Related Work}
+\label{sec:related}
+\subsubsection*{RUL prediction on C-MAPSS}
+Convolutional \cite{li2018,li2020}, recurrent \cite{zhang2019} and hybrid \cite{tang2025,chen2024,deng2024} architectures report FD001 RMSE of 11--13 cycles. Reviews \cite{lei2018,zhao2019,liu2025} note that comparability is limited by undocumented preprocessing and split choices; Ruvaifa et al.\ \cite{ruvaifa2026} show a plain LSTM matching more complex models once preprocessing is controlled, and Shamim et al.\ \cite{shamim2026} audit window-level leakage. Neither addresses checkpoint selection, normaliser scope, or interval metrics.
+\subsubsection*{Uncertainty quantification in prognostics}
+MC Dropout \cite{gal2016}, deep ensembles \cite{lakshminarayanan2017}, heteroscedastic regression \cite{nix1994,kendall2017} and evidential methods \cite{ayed2025} have each been applied to RUL. Basora et al.\ \cite{basora2025} benchmark several on N-CMAPSS and find heteroscedastic networks competitive at low cost; our benchmark differs in its leakage audit, fair calibration, proper scoring and degradation study, not in the mechanisms compared. Conformal RUL prediction \cite{zhan2024,piao2025,mao2024} rests on exchangeability of calibration and test scores \cite{barber2023}. Surveys \cite{gawlikowski2023,ovadia2019} document that predictive uncertainty degrades under shift, and Valdenegro-Toro and Saromo Mori \cite{valdenegro2022} report in vision that aleatoric estimates are unreliable out of distribution while ensembles disentangle best; our attribution results are consistent with theirs. Seitzer et al.\ \cite{seitzer2022} and Stirn et al.\ \cite{stirn2022} document pathologies of Gaussian likelihood training relevant to the variance-floor saturation we observe.
+\subsubsection*{Measurement uncertainty and learned models}
+The GUM \cite{gum2008} presumes that the uncertainty of the measurement model is negligible relative to that of its inputs; recent metrological work asks when learned models satisfy this \cite{angrisani2026}. Section~\ref{sec:discussion} returns to this briefly.
+
+\section{Evaluation Protocol}
+\label{sec:protocol}
+\subsection{Two Evaluation Units}
+C-MAPSS training files contain complete run-to-failure trajectories; test files contain trajectories truncated before failure with the terminal RUL supplied separately. Two evaluation units are used in this paper and are never mixed. The \emph{terminal unit} is one prediction per test engine, from the last available window, scored against the supplied terminal label; all headline accuracy and interval figures (Tables~\ref{tab:leak}, \ref{tab:clean}) use it and are comparable with the literature. The \emph{trajectory unit} is every window of a test engine, with labels back-computed from the terminal label under the piecewise-linear target; it is used only for the per-engine attainment rate of Table~\ref{tab:clean}, where a single window per engine cannot define a per-engine coverage. Windows within an engine are dependent, and the trajectory-unit statistic is computed per engine first and then averaged with equal engine weight. The degradation study of Sections~\ref{sec:attribution}--\ref{sec:decision} uses the terminal unit throughout: each perturbed test engine contributes its last window, and coverage is averaged over engines, models and noise realisations. A provenance table listing, for every table in this paper, the generating script, label version, evaluation unit and averaging scheme is given in the supplementary material.
+
+\subsection{Engine-Level Three-Way Split with Disjoint Calibration}
+Each of the five seeds draws its own engine-level partition of the official training file of each sub-dataset, shared by every method for that seed: 60\% of engines for fitting, 20\% for validation (checkpoint selection only), and 20\% for calibration (conformal quantiles and, under fair calibration, the residual scale of the fixed-variance and MC Dropout mechanisms). The official test file is touched once after all weights and quantiles are frozen. A run-time assertion aborts training if any engine appears in more than one subset. Splitting by engine rather than by window matters because a window-level split places overlapping segments of one trajectory on both sides \cite{shamim2026}; keeping calibration apart from validation matters because a model selected on the calibration engines shrinks their residuals relative to unseen ones. The min--max normaliser is fitted per seed on the fitting engines only. This is stricter than fitting on the whole training file, and its cost is measured below rather than absorbed.
+
+\subsection{What the Two Most Consequential Protocol Choices Are Worth}
+\label{sec:leak}
+Two decisions in a training loop can be made with or without reference to held-out data: which checkpoint to keep, and on which data to fit the normaliser. We trained the LSTM of Section~\ref{sec:mechanisms} with the same five seeds under all four combinations of checkpoint selection (on the official test set versus on the validation engines) and normaliser scope (the whole training file versus the fitting engines only). Table~\ref{tab:leak} reports the terminal-unit result for the three sub-datasets present in the earlier version of this work.
+
+\begin{table*}[!t]
+\caption{$2\times2$ protocol experiment, heteroscedastic LSTM, terminal unit, mean of five seeds. Sel.: checkpoint selected on test set (T) or validation engines (V). Norm.: normaliser fitted on whole training file (W) or fitting engines only (F). Sel.\ is the mean over normaliser levels of (T$-$V), Norm.\ the mean over selection levels of (W$-$F), and Int.\ the difference of differences (T/W$-$T/F)$-$(V/W$-$V/F), all on the RMSE/score scale; negative means the choice makes the result look better. $\ECE$ here is computed on the pooled predictions of the five seeds, whereas Table~\ref{tab:clean} reports the mean of per-seed $\ECE$; the two differ for the same model (0.014 against 0.032 on FD001).}
+\label{tab:leak}
+\centering\small
+\begin{tabular}{llrrrr|rrr}
+\toprule
+ & & T/W & V/W & V/F & T/F & Sel. & Norm. & Int. \\
+\midrule
+\multirow{2}{*}{FD001} & RMSE  & 12.81 & 13.91 & 15.11 & 13.23 & $-1.50$ & $-0.81$ & $+0.78$ \\
+ & Score & 239.2 & 375.3 & 508.4 & 268.8 & $-187.9$ & $-81.4$ & $+103.5$ \\
+\midrule
+\multirow{2}{*}{FD002} & RMSE  & 14.87 & 15.76 & 16.37 & 15.72 & $-0.76$ & $-0.73$ & $-0.24$ \\
+ & Score & 1073.0 & 1089.6 & 1246.9 & 1254.1 & $-4.7$ & $-169.2$ & $-23.8$ \\
+\midrule
+\multirow{2}{*}{FD004} & RMSE  & 17.82 & 19.03 & 19.80 & 19.24 & $-0.89$ & $-1.09$ & $-0.65$ \\
+ & Score & 1751.0 & 2533.5 & 3137.7 & 2685.8 & $-617.2$ & $-769.4$ & $-330.6$ \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Both choices make results look better in every cell but one (the FD002 score under fit-only normalisation, where test-set selection is marginally worse, 1254.1 against 1246.9). Their combined effect, from the fully leaked to the fully clean configuration, is 10--18\% in RMSE and 16--113\% in the NASA score, larger than the margins by which recent methods are separated. They are not additive. On FD001 the interaction is comparable with the main effects and positive: once the checkpoint is chosen on the test set, restricting the normaliser costs only a third of what it costs otherwise. On FD002 the two choices contribute equally to RMSE while the score effect is almost entirely the normaliser's, and on FD004 the two are comparable with a negative interaction. A reader auditing a result should therefore expect the two defects to compound in a dataset-dependent way, and should not attempt to correct a published number by subtracting a fixed premium.
+
+The interval metrics move differently. Test-set selection changes $\PICP$ by $-0.05$, $+0.01$ and $-0.01$ on the three sub-datasets and moves $\ECE$ in opposite directions on FD001 and FD004. The selection criterion is RMSE, a statistic of the mean alone; the variance head is a bystander to the search, and whatever the search does to calibration is a side effect. A leaked point-accuracy figure is optimistic; a leaked interval figure is merely unreliable.
+
+Whether these two choices are the most common in the C-MAPSS literature we cannot say without an audit of that literature, which we have not performed; we claim only that they are consequential and rarely stated.
+
+\section{Interval Mechanisms and Fair Calibration}
+\label{sec:mechanisms}
+Given a window of $W=30$ cycles of the $F$ selected channels (14 for the single-condition FD001 and FD003, 15 for the six-condition FD002 and FD004), the models predict the clipped target $y=\min(\mathrm{RUL},125)$. Two backbones are used. The LSTM has two layers of 64 units with dropout 0.2. The Transformer projects each sensor vector linearly into a model dimension of $d=64$, adds a learned positional encoding, and applies $n=2$ encoder layers with $h=4$ heads; the encoder output is average-pooled over the window before the heads. Hyperparameters of both were fixed before the protocol was adopted and were not re-tuned, so that Section~\ref{sec:leak} isolates the protocol effect; absolute accuracies are not upper bounds and every comparison is within a backbone. Training uses Adam at $10^{-3}$, batch 256 and 150 epochs, keeping the checkpoint with the lowest validation RMSE, without early stopping; seeds are $\{42, 2024, 7, 888, 123\}$.
+
+Five mechanisms form intervals from the same backbone. \emph{Fixed variance}: an MSE-trained head with one global $\sigma$. \emph{Heteroscedastic}: two heads emitting $\muh$ and $\log\sigh$ (clamped to $[-3,2]$), trained by Gaussian negative log-likelihood \cite{nix1994}, one deterministic pass. \emph{MC Dropout}: the MSE backbone with dropout active, $T=50$ passes, and the full predictive variance $\sigma^2_{\mathrm{res}}+\frac1T\sum_t(\muh_t-\muh)^2$ \cite{kendall2017}. \emph{Deep ensemble}: the five heteroscedastic seeds combined by moment matching \cite{lakshminarayanan2017}, whose variance contains both the spread of member means and the mean of member variances, so that member-level variance-floor saturation propagates into it. \emph{Split conformal}: the $\lceil(n+1)(1-\alpha)\rceil/n$ quantile of $|y-\muh|/\sigh$ on the calibration engines scales the heteroscedastic interval (CP-norm); CP-norm inherits its width modulation from that head.
+
+\emph{Fair calibration.} The fixed-variance and MC Dropout mechanisms need a residual scale $\sigma_{\mathrm{res}}$. Estimating it from training residuals, the usual practice, gives these two mechanisms less calibration resource than conformal prediction and makes their intervals optimistic: on every one of the eight backbone--dataset combinations the calibration-set residual scale is larger, by 8--36\% on average and up to $1.95\times$ for one seed. All main-table figures below therefore estimate $\sigma_{\mathrm{res}}$ on the calibration engines, the same data CP-norm uses; the training-residual figures are given in Appendix~\ref{app:fair}.
+
+\emph{Metrics.} RMSE and NASA score \cite{saxena2008} for the point estimate. For intervals at nominal level $1-\alpha=0.9$: $\PICP$, $\MPIW$ (cycles), $\ECE$ over twenty nominal levels, the per-engine attainment rate (trajectory unit; fraction of engines whose own coverage reaches 0.9), and the interval (Winkler) score $\IS=(u-l)+\frac{2}{\alpha}(l-y)_++\frac{2}{\alpha}(y-u)_+$ \cite{gneiting2007}, which penalises width and miscoverage jointly and is proper. A single-level weighted interval score was also computed and identifies the same top-ranked mechanism in every backbone--dataset combination; it is given in the supplementary material, since with one interval level it adds little. We treat $\PICP$ as a constraint and $\IS$ as the quality measure; coverage above nominal is not better, it is wider.
+
+\section{Degradation Protocol}
+\label{sec:degradation}
+\subsection{Additive Noise and the Excursion Axis}
+Gaussian noise is injected into raw readings before normalisation, without retraining, at levels referenced in three ways: to the within-condition channel standard deviation (scheme A), to the pooled standard deviation (B), and to a fixed fraction of the channel's range over the official training file (C), at $\{0.1,0.5,1,2,5\}\%$. The range in C is the training-data range, not an instrument's full scale; the channel statistics of all three schemes are computed over the whole official training file rather than the fitting engines only, so that the perturbation scale does not depend on the partition seed. Nominal signal-to-noise ratio is not comparable across schemes: at the same nominal level B injects an order of magnitude more absolute noise than A on six-condition data. Results are therefore expressed on the measured fraction of normalised inputs outside $[-1,1]$, written $\foob$, computed on the same terminal windows that are fed to the model and scored, with each model's own normaliser, and averaged over the same five models and five realisations as the coverage; results are pooled across schemes on that axis. The fixed-variance and MC Dropout mechanisms use the calibration-set residual scale of Section~\ref{sec:mechanisms} in every degradation experiment, as in Table~\ref{tab:clean}. Each level is a full factorial of five models and five noise realisations; within a realisation every mechanism receives the identical perturbed set, so that ensemble members read one sensor stream and cannot average the perturbation away.
+
+\subsection{Structured Degradation and Its Controls}
+Three deterministic degradations are applied at the same levels: a per-channel \emph{bias} with random sign; a within-window \emph{drift}, a linear ramp from zero to the nominal level at the last step; and a \emph{gain} error multiplying raw readings by $1\pm k$. To test the interpretation of the drift result, five controls are run at 5\% of range on FD001 and FD002 for both backbones: a reversed ramp (maximum at the first step, zero at the last); a shuffled ramp with the same values in random temporal order; a single-channel ramp on $s_9$ only; a bias of magnitude equal to the ramp's end value; and drift generated once on each continuous test trajectory and then windowed, so that a physical instant receives the same perturbation in every window that contains it.
+
+\subsection{Four-Way Attribution}
+Coverage can be lost because $|y-\muh|$ grows or because $\sigh$ changes. Writing $\mu_0,\sigma_0$ for clean outputs and $\mu_1,\sigma_1$ for perturbed ones, we evaluate coverage under all four combinations $C(\mu_i,\sigma_j)$ and report the mean effect and scale effect under both decomposition orders together with their interaction. Attribution is stated only where both orders agree.
+
+\subsection{Maintenance Decision Rule}
+A fixed rule converts each interval into a decision at the terminal unit: maintenance is triggered when a one-sided 95\% lower bound falls at or below a lead time $L\in\{10,20,30\}$ cycles. An engine with true RUL $\le L$ that was not triggered is an \emph{unrecognised maintenance need}; an engine triggered with true RUL $>L+20$ is a \emph{premature trigger}, and its remaining life beyond $L$ is the \emph{excess over the lead time}. Cost is $c_{\mathrm{late}}\,r_{\mathrm{late}}+c_{\mathrm{early}}\,r_{\mathrm{early}}$, reported at cost ratios $c_{\mathrm{late}}/c_{\mathrm{early}}\in\{5,20,100\}$.
+
+\section{Results on Clean Inputs}
+\label{sec:clean}
+Table~\ref{tab:clean} gives the fairly calibrated benchmark.
+
+\begin{table*}[!t]
+\caption{Clean-input benchmark under fair calibration (calibration-set residual scale for fixed variance and MC Dropout). Terminal unit except per-engine (trajectory unit). Mean of five seeds; ensemble is a single $M=5$ point estimate. Lower $\IS$ is better.}
+\label{tab:clean}
+\centering\small
+\begin{tabular}{llccccc|ccccc}
+\toprule
+ & & \multicolumn{5}{c|}{LSTM} & \multicolumn{5}{c}{Transformer} \\
+ & Mechanism & $\PICP$ & $\MPIW$ & $\ECE$ & Per-eng. & $\IS$ & $\PICP$ & $\MPIW$ & $\ECE$ & Per-eng. & $\IS$ \\
+\midrule
+\multirow{5}{*}{FD001}
+ & Fixed variance & 0.870 & 47.82 & 0.072 & 0.54 & 69.8 & 0.884 & 45.26 & 0.081 & 0.61 & 66.7 \\
+ & Heteroscedastic & 0.864 & 42.19 & 0.032 & 0.74 & 66.8 & 0.892 & 43.40 & 0.044 & 0.78 & 65.4 \\
+ & MC Dropout & 0.898 & 50.30 & 0.080 & 0.61 & 69.0 & 0.920 & 48.79 & 0.099 & 0.73 & 62.2 \\
+ & Deep ensemble & 0.910 & 45.05 & 0.049 & 0.85 & 62.5 & 0.920 & 45.40 & 0.068 & 0.81 & 60.0 \\
+ & Split-CP (norm) & 0.894 & 45.60 & 0.036 & 0.81 & 66.3 & 0.894 & 43.85 & 0.056 & 0.78 & 64.2 \\
+\midrule
+\multirow{5}{*}{FD002}
+ & Fixed variance & 0.916 & 60.92 & 0.057 & 0.61 & 73.7 & 0.918 & 58.91 & 0.080 & 0.64 & 72.5 \\
+ & Heteroscedastic & 0.918 & 51.62 & 0.033 & 0.76 & 62.0 & 0.890 & 49.78 & 0.032 & 0.74 & 65.1 \\
+ & MC Dropout & 0.926 & 62.83 & 0.065 & 0.65 & 74.2 & 0.922 & 60.50 & 0.082 & 0.66 & 71.5 \\
+ & Deep ensemble & 0.968 & 54.63 & 0.054 & 0.83 & 58.3 & 0.941 & 52.52 & 0.039 & 0.80 & 60.2 \\
+ & Split-CP (norm) & 0.934 & 53.72 & 0.036 & 0.77 & 62.5 & 0.908 & 52.60 & 0.027 & 0.77 & 65.5 \\
+\midrule
+\multirow{5}{*}{FD003}
+ & Fixed variance & 0.882 & 46.80 & 0.104 & 0.70 & 70.9 & 0.858 & 42.71 & 0.085 & 0.67 & 68.5 \\
+ & Heteroscedastic & 0.864 & 37.07 & 0.046 & 0.73 & 61.1 & 0.884 & 39.14 & 0.047 & 0.77 & 62.2 \\
+ & MC Dropout & 0.894 & 49.15 & 0.115 & 0.70 & 69.6 & 0.892 & 45.31 & 0.090 & 0.72 & 61.0 \\
+ & Deep ensemble & 0.910 & 40.63 & 0.093 & 0.78 & 55.7 & 0.940 & 42.86 & 0.080 & 0.87 & 55.0 \\
+ & Split-CP (norm) & 0.910 & 46.05 & 0.066 & 0.78 & 61.1 & 0.894 & 44.76 & 0.088 & 0.85 & 63.9 \\
+\midrule
+\multirow{5}{*}{FD004}
+ & Fixed variance & 0.883 & 60.93 & 0.056 & 0.69 & 87.2 & 0.856 & 55.53 & 0.076 & 0.70 & 87.3 \\
+ & Heteroscedastic & 0.893 & 58.00 & 0.028 & 0.76 & 79.6 & 0.862 & 50.48 & 0.033 & 0.75 & 83.6 \\
+ & MC Dropout & 0.893 & 63.07 & 0.063 & 0.72 & 86.9 & 0.888 & 57.70 & 0.041 & 0.76 & 79.9 \\
+ & Deep ensemble & 0.932 & 61.47 & 0.045 & 0.82 & 73.8 & 0.899 & 55.06 & 0.053 & 0.83 & 75.0 \\
+ & Split-CP (norm) & 0.889 & 56.72 & 0.038 & 0.74 & 79.2 & 0.864 & 51.74 & 0.094 & 0.76 & 83.7 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[!t]
+\caption{Ensemble gain with the partition held fixed. Single models: five initialisation seeds trained on the seed-42 partition; same-partition ensemble: those five combined; cross-partition ensemble: the five seeds of Table~\ref{tab:clean}, each trained on its own partition. Column 3 is the Table~\ref{tab:clean} heteroscedastic row for reference (five seeds, five partitions). Source: \texttt{leakfree\_r4/samesplit\_ensemble.json}.}
+\label{tab:samesplit}
+\centering\footnotesize
+\begin{tabular}{llcccccc}
+\toprule
+ & & \multicolumn{4}{c}{$\IS$} & \multicolumn{2}{c}{$\PICP$} \\
+Backbone & Data & 5 part., single & 1 part., single & 1 part., ens. & 5 part., ens. & 1 part., ens. & 5 part., ens. \\
+\midrule
+LSTM & FD001 & 66.8 & 59.9 $\pm$ 2.2 & 57.9 & 62.5 & 0.900 & 0.910 \\
+LSTM & FD002 & 62.0 & 63.7 $\pm$ 4.2 & 58.9 & 58.3 & 0.929 & 0.968 \\
+LSTM & FD003 & 61.1 & 59.8 $\pm$ 4.9 & 56.4 & 55.7 & 0.920 & 0.910 \\
+LSTM & FD004 & 79.6 & 80.5 $\pm$ 3.5 & 76.5 & 73.8 & 0.941 & 0.932 \\
+Transformer & FD001 & 65.4 & 61.4 $\pm$ 3.2 & 59.4 & 60.0 & 0.930 & 0.920 \\
+Transformer & FD002 & 65.1 & 68.1 $\pm$ 7.0 & 62.8 & 60.2 & 0.913 & 0.941 \\
+Transformer & FD003 & 62.2 & 63.1 $\pm$ 6.2 & 54.2 & 55.0 & 0.930 & 0.940 \\
+Transformer & FD004 & 83.6 & 81.9 $\pm$ 4.5 & 74.8 & 75.0 & 0.890 & 0.899 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+Three findings hold across the table. First, coverage and interval score disagree about MC Dropout, and coverage rankings among the single-model mechanisms do not transfer between backbones. Under fair calibration MC Dropout covers at least as well as the heteroscedastic head in all eight backbone--dataset combinations, yet its interval score is the worst or second-worst of the five on the LSTM (74.2 against 62.0 for the head on FD002) and only competitive on the Transformer: it buys coverage with width. Between the fixed-variance reference and the heteroscedastic head the sign of the coverage difference flips across sub-datasets in a pattern that differs between backbones (the head covers less on FD001 and FD003 for the LSTM but only on FD002 for the Transformer). Nor does the ranking by degradation tolerance, reported in Section~\ref{sec:attribution}. Second, the ranking by interval score is more stable than the ranking by coverage: the deep ensemble has the lowest $\IS$ in all eight backbone--dataset combinations and the fixed-variance reference the highest in seven, with the single-pass heteroscedastic head between them. This is an in-sample observation on one ensemble per combination, and the ensemble of Table~\ref{tab:clean} is a cross-partition ensemble: because the partition of Section~\ref{sec:protocol} is drawn per seed, its five members were fitted on five different subsets whose union covers 99 of the 100 FD001 training engines, so part of its advantage could be data coverage rather than averaging. Table~\ref{tab:samesplit} removes that confound by training five initialisations on one partition. On this partition the same-partition ensemble beats the mean of its own members by 2.0--8.9 $\IS$ points in all eight combinations, and the two ensembles differ by at most 4.7 points with no consistent direction. This shows that the gain does not depend entirely on cross-partition data coverage; it does not estimate the coverage effect over the space of partitions, since one partition was examined. The same table also shows that on FD001 five single models on this partition average 59.9 $\IS$ against 66.8 for five single models on five partitions, a difference as large as the ensemble margin, which is one reason five seeds on five partitions are a coarse instrument. Three disjoint five-member ensembles from a fifteen-seed pool (Appendix~\ref{app:seeds}) give $\IS$ spreads of 2--5 points, and a per-engine paired bootstrap on the same test set, of one disjoint ensemble against the single seed-42 model, excludes zero on FD004 only, with FD003 reversed in point estimate; this is a within-benchmark check of one comparison, not an external validation, and the margin is consistent in aggregate but not established per sub-dataset. On the LSTM the head recovers about 60\% of the ensemble's $\IS$ improvement over the fixed-variance reference (42--76\% across the four sub-datasets) at one fifth of the inference cost. Third, fair calibration matters: with a training-residual scale the fixed-variance and MC Dropout rows are 8--36\% narrower and correspondingly under-cover, and the heteroscedastic head's apparent advantage over them is larger than it is here.
+
+Inference cost is reported in Appendix~\ref{app:latency} as distributions over repeated measurements at batch sizes 1, 32 and 512, without a pass/fail criterion; the architectural multipliers $T=50$ and $M=5$ are consistent with the LSTM measurements and are used as a diagnostic only.
+
+\section{Attribution of Coverage Loss under Additive Noise}
+\label{sec:attribution}
+Under noise, 34 of the 40 (backbone, sub-dataset, mechanism) combinations lose ten points of coverage before $\foob$ reaches 1.7\%, and all but one before 3.5\%. The exception is the Transformer ensemble on FD001: on the original grid its crossover interpolates to 7.0\%; on a refined grid of ten levels between 1.0\% and 11.8\% excursion the grand-mean curve crosses at 3.3\%, but the curve is not monotone, dipping below the threshold and recovering more than once, and the first crossing of the five individual realisations ranges from 1.0\% to 4.6\%. The crossover is ill-defined for this cell; its grand-mean value is comparable with the largest of the other cells (3.5\% for the fixed-variance LSTM on FD001), and we report it as an unstable outlier rather than as a stable threshold. These counts are sensitive to the noise realisation: under an earlier, independently seeded realisation of the same protocol 39 of 40 cells crossed before 1.7\%. The relative ordering of mechanisms is not stable: on the LSTM the fixed-variance and MC Dropout rows fail last on FD001 and FD002 and first on FD003 and FD004, and on the Transformer the ordering agrees with the LSTM on none of the four sub-datasets. We report no mechanism as more tolerant than another.
+
+What is stable is the attribution. Table~\ref{tab:attr} gives the four-way decomposition at the point where the heteroscedastic head has lost ten points of coverage, obtained by interpolation on the measured curves for both backbones; $C_{11}$ follows from the definition of the point, $C_{10}$ is interpolated on the frozen-scale curve, and $C_{01}$ is interpolated between two new evaluations that bracket the point. Full four-way values and cross-seed standard deviations (0.02--0.08 in coverage) are in the supplementary material; the sign judgements are robust to that spread, the magnitudes less so. An earlier draft read the decomposition at the nearest measured grid point instead, where the total loss ranged from 0.04 to 0.15; moving to the interpolated point changed the sign of the Transformer's scale effect in five of eight cells and removed the one LSTM case in which mean dominance had depended on decomposition order, which is a warning about how sensitive this quantity is to where it is read. In all 16 (backbone, sub-dataset, mechanism) cases the seed-pooled point estimate of the mean effect exceeds that of the scale effect in magnitude under both decomposition orders. A per-seed paired bootstrap of $|\Delta_\mu|-|\Delta_\sigma|$ at the same interpolated point excludes zero in all 16 cells under the mean-first order and in 15 of 16 under the scale-first order, the exception being CP-norm on the LSTM for FD001 (interval $[-0.008, 0.038]$). Mean dominance is therefore supported by interval as well as by point estimate in 31 of the 32 order-specific cells. The scale effect is secondary in magnitude but not stable in sign. Read with the mean varied first, the learned scale appears to help in two LSTM cells (both mechanisms on FD004) and is within a point of zero on FD003; read with the scale varied first, it is harmful in all sixteen cells, and averaged over the two orders it is harmful in all sixteen. The interaction between mean and scale, $(C_{11}-C_{10})-(C_{01}-C_{00})$, is positive in all sixteen cells, reaching $+0.047$ of coverage, and is what makes the sign order-dependent. The magnitudes are also sensitive to the noise realisation: an earlier, independently seeded realisation of the same protocol gave 38\% for the FD001 heteroscedastic share under the mean-first order against the 30\% reported here, so shares should be read to within several points. We therefore report mean dominance as the finding and draw no conclusion about whether the learned scale ever helps under degradation: there is no order-independent evidence that it does, and under one order it never does.
+
+\begin{table*}[!t]
+\caption{Four-way attribution of coverage loss under additive noise at the ten-point loss of the heteroscedastic head. Scale contribution, as a share of the total ten-point loss (positive: the live scale makes the loss larger), is given under both decomposition orders. The point-estimate row indicates whether $|$mean$|>|$scale$|$ under both orders on the seed-pooled predictions; the CI rows report, for the heteroscedastic head and CP-norm respectively, whether a per-seed paired bootstrap of $|\Delta_\mu|-|\Delta_\sigma|$ at the same interpolated point excludes zero, separately for each order. Scale contribution is the share of total loss. LSTM shown; Transformer in Appendix~\ref{app:attr}.}
+\label{tab:attr}
+\centering\small
+\begin{tabular}{llcccc}
+\toprule
+ & & FD001 & FD002 & FD003 & FD004 \\
+\midrule
+\multirow{2}{*}{Heteroscedastic} & scale, mean first & +30.0\% & +9.2\% & +2.0\% & -10.8\% \\
+ & scale, scale first & +35.8\% & +29.7\% & +21.0\% & +36.4\% \\
+\multirow{2}{*}{CP-norm} & scale, mean first & +19.2\% & +12.3\% & +7.6\% & -8.7\% \\
+ & scale, scale first & +42.2\% & +32.0\% & +33.3\% & +37.0\% \\
+\midrule
+\multicolumn{2}{l}{Mean dominates (point estimate), both orders} & yes & yes & yes & yes \\
+\multicolumn{2}{l}{CI excludes zero, mean first (het./CP)} & yes/yes & yes/yes & yes/yes & yes/yes \\
+\multicolumn{2}{l}{CI excludes zero, scale first (het./CP)} & yes/no & yes/yes & yes/yes & yes/yes \\
+\multicolumn{2}{l}{Baseline clamp fraction} & 0.34 & 0.22 & 0.40 & 0.076 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Where the scale is harmful its behaviour is the same: $\sigh$ contracts while $|y-\muh|$ grows, because a rising fraction of samples reaches the architectural floor on $\log\sigh$; the mean does not collapse to a constant but disperses, so the network is extrapolating. A hypothesis that the scale's contribution is predicted by the clean-data floor fraction ordered the first three sub-datasets perfectly and was tested by adding FD003, whose floor fraction is the highest of the four but whose scale contribution is near zero; it is not supported.
+
+\section{Structured Degradation}
+\label{sec:structured}
+\subsection{Bias and Gain Are Tolerated; Drift Is Not}
+Table~\ref{tab:types} gives the excursion at which the heteroscedastic head loses ten points of coverage under each degradation, both backbones. Under bias and gain the six-condition sub-datasets tolerate 7--14\% excursion before losing ten points, an order of magnitude beyond the 1--2\% at which noise causes the same loss, and on the single-condition sub-datasets the criterion is reached only sporadically (Transformer bias on FD003 at 0.03\%, gain on FD003 beyond 10\% for both backbones), with the reaching cells changing between noise realisations. The dose--response curves of the four degradations do not coincide on $\foob$: mean absolute differences in $\PICP$ at matched excursion are 0.10--0.48. The excursion at which the ten-point criterion is met is similar across mechanisms, within about two points in any (degradation, sub-dataset) cell, but the depth of the collapse at 5\% of range is not: coverage differs between mechanisms by 5--40 points there, and in 22 of the 24 (backbone, degradation, sub-dataset) cells the worst mechanism is one of the two that use the heteroscedastic scale head (the head itself or CP-norm), while the fixed-scale mechanisms retain up to 25 points more coverage and the ensemble or MC Dropout is best in every cell. Under the structured perturbations of this study, the mechanisms with a fixed residual scale generally retain higher coverage; since the mechanisms also differ in mean prediction, training objective and interval width, this is not attributed to the fixed scale alone, and higher coverage here does not translate into a better interval score or a lower maintenance cost.
+
+\begin{table*}[!t]
+\caption{Excursion $\foob$ at which the heteroscedastic head has lost ten points of coverage under structured degradation. n.r.: not reached within 5\% of range. Values above 10\% are outside the regime studied and are given as $>10$. $<10^{-4}$: coverage falls by ten points while the excursion stays below $10^{-4}$ at every level, so no crossover on the excursion axis exists.}
+\label{tab:types}
+\centering\small
+\begin{tabular}{llcccc}
+\toprule
+Backbone & Degradation & FD001 & FD002 & FD003 & FD004 \\
+\midrule
+\multirow{3}{*}{LSTM} & Bias & n.r. & $>10$ & n.r. & 9.83\% \\
+ & Drift & $<10^{-4}$ & 9.27\% & $<10^{-4}$ & $>10$ \\
+ & Gain & n.r. & 9.73\% & $>10$ & 9.14\% \\
+\midrule
+\multirow{3}{*}{Transformer} & Bias & n.r. & $>10$ & 0.03\% & $>10$ \\
+ & Drift & $<10^{-4}$ & 8.69\% & $<10^{-4}$ & 9.09\% \\
+ & Gain & n.r. & 8.79\% & $>10$ & 7.84\% \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Drift is different. At 5\% of range a within-window ramp reduces the heteroscedastic head's coverage to 0.61--0.63 on FD001, 0.02--0.03 on FD002, 0.08--0.19 on FD003 and 0.08--0.19 on FD004 across the two backbones, while on the single-condition sub-datasets $\foob$ remains below $10^{-4}$ (zero to numerical precision on FD001): windows near end of life already sit inside the training range and a ramp does not push them out. On the six-condition sub-datasets $\foob$ under drift is 16--18\%, comparable with bias, yet the coverage loss is far larger.
+
+\subsection{Why Drift Is Damaging: Five Controls}
+Table~\ref{tab:controls} reports the controls on FD002. A bias of magnitude equal to the ramp's end value leaves coverage at 0.38 (LSTM) and 0.21 (Transformer) where the ramp leaves it at 0.02--0.03, at comparable excursion; the end magnitude is not the cause. A reversed ramp, with the same values in the opposite temporal order, leaves coverage at 0.66 (LSTM) and 0.63 (Transformer); a shuffled ramp at 0.24 on the LSTM but only 0.08 on the Transformer, which is nearly as damaged by the shuffled values as by the ramp; a ramp on the single channel $s_9$, with excursion $10^{-4}$, still reduces coverage to 0.66 and 0.55. Continuous drift is defined as a ramp from zero at the first cycle of each test trajectory to $k$ times the range at its last cycle, after which the terminal window is taken as usual; for a median FD002 trajectory of 132 cycles its local slope within the window is 4.5 times gentler than the per-window ramp's, and its window mean offset about 89\% of the end value against 50\%. It produces the same loss as the per-window ramp (0.027 against 0.028 on the LSTM, 0.019 against 0.022 on the Transformer), while the equal-end bias, with 100\% offset and zero slope, does not. Neither slope steepness nor offset magnitude is the driver; the presence of monotone within-window change is. A further control fixes the last $k$ steps of the ramp and shuffles the rest: for the LSTM, $k=1$ leaves coverage at 0.24, close to the fully shuffled 0.24, while $k=5$ brings it to 0.09, approaching the ramp's 0.03; the damage requires a run of correctly ordered steps at the end of the window, not merely the end value. For the Transformer every shuffled variant is nearly as damaging as the ramp (0.02--0.07), so the control does not discriminate there. Together the controls identify a monotone trend rising towards the prediction instant as the damaging feature for the recurrent backbone; for the Transformer the reversed-ramp and equal-bias controls point the same way but the temporal-order component is not established. Whether the models are reading the trend as degradation, or responding to it through some other nonlinearity, the present controls cannot say. A monotone trend towards the prediction instant is also the signature of degradation in the training data, so one reading is that a drifting sensor presents a healthy engine as one approaching failure; the present controls cannot establish that reading, only that the trend is what damages. What is observed is that the learned scale contracts under drift, as it does near end of life on clean data, and that the heteroscedastic head's coverage under drift is below the fixed-variance reference on three of four sub-datasets on both backbones. We note that the reversed and shuffled controls also reduce the perturbation at the final step, so they are consistent with recency weighting as well as with trend reading; the equal-magnitude bias control is the one that separates the two, and it favours trend.
+
+\begin{table}[!t]
+\caption{Drift controls at 5\% of range, FD002, heteroscedastic head. $\PICP$ under each perturbation.}
+\label{tab:controls}
+\centering\footnotesize
+\begin{tabular}{lccc}
+\toprule
+Perturbation & $\foob$ & LSTM & Transformer \\
+\midrule
+Ramp (per window) & 0.175 & 0.028 & 0.022 \\
+Ramp (contin. trajectory) & 0.201 & 0.027 & 0.019 \\
+Bias, equal end value & 0.174 / 0.164 & 0.378 & 0.209 \\
+Reversed ramp & 0.173 & 0.659 & 0.633 \\
+Shuffled ramp & 0.174 & 0.238 & 0.076 \\
+Single-channel ramp ($s_9$) & $10^{-4}$ & 0.660 & 0.551 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Maintenance-Decision Consequences}
+\label{sec:decision}
+We call the following a \emph{terminal-instant decision stress test}: one decision per test engine, at the last available window, under a fixed rule. It measures wrong triggers at a given state; it is not a simulation of first maintenance time, fleet availability or lifetime cost. The rule triggers maintenance when a one-sided 95\% lower bound on RUL is at or below the lead time $L$. For the Gaussian mechanisms the bound is $\muh-1.645\sigh$; for split conformal it is a one-sided conformal quantile at $\alpha=0.05$ recalibrated for the purpose, so that every mechanism is compared at the same nominal tail risk. An engine with true RUL $\le L$ that is not triggered is an \emph{unrecognised maintenance need}; we report its rate over all engines and conditionally over the at-risk group. An engine triggered with true RUL $>L+20$ is a \emph{premature trigger}, for which we report the true RUL at trigger, both under the 125-cycle label clip and unclipped, and its excess over $L$; the excess is the life surrendered relative to an ideal trigger at exactly $L$, on the assumption that maintenance follows immediately, not the total remaining life. Costs are $c_{\mathrm{late}}r_{\mathrm{late}}+c_{\mathrm{early}}r_{\mathrm{early}}$ at cost ratios $\{5,20,100\}$, and rankings between mechanisms are compared with a per-engine bootstrap.
+
+Table~\ref{tab:decision} gives the heteroscedastic head; the full 5 mechanisms $\times$ 2 backbones $\times$ 4 sub-datasets $\times$ 4 conditions $\times$ 3 lead times with costs and bootstrap intervals are in the supplementary material. Two results are robust. First, the direction of error depends on the degradation. Under bias the unrecognised rate is non-zero (0.073 overall, 0.35 within the at-risk group, FD002/LSTM at $L=20$); the deep ensemble has the lowest unrecognised rate on all four LSTM sub-datasets and is lowest or within 0.001 of lowest on the Transformer. Under drift the unrecognised rate is zero in every cell but one (0.0008 for the fixed-variance reference on FD004, Transformer), and instead 65--73\% of six-condition engines are triggered, with a mean unclipped true remaining life among those triggers of 106--108 cycles (96--98 under the label clip) on both backbones; the single-condition sub-datasets are far less affected (2.6\% and 15\% premature on FD001 and FD003 for the LSTM). Drift makes the models pessimistic, with the learned scale contracted as well; bias makes them miss. Second, no mechanism is recommendable on cost. Across the 96 (backbone, sub-dataset, condition, lead time) combinations the cost ranking reverses between cost ratios in 34, and in 15 of those the top-ranked mechanism changes (43 and 26 under an earlier noise realisation); the per-engine bootstrap finds only 63--104 of 144 pairwise top-versus-rest differences to exclude zero at 95\%. The qualitative asymmetry is the finding; the ranking is not.
+
+\begin{table*}[!t]
+\caption{Terminal-instant decision stress test at lead time $L=20$, heteroscedastic head, one-sided 95\% lower bound. Unrecognised: fraction of all engines (in parentheses, of engines with true RUL $\le L$) not triggered. Premature: fraction triggered with true RUL $>L+20$. True RUL at trigger is given both with the 125-cycle label clip used elsewhere in the paper and with the original unclipped label, as the mean over premature triggers; the excess over $L$ uses the unclipped value. Trigger decisions use thresholds of at most 50 cycles and are unaffected by the clip.}
+\label{tab:decision}
+\centering\footnotesize
+\begin{tabular}{llcccc}
+\toprule
+Condition & Data/backbone & Unrecognised (cond.) & Premature & RUL at trigger (clipped / unclipped) & Excess over $L$ (unclipped) \\
+\midrule
+Clean & FD002/LSTM & 0.000 (0.000) & 0.037 & 50.4 / 50.4 & 30.4 \\
+Bias 5\% & FD002/LSTM & 0.073 (0.348) & 0.167 & 94.1 / 103.7 & 83.7 \\
+Drift 5\% & FD002/LSTM & 0.000 (0.000) & 0.700 & 95.6 / 105.6 & 85.6 \\
+Drift 5\% & FD004/LSTM & 0.000 (0.000) & 0.693 & 98.3 / 108.5 & 88.5 \\
+Drift 5\% & FD002/Transformer & 0.000 (0.000) & 0.701 & 95.6 / 105.7 & 85.7 \\
+Drift 5\% & FD001/LSTM & 0.000 (0.000) & 0.026 & 63.0 / 63.0 & 43.0 \\
+Drift 5\% & FD003/LSTM & 0.000 (0.000) & 0.154 & 54.5 / 54.5 & 34.5 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The two structured degradations therefore fail on opposite sides of the rule. Bias produces the safety-side error, an engine operated past the point at which service was due. Drift produces an economic error that a coverage statistic does not convey: two thirds of a six-condition fleet triggered early, surrendering on average on the order of 85 cycles beyond the lead time. Because true degradation also produces trends, a monitor that distinguishes sensor drift from engine degradation is a research problem rather than a corrective we can offer here; what the stress test establishes is that a decision audit must count both sides of the rule, and that neither side is predicted by the excursion statistic.
+
+\section{Split Conformal Prediction on the Standard Partition}
+\label{sec:cp}
+Split conformal prediction guarantees marginal coverage of at least $1-\alpha$ when calibration and test scores are exchangeable \cite{barber2023}. On the standard C-MAPSS partition the calibration windows are drawn across whole trajectories and the test windows are concentrated near truncation points, and windows within an engine are dependent, so the conditions of the guarantee are not obviously met. We observe empirical coverage of 0.934 (CP-norm, LSTM, FD002; $+0.034$ over nominal) and 0.864 (CP-norm, Transformer, FD004; $-0.036$); the other six backbone--dataset combinations lie within $\pm0.03$. We do not read these deviations as a failure of the guarantee: over-coverage is permitted by it, and a single finite-sample empirical coverage does not establish non-exchangeability in either direction. What the observations do establish is that a conformal interval reported on this partition should be accompanied by its empirical coverage, with a per-engine-clustered uncertainty, rather than by the nominal level alone.
+
+\section{Discussion}
+\label{sec:discussion}
+\subsubsection*{What a reliability engineer should change}
+Three practices follow from the results. First, validate interval mechanisms under fair calibration and score them with a proper interval score; a coverage figure above nominal is not evidence of a better interval, and a mechanism that draws its scale from training residuals is not comparable with one that uses held-out data. Second, do not read a range-based excursion statistic as a risk indicator. On single-condition data some damaging drifts leave it at zero; on six-condition data bias and drift produce comparable excursion with opposite decision consequences. A monitor that separates sensor drift from genuine degradation, both of which trend, is needed and is not provided here. Third, expect drift and bias to fail on opposite sides of the decision rule, and audit both premature triggers and unrecognised needs rather than either alone; do not select a mechanism on a single cost ratio.
+\subsubsection*{Protocol}
+The $2\times2$ experiment shows that the two protocol choices interact and that their effect on interval metrics is unpredictable in sign. A published C-MAPSS result cannot be corrected for them after the fact; the protocol must be stated.
+\subsubsection*{On the learned scale as a measurement uncertainty}
+A heteroscedastic $\sigh$ is tempting to read as a GUM combined standard uncertainty. The results argue against it: the model's own uncertainty, as evidenced by a 10--18\% protocol effect on the same architecture, is not negligible in the sense the GUM presumes \cite{angrisani2026}, and a scale that contracts under drift violates the requirement that a stated uncertainty not be optimistic where the measurement is least trustworthy. On clean, in-range inputs $1.645\,\sigh$ is an empirically calibrated half-width of a central 90\% interval, and nothing more; the ten-point loss thresholds of Section~\ref{sec:attribution} are properties of this benchmark, not a general range of validity.
+
+\section{Limitations}
+Two backbones on simulated data; N-CMAPSS \cite{chao2021} with recorded flight profiles is the next step. Because each seed draws its own partition, the five-seed spread mixes initialisation and partition variability; Table~\ref{tab:samesplit} shows that on FD001 the seed-42 partition alone differs from the five-partition mean by about seven $\IS$ points, comparable with any mechanism margin. Five seeds also do not resolve that spread: a five-seed standard deviation is itself uncertain by about $\pm35\%$ (Appendix~\ref{app:seeds}). The ensemble's main-table entries are single point estimates, with between-ensemble spread of up to two points of $\PICP$ from disjoint groups of a fifteen-seed pool. Structured degradation was applied to 5\% of the training range, which is not an instrument's full scale; the excursion at which coverage drops ten points is interpolated and becomes unreliable where curves are flat, so values beyond 10\% are reported as bounds. The drift controls were run on two sub-datasets. The maintenance rule is one fixed rule with one lead-time family; rank reversal across cost ratios was checked exhaustively over the 96 combinations. KernelSHAP attribution was computed and is not reported: cross-seed rank correlation was about 0.3 and did not improve with a fourfold sampling budget. No stable latency plateau was found for the Transformer at any batch size tested. Every perturbation is seeded from a SHA-256 digest of its (sub-dataset, condition, trial) identifiers, dropout sampling is seeded, and cuDNN is run in deterministic mode; two independent runs of the released code on the same machine (PyTorch 2.11, CUDA 13, RTX A5000 Laptop GPU) reproduced the 31 result files behind the tables bit-for-bit, as listed with their hashes in \texttt{REPRODUCE.md}. Training, timing and cross-platform reproduction are outside that check. Each noisy condition is nevertheless one seeded realisation of five trials, and the changes quoted in Sections~\ref{sec:attribution} and~\ref{sec:decision} between two independent seedings (the FD001 heteroscedastic scale share moving from 38\% to 30\%, cells crossing 1.7\% moving from 39 to 34 of 40, cost-rank reversals from 43 to 34 of 96) indicate the realisation sensitivity of the noisy-condition figures.
+
+\section{Conclusion}
+Under a leakage-audited protocol with fair calibration, which mechanism gives the best-covered RUL interval depends on the backbone; by interval score the deep ensemble is best in every combination in sample, with a margin that independent replication confirms on one sub-dataset. Coverage lost under additive noise is lost predominantly through the mean, robustly to decomposition order, in all 16 cases by point estimate and in 31 of 32 order-specific cells by paired interval. Different sensor degradations produce different directions of prediction and decision error: a within-window drift, damaging through its temporal structure, makes the models pessimistic and triggers premature maintenance on two thirds of a six-condition fleet, while bias makes them miss maintenance needs; on single-condition data drift does this at an input excursion below $10^{-4}$. A single excursion statistic does not characterise these risks, cost rankings between mechanisms are unstable across cost ratios, and monitoring that separates sensor drift from engine degradation remains to be developed.
+
+\appendices
+\section{Audit History}
+\label{app:audit}
+The protocol of Section~\ref{sec:protocol} was adopted after an audit of the pipeline behind an earlier, unpublished version of this work found that the checkpoint had been selected on the official test set and the normaliser fitted on data used for checkpoint selection; the $2\times2$ experiment retrained from that pipeline. The same audit found that the earlier MC Dropout baseline had omitted the aleatory variance term, producing coverage of 0.40--0.49, and that an earlier ensemble evaluation had given each member its own noise realisation, which averages the perturbation at $1/\sqrt{M}$ and manufactured an apparent robustness. An earlier mean-only counterfactual used a separately trained MSE model and disagreed in sign with the frozen-output control on two of three sub-datasets. All are corrected above; the earlier results are retained in the released repository (\url{https://github.com/jeff-1980/paper2}, tag \texttt{v0.9-review}) under \texttt{superseded/}.
+
+\section{Fair Calibration versus Training Residuals}
+\label{app:fair}
+Table~\ref{tab:fair} gives the ratio of the calibration-set to the training-residual scale $\sigma_{\mathrm{res}}$, and the resulting $\PICP$/$\MPIW$ under each estimator, for the fixed-variance and MC Dropout mechanisms.
+
+\begin{table*}[!t]
+\caption{Calibration-set versus training-residual $\sigma_{\mathrm{res}}$: ratio, and $\PICP$/$\MPIW$ under each estimator. Tr.: training-residual; Cal.: calibration-set (fair, used in Table~\ref{tab:clean}).}
+\label{tab:fair}
+\centering\small
+\begin{tabular}{llcccc}
+\toprule
+ & & \multicolumn{2}{c}{Fixed variance} & \multicolumn{2}{c}{MC Dropout} \\
+Backbone/Data & Ratio & $\PICP$ Tr. & $\PICP$ Cal. & $\PICP$ Tr. & $\PICP$ Cal. \\
+\midrule
+LSTM/FD001 & 1.241 & 0.806 & 0.870 & 0.830 & 0.898 \\
+LSTM/FD002 & 1.125 & 0.880 & 0.916 & 0.894 & 0.926 \\
+LSTM/FD003 & 1.364 & 0.818 & 0.882 & 0.840 & 0.894 \\
+LSTM/FD004 & 1.103 & 0.854 & 0.883 & 0.865 & 0.893 \\
+Transformer/FD001 & 1.079 & 0.870 & 0.884 & 0.912 & 0.920 \\
+Transformer/FD002 & 1.084 & 0.897 & 0.918 & 0.903 & 0.922 \\
+Transformer/FD003 & 1.238 & 0.788 & 0.858 & 0.838 & 0.892 \\
+Transformer/FD004 & 1.168 & 0.814 & 0.856 & 0.847 & 0.888 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The training-residual $\PICP$ is below the calibration-set $\PICP$ in all sixteen (backbone, dataset, mechanism) cells, confirming systematic under-coverage of the training-residual estimator. $\MPIW$ under the training-residual estimator is narrower throughout (e.g.\ LSTM/FD001 fixed variance: 38.55 versus 47.82 cycles), consistent with the narrower scale.
+
+\section{Transformer Attribution}
+\label{app:attr}
+Table~\ref{tab:attr-transformer} gives the four-way decomposition for the Transformer, in the same form as Table~\ref{tab:attr} for the LSTM. The mean effect dominates under both decomposition orders in all eight (sub-dataset, mechanism) cells, with no exception.
+
+\begin{table*}[!t]
+\caption{Four-way attribution of coverage loss under additive noise, Transformer, at the ten-point loss of the heteroscedastic head. Scale contribution is the share of total loss under each decomposition order.}
+\label{tab:attr-transformer}
+\centering\small
+\begin{tabular}{llcccc}
+\toprule
+ & & FD001 & FD002 & FD003 & FD004 \\
+\midrule
+\multirow{2}{*}{Heteroscedastic} & scale, mean first & +17.0\% & +12.7\% & +0.1\% & +2.7\% \\
+ & scale, scale first & +21.2\% & +28.4\% & +20.3\% & +33.6\% \\
+\multirow{2}{*}{CP-norm} & scale, mean first & +14.1\% & +11.3\% & +5.2\% & +6.3\% \\
+ & scale, scale first & +26.3\% & +31.6\% & +21.0\% & +28.8\% \\
+\midrule
+\multicolumn{2}{l}{Mean dominates (point estimate), both orders} & yes & yes & yes & yes \\
+\multicolumn{2}{l}{CI excludes zero, mean first (het./CP)} & yes/yes & yes/yes & yes/yes & yes/yes \\
+\multicolumn{2}{l}{CI excludes zero, scale first (het./CP)} & yes/yes & yes/yes & yes/yes & yes/yes \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Seed Variance and Ensemble Size}
+\label{app:seeds}
+Ten further seeds per sub-dataset were trained under the same protocol (nine of 120 QC checks fell outside the five-seed range and were retained). The ratio of fifteen- to five-seed $\PICP$ standard deviation is 1.45, 0.71 and 0.78 on FD001, FD002 and FD004, consistent with the sampling error of a standard deviation from $n=5$. Over $M\in\{2,3,5,10\}$ ensemble size yields diminishing but monotone gains on every sub-dataset; on FD004, $\PICP$ rises from 0.910 to 0.937 and $\IS$ falls from 76.4 to 73.3. Three disjoint five-member ensembles from the pool give $\IS$ of 55.2/57.4/57.8, 58.9/57.3/58.5, 57.0/53.0/51.9 and 73.1/73.9/75.9 on FD001--FD004.
+
+\section{Latency}
+\label{app:latency}
+Per-sample latency of every mechanism was measured on one NVIDIA RTX A5000 Laptop GPU at batch sizes 1, 32 and 512 with CUDA-event and wall-clock timing separately, eleven repetitions per cell, reported as median and interquartile range without exclusion. Table~\ref{tab:latency} gives the single-pass (heteroscedastic head) CUDA-event median and interquartile range, in microseconds per sample, at each batch size; wall-clock medians agree with CUDA-event medians to within a few percent throughout and are not tabulated separately. The architectural multipliers $T=50$ (MC Dropout) and $M=5$ (ensemble) are consistent with the LSTM measurements and are used as a diagnostic only, not as an acceptance criterion.
+
+\begin{table*}[!t]
+\caption{Per-sample latency of the heteroscedastic head, CUDA-event timing, median (IQR) in microseconds, at batch sizes 1, 32 and 512.}
+\label{tab:latency}
+\centering\small
+\begin{tabular}{llccc}
+\toprule
+Data & Backbone & Batch 1 & Batch 32 & Batch 512 \\
+\midrule
+FD001 & LSTM & 553.89 (71.65) & 10.98 (1.04) & 1.80 (0.12) \\
+FD001 & Transformer & 802.82 (67.09) & 21.98 (1.88) & 5.22 (0.09) \\
+FD002 & LSTM & 364.54 (46.51) & 12.77 (3.09) & 2.80 (0.06) \\
+FD002 & Transformer & 827.39 (76.24) & 25.63 (2.13) & 27.94 (1.07) \\
+FD003 & LSTM & 351.23 (13.31) & 12.13 (1.17) & 2.81 (0.04) \\
+FD003 & Transformer & 755.71 (126.98) & 25.32 (1.04) & 7.06 (0.05) \\
+FD004 & LSTM & 355.33 (24.03) & 11.07 (1.14) & 2.82 (0.08) \\
+FD004 & Transformer & 887.81 (86.02) & 25.25 (2.43) & 6.15 (0.11) \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The LSTM's single pass costs 0.0018\,ms per sample on FD001 and 0.0028\,ms on the other sub-datasets at batch 512 and about 0.35--0.55\,ms at batch 1; the Transformer's 2.5--3 times more. One cell (Transformer, FD002, batch 512) returned a median 4--5 times its neighbours and is reported as measured.
+
+\bibliographystyle{ieeetr}
+\bibliography{refs}
+\end{document}

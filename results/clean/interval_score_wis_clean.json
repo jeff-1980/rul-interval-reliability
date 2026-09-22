@@ -1,0 +1,262 @@
+{
+  "LSTM": {
+    "FD001": {
+      "MSE_fixed": {
+        "interval_score_mean": 76.09144202804565,
+        "interval_score_std": 105.84431310974443,
+        "wis_mean": 6.18098691927592,
+        "wis_std": 6.687896139835245
+      },
+      "NLL": {
+        "interval_score_mean": 66.7594649887085,
+        "interval_score_std": 87.37912551312994,
+        "wis_mean": 5.915017491658529,
+        "wis_std": 5.949328287003125
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 72.41977006912231,
+        "interval_score_std": 96.17970745672076,
+        "wis_mean": 6.037921538988749,
+        "wis_std": 6.3156748397213605
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 62.538618850708005,
+        "interval_score_std": 72.09243185059285,
+        "wis_mean": 5.588136421839396,
+        "wis_std": 5.2410264086171265
+      },
+      "CP_norm": {
+        "interval_score_mean": 66.25389381790161,
+        "interval_score_std": 82.22368063409397,
+        "wis_mean": 5.898165119298299,
+        "wis_std": 5.726261866122237
+      }
+    },
+    "FD002": {
+      "MSE_fixed": {
+        "interval_score_mean": 73.30761416288233,
+        "interval_score_std": 70.38291838817028,
+        "wis_mean": 6.781530830398378,
+        "wis_std": 5.55470927736422
+      },
+      "NLL": {
+        "interval_score_mean": 61.960649537097794,
+        "interval_score_std": 56.489699639950665,
+        "wis_mean": 6.145856612240686,
+        "wis_std": 5.0707388973709255
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 72.98755731394168,
+        "interval_score_std": 65.49737613958173,
+        "wis_mean": 6.793798397049132,
+        "wis_std": 5.390326019821016
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 58.26321029663086,
+        "interval_score_std": 35.716062077391925,
+        "wis_mean": 5.811107043629421,
+        "wis_std": 4.295994146296254
+      },
+      "CP_norm": {
+        "interval_score_mean": 62.53077056040406,
+        "interval_score_std": 53.81888864811388,
+        "wis_mean": 6.1648606463508955,
+        "wis_std": 4.975963234931536
+      }
+    },
+    "FD003": {
+      "MSE_fixed": {
+        "interval_score_mean": 76.50089455413818,
+        "interval_score_std": 117.40569847683423,
+        "wis_mean": 5.82871432949702,
+        "wis_std": 7.196135637499133
+      },
+      "NLL": {
+        "interval_score_mean": 61.066093063354494,
+        "interval_score_std": 84.5254167827589,
+        "wis_mean": 5.20489102824529,
+        "wis_std": 5.742698473844318
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 72.0772260017395,
+        "interval_score_std": 105.84580423714961,
+        "wis_mean": 5.657418408099809,
+        "wis_std": 6.753312205357957
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 55.690730266571045,
+        "interval_score_std": 60.10846861816913,
+        "wis_mean": 4.764263851801554,
+        "wis_std": 4.8087784167840795
+      },
+      "CP_norm": {
+        "interval_score_mean": 61.08269840240479,
+        "interval_score_std": 67.68203886341104,
+        "wis_mean": 5.205444539546966,
+        "wis_std": 5.113116183094993
+      }
+    },
+    "FD004": {
+      "MSE_fixed": {
+        "interval_score_mean": 89.06940672669229,
+        "interval_score_std": 113.982855468224,
+        "wis_mean": 7.613327516684552,
+        "wis_std": 7.6930925509213255
+      },
+      "NLL": {
+        "interval_score_mean": 79.57865286235568,
+        "interval_score_std": 91.79554330289545,
+        "wis_mean": 7.541113992200117,
+        "wis_std": 6.865402391865023
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 88.20531185166243,
+        "interval_score_std": 108.12875439203923,
+        "wis_mean": 7.595482960414618,
+        "wis_std": 7.463757413379625
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 73.83641436934974,
+        "interval_score_std": 71.06371738301108,
+        "wis_mean": 7.229124422247734,
+        "wis_std": 5.989567422491018
+      },
+      "CP_norm": {
+        "interval_score_mean": 79.1623056146163,
+        "interval_score_std": 93.62310098670939,
+        "wis_mean": 7.527235750608806,
+        "wis_std": 6.92517771892947
+      }
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "MSE_fixed": {
+        "interval_score_mean": 67.18471015167236,
+        "interval_score_std": 84.49368948788411,
+        "wis_mean": 5.578538202369213,
+        "wis_std": 5.809932228489705
+      },
+      "NLL": {
+        "interval_score_mean": 65.35031591415405,
+        "interval_score_std": 87.57743868409487,
+        "wis_mean": 5.599070204794406,
+        "wis_std": 5.8097974193784765
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 61.59437062072754,
+        "interval_score_std": 64.30103216097717,
+        "wis_mean": 5.29095380299886,
+        "wis_std": 4.909900080089667
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 59.995714378356936,
+        "interval_score_std": 71.62998771262455,
+        "wis_mean": 5.216465502580006,
+        "wis_std": 5.122936974091917
+      },
+      "CP_norm": {
+        "interval_score_mean": 64.23320625305176,
+        "interval_score_std": 84.92033406488599,
+        "wis_mean": 5.561833216090997,
+        "wis_std": 5.693428424693332
+      }
+    },
+    "FD002": {
+      "MSE_fixed": {
+        "interval_score_mean": 72.02159671104944,
+        "interval_score_std": 69.45536535864272,
+        "wis_mean": 6.389238666016436,
+        "wis_std": 5.470839375273962
+      },
+      "NLL": {
+        "interval_score_mean": 65.06676148878256,
+        "interval_score_std": 61.503870350013294,
+        "wis_mean": 6.140444130013268,
+        "wis_std": 5.121574341956728
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 71.07148616624914,
+        "interval_score_std": 62.30162300179793,
+        "wis_mean": 6.428628803851262,
+        "wis_std": 5.214843592415989
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 60.248676661917344,
+        "interval_score_std": 43.64646925399913,
+        "wis_mean": 5.792204509642127,
+        "wis_std": 4.430424506355055
+      },
+      "CP_norm": {
+        "interval_score_mean": 65.460890499311,
+        "interval_score_std": 56.68579915042854,
+        "wis_mean": 6.1535817636975505,
+        "wis_std": 4.976240017649078
+      }
+    },
+    "FD003": {
+      "MSE_fixed": {
+        "interval_score_mean": 74.45242348480225,
+        "interval_score_std": 104.63112501247876,
+        "wis_mean": 5.7917585880915325,
+        "wis_std": 6.664988064071583
+      },
+      "NLL": {
+        "interval_score_mean": 62.19769696426392,
+        "interval_score_std": 92.38144050865994,
+        "wis_mean": 5.4034252904494595,
+        "wis_std": 5.903687529776845
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 63.69664796447754,
+        "interval_score_std": 79.36941583834512,
+        "wis_mean": 5.34337705186208,
+        "wis_std": 5.5181007956960215
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 55.000195541381835,
+        "interval_score_std": 62.2964233764341,
+        "wis_mean": 4.832778031905494,
+        "wis_std": 4.770386716484791
+      },
+      "CP_norm": {
+        "interval_score_mean": 63.87677127075195,
+        "interval_score_std": 81.27603791602095,
+        "wis_mean": 5.459394433999061,
+        "wis_std": 5.559645291302103
+      }
+    },
+    "FD004": {
+      "MSE_fixed": {
+        "interval_score_mean": 92.10991705399525,
+        "interval_score_std": 127.30500316763937,
+        "wis_mean": 7.388838532145347,
+        "wis_std": 8.255727165069555
+      },
+      "NLL": {
+        "interval_score_mean": 83.62406581926949,
+        "interval_score_std": 116.18008508614577,
+        "wis_mean": 7.156977151922369,
+        "wis_std": 7.478018740113166
+      },
+      "MC_Dropout_fixed": {
+        "interval_score_mean": 82.16248815029482,
+        "interval_score_std": 103.00375646866888,
+        "wis_mean": 7.283502830956054,
+        "wis_std": 6.942019814393172
+      },
+      "Deep_Ensemble": {
+        "interval_score_mean": 74.9941665311403,
+        "interval_score_std": 86.28759888082472,
+        "wis_mean": 6.61259245302439,
+        "wis_std": 6.30424662546441
+      },
+      "CP_norm": {
+        "interval_score_mean": 83.72054414226034,
+        "interval_score_std": 114.04452618000035,
+        "wis_mean": 7.160193096022062,
+        "wis_std": 7.417187266524286
+      }
+    }
+  }
+}

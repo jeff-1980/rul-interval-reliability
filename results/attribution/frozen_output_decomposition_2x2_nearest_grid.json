@@ -1,0 +1,422 @@
+{
+  "LSTM": {
+    "FD001": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.007373685425685457,
+          "actual_feat_oob": 0.003023809523809524
+        },
+        "C_mu0_sigma0": 0.8640000000000001,
+        "C_mu1_sigma0": 0.826,
+        "C_mu0_sigma1": 0.8540000000000001,
+        "C_mu1_sigma1": 0.806,
+        "total_delta": -0.05800000000000005,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.038000000000000145,
+          "sigma_effect": -0.019999999999999907
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.010000000000000009,
+          "mu_effect": -0.04800000000000004
+        },
+        "interaction": 0.009999999999999898,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.0061905959509552504,
+          "actual_feat_oob": 0.003023809523809524
+        },
+        "C_mu0_sigma0": 0.8939999999999999,
+        "C_mu1_sigma0": 0.8539999999999999,
+        "C_mu0_sigma1": 0.874,
+        "C_mu1_sigma1": 0.8240000000000001,
+        "total_delta": -0.06999999999999984,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.040000000000000036,
+          "sigma_effect": -0.029999999999999805
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.019999999999999907,
+          "mu_effect": -0.04999999999999993
+        },
+        "interaction": 0.009999999999999898,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "target_rel_co": 0.014301702996386587,
+          "actual_feat_oob": 0.016101888449714538
+        },
+        "C_mu0_sigma0": 0.917786561264822,
+        "C_mu1_sigma0": 0.7675889328063241,
+        "C_mu0_sigma1": 0.8719367588932805,
+        "C_mu1_sigma1": 0.7533596837944663,
+        "total_delta": -0.16442687747035578,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.15019762845849793,
+          "sigma_effect": -0.014229249011857847
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.04584980237154157,
+          "mu_effect": -0.11857707509881421
+        },
+        "interaction": -0.03162055335968372,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.01387873678672214,
+          "actual_feat_oob": 0.011934123847167325
+        },
+        "C_mu0_sigma0": 0.9343873517786561,
+        "C_mu1_sigma0": 0.8948616600790515,
+        "C_mu0_sigma1": 0.9138339920948617,
+        "C_mu1_sigma1": 0.8790513833992095,
+        "total_delta": -0.05533596837944654,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.039525691699604515,
+          "sigma_effect": -0.015810276679842028
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.020553359683794348,
+          "mu_effect": -0.034782608695652195
+        },
+        "interaction": -0.00474308300395232,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.003084583333333308,
+          "actual_feat_oob": 0.004686666666666667
+        },
+        "C_mu0_sigma0": 0.858,
+        "C_mu1_sigma0": 0.74,
+        "C_mu0_sigma1": 0.836,
+        "C_mu1_sigma1": 0.75,
+        "total_delta": -0.10799999999999998,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.118,
+          "sigma_effect": 0.010000000000000009
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.02200000000000002,
+          "mu_effect": -0.08599999999999997
+        },
+        "interaction": -0.03200000000000003,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.004773931178310755,
+          "actual_feat_oob": 0.004686666666666667
+        },
+        "C_mu0_sigma0": 0.9099999999999999,
+        "C_mu1_sigma0": 0.828,
+        "C_mu0_sigma1": 0.8779999999999999,
+        "C_mu1_sigma1": 0.818,
+        "total_delta": -0.09199999999999997,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.08199999999999996,
+          "sigma_effect": -0.010000000000000009
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.03200000000000003,
+          "mu_effect": -0.05999999999999994
+        },
+        "interaction": -0.02200000000000002,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "target_rel_co": 0.012013376178224133,
+          "actual_feat_oob": 0.012019378027816847
+        },
+        "C_mu0_sigma0": 0.8919831223628693,
+        "C_mu1_sigma0": 0.7721518987341772,
+        "C_mu0_sigma1": 0.8565400843881857,
+        "C_mu1_sigma1": 0.80084388185654,
+        "total_delta": -0.09113924050632927,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.11983122362869203,
+          "sigma_effect": 0.028691983122362763
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.03544303797468351,
+          "mu_effect": -0.055696202531645755
+        },
+        "interaction": -0.06413502109704627,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "target_rel_co": 0.011577444962103436,
+          "actual_feat_oob": 0.012019378027816847
+        },
+        "C_mu0_sigma0": 0.889451476793249,
+        "C_mu1_sigma0": 0.7637130801687764,
+        "C_mu0_sigma1": 0.8523206751054853,
+        "C_mu1_sigma1": 0.7949367088607595,
+        "total_delta": -0.09451476793248947,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.12573839662447261,
+          "sigma_effect": 0.03122362869198314
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.037130801687763726,
+          "mu_effect": -0.05738396624472575
+        },
+        "interaction": -0.06835443037974687,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.008591302785265053,
+          "actual_feat_oob": 0.0030780952380952374
+        },
+        "C_mu0_sigma0": 0.8859999999999999,
+        "C_mu1_sigma0": 0.834,
+        "C_mu0_sigma1": 0.882,
+        "C_mu1_sigma1": 0.8400000000000001,
+        "total_delta": -0.04599999999999982,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.051999999999999935,
+          "sigma_effect": 0.006000000000000116
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.0039999999999998925,
+          "mu_effect": -0.041999999999999926
+        },
+        "interaction": -0.010000000000000009,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.006465921325051756,
+          "actual_feat_oob": 0.0030780952380952374
+        },
+        "C_mu0_sigma0": 0.8939999999999999,
+        "C_mu1_sigma0": 0.836,
+        "C_mu0_sigma1": 0.8880000000000001,
+        "C_mu1_sigma1": 0.8379999999999999,
+        "total_delta": -0.05600000000000005,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.05799999999999994,
+          "sigma_effect": 0.0019999999999998908
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.005999999999999783,
+          "mu_effect": -0.050000000000000266
+        },
+        "interaction": -0.007999999999999674,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.013343045151588245,
+          "actual_feat_oob": 0.012012882447665057
+        },
+        "C_mu0_sigma0": 0.883794466403162,
+        "C_mu1_sigma0": 0.790513833992095,
+        "C_mu0_sigma1": 0.8616600790513835,
+        "C_mu1_sigma1": 0.8,
+        "total_delta": -0.0837944664031619,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.09328063241106699,
+          "sigma_effect": 0.009486166007905084
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.022134387351778417,
+          "mu_effect": -0.06166007905138349
+        },
+        "interaction": -0.0316205533596835,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.013425083375130892,
+          "actual_feat_oob": 0.012012882447665057
+        },
+        "C_mu0_sigma0": 0.9027667984189722,
+        "C_mu1_sigma0": 0.8079051383399211,
+        "C_mu0_sigma1": 0.8790513833992095,
+        "C_mu1_sigma1": 0.8158102766798419,
+        "total_delta": -0.08695652173913038,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.09486166007905117,
+          "sigma_effect": 0.007905138339920792
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.02371541501976271,
+          "mu_effect": -0.06324110671936767
+        },
+        "interaction": -0.0316205533596835,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "armc",
+          "level_key": "5",
+          "target_rel_co": 0.0011637177280550805,
+          "actual_feat_oob": 0.0012114285714285714
+        },
+        "C_mu0_sigma0": 0.8700000000000001,
+        "C_mu1_sigma0": 0.7440000000000001,
+        "C_mu0_sigma1": 0.852,
+        "C_mu1_sigma1": 0.756,
+        "total_delta": -0.1140000000000001,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.126,
+          "sigma_effect": 0.0119999999999999
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.018000000000000127,
+          "mu_effect": -0.09599999999999997
+        },
+        "interaction": -0.030000000000000027,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "armc",
+          "level_key": "5",
+          "target_rel_co": 0.002072539682539674,
+          "actual_feat_oob": 0.0012114285714285714
+        },
+        "C_mu0_sigma0": 0.8860000000000001,
+        "C_mu1_sigma0": 0.782,
+        "C_mu0_sigma1": 0.868,
+        "C_mu1_sigma1": 0.7819999999999999,
+        "total_delta": -0.1040000000000002,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.10400000000000009,
+          "sigma_effect": -1.1102230246251565e-16
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.018000000000000127,
+          "mu_effect": -0.08600000000000008
+        },
+        "interaction": -0.018000000000000016,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.0071072073223971965,
+          "actual_feat_oob": 0.007437412095639944
+        },
+        "C_mu0_sigma0": 0.8565400843881857,
+        "C_mu1_sigma0": 0.7417721518987341,
+        "C_mu0_sigma1": 0.8236286919831223,
+        "C_mu1_sigma1": 0.7358649789029535,
+        "total_delta": -0.12067510548523219,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.11476793248945161,
+          "sigma_effect": -0.005907172995780585
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.032911392405063467,
+          "mu_effect": -0.08776371308016873
+        },
+        "interaction": -0.02700421940928288,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.007283159150913976,
+          "actual_feat_oob": 0.007437412095639944
+        },
+        "C_mu0_sigma0": 0.8556962025316455,
+        "C_mu1_sigma0": 0.7561181434599156,
+        "C_mu0_sigma1": 0.8329113924050633,
+        "C_mu1_sigma1": 0.7459915611814346,
+        "total_delta": -0.10970464135021085,
+        "order_A_freeze_sigma_first": {
+          "mu_effect": -0.0995780590717299,
+          "sigma_effect": -0.010126582278480956
+        },
+        "order_B_freeze_mu_first": {
+          "sigma_effect": -0.022784810126582178,
+          "mu_effect": -0.08691983122362867
+        },
+        "interaction": -0.012658227848101222,
+        "mean_dominant_order_A": true,
+        "mean_dominant_order_B": true,
+        "mean_dominant_both_orders": true
+      }
+    }
+  }
+}

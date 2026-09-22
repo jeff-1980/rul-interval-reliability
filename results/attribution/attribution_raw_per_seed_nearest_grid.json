@@ -1,0 +1,758 @@
+{
+  "LSTM": {
+    "FD001": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.007373685425685457,
+          "actual_feat_oob": 0.003023809523809524,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.87,
+          0.89,
+          0.88,
+          0.84,
+          0.84
+        ],
+        "C10_per_seed": [
+          0.84,
+          0.85,
+          0.82,
+          0.79,
+          0.83
+        ],
+        "C01_per_seed": [
+          0.89,
+          0.89,
+          0.88,
+          0.81,
+          0.8
+        ],
+        "C11_per_seed": [
+          0.82,
+          0.83,
+          0.8,
+          0.77,
+          0.81
+        ],
+        "C00_mean": 0.8640000000000001,
+        "C00_std": 0.023021728866442694,
+        "C10_mean": 0.826,
+        "C10_std": 0.023021728866442652,
+        "C01_mean": 0.8540000000000001,
+        "C01_std": 0.04505552130427522,
+        "C11_mean": 0.806,
+        "C11_std": 0.02302172886644265,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.0061905959509552504,
+          "actual_feat_oob": 0.003023809523809524,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.87,
+          0.89,
+          0.91,
+          0.86,
+          0.94
+        ],
+        "C10_per_seed": [
+          0.84,
+          0.83,
+          0.86,
+          0.81,
+          0.93
+        ],
+        "C01_per_seed": [
+          0.89,
+          0.87,
+          0.9,
+          0.81,
+          0.9
+        ],
+        "C11_per_seed": [
+          0.81,
+          0.8,
+          0.85,
+          0.77,
+          0.89
+        ],
+        "C00_mean": 0.8939999999999999,
+        "C00_std": 0.032093613071762415,
+        "C10_mean": 0.8539999999999999,
+        "C10_std": 0.04615192303685732,
+        "C01_mean": 0.874,
+        "C01_std": 0.03781534080237806,
+        "C11_mean": 0.8240000000000001,
+        "C11_std": 0.04669047011971499,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "target_rel_co": 0.014301702996386587,
+          "actual_feat_oob": 0.016101888449714538,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.8814229249011858,
+          0.9090909090909091,
+          0.9169960474308301,
+          0.932806324110672,
+          0.9486166007905138
+        ],
+        "C10_per_seed": [
+          0.7470355731225297,
+          0.7509881422924901,
+          0.782608695652174,
+          0.7628458498023716,
+          0.7944664031620553
+        ],
+        "C01_per_seed": [
+          0.8181818181818182,
+          0.8853754940711462,
+          0.8695652173913043,
+          0.8735177865612648,
+          0.9130434782608695
+        ],
+        "C11_per_seed": [
+          0.7509881422924901,
+          0.7272727272727273,
+          0.7786561264822134,
+          0.7193675889328063,
+          0.7905138339920948
+        ],
+        "C00_mean": 0.917786561264822,
+        "C00_std": 0.025370445116017718,
+        "C10_mean": 0.7675889328063241,
+        "C10_std": 0.02042373230476491,
+        "C01_mean": 0.8719367588932805,
+        "C01_std": 0.034525640793553254,
+        "C11_mean": 0.7533596837944663,
+        "C11_std": 0.031072322540764495,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.01387873678672214,
+          "actual_feat_oob": 0.011934123847167325,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.9486166007905138,
+          0.9169960474308301,
+          0.9446640316205533,
+          0.9446640316205533,
+          0.9169960474308301
+        ],
+        "C10_per_seed": [
+          0.8972332015810277,
+          0.9011857707509882,
+          0.9209486166007905,
+          0.8853754940711462,
+          0.8695652173913043
+        ],
+        "C01_per_seed": [
+          0.9209486166007905,
+          0.9130434782608695,
+          0.9288537549407114,
+          0.9209486166007905,
+          0.8853754940711462
+        ],
+        "C11_per_seed": [
+          0.8774703557312253,
+          0.8735177865612648,
+          0.9090909090909091,
+          0.8616600790513834,
+          0.8735177865612648
+        ],
+        "C00_mean": 0.9343873517786561,
+        "C00_std": 0.01595780967445558,
+        "C10_mean": 0.8948616600790515,
+        "C10_std": 0.019079080452406607,
+        "C01_mean": 0.9138339920948617,
+        "C01_std": 0.01686223636972454,
+        "C11_mean": 0.8790513833992095,
+        "C11_std": 0.017808506444377554,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.003084583333333308,
+          "actual_feat_oob": 0.004686666666666667,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.89,
+          0.81,
+          0.92,
+          0.85,
+          0.82
+        ],
+        "C10_per_seed": [
+          0.72,
+          0.71,
+          0.81,
+          0.74,
+          0.72
+        ],
+        "C01_per_seed": [
+          0.84,
+          0.84,
+          0.89,
+          0.81,
+          0.8
+        ],
+        "C11_per_seed": [
+          0.72,
+          0.73,
+          0.84,
+          0.73,
+          0.73
+        ],
+        "C00_mean": 0.858,
+        "C00_std": 0.04658325879540847,
+        "C10_mean": 0.74,
+        "C10_std": 0.04062019202317984,
+        "C01_mean": 0.836,
+        "C01_std": 0.035071355833500344,
+        "C11_mean": 0.75,
+        "C11_std": 0.05049752469181039,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.004773931178310755,
+          "actual_feat_oob": 0.004686666666666667,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.9,
+          0.9,
+          0.89,
+          0.96,
+          0.9
+        ],
+        "C10_per_seed": [
+          0.76,
+          0.84,
+          0.75,
+          0.94,
+          0.85
+        ],
+        "C01_per_seed": [
+          0.84,
+          0.88,
+          0.83,
+          0.95,
+          0.89
+        ],
+        "C11_per_seed": [
+          0.75,
+          0.84,
+          0.77,
+          0.91,
+          0.82
+        ],
+        "C00_mean": 0.9099999999999999,
+        "C00_std": 0.028284271247461877,
+        "C10_mean": 0.828,
+        "C10_std": 0.07726577508832741,
+        "C01_mean": 0.8779999999999999,
+        "C01_std": 0.04764451699828638,
+        "C11_mean": 0.818,
+        "C11_std": 0.06300793600809346,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "target_rel_co": 0.012013376178224133,
+          "actual_feat_oob": 0.012019378027816847,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.9240506329113924,
+          0.8734177215189873,
+          0.9071729957805907,
+          0.8396624472573839,
+          0.9156118143459916
+        ],
+        "C10_per_seed": [
+          0.8270042194092827,
+          0.7552742616033755,
+          0.7679324894514767,
+          0.7130801687763713,
+          0.7974683544303798
+        ],
+        "C01_per_seed": [
+          0.8987341772151899,
+          0.8481012658227848,
+          0.8354430379746836,
+          0.810126582278481,
+          0.890295358649789
+        ],
+        "C11_per_seed": [
+          0.8607594936708861,
+          0.7974683544303798,
+          0.7552742616033755,
+          0.7257383966244726,
+          0.8649789029535865
+        ],
+        "C00_mean": 0.8919831223628693,
+        "C00_std": 0.03499821325456159,
+        "C10_mean": 0.7721518987341772,
+        "C10_std": 0.04313301329168963,
+        "C01_mean": 0.8565400843881857,
+        "C01_std": 0.03738406149086362,
+        "C11_mean": 0.80084388185654,
+        "C11_std": 0.062112800326447774,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "target_rel_co": 0.011577444962103436,
+          "actual_feat_oob": 0.012019378027816847,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.8860759493670886,
+          0.8945147679324894,
+          0.8734177215189873,
+          0.8818565400843882,
+          0.9113924050632911
+        ],
+        "C10_per_seed": [
+          0.7552742616033755,
+          0.7721518987341772,
+          0.7257383966244726,
+          0.7679324894514767,
+          0.7974683544303798
+        ],
+        "C01_per_seed": [
+          0.8565400843881856,
+          0.8565400843881856,
+          0.8227848101265823,
+          0.8354430379746836,
+          0.890295358649789
+        ],
+        "C11_per_seed": [
+          0.7848101265822784,
+          0.8185654008438819,
+          0.7510548523206751,
+          0.7552742616033755,
+          0.8649789029535865
+        ],
+        "C00_mean": 0.889451476793249,
+        "C00_std": 0.014432600317710598,
+        "C10_mean": 0.7637130801687764,
+        "C10_std": 0.026180746088588308,
+        "C01_mean": 0.8523206751054853,
+        "C01_std": 0.025665664684802598,
+        "C11_mean": 0.7949367088607595,
+        "C11_std": 0.04760645639685513,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.008591302785265053,
+          "actual_feat_oob": 0.0030780952380952374,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.92,
+          0.83,
+          0.87,
+          0.92,
+          0.89
+        ],
+        "C10_per_seed": [
+          0.85,
+          0.81,
+          0.8,
+          0.9,
+          0.81
+        ],
+        "C01_per_seed": [
+          0.93,
+          0.82,
+          0.86,
+          0.93,
+          0.87
+        ],
+        "C11_per_seed": [
+          0.86,
+          0.8,
+          0.82,
+          0.89,
+          0.83
+        ],
+        "C00_mean": 0.8859999999999999,
+        "C00_std": 0.037815340802378104,
+        "C10_mean": 0.834,
+        "C10_std": 0.041593268686170824,
+        "C01_mean": 0.882,
+        "C01_std": 0.047644516998286424,
+        "C11_mean": 0.8400000000000001,
+        "C11_std": 0.035355339059327376,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.006465921325051756,
+          "actual_feat_oob": 0.0030780952380952374,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.89,
+          0.89,
+          0.89,
+          0.9,
+          0.9
+        ],
+        "C10_per_seed": [
+          0.83,
+          0.84,
+          0.84,
+          0.83,
+          0.84
+        ],
+        "C01_per_seed": [
+          0.89,
+          0.88,
+          0.89,
+          0.89,
+          0.89
+        ],
+        "C11_per_seed": [
+          0.85,
+          0.81,
+          0.86,
+          0.82,
+          0.85
+        ],
+        "C00_mean": 0.8939999999999999,
+        "C00_std": 0.005477225575051666,
+        "C10_mean": 0.836,
+        "C10_std": 0.005477225575051666,
+        "C01_mean": 0.8880000000000001,
+        "C01_std": 0.004472135954999584,
+        "C11_mean": 0.8379999999999999,
+        "C11_std": 0.021679483388678783,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.013343045151588245,
+          "actual_feat_oob": 0.012012882447665057,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.9130434782608695,
+          0.8774703557312253,
+          0.8893280632411067,
+          0.9288537549407114,
+          0.8102766798418972
+        ],
+        "C10_per_seed": [
+          0.7865612648221344,
+          0.7707509881422925,
+          0.8181818181818182,
+          0.8537549407114624,
+          0.7233201581027668
+        ],
+        "C01_per_seed": [
+          0.8932806324110671,
+          0.8616600790513834,
+          0.8814229249011858,
+          0.9090909090909091,
+          0.7628458498023716
+        ],
+        "C11_per_seed": [
+          0.7984189723320159,
+          0.7905138339920948,
+          0.8221343873517787,
+          0.8537549407114624,
+          0.7351778656126482
+        ],
+        "C00_mean": 0.883794466403162,
+        "C00_std": 0.04572013831121344,
+        "C10_mean": 0.790513833992095,
+        "C10_std": 0.049209089320113544,
+        "C01_mean": 0.8616600790513835,
+        "C01_std": 0.05788861073469092,
+        "C11_mean": 0.8,
+        "C11_std": 0.043800459058324324,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.013425083375130892,
+          "actual_feat_oob": 0.012012882447665057,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.9130434782608695,
+          0.8972332015810277,
+          0.9288537549407114,
+          0.9209486166007905,
+          0.8537549407114624
+        ],
+        "C10_per_seed": [
+          0.782608695652174,
+          0.782608695652174,
+          0.8695652173913043,
+          0.841897233201581,
+          0.7628458498023716
+        ],
+        "C01_per_seed": [
+          0.8932806324110671,
+          0.8695652173913043,
+          0.9169960474308301,
+          0.8972332015810277,
+          0.8181818181818182
+        ],
+        "C11_per_seed": [
+          0.7944664031620553,
+          0.8063241106719368,
+          0.8695652173913043,
+          0.841897233201581,
+          0.766798418972332
+        ],
+        "C00_mean": 0.9027667984189722,
+        "C00_std": 0.029788843765085813,
+        "C10_mean": 0.8079051383399211,
+        "C10_std": 0.045463137184223255,
+        "C01_mean": 0.8790513833992095,
+        "C01_std": 0.03797347391138481,
+        "C11_mean": 0.8158102766798419,
+        "C11_std": 0.04036654998161829,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "armc",
+          "level_key": "5",
+          "target_rel_co": 0.0011637177280550805,
+          "actual_feat_oob": 0.0012114285714285714,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.9,
+          0.85,
+          0.89,
+          0.83,
+          0.88
+        ],
+        "C10_per_seed": [
+          0.75,
+          0.74,
+          0.75,
+          0.68,
+          0.8
+        ],
+        "C01_per_seed": [
+          0.83,
+          0.9,
+          0.84,
+          0.81,
+          0.88
+        ],
+        "C11_per_seed": [
+          0.76,
+          0.75,
+          0.74,
+          0.71,
+          0.82
+        ],
+        "C00_mean": 0.8700000000000001,
+        "C00_std": 0.02915475947422653,
+        "C10_mean": 0.7440000000000001,
+        "C10_std": 0.04277849927241487,
+        "C01_mean": 0.852,
+        "C01_std": 0.037013511046643494,
+        "C11_mean": 0.756,
+        "C11_std": 0.04037325847637269,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "armc",
+          "level_key": "5",
+          "target_rel_co": 0.002072539682539674,
+          "actual_feat_oob": 0.0012114285714285714,
+          "resolved_arm_label": "global"
+        },
+        "C00_per_seed": [
+          0.88,
+          0.87,
+          0.87,
+          0.93,
+          0.88
+        ],
+        "C10_per_seed": [
+          0.67,
+          0.8,
+          0.74,
+          0.9,
+          0.8
+        ],
+        "C01_per_seed": [
+          0.79,
+          0.9,
+          0.84,
+          0.93,
+          0.88
+        ],
+        "C11_per_seed": [
+          0.68,
+          0.78,
+          0.73,
+          0.9,
+          0.82
+        ],
+        "C00_mean": 0.8860000000000001,
+        "C00_std": 0.025099800796022288,
+        "C10_mean": 0.782,
+        "C10_std": 0.084970583144992,
+        "C01_mean": 0.868,
+        "C01_std": 0.05449770637375486,
+        "C11_mean": 0.7819999999999999,
+        "C11_std": 0.08438009243891594,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.0071072073223971965,
+          "actual_feat_oob": 0.007437412095639944,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.8649789029535865,
+          0.8607594936708861,
+          0.8818565400843882,
+          0.8649789029535865,
+          0.810126582278481
+        ],
+        "C10_per_seed": [
+          0.7215189873417721,
+          0.8016877637130801,
+          0.7637130801687764,
+          0.7426160337552743,
+          0.679324894514768
+        ],
+        "C01_per_seed": [
+          0.8016877637130801,
+          0.8565400843881856,
+          0.8607594936708861,
+          0.8396624472573839,
+          0.759493670886076
+        ],
+        "C11_per_seed": [
+          0.7257383966244726,
+          0.7679324894514767,
+          0.7679324894514767,
+          0.7468354430379747,
+          0.6708860759493671
+        ],
+        "C00_mean": 0.8565400843881857,
+        "C00_std": 0.027181642883386346,
+        "C10_mean": 0.7417721518987341,
+        "C10_std": 0.04577621554469372,
+        "C01_mean": 0.8236286919831223,
+        "C01_std": 0.042759919190407523,
+        "C11_mean": 0.7358649789029535,
+        "C11_std": 0.040316891765708844,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      },
+      "CP_norm": {
+        "grid_point_used": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "target_rel_co": 0.007283159150913976,
+          "actual_feat_oob": 0.007437412095639944,
+          "resolved_arm_label": "per_condition"
+        },
+        "C00_per_seed": [
+          0.890295358649789,
+          0.8523206751054853,
+          0.8354430379746836,
+          0.8649789029535865,
+          0.8354430379746836
+        ],
+        "C10_per_seed": [
+          0.759493670886076,
+          0.8016877637130801,
+          0.7215189873417721,
+          0.7763713080168776,
+          0.7215189873417721
+        ],
+        "C01_per_seed": [
+          0.8227848101265823,
+          0.8565400843881856,
+          0.8396624472573839,
+          0.8396624472573839,
+          0.8059071729957806
+        ],
+        "C11_per_seed": [
+          0.7383966244725738,
+          0.7679324894514767,
+          0.7426160337552743,
+          0.7637130801687764,
+          0.7172995780590717
+        ],
+        "C00_mean": 0.8556962025316455,
+        "C00_std": 0.022994812815930313,
+        "C10_mean": 0.7561181434599156,
+        "C10_std": 0.034972769257556297,
+        "C01_mean": 0.8329113924050633,
+        "C01_std": 0.019243467090280773,
+        "C11_mean": 0.7459915611814346,
+        "C11_std": 0.020541200750444008,
+        "percentage_computation": "aggregate-then-difference: C00/C10/C01/C11 are seed-averaged PICP first, effects/interaction computed from those averaged values (not per-seed ratio averaged after)."
+      }
+    }
+  }
+}

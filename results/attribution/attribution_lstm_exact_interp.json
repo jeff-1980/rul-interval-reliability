@@ -1,0 +1,722 @@
+{
+  "FD001": {
+    "NLL": {
+      "crossover_feat_oob_exact": 0.007373685425685457,
+      "bracket_points": {
+        "A": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "B_pooled",
+          "feat_oob": 0.003023809523809524,
+          "picp": 0.7792
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "arm_key": "B_pooled",
+          "feat_oob": 0.021911428571428568,
+          "picp": 0.7132000000000001
+        },
+        "interp_frac_toward_B": 0.23030303030303204
+      },
+      "C00": 0.8639999999999999,
+      "C10": 0.7939927272727271,
+      "C01": 0.8282230303030301,
+      "C11": 0.7639999999999999,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.0700072727272728,
+        "sigma_effect": -0.02999272727272717
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.03577696969696975,
+        "mu_effect": -0.06422303030303023
+      },
+      "interaction": 0.0057842424242425805,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.87,
+        0.89,
+        0.88,
+        0.84,
+        0.84
+      ],
+      "C10_per_seed": [
+        0.8317212121212121,
+        0.7991030303030302,
+        0.8209454545454545,
+        0.7455515151515151,
+        0.7726424242424241
+      ],
+      "C01_per_seed": [
+        0.8593939393939394,
+        0.8563151515151515,
+        0.8478545454545454,
+        0.7806181818181819,
+        0.7969333333333333
+      ],
+      "C11_per_seed": [
+        0.8091151515151515,
+        0.7764969696969695,
+        0.7815636363636362,
+        0.7140242424242423,
+        0.7387999999999999
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": 2.220446049250313e-16,
+        "C10": 1.1102230246251565e-16,
+        "C01": 2.220446049250313e-16,
+        "C11": 0.0
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.003023809523809524,
+        "C00": 0.8640000000000001,
+        "C10": 0.826,
+        "C01": 0.8540000000000001,
+        "C11": 0.806,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.0057842424242425805,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    },
+    "CP_norm": {
+      "crossover_feat_oob_exact": 0.0061905959509552504,
+      "bracket_points": {
+        "A": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "B_pooled",
+          "feat_oob": 0.003023809523809524,
+          "picp": 0.8052000000000001
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "arm_key": "B_pooled",
+          "feat_oob": 0.021911428571428568,
+          "picp": 0.7384
+        },
+        "interp_frac_toward_B": 0.16766467065868362
+      },
+      "C00": 0.894,
+      "C10": 0.813226347305389,
+      "C01": 0.8517892215568862,
+      "C11": 0.794,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.08077365269461101,
+        "sigma_effect": -0.01922634730538897
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.04221077844311383,
+        "mu_effect": -0.05778922155688615
+      },
+      "interaction": 0.02298443113772486,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.87,
+        0.89,
+        0.91,
+        0.86,
+        0.94
+      ],
+      "C10_per_seed": [
+        0.823940119760479,
+        0.7706227544910179,
+        0.8516167664670657,
+        0.7573053892215569,
+        0.8626467065868263
+      ],
+      "C01_per_seed": [
+        0.8519880239520957,
+        0.8469820359281437,
+        0.8886586826347306,
+        0.7879880239520958,
+        0.8833293413173653
+      ],
+      "C11_per_seed": [
+        0.807580838323353,
+        0.7499161676646706,
+        0.8392694610778443,
+        0.728946107784431,
+        0.8442874251497006
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": -1.1102230246251565e-16,
+        "C10": 1.1102230246251565e-16,
+        "C01": 0.0,
+        "C11": -1.1102230246251565e-16
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.003023809523809524,
+        "C00": 0.8939999999999999,
+        "C10": 0.8539999999999999,
+        "C01": 0.874,
+        "C11": 0.8240000000000001,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.02298443113772486,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    }
+  },
+  "FD002": {
+    "NLL": {
+      "crossover_feat_oob_exact": 0.014301702996386587,
+      "bracket_points": {
+        "A": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.011934123847167325,
+          "picp": 0.8540711462450592
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.016101888449714538,
+          "picp": 0.790197628458498
+        },
+        "interp_frac_toward_B": 0.5680693069306909
+      },
+      "C00": 0.9177865612648222,
+      "C10": 0.826937150236763,
+      "C01": 0.8880589363284156,
+      "C11": 0.8177865612648222,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.09084941102805921,
+        "sigma_effect": -0.009150588971940765
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.02972762493640657,
+        "mu_effect": -0.0702723750635934
+      },
+      "interaction": 0.020577035964465806,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.8814229249011858,
+        0.9090909090909091,
+        0.9169960474308301,
+        0.932806324110672,
+        0.9486166007905138
+      ],
+      "C10_per_seed": [
+        0.7931602942902987,
+        0.824027511446797,
+        0.8377891049974564,
+        0.8209173091222167,
+        0.8587915313270458
+      ],
+      "C01_per_seed": [
+        0.8426544828395883,
+        0.886043713066959,
+        0.8941455015066725,
+        0.8859360936093611,
+        0.9315148906194968
+      ],
+      "C11_per_seed": [
+        0.7836741282823936,
+        0.809171134504755,
+        0.8263100223065787,
+        0.8081282041247604,
+        0.8616493171056238
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": -1.1102230246251565e-16,
+        "C10": 0.0,
+        "C01": -1.1102230246251565e-16,
+        "C11": 1.1102230246251565e-16
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.016101888449714538,
+        "C00": 0.917786561264822,
+        "C10": 0.7675889328063241,
+        "C01": 0.8719367588932805,
+        "C11": 0.7533596837944663,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.020577035964465806,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    },
+    "CP_norm": {
+      "crossover_feat_oob_exact": 0.01387873678672214,
+      "bracket_points": {
+        "A": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.011934123847167325,
+          "picp": 0.8641897233201581
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.016101888449714538,
+          "picp": 0.8003162055335968
+        },
+        "interp_frac_toward_B": 0.46658415841583867
+      },
+      "C00": 0.9343873517786563,
+      "C10": 0.8467289555042463,
+      "C01": 0.902431417054749,
+      "C11": 0.8343873517786563,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.08765839627440997,
+        "sigma_effect": -0.012341603725590011
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.03195593472390723,
+        "mu_effect": -0.06804406527609275
+      },
+      "interaction": 0.01961433099831722,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.9486166007905138,
+        0.9169960474308301,
+        0.9446640316205533,
+        0.9446640316205533,
+        0.9169960474308301
+      ],
+      "C10_per_seed": [
+        0.8629280319336282,
+        0.8454858529331196,
+        0.8872236136657146,
+        0.8469074081321177,
+        0.7910998708566511
+      ],
+      "C01_per_seed": [
+        0.9030319336281456,
+        0.8986586702148477,
+        0.9234258208429539,
+        0.9037177630806559,
+        0.8833228975071421
+      ],
+      "C11_per_seed": [
+        0.8483827730599148,
+        0.8276210229718626,
+        0.8702031072672486,
+        0.8291492192697534,
+        0.7965806363245022
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": -2.220446049250313e-16,
+        "C10": 0.0,
+        "C01": 1.1102230246251565e-16,
+        "C11": -1.1102230246251565e-16
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.011934123847167325,
+        "C00": 0.9343873517786561,
+        "C10": 0.8948616600790515,
+        "C01": 0.9138339920948617,
+        "C11": 0.8790513833992095,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.01961433099831722,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    }
+  },
+  "FD003": {
+    "NLL": {
+      "crossover_feat_oob_exact": 0.003084583333333308,
+      "bracket_points": {
+        "A": {
+          "kind": "armc",
+          "level_key": "5",
+          "arm_key": "C_fixedpct",
+          "feat_oob": 0.0010247619047619046,
+          "picp": 0.7724
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "B_pooled",
+          "feat_oob": 0.004686666666666667,
+          "picp": 0.7467999999999999
+        },
+        "interp_frac_toward_B": 0.562499999999993
+      },
+      "C00": 0.8580000000000001,
+      "C10": 0.7600500000000001,
+      "C01": 0.836975,
+      "C11": 0.7580000000000001,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.09794999999999998,
+        "sigma_effect": -0.0020499999999999963
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.02102500000000007,
+        "mu_effect": -0.0789749999999999
+      },
+      "interaction": 0.018975000000000075,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.89,
+        0.81,
+        0.92,
+        0.85,
+        0.82
+      ],
+      "C10_per_seed": [
+        0.7483750000000001,
+        0.73525,
+        0.79975,
+        0.7445000000000004,
+        0.772375
+      ],
+      "C01_per_seed": [
+        0.82825,
+        0.8237500000000001,
+        0.876,
+        0.8368749999999999,
+        0.8200000000000001
+      ],
+      "C11_per_seed": [
+        0.7346250000000003,
+        0.7482500000000002,
+        0.7795000000000001,
+        0.7551250000000003,
+        0.7725000000000002
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": -1.1102230246251565e-16,
+        "C10": -1.1102230246251565e-16,
+        "C01": 0.0,
+        "C11": 1.1102230246251565e-16
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.004686666666666667,
+        "C00": 0.858,
+        "C10": 0.74,
+        "C01": 0.836,
+        "C11": 0.75,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.018975000000000075,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    },
+    "CP_norm": {
+      "crossover_feat_oob_exact": 0.004773931178310755,
+      "bracket_points": {
+        "A": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "B_pooled",
+          "feat_oob": 0.004686666666666667,
+          "picp": 0.8103999999999999
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "arm_key": "B_pooled",
+          "feat_oob": 0.028597142857142856,
+          "picp": 0.7008
+        },
+        "interp_frac_toward_B": 0.003649635036496964
+      },
+      "C00": 0.9099999999999998,
+      "C10": 0.8176364963503648,
+      "C01": 0.8767328467153284,
+      "C11": 0.8099999999999998,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.09236350364963497,
+        "sigma_effect": -0.007636496350365007
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.03326715328467145,
+        "mu_effect": -0.06673284671532853
+      },
+      "interaction": 0.02563065693430644,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.9,
+        0.9,
+        0.89,
+        0.96,
+        0.9
+      ],
+      "C10_per_seed": [
+        0.7676058394160583,
+        0.8277299270072992,
+        0.7215474452554743,
+        0.9135839416058393,
+        0.8577153284671533
+      ],
+      "C01_per_seed": [
+        0.8479197080291971,
+        0.885897810218978,
+        0.81792700729927,
+        0.9399708029197081,
+        0.8919489051094891
+      ],
+      "C11_per_seed": [
+        0.7396715328467153,
+        0.8415255474452553,
+        0.7155547445255473,
+        0.8956131386861312,
+        0.8576350364963503
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": 1.1102230246251565e-16,
+        "C10": 0.0,
+        "C01": 2.220446049250313e-16,
+        "C11": 0.0
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.004686666666666667,
+        "C00": 0.9099999999999999,
+        "C10": 0.828,
+        "C01": 0.8779999999999999,
+        "C11": 0.818,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.02563065693430644,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    }
+  },
+  "FD004": {
+    "NLL": {
+      "crossover_feat_oob_exact": 0.012013376178224133,
+      "bracket_points": {
+        "A": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.007493983434911705,
+          "picp": 0.8555274261603375
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.012019378027816847,
+          "picp": 0.7918987341772152
+        },
+        "interp_frac_toward_B": 0.9986737400530499
+      },
+      "C00": 0.8919831223628693,
+      "C10": 0.7811767339309897,
+      "C01": 0.8555491387704395,
+      "C11": 0.7919831223628693,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.11080638843187951,
+        "sigma_effect": 0.010806388431879532
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.036433983592429775,
+        "mu_effect": -0.0635660164075702
+      },
+      "interaction": 0.04724037202430931,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.9240506329113924,
+        0.8734177215189873,
+        0.9071729957805907,
+        0.8396624472573839,
+        0.9156118143459916
+      ],
+      "C10_per_seed": [
+        0.8338179498371554,
+        0.7756057706297776,
+        0.7773114416501584,
+        0.7021902875242028,
+        0.8169582200136543
+      ],
+      "C01_per_seed": [
+        0.8945293176196711,
+        0.8455998388342342,
+        0.853198133163214,
+        0.8059228418896688,
+        0.8784955623454096
+      ],
+      "C11_per_seed": [
+        0.8363574298537197,
+        0.7781609195402299,
+        0.7967140091103427,
+        0.7275067432204053,
+        0.8211765100896484
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": 0.0,
+        "C10": 0.0,
+        "C01": 2.220446049250313e-16,
+        "C11": 0.0
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.012019378027816847,
+        "C00": 0.8919831223628693,
+        "C10": 0.7721518987341772,
+        "C01": 0.8565400843881857,
+        "C11": 0.80084388185654,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.04724037202430931,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    },
+    "CP_norm": {
+      "crossover_feat_oob_exact": 0.011577444962103436,
+      "bracket_points": {
+        "A": {
+          "kind": "mainarm",
+          "level_key": "5",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.007493983434911705,
+          "picp": 0.8479324894514767
+        },
+        "B": {
+          "kind": "mainarm",
+          "level_key": "0",
+          "arm_key": "A_percondition",
+          "feat_oob": 0.012019378027816847,
+          "picp": 0.7831223628691982
+        },
+        "interp_frac_toward_B": 0.902343749999996
+      },
+      "C00": 0.8894514767932491,
+      "C10": 0.7807904799578061,
+      "C01": 0.8524498945147678,
+      "C11": 0.7894514767932491,
+      "total_delta": -0.09999999999999998,
+      "order_A_freeze_sigma_first": {
+        "mu_effect": -0.10866099683544295,
+        "sigma_effect": 0.008660996835442969
+      },
+      "order_B_freeze_mu_first": {
+        "sigma_effect": -0.03700158227848127,
+        "mu_effect": -0.0629984177215187
+      },
+      "interaction": 0.04566257911392424,
+      "mean_dominant_order_A": true,
+      "mean_dominant_order_B": true,
+      "mean_dominant_both_orders": true,
+      "C00_per_seed": [
+        0.8860759493670886,
+        0.8945147679324894,
+        0.8734177215189873,
+        0.8818565400843882,
+        0.9113924050632911
+      ],
+      "C10_per_seed": [
+        0.7807819092827006,
+        0.8034843090717302,
+        0.7562895569620257,
+        0.7415117352320677,
+        0.8218848892405065
+      ],
+      "C01_per_seed": [
+        0.8501615242616033,
+        0.8614616297468356,
+        0.8376252637130801,
+        0.8336959388185654,
+        0.8793051160337553
+      ],
+      "C11_per_seed": [
+        0.7881296149789031,
+        0.8067576476793252,
+        0.7681039029535868,
+        0.7582443301687767,
+        0.8260218881856541
+      ],
+      "per_seed_seed_order": [
+        42,
+        2024,
+        7,
+        888,
+        123
+      ],
+      "per_seed_vs_grand_mean_gap": {
+        "C00": -1.1102230246251565e-16,
+        "C10": 0.0,
+        "C01": 2.220446049250313e-16,
+        "C11": 1.1102230246251565e-16
+      },
+      "per_seed_definition": "C_ij interpolated per seed between bracket points A and B using the same frac as the grand-mean crossover; C10/C01/C11 at each bracket point are the seed's own mean over N_TRIALS perturbation replicates (model_marginal convention, same as grand_and_marginal_stats); C00 is point-independent.",
+      "old_nearest_grid_point_version": {
+        "actual_feat_oob": 0.012019378027816847,
+        "C00": 0.889451476793249,
+        "C10": 0.7637130801687764,
+        "C01": 0.8523206751054853,
+        "C11": 0.7949367088607595,
+        "mean_dominant_both_orders": true
+      },
+      "interaction_OLD_mu_convention": -0.04566257911392424,
+      "interaction_definition": "(C11-C10)-(C01-C00), i.e. orderA_sigma_effect - orderB_sigma_effect"
+    }
+  }
+}

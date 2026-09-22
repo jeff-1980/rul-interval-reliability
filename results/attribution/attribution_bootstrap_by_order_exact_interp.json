@@ -1,0 +1,1042 @@
+{
+  "LSTM": {
+    "FD001": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.015672727272727283,
+            0.06829090909090907,
+            0.019672727272727175,
+            0.06292121212121216,
+            0.03351515151515161
+          ],
+          "mean": 0.040014545454545455,
+          "bootstrap_mean": 0.04006087757575758,
+          "ci95_lo": 0.020841212121212104,
+          "ci95_hi": 0.05918787878787881,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.039672727272727304,
+            0.04613333333333347,
+            0.03414545454545459,
+            0.007212121212121447,
+            0.015066666666666673
+          ],
+          "mean": 0.028446060606060697,
+          "bootstrap_mean": 0.028349426666666757,
+          "ci95_lo": 0.015275151515151663,
+          "ci95_hi": 0.04096951515151517,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.050000000000000044,
+            0.040000000000000036,
+            0.06000000000000005,
+            0.020000000000000018,
+            -0.029999999999999916
+          ],
+          "mean": 0.028000000000000046,
+          "bootstrap_mean": 0.027617000000000048,
+          "ci95_lo": -0.001999999999999935,
+          "ci95_hi": 0.052000000000000046,
+          "excludes_zero": false,
+          "dominant_direction": null,
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.029700598802395062,
+            0.0986706586826348,
+            0.04603592814371282,
+            0.07433532934131726,
+            0.05899401197604792
+          ],
+          "mean": 0.061547305389221575,
+          "bootstrap_mean": 0.061498868263473075,
+          "ci95_lo": 0.04189461077844305,
+          "ci95_hi": 0.0832766467065869,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.026395209580838408,
+            0.05404790419161676,
+            0.028047904191616846,
+            -0.01297005988023947,
+            -0.01762874251496993
+          ],
+          "mean": 0.015578443113772522,
+          "bootstrap_mean": 0.015359821556886295,
+          "ci95_lo": -0.007561676646706483,
+          "ci95_hi": 0.03811736526946112,
+          "excludes_zero": false,
+          "dominant_direction": null,
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.050000000000000044,
+            0.040000000000000036,
+            0.040000000000000036,
+            0.0,
+            -0.030000000000000027
+          ],
+          "mean": 0.020000000000000018,
+          "bootstrap_mean": 0.019944000000000017,
+          "ci95_lo": -0.008000000000000007,
+          "ci95_hi": 0.04400000000000004,
+          "excludes_zero": false,
+          "dominant_direction": null,
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.07877646460298204,
+            0.07020702070207008,
+            0.06772785974249595,
+            0.09909990999099894,
+            0.08696728368489004
+          ],
+          "mean": 0.08055570774468741,
+          "bootstrap_mean": 0.08084492378585674,
+          "ci95_lo": 0.07141268148553978,
+          "ci95_hi": 0.09097053183579218,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.020211912495597284,
+            0.05382538253825386,
+            0.04498493327593622,
+            0.030937658983289817,
+            0.05276386334285599
+          ],
+          "mean": 0.040544750127186634,
+          "bootstrap_mean": 0.04051964867138888,
+          "ci95_lo": 0.028867451962587533,
+          "ci95_hi": 0.05142038116855161,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.07114624505928857,
+            0.13438735177865613,
+            0.08695652173913038,
+            0.1106719367588932,
+            0.11857707509881421
+          ],
+          "mean": 0.1043478260869565,
+          "bootstrap_mean": 0.10417075098814225,
+          "ci95_lo": 0.08379446640316206,
+          "ci95_hi": 0.12332015810276678,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.0711433099831722,
+            0.05364536453645341,
+            0.04041991155637281,
+            0.07999843462607126,
+            0.12041541110632792
+          ],
+          "mean": 0.07312448636167952,
+          "bootstrap_mean": 0.07290125983250487,
+          "ci95_lo": 0.05098070676632862,
+          "ci95_hi": 0.09720698156772187,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.009064493405862573,
+            0.05270027002700273,
+            0.03198450279810583,
+            0.03362227527100503,
+            0.05306911125895197
+          ],
+          "mean": 0.03608813055218563,
+          "bootstrap_mean": 0.03622992779712752,
+          "ci95_lo": 0.022375650608539254,
+          "ci95_hi": 0.04903220756858288,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.02371541501976282,
+            0.011857707509881354,
+            0.007905138339920903,
+            0.035573122529644285,
+            0.015810276679841917
+          ],
+          "mean": 0.018972332015810257,
+          "bootstrap_mean": 0.01905454545454543,
+          "ci95_lo": 0.011067193675889287,
+          "ci95_hi": 0.027667984189723337,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.12787500000000007,
+            0.06174999999999986,
+            0.1000000000000002,
+            0.09487499999999971,
+            0.047499999999999765
+          ],
+          "mean": 0.08639999999999992,
+          "bootstrap_mean": 0.08628896249999993,
+          "ci95_lo": 0.06084999999999987,
+          "ci95_hi": 0.11115000000000015,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.031874999999999765,
+            0.06174999999999986,
+            0.05249999999999988,
+            0.0686249999999996,
+            0.047499999999999765
+          ],
+          "mean": 0.052449999999999775,
+          "bootstrap_mean": 0.05258361249999977,
+          "ci95_lo": 0.041974999999999804,
+          "ci95_hi": 0.06302499999999969,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.12,
+            0.08000000000000007,
+            0.07999999999999996,
+            0.07000000000000006,
+            0.08000000000000007
+          ],
+          "mean": 0.08600000000000003,
+          "bootstrap_mean": 0.08588900000000005,
+          "ci95_lo": 0.07400000000000007,
+          "ci95_hi": 0.10400000000000001,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.10445985401459867,
+            0.058474452554744705,
+            0.16245985401459873,
+            0.028445255474452535,
+            0.042204379562043814
+          ],
+          "mean": 0.07920875912408769,
+          "bootstrap_mean": 0.07939504525547456,
+          "ci95_lo": 0.03995474452554748,
+          "ci95_hi": 0.12412572992700706,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.05616788321167898,
+            0.03027007299270057,
+            0.030299270072992712,
+            0.02432846715328507,
+            0.026262773722627863
+          ],
+          "mean": 0.03346569343065704,
+          "bootstrap_mean": 0.033610129197080396,
+          "ci95_lo": 0.025909489051095157,
+          "ci95_hi": 0.04501313868613151,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.07999999999999996,
+            0.040000000000000036,
+            0.07999999999999996,
+            0.010000000000000009,
+            0.040000000000000036
+          ],
+          "mean": 0.05,
+          "bootstrap_mean": 0.05008200000000001,
+          "ci95_lo": 0.028000000000000025,
+          "ci95_hi": 0.07199999999999998,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.0876932030576727,
+            0.09525680197875741,
+            0.110458986670248,
+            0.11215570403697861,
+            0.09443530425634317
+          ],
+          "mean": 0.09999999999999998,
+          "bootstrap_mean": 0.10010853999485163,
+          "ci95_lo": 0.09190276332135783,
+          "ci95_hi": 0.1082722806075054,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.028650572474230085,
+            0.03962103660925109,
+            0.0025092614354945697,
+            0.044676493301548326,
+            0.020202800255179176
+          ],
+          "mean": 0.02713203281514065,
+          "bootstrap_mean": 0.02716410838397746,
+          "ci95_lo": 0.013125384727305334,
+          "ci95_hi": 0.03979871626990817,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.06329113924050633,
+            0.07594936708860756,
+            0.06751054852320681,
+            0.09704641350210974,
+            0.05063291139240511
+          ],
+          "mean": 0.0708860759493671,
+          "bootstrap_mean": 0.07076540084388187,
+          "ci95_lo": 0.05822784810126584,
+          "ci95_hi": 0.08523206751054857,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.09794633438818545,
+            0.08775712025316418,
+            0.10531381856540056,
+            0.1236122099156115,
+            0.08537051687763697
+          ],
+          "mean": 0.09999999999999973,
+          "bootstrap_mean": 0.09990131592826978,
+          "ci95_lo": 0.08884032172995755,
+          "ci95_hi": 0.11278151371307985,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.026117484177214934,
+            0.021650843881856563,
+            0.033728902953586104,
+            0.02729100738396595,
+            0.021195938818565296
+          ],
+          "mean": 0.02599683544303777,
+          "bootstrap_mean": 0.026046457014767724,
+          "ci95_lo": 0.022453190928269983,
+          "ci95_hi": 0.030025712025316165,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.10126582278481011,
+            0.07594936708860756,
+            0.09704641350210974,
+            0.06751054852320681,
+            0.04641350210970463
+          ],
+          "mean": 0.07763713080168777,
+          "bootstrap_mean": 0.0776759493670886,
+          "ci95_lo": 0.06075949367088609,
+          "ci95_hi": 0.09451476793248945,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    }
+  },
+  "Transformer": {
+    "FD001": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.07022641509433947,
+            0.09788679245283027,
+            0.03358490566037753,
+            0.02071698113207543,
+            0.10701886792452842
+          ],
+          "mean": 0.06588679245283022,
+          "bootstrap_mean": 0.06575843018867929,
+          "ci95_lo": 0.03793169811320754,
+          "ci95_hi": 0.09418113207547174,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.05898113207547184,
+            0.05788679245283046,
+            0.05245283018867919,
+            0.06252830188679248,
+            0.05569811320754703
+          ],
+          "mean": 0.0575094339622642,
+          "bootstrap_mean": 0.05751284528301892,
+          "ci95_lo": 0.05440754716981129,
+          "ci95_hi": 0.0604000000000001,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.06000000000000005,
+            0.009999999999999898,
+            0.050000000000000044,
+            0.030000000000000027,
+            0.05999999999999994
+          ],
+          "mean": 0.041999999999999996,
+          "bootstrap_mean": 0.041983999999999994,
+          "ci95_lo": 0.023999999999999955,
+          "ci95_hi": 0.05800000000000001,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.06834782608695666,
+            0.06121739130434778,
+            0.02713043478260846,
+            0.1260000000000001,
+            0.07591304347826067
+          ],
+          "mean": 0.07172173913043474,
+          "bootstrap_mean": 0.07200477391304344,
+          "ci95_lo": 0.046897826086956355,
+          "ci95_hi": 0.10302608695652175,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.0671304347826086,
+            0.03756521739130447,
+            0.03547826086956518,
+            0.05434782608695654,
+            0.042695652173913023
+          ],
+          "mean": 0.047443478260869566,
+          "bootstrap_mean": 0.04740264347826087,
+          "ci95_lo": 0.037756521739130466,
+          "ci95_hi": 0.05824347826086951,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.040000000000000036,
+            0.040000000000000036,
+            0.030000000000000027,
+            0.06000000000000005,
+            0.050000000000000044
+          ],
+          "mean": 0.04400000000000004,
+          "bootstrap_mean": 0.04383800000000004,
+          "ci95_lo": 0.03600000000000003,
+          "ci95_hi": 0.05400000000000005,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    },
+    "FD002": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.09499607943543864,
+            0.06378838552751598,
+            0.05846121841545182,
+            0.09039008283859506,
+            0.065266465037632
+          ],
+          "mean": 0.0745804462509267,
+          "bootstrap_mean": 0.07474922260805546,
+          "ci95_lo": 0.06195313458471352,
+          "ci95_hi": 0.08783334133448539,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.04921668720295724,
+            0.039250452065097474,
+            0.04272028505438108,
+            0.05705301563425147,
+            0.027804003776543684
+          ],
+          "mean": 0.04320888874664619,
+          "bootstrap_mean": 0.043241798819029946,
+          "ci95_lo": 0.03467187274967596,
+          "ci95_hi": 0.05131992340230331,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.10671936758893275,
+            0.08695652173913049,
+            0.06324110671936756,
+            0.055335968379446654,
+            0.03952569169960474
+          ],
+          "mean": 0.07035573122529644,
+          "bootstrap_mean": 0.07034545454545454,
+          "ci95_lo": 0.05059288537549407,
+          "ci95_hi": 0.09249011857707508,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.10200166310287473,
+            0.06599062614743267,
+            0.0601892049504309,
+            0.10254919112723793,
+            0.056650251625305126
+          ],
+          "mean": 0.07747618739065627,
+          "bootstrap_mean": 0.07761802544331399,
+          "ci95_lo": 0.05993390785978094,
+          "ci95_hi": 0.0950184669215316,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.04557063867470135,
+            0.026220868701268052,
+            0.039076437936024666,
+            0.04478012484070926,
+            0.027923929242531953
+          ],
+          "mean": 0.03671439987904705,
+          "bootstrap_mean": 0.03689568025227326,
+          "ci95_lo": 0.029473206764724934,
+          "ci95_hi": 0.04395559299336917,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.1106719367588932,
+            0.08695652173913038,
+            0.04743083003952575,
+            0.055335968379446654,
+            0.055335968379446654
+          ],
+          "mean": 0.07114624505928853,
+          "bootstrap_mean": 0.071198418972332,
+          "ci95_lo": 0.05217391304347829,
+          "ci95_hi": 0.09486166007905132,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    },
+    "FD003": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.12710843373493985,
+            0.05127710843373501,
+            0.1082168674698798,
+            0.11501204819277089,
+            0.046144578313253026
+          ],
+          "mean": 0.08955180722891572,
+          "bootstrap_mean": 0.08951749156626511,
+          "ci95_lo": 0.060612048192771176,
+          "ci95_hi": 0.11849156626506026,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.0519759036144577,
+            0.07354216867469898,
+            0.04426506024096377,
+            0.0804096385542169,
+            0.04127710843373489
+          ],
+          "mean": 0.058293975903614445,
+          "bootstrap_mean": 0.05836873493975903,
+          "ci95_lo": 0.044612048192771,
+          "ci95_hi": 0.0725831325301205,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.07999999999999996,
+            0.09999999999999998,
+            0.08999999999999997,
+            0.12,
+            0.06000000000000005
+          ],
+          "mean": 0.09,
+          "bootstrap_mean": 0.089923,
+          "ci95_lo": 0.07200000000000002,
+          "ci95_hi": 0.10799999999999998,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.16205797101449293,
+            0.06766666666666654,
+            0.12904347826086948,
+            0.0040000000000000036,
+            0.0637536231884056
+          ],
+          "mean": 0.08530434782608691,
+          "bootstrap_mean": 0.08529902318840575,
+          "ci95_lo": 0.040634782608695554,
+          "ci95_hi": 0.13044637681159435,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.06408695652173924,
+            0.06468115942028962,
+            0.06594202898550738,
+            0.048115942028985614,
+            0.047579710144927234
+          ],
+          "mean": 0.05808115942028982,
+          "bootstrap_mean": 0.0580961333333333,
+          "ci95_lo": 0.051095652173912987,
+          "ci95_hi": 0.06506666666666665,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.12,
+            0.08999999999999997,
+            0.09999999999999998,
+            0.030000000000000027,
+            0.06000000000000005
+          ],
+          "mean": 0.08,
+          "bootstrap_mean": 0.07980700000000002,
+          "ci95_lo": 0.050000000000000024,
+          "ci95_hi": 0.10599999999999998,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    },
+    "FD004": {
+      "NLL": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.12110534009268181,
+            0.0912843798919748,
+            0.07469183798297718,
+            0.07580008086337209,
+            0.09477705553654903
+          ],
+          "mean": 0.09153173887351099,
+          "bootstrap_mean": 0.09169624451839636,
+          "ci95_lo": 0.07867529209301365,
+          "ci95_hi": 0.10656252397391627,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.020073813744699853,
+            0.042973698669901084,
+            0.0321618511491929,
+            0.02921863175027739,
+            0.03990400066349409
+          ],
+          "mean": 0.03286639919551306,
+          "bootstrap_mean": 0.032845701904436024,
+          "ci95_lo": 0.025868814729574207,
+          "ci95_hi": 0.039584082356234104,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.08016877637130804,
+            0.05485232067510548,
+            0.09704641350210974,
+            0.09704641350210963,
+            0.08016877637130804
+          ],
+          "mean": 0.08185654008438818,
+          "bootstrap_mean": 0.08191054852320676,
+          "ci95_lo": 0.06835443037974683,
+          "ci95_hi": 0.09367088607594938,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      },
+      "CP_norm": {
+        "order_A_freeze_sigma_first": {
+          "per_seed_values": [
+            0.10983687642581696,
+            0.09254638321926767,
+            0.07925928169099372,
+            0.06771445299093515,
+            0.08459209012173696
+          ],
+          "mean": 0.0867898168897501,
+          "bootstrap_mean": 0.08706308319706037,
+          "ci95_lo": 0.07498980477661336,
+          "ci95_hi": 0.10026325883754246,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "order_B_freeze_mu_first": {
+          "per_seed_values": [
+            0.039429269375971576,
+            0.04829305715381649,
+            0.030673490400338843,
+            0.04103325056023255,
+            0.05287182282518721
+          ],
+          "mean": 0.04246017806310933,
+          "bootstrap_mean": 0.04244971332243141,
+          "ci95_lo": 0.03594855954616092,
+          "ci95_hi": 0.04921027900591511,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "seed_order": [
+            42,
+            2024,
+            7,
+            888,
+            123
+          ]
+        },
+        "evaluation_point": "G/H exact-interpolation crossover (crossover_feat_oob_exact)",
+        "_order_averaged": {
+          "per_seed_values": [
+            0.06329113924050633,
+            0.05485232067510548,
+            0.09282700421940926,
+            0.06329113924050633,
+            0.08438818565400852
+          ],
+          "mean": 0.07172995780590719,
+          "bootstrap_mean": 0.07167299578059072,
+          "ci95_lo": 0.059915611814345994,
+          "ci95_hi": 0.0852320675105485,
+          "excludes_zero": true,
+          "dominant_direction": "mu",
+          "caveat": "nearest-grid-point operating point (frozen_decomposition_2x2.json / B_attribution_raw_per_seed.json), order-A/order-B averaged before bootstrap -- NOT the same operating point or order-separated methodology as the sibling fields in this file; kept only for before/after comparison."
+        }
+      }
+    }
+  },
+  "_summary": {
+    "LSTM": {
+      "A_excl_zero": 8,
+      "B_excl_zero": 7,
+      "total_cells": 8
+    },
+    "Transformer": {
+      "A_excl_zero": 8,
+      "B_excl_zero": 8,
+      "total_cells": 8
+    }
+  }
+}

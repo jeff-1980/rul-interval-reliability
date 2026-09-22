@@ -1,0 +1,4802 @@
+[
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "LSTM",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD001",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD002",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD003",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "clean",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "gaussian1pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "drift5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "NLL",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MSE_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "MC_Dropout_fixed",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": false,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "Deep_Ensemble",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 10,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 20,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  },
+  {
+    "backbone": "Transformer",
+    "ds": "FD004",
+    "condition": "bias5pct",
+    "method": "CP_norm",
+    "L": 30,
+    "exact_match_to_baseline": true,
+    "is_deterministic_method": true,
+    "d_premature": 0.0
+  }
+]

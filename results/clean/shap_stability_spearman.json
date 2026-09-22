@@ -1,0 +1,5 @@
+{
+  "spearman_rho": 0.5384615384615385,
+  "spearman_p": 0.04697614585955511,
+  "note": "NOT apples-to-apples: the earlier ranking used GradientExplainer on a pre-audit (leaky) checkpoint; the current ranking uses KernelExplainer (sensor-grouped) on leakfree checkpoint -- both the weights AND the explainer method changed, this rho conflates both effects"
+}
