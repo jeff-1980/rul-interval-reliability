@@ -67,7 +67,6 @@ mapping = {
    ('leakfree/shap_spearman_leakfree_ns800.json', 'shap_spearman_ns800.json'),
  ],
  'degradation': [
-   ('leakfree_r8/joint_setting_sensor_perturbation_control.json', 'joint_setting_sensor_perturbation_control.json'),
    ('noise_sensitivity_leakfree.json', 'lstm_noise_main_arm.json'),
    ('noise_sensitivity_leakfree_armC.json', 'lstm_noise_armc.json'),
    ('noise_sensitivity_leakfree_FD003.json', 'lstm_fd003_noise_main_arm.json'),

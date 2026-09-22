@@ -55,6 +55,7 @@ degradation/drift_fixed_endpoint_shuffle_control.json
 degradation/lstm_armc_mu_std.json
 degradation/lstm_clamp_frac_armc.json
 degradation/lstm_clamp_frac_main_arm.json
+degradation/lstm_ensemble_n5_vs_n15_variance.json
 degradation/lstm_ensemble_scale_sweep.json
 degradation/lstm_fd003_armc_mu_std.json
 degradation/lstm_fd003_ensemble_scale_sweep.json
@@ -75,6 +76,7 @@ degradation/transformer_frozen_sigma_decomposition.json
 degradation/transformer_half_life.json
 degradation/transformer_noise_armc.json
 degradation/transformer_noise_main_arm.json
+diagnostics/A1_perturbation_target_diagnostic.json
 seeds/ensemble_independent_replication.json
 seeds/ensemble_size_sweep_fd004_interval_score.json
 seeds/samesplit_ensemble_control.json

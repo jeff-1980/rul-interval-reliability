@@ -1,8 +1,11 @@
 # Reproducing the result files
 
-This document covers reproduction of the **72 result files** listed below
+This document covers reproduction of the **74 result files** listed below
 under this release's protocol (two changes from the predecessor pipeline,
-both inference-level, no retraining):
+both inference-level, no retraining). 73 of the 74 are `run_pipeline.sh`
+outputs; the 74th (`results/diagnostics/A1_perturbation_target_diagnostic.json`)
+is a one-off pre-flight diagnostic, run separately, held to the same bar
+because it is now cited in the main text (see "How to reproduce" below):
 
 - **Sensor-only perturbation on FD002/FD004.** These two datasets' feature
   columns are 3 operating-condition settings + 15 sensor channels. Every
@@ -12,11 +15,11 @@ both inference-level, no retraining):
   untouched -- settings are the commanded operating regime, not sensor
   measurements subject to degradation. FD001/FD003 have no setting columns
   and are unaffected by this change. `f_oob` is likewise computed only over
-  the perturbed sensor channels. A joint-perturbation (all 18 columns)
-  control at the old drift-5%/Gaussian-1% settings is retained separately
-  in `results/degradation/joint_setting_sensor_perturbation_control.json`
-  for comparison; it is a re-export of already-verified prior-round data,
-  not independently re-verified this round.
+  the perturbed sensor channels. `results/diagnostics/A1_perturbation_target_diagnostic.json`
+  is the pre-registered check that confirmed this change was safe to make
+  (see its own section below); it also retains the joint (18-column)
+  perturbation's numbers for comparison, so no separate joint-perturbation
+  control file is shipped.
 - **Test-truth convention.** Every table (clean, degradation, attribution,
   decision, the Table I/II families) now scores against
   `min(official_RUL - 1, 125)`, matching the training/calibration label
@@ -31,14 +34,14 @@ or was superseded by a file that is.
 
 ## Scope: what is and isn't guaranteed
 
-**Reproducible (verified bit-identical across two independent full reruns
-of this release's pipeline, 2026-09-22)**: 69 of the 72 files below, for
-every mechanism except MC-Dropout's own live T=50/T=100 sampling, which is
-reproducible only if you re-run the unmodified code with the seed it
-itself derives via `stable_seed(...)` at each call site -- there is no way
-to recover the specific MC-Dropout sampling used in results generated
-before this reproducibility fix (that randomness was never seeded and the
-seed was never logged).
+**Reproducible (verified bit-identical across two independent reruns,
+2026-09-22)**: 71 of the 74 files below, for every mechanism except
+MC-Dropout's own live T=50/T=100 sampling, which is reproducible only if
+you re-run the unmodified code with the seed it itself derives via
+`stable_seed(...)` at each call site -- there is no way to recover the
+specific MC-Dropout sampling used in results generated before this
+reproducibility fix (that randomness was never seeded and the seed was
+never logged).
 
 **Reproducible except for one non-guaranteed field**: 3 files
 (`clean/lstm_deep_ensemble.json`, `clean/lstm_fd003_deep_ensemble.json`,
@@ -47,14 +50,12 @@ in their `latency_ms_per_sample` field, which is wall-clock timing and has
 never been claimed reproducible (see `README.md`'s scope note). No other
 field in these files differs.
 
-**Not independently re-verified this round, but re-exported/regenerated
-from already-verified inputs**: `results/degradation/joint_setting_sensor_perturbation_control.json`
-(a re-export of prior-round data, described above) and
-`results/diagnostics/*.json` (the pre-registered A1/A2 checks that were
-run once, before committing to this round's full rerun, to confirm
-sensor-only perturbation was safe to adopt -- see
-`results/diagnostics/README.md`). Both were produced by the same
-inference code as the 72 verified files, just not run twice this round.
+**Not independently re-verified this round**:
+`results/diagnostics/A2_target_alignment_diagnostic.json` (a pre-registered
+diagnostic run once, before committing to this round's full rerun, to
+motivate the RUL-1 convention change -- see `results/diagnostics/README.md`).
+It was produced by the same inference code as the verified files above,
+just not run twice this round, and is not one of the 74.
 
 **Not covered by this document**: model training (checkpoint weights
 depend on training-time CUDA kernel selection and are not asserted
@@ -109,24 +110,35 @@ export RUL_DATA_DIR=/path/to/cmapss   # or place the data at ../data/
 bash run_pipeline.sh myrun
 ```
 
-This runs, in order, the scripts that generate the 72 files below (see
+This runs, in order, the 73 `run_pipeline.sh` outputs below (see
 `run_pipeline.sh` for the exact list and grouping) using the checkpoints
 already provided under `results/checkpoints/` -- including the T/W and V/W
 leakage-baseline checkpoints under
 `results/checkpoints/lstm_leaked_test_select_whole_file_scaler/` and
 `results/checkpoints/lstm_leaked_val_select_whole_file_scaler/`, needed by
-`build_table1.py` (Table I). Every script writes into
+`build_table1.py` (Table I), and the 10 extra-seed checkpoints under
+`results/checkpoints/lstm/{ds}_LSTM_extraseed{seed}.pt`, needed by
+`eval_lstm_ensemble_n5_vs_n15.py` (Appendix D). Every script writes into
 `results/generated/`; the final step, `publish_results.py`, copies each
 output to its released name and location under `results/{category}/` (see
 `results/table_provenance.csv` for the mapping).
 
-To verify reproducibility yourself: run the sequence twice
-(`run_pipeline.sh runA` then `run_pipeline.sh runB`, snapshotting the 72
-released files between runs), then compare MD5s -- this is exactly what
-`code/check_md5.py` does (edit its snapshot directory to point at your two
-runs' outputs).
+The 74th file, `results/diagnostics/A1_perturbation_target_diagnostic.json`,
+is not part of `run_pipeline.sh` -- it is a one-off pre-flight check, run
+separately:
 
-## The 72 files and their MD5 (this environment, this codebase revision)
+```bash
+cd code
+export PYTHONHASHSEED=0
+python3 diagnostic_perturbation_target_a1.py
+```
+
+To verify reproducibility yourself: run both the pipeline and this script
+twice (snapshotting the 74 released files between runs), then compare
+MD5s -- this is exactly what `code/check_md5.py` does (edit its snapshot
+directory to point at your two runs' outputs).
+
+## The 74 files and their MD5 (this environment, this codebase revision)
 
 ```
 e44c3ba1cb450a033c38d5265fa7b6da  results/attribution/attribution_bootstrap_by_order_exact_interp.json
@@ -179,6 +191,7 @@ c9ea4380c505903a89af3d5dd181053e  results/degradation/drift_fixed_endpoint_shuff
 5de422b97196a4995fbdf0aef60a3117  results/degradation/lstm_clamp_frac_armc.json
 1e977be6c2acbe17bc1e5a95153f4ecf  results/degradation/lstm_clamp_frac_main_arm.json
 97a942d265d17661475c053449c226de  results/degradation/lstm_ensemble_scale_sweep.json
+9531318a22a107e8ef426ade057ee6c0  results/degradation/lstm_ensemble_n5_vs_n15_variance.json
 81d9ae0d534cc5b694922e67479d81ad  results/degradation/lstm_fd003_armc_mu_std.json
 f1e42943f29c772cbdd11214813fdbdf  results/degradation/lstm_fd003_ensemble_scale_sweep.json
 a85aa0e48249309d9da7aba457c6c29b  results/degradation/lstm_fd003_frozen_sigma_decomposition.json
@@ -198,6 +211,7 @@ f2611802e0bfec4dd7bb00e879f0e58a  results/degradation/transformer_frozen_sigma_d
 04a784a8aef49646d8883fa4478f7065  results/degradation/transformer_half_life.json
 d0576fa10fb3d5de025f062964ee2083  results/degradation/transformer_noise_armc.json
 8b1996e28c2660c2f723e022398b3783  results/degradation/transformer_noise_main_arm.json
+b31403907e599ddf0e9683a362c6aba7  results/diagnostics/A1_perturbation_target_diagnostic.json
 e6fc8d99b88bdefd0dc7ee99624ca1f8  results/seeds/ensemble_independent_replication.json
 fe82a360216851aa1a1d67faec927a45  results/seeds/ensemble_size_sweep_fd004_interval_score.json
 7ca3fafbed144632be9451d650f0c6a5  results/seeds/samesplit_ensemble_control.json
@@ -208,15 +222,17 @@ fe82a360216851aa1a1d67faec927a45  results/seeds/ensemble_size_sweep_fd004_interv
 
 ## Numerical self-consistency of this manifest
 
-- 69 files bit-identical across two independent full reruns of this
-  release's `run_pipeline.sh` (2026-09-22) -- the MD5s above.
+- 71 files bit-identical across two independent reruns (2026-09-22) -- the
+  MD5s above. 70 are `run_pipeline.sh` outputs; 1
+  (`results/diagnostics/A1_perturbation_target_diagnostic.json`) is the
+  standalone diagnostic described above.
 - 3 files identical except for `latency_ms_per_sample` (wall-clock timing,
   explicitly out of scope) -- the MD5s above are from the second of the
   two runs; a fresh run's `latency_ms_per_sample` value will differ from
   it but every other field will match.
-- 72 = 69 + 3, matching the file count claimed at the top of this
+- 74 = 71 + 3, matching the file count claimed at the top of this
   document.
-- 3 additional files (`results/degradation/joint_setting_sensor_perturbation_control.json`
-  and the 2 files under `results/diagnostics/`) exist alongside these 72
-  but are excluded from the reproducibility claim for the separate,
-  documented reason given above (re-export vs. single-run diagnostic).
+- 1 additional file (`results/diagnostics/A2_target_alignment_diagnostic.json`)
+  exists alongside these 74 but is excluded from the reproducibility claim
+  for the documented reason given above (single-run diagnostic, not
+  independently re-verified).

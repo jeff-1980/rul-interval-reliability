@@ -99,6 +99,7 @@ run 49_ensemble_scale_sweep_fd003 eval_lstm_fd003_ensemble_scale_sweep.py
 run 50_ensemble_size_replication ensemble_size_and_independent_replication.py
 run 51_compare_backbones compare_backbones_noise.py
 run 52_compare_degradations compare_degradations_dose_response.py
+run 54_ensemble_n5_vs_n15 eval_lstm_ensemble_n5_vs_n15.py
 
 # --- Phase 7: publish results/generated/ outputs to their released
 # names/locations under results/{category}/ ---
