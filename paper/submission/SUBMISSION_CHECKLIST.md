@@ -1,4 +1,4 @@
-# IEEE Transactions on Reliability — submission package (v0.9-review)
+# IEEE Transactions on Reliability — submission package (v1.0-submission)
 
 Files
 - main.pdf / main.tex — manuscript, 11 pages, IEEEtran journal mode
@@ -6,8 +6,8 @@ Files
 - refs.bib, IEEEtran.cls — sources
 - cover_letter.txt — cover letter (paste into ScholarOne)
 
-Repository: https://github.com/jeff-1980/paper2  tag v0.9-review
-(REPRODUCE.md: 31 result files, two independent runs, bit-for-bit; PyTorch 2.11.0+cu130, cuDNN 9.1.9, RTX A5000 Laptop GPU)
+Repository: https://github.com/jeff-1980/rul-interval-reliability  tag v1.0-submission
+(REPRODUCE.md: 32 result files (30 bit-for-bit, 2 to numerical precision), two independent runs, bit-for-bit; PyTorch 2.11.0+cu130, cuDNN 9.1.9, RTX A5000 Laptop GPU)
 
 Form fields
 - Article type: Regular paper
@@ -19,5 +19,5 @@ Form fields
 - Suggested reviewers: leave blank unless personally known and conflict-free.
 
 Before clicking submit
-- Confirm the uploaded main.pdf text contains "v0.9-review" (pdftotext | grep).
-- Confirm the repository tag v0.9-review resolves publicly and paper/main.pdf there has the same MD5 as the uploaded file.
+- Confirm the uploaded main.pdf text contains "v1.0-submission" (pdftotext | grep).
+- Confirm the repository tag v1.0-submission resolves publicly and paper/main.pdf there has the same MD5 as the uploaded file.

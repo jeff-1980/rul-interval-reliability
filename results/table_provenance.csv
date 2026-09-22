@@ -1,31 +1,12 @@
-table_id,label,title_short,generating_script,labels_truncated_125,eval_unit,engine_equal_weighted,seed_perturbation_aggregation,noise_range_source
-Table I,tab:leak,2x2 protocol experiment,"the original pre-audit training script (superseded)(T/W) + the validation-selection-only pre-audit script (superseded)(V/W) + train_lstm.py(V/F) + protocol_2x2_quadrant4.py(T/F)",yes,terminal,yes,mean of 5 seeds (no noise trials),N/A (no injected noise)
-Table II,tab:clean,Clean-input benchmark,"fair_calibration_main_table.py (Fixed-var/MC-Dropout rows) + COST_TABLE_*_leakfree.csv via cost_table_lstm.py/cost_table_transformer.py (Heteroscedastic/Ensemble/CP-norm rows) + interval_score.py (IS/WIS all rows)",yes,"terminal, EXCEPT Per-eng. column = trajectory",yes,mean of 5 seeds (clean condition; no trial axis),N/A (no injected noise)
-Table III,tab:attr,4-way attribution (LSTM),"HYBRID: Scale-contribution rows <- frozen_sigma_relative.py (exact-interpolation crossover, single-order/frozen-sigma-only formula); Mean-dominates row <- attribution_frozen_2x2_nearest_grid.py (nearest-grid-point crossover, four-way average-of-both-orders formula); Baseline clamp fraction row <- clamp_frac.py",yes,terminal,yes,grand-mean over 5 seeds x 5 trials (pooled cells),FULL TRAINING FILE (fit_fullscale_range on unfiltered train_df_raw) -- see finding (a)
-Appendix C,tab:attr-transformer,4-way attribution (Transformer),attribution_frozen_2x2_nearest_grid.py (nearest-grid-point crossover, four-way average-of-both-orders formula for BOTH scale contribution and dominance),yes,terminal,yes,grand-mean over 5 seeds x 5 trials (pooled cells),FULL TRAINING FILE -- see finding (a)
-Table IV,tab:types,Excursion at 10-pt coverage loss by degradation type,run_sweep_degradation_transformer.py (shared T2 engine sweep both backbones); exact crossover-extraction script not conclusively resolved by static grep -- see note,yes,terminal,yes,"grand-mean over 5 seeds x 5 trials (bias/gain); drift trials are deterministic repeats of one ramp, N_TRIALS degenerates to identical values",FULL TRAINING FILE -- see finding (a)
-Table V,tab:controls,Drift controls FD002,drift_controls.py -> drift_controls.json,yes,terminal,yes,grand-mean over 5 seeds (deterministic perturbations except shuffled-ramp's random order draw),FULL TRAINING FILE -- see finding (a)
-Table VI,tab:decision,Maintenance outcomes L=20,maintenance_decision_two_sided.py -> results/decision/maintenance_decision_two_sided.json,yes (subject to item-2 correction: mean +2.55/max +11.42 cyc on Wasted col),terminal,yes,grand-mean over 5 seeds x 5 trials (gaussian/bias) or 5 seeds only (drift/clean),FULL TRAINING FILE -- see finding (a)
-Appendix E,tab:latency,Per-sample latency,latency_lstm.py -> latency_redesign_run1.json,N/A (no RUL involved),N/A (timing only),N/A,median+IQR over 11 repetitions per cell (not a seed/trial axis),N/A
-Appendix D,app:seeds,(no table; text only),N/A -- Section text cites relative_half_life_feat_oob.json / t2_transformer_half_life_feat_oob.json (10-extra-seed QC),N/A,N/A,N/A,N/A,N/A
-
-# Findings (referenced above):
-# (a) main.tex line 99 claims arm C's noise range is "on the fitting engines", but every
-#     degradation script (19 call sites of V4.fit_fullscale_range, grep-verified) passes the
-#     UNFILTERED full training file (train_df_raw from V4.load_raw_train_test_and_scaler),
-#     never restricted to fit_units. Text and code disagree on this point.
-# (b) Table III mixes two crossover-localization methods internally: "Scale contribution" rows
-#     use exact-interpolation + single-order (frozen-sigma-only) formula (frozen_sigma_relative); "Mean
-#     dominates, both orders" row uses nearest-grid-point + four-way average-of-both-orders
-#     formula (frozen_decomposition_2x2.json). The two rows do not describe the same operating
-#     point.
-# (c) Table III (LSTM) and Appendix C (Transformer) are presented as directly comparable ("same
-#     form") but use different scale-contribution formulas: Table III = single-order fraction at
-#     the exact-interpolated crossover; Appendix C = average-of-both-orders fraction at the
-#     nearest measured grid point. Exact-interpolation four-way recomputation for both backbones
-#     now exists (attribution_interp_transformer.py,
-#     attribution_interp_lstm.py) but main.tex has not been updated to it.
-# (d) Table VI (tab:decision) still reflects the R2 two-sided-90%-PI rule and
-#     missed/premature/wasted terminology; the R3 revision (one-sided 95% bound, renamed
-#     "unrecognised maintenance need", full rank-reversal + bootstrap check) in
-#     results/decision/maintenance_decision_one_sided.json has not been carried into main.tex.
+table,generating_script,labels,evaluation_unit,engine_equal_weighted,aggregation,noise_range_reference
+Protocol 2x2 (Table I),"train_lstm.py (V/F) and protocol_2x2_quadrant4.py (T/F); the T/W and V/W cells come from the superseded pre-audit training scripts, whose outputs are retained as data",clipped,terminal,yes,mean of 5 seeds; ECE on pooled seeds,--
+Clean benchmark (Table II),"fair_calibration_main_table.py (fixed variance, MC Dropout); cost_table_lstm.py, cost_table_transformer.py, table2_clean_merge.py (others); eval_*_per_engine_coverage.py (per-engine column)",clipped,terminal (per-engine: trajectory),yes,mean of 5 seeds; ECE per seed,--
+Same-partition ensemble (Table III),samesplit_ensemble_control.py,clipped,terminal,yes,"one partition (seed 42), five initialisations",--
+"Attribution, LSTM (Table IV)",attribution_interp_lstm.py; clamp fraction from clamp_frac.py,clipped,terminal,yes,seed-pooled predictions; interpolated crossover,official training file
+Structured degradation (Table V),"run_sweep_degradation_transformer.py with sweep_engine.py (both backbones), half_life_degradation.py",clipped,terminal,yes,"5 models x 5 realisations, grand mean",official training file
+Drift controls (Table VI),drift_controls.py; drift_bias_equal_magnitude_control.py; drift_fixed_endpoint_shuffle_control.py,clipped,terminal,yes,5 models; deterministic except shuffled/bias sign draws,official training file
+Decision stress test (Table VII),maintenance_decision_one_sided.py; unclipped RUL from maintenance_stress_test_rul_correction_v2.py,clipped for triggers; unclipped RUL reported,terminal,yes,5 models x 5 realisations,official training file
+Fair calibration (Appendix B),fair_calibration_sigma_fixed.py,clipped,terminal,yes,mean of 5 seeds,--
+"Attribution, Transformer (Appendix C)",attribution_interp_transformer.py,clipped,terminal,yes,seed-pooled predictions; interpolated crossover,official training file
+Seeds and ensemble size (Appendix D),eval_lstm_ensemble_n5_vs_n15.py; ensemble_size_and_independent_replication.py,clipped,terminal,yes,15 seeds; three disjoint ensembles,--
+Latency (Appendix E),latency_lstm.py; latency_transformer.py,--,--,--,median and IQR over 11 repetitions,--
