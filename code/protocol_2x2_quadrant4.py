@@ -40,7 +40,7 @@ import common as C
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
 CKPT_DIR = os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm_drift_controls')
 os.makedirs(CKPT_DIR, exist_ok=True)
 
@@ -148,7 +148,7 @@ if __name__ == '__main__':
         print(f"GPU: {torch.cuda.get_device_name(0)}")
     print(f"Device: {device}  test-select + fit-only-scaler quadrant  DATASETS={DATASETS}  SEEDS={C.SEEDS}")
 
-    out_path = os.path.join(R2_DIR, 'protocol_2x2_quadrant4_testselect_fitonlyscaler.json')
+    out_path = os.path.join(CALIB_DIR, 'protocol_2x2_quadrant4_testselect_fitonlyscaler.json')
     all_out = {}
     if os.path.exists(out_path):
         with open(out_path) as f:

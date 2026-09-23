@@ -37,7 +37,7 @@ import sweep_engine as E
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
 
 DATASETS = ['FD001', 'FD002']
 BACKBONES = ['LSTM', 'Transformer']
@@ -208,7 +208,7 @@ if __name__ == '__main__':
             if device.type == 'cuda':
                 torch.cuda.empty_cache()
 
-    out_path = os.path.join(R2_DIR, 'drift_controls.json')
+    out_path = os.path.join(CALIB_DIR, 'drift_controls.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

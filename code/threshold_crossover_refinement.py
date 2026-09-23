@@ -22,7 +22,7 @@ to the noise realization itself, not just to grid density (which was
 already verified separately).
 
 Inference only, no retraining. Output:
-results/generated/leakfree_r4/threshold_960_refinement.json
+results/generated/intermediate/partition_and_rul_correction/threshold_960_refinement.json
 """
 import os
 import json
@@ -39,9 +39,9 @@ import run_sweep_noise_transformer_armc as PA
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
-R4_DIR = os.path.join(RESULTS_DIR, 'leakfree_r4')
-os.makedirs(R4_DIR, exist_ok=True)
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
+PARTITION_RUL_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'partition_and_rul_correction')
+os.makedirs(PARTITION_RUL_DIR, exist_ok=True)
 
 DS = 'FD001'
 BACKBONE = 'Transformer'
@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     models_by_seed = {seed: E.load_models_for_seed(DS, BACKBONE, seed, device) for seed in C.SEEDS}
 
-    with open(os.path.join(R3_DIR, 'D3_refined_grid_transformer_fd001_ensemble.json')) as f:
+    with open(os.path.join(ATTR_DECISION_DIR, 'D3_refined_grid_transformer_fd001_ensemble.json')) as f:
         d3 = json.load(f)
     picp_clean = d3['picp_clean']
     rel_threshold = d3['rel_threshold']
@@ -164,7 +164,7 @@ if __name__ == '__main__':
         'prior_D3_refined_crossover': d3['refined_crossover_feat_oob'],
     }
 
-    out_path = os.path.join(R4_DIR, 'threshold_960_refinement.json')
+    out_path = os.path.join(PARTITION_RUL_DIR, 'threshold_960_refinement.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

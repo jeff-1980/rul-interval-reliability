@@ -21,7 +21,7 @@ crossover.
 
 The only "new computation" added is C01; C00/C10/crossover location all
 reuse existing data, no retraining. Read-only output:
-leakfree_r3/G_transformer_exact_interp_attribution.json. Does not modify
+intermediate/attribution_and_decision/G_transformer_exact_interp_attribution.json. Does not modify
 main.tex or write any tex.
 """
 import os
@@ -40,7 +40,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
 TRANSFORMER_DIR = os.path.join(RESULTS_DIR, 'leakfree_t2')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 METHODS = ['NLL', 'CP_norm']
@@ -224,7 +224,7 @@ if __name__ == '__main__':
         cp_all = json.load(f)
     with open(os.path.join(PROJ_DIR, 'results', 'canonical_splits.json')) as f:
         canon = json.load(f)
-    with open(os.path.join(RESULTS_DIR, 'leakfree_r2', 'frozen_decomposition_2x2.json')) as f:
+    with open(os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls', 'frozen_decomposition_2x2.json')) as f:
         old_2x2 = json.load(f)
 
     backbone = 'Transformer'
@@ -381,7 +381,7 @@ if __name__ == '__main__':
         if device.type == 'cuda':
             torch.cuda.empty_cache()
 
-    out_path = os.path.join(R3_DIR, 'G_transformer_exact_interp_attribution.json')
+    out_path = os.path.join(ATTR_DECISION_DIR, 'G_transformer_exact_interp_attribution.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

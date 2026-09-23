@@ -1,11 +1,13 @@
 """
-Rebuilds the generator script for leakfree_r2/table2_clean_full.json --
-an audit found no existing script in the codebase actually produces this
-file. This file contains no new computation itself; it merges existing,
+Rebuilds the generator script for
+intermediate/calibration_and_controls/table2_clean_full.json -- an audit
+found no existing script in the codebase actually produces this file.
+This file contains no new computation itself; it merges existing,
 independently-computed per-method result files into the unified shape
 needed for Table II, keyed by (backbone, dataset, method):
   - MSE_fixed / MC_Dropout_fixed: taken directly from
-    leakfree_r2/fair_calibration_main_table.json (these two mechanisms'
+    intermediate/calibration_and_controls/fair_calibration_main_table.json
+    (these two mechanisms'
     sigma comes from calibration-set residual variance, the "fair
     calibration"-fixed convention; the six fields picp_mean/mpiw_mean/
     ece_mean/per_engine_compliance/interval_score_mean/wis_mean are
@@ -27,7 +29,7 @@ import numpy as np
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 METHODS = ['MSE_fixed', 'NLL', 'MC_Dropout_fixed', 'Deep_Ensemble', 'CP_norm']
@@ -63,11 +65,11 @@ def nll_cp_ens(backbone, ds):
 
 
 if __name__ == '__main__':
-    fair = _load('leakfree_r2/fair_calibration_main_table.json')
+    fair = _load('intermediate/calibration_and_controls/fair_calibration_main_table.json')
     per_engine_lstm = _load('per_engine_coverage_leakfree.json')
     per_engine_lstm_fd003 = _load('stepFD003_per_engine_coverage_leakfree.json')
     per_engine_t2 = _load('leakfree_t2/t2_transformer_per_engine_coverage_leakfree.json')
-    iswis = _load('leakfree_r2/interval_score_wis_clean.json')
+    iswis = _load('intermediate/calibration_and_controls/interval_score_wis_clean.json')
 
     result = {'LSTM': {}, 'Transformer': {}}
     for backbone in ['LSTM', 'Transformer']:
@@ -92,12 +94,12 @@ if __name__ == '__main__':
                     'wis': iswis[backbone][ds][m]['wis_mean'],
                 }
 
-    out_path = os.path.join(R2_DIR, 'table2_clean_full.json')
+    out_path = os.path.join(CALIB_DIR, 'table2_clean_full.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"Saved -> {out_path}")
 
-    with open(os.path.join(R2_DIR, 'table2_clean_full.json')) as f:
+    with open(os.path.join(CALIB_DIR, 'table2_clean_full.json')) as f:
         existing = json.load(f)
 
     print("\n=== comparison against existing table2_clean_full.json (tol 1e-6) ===")

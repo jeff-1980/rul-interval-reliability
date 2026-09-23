@@ -1,5 +1,5 @@
 """
-Table I controlled 2x2 retraining -- the only training step in this round.
+Table I controlled 2x2 retraining -- the only training step in this experiment.
 
 Problem: the original T/W cell fit its checkpoint on 100% of the training
 engines, and the original V/W cell on 80%, while V/F and T/F both use
@@ -52,9 +52,9 @@ from samesplit_ensemble_control import gate_check_split
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R9_DIR = os.path.join(RESULTS_DIR, 'leakfree_r9')
+TABLE1_RETRAIN_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'table1_controlled_retrain')
 CKPT_DIR = os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm_2x2_controlled')
-os.makedirs(R9_DIR, exist_ok=True)
+os.makedirs(TABLE1_RETRAIN_DIR, exist_ok=True)
 os.makedirs(CKPT_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD004']
@@ -203,7 +203,7 @@ if __name__ == '__main__':
         print(f"GPU: {torch.cuda.get_device_name(0)}")
     print(f"Device: {device}  Controlled 2x2 retrain (T/W', V/W')  DATASETS={DATASETS}  SEEDS={C.SEEDS}")
 
-    out_path = os.path.join(R9_DIR, 'controlled_2x2_retrain_results.json')
+    out_path = os.path.join(TABLE1_RETRAIN_DIR, 'controlled_2x2_retrain_results.json')
     all_out = {}
     if os.path.exists(out_path):
         with open(out_path) as f:

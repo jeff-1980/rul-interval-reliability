@@ -43,7 +43,7 @@ from attribution_bootstrap_order_averaged import fix_interaction
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 METHODS = ['NLL', 'CP_norm']
@@ -89,14 +89,14 @@ def bootstrap_by_order_from_cell(cell):
 
 
 if __name__ == '__main__':
-    g_path = os.path.join(R3_DIR, 'G_transformer_exact_interp_attribution.json')
-    h_path = os.path.join(R3_DIR, 'H_lstm_exact_interp_attribution.json')
+    g_path = os.path.join(ATTR_DECISION_DIR, 'G_transformer_exact_interp_attribution.json')
+    h_path = os.path.join(ATTR_DECISION_DIR, 'H_lstm_exact_interp_attribution.json')
     g_data = fix_interaction(g_path)
     h_data = fix_interaction(h_path)
     print("Interaction sign fixed in G and H (verified via algebraic identity check).")
 
     # old order-averaged version, unchanged method, nearest-grid-point data source
-    with open(os.path.join(R3_DIR, 'B_attribution_raw_per_seed.json')) as f:
+    with open(os.path.join(ATTR_DECISION_DIR, 'B_attribution_raw_per_seed.json')) as f:
         raw_b = json.load(f)
 
     def old_order_averaged(cell_b):
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     result['_summary'] = counts
     print(f"\nCounts (CI excludes zero): {json.dumps(counts, indent=2)}")
 
-    out_path = os.path.join(R3_DIR, 'bootstrap_by_order_exact_interp.json')
+    out_path = os.path.join(ATTR_DECISION_DIR, 'bootstrap_by_order_exact_interp.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

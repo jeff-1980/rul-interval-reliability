@@ -3,7 +3,7 @@
 This document covers reproduction of the **74 result files** listed below,
 all of them `run_pipeline.sh` outputs (including
 `results/diagnostics/A1_perturbation_target_diagnostic.json`, folded into
-the pipeline this round because it is now cited in the main text). The
+the pipeline because it is now cited in the main text). The
 current protocol, relative to the predecessor pipeline, is inference-level
 except for one deliberate retraining (noted below):
 
@@ -19,7 +19,7 @@ except for one deliberate retraining (noted below):
   `noise_injection.feat_oob(X_scaled, sensor_mask)`, that every sweep,
   control, attribution and threshold script now calls (previously several
   of them independently reimplemented the same reduction with a plain
-  18-column denominator; see "What changed this round" below).
+  18-column denominator; see "What changed in this experiment" below).
   `results/diagnostics/A1_perturbation_target_diagnostic.json` is the
   pre-registered check that confirmed the sensor-only restriction was safe
   to make; it also retains the joint (18-column) perturbation's numbers for
@@ -30,7 +30,7 @@ except for one deliberate retraining (noted below):
   convention's counting origin (the last row of a run-to-failure training
   trajectory has RUL = 0), not the official RUL value directly.
 - **Table I's T/W and V/W cells are now controlled (T/W', V/W').** See
-  "What changed this round" below -- this is the one exception to
+  "What changed in this experiment" below -- this is the one exception to
   "inference-level": these two cells were retrained (not reproducibility-
   asserted; see the Scope section).
 
@@ -38,7 +38,7 @@ This list supersedes the predecessor 32-file list entirely -- every file
 in that list is either included below (with updated content and checksum)
 or was superseded by a file that is.
 
-## What changed this round
+## What changed in this experiment
 
 1. **Table I's T/W and V/W cells retrained as T/W', V/W'.** The original
    T/W cell fit its checkpoint on 100% of the training-file engines, and
@@ -107,18 +107,18 @@ in their `latency_ms_per_sample` field, which is wall-clock timing and has
 never been claimed reproducible (see `README.md`'s scope note). No other
 field in these files differs.
 
-**Not independently re-verified this round**:
+**Not independently re-verified for this experiment**:
 `results/diagnostics/A2_target_alignment_diagnostic.json` (a pre-registered
 diagnostic run once, to motivate the RUL-1 convention change -- see
 `results/diagnostics/README.md`). It was produced by the same inference
-code as the verified files above, just not run twice this round, and is
-not one of the 74.
+code as the verified files above, just not run twice for this experiment,
+and is not one of the 74.
 
 **Not covered by this document**: model training (checkpoint weights
 depend on training-time CUDA kernel selection and are not asserted
 reproducible here). This now includes:
 - `results/checkpoints/lstm_2x2_controlled/` (T/W', V/W', trained once by
-  `protocol_2x2_controlled_retrain.py` this round);
+  `protocol_2x2_controlled_retrain.py` for this experiment);
 - the original, uncontrolled T/W and V/W checkpoints under
   `results/superseded/checkpoints_tw_vw_uncontrolled/` and their training
   scripts under `code/superseded/`;

@@ -49,8 +49,8 @@ import sweep_engine as E
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R8_DIR = os.path.join(RESULTS_DIR, 'leakfree_r8')
-os.makedirs(R8_DIR, exist_ok=True)
+DIAG_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'protocol_diagnostics')
+os.makedirs(DIAG_DIR, exist_ok=True)
 
 DATASETS = ['FD002', 'FD004']
 BACKBONES = ['LSTM', 'Transformer']
@@ -159,7 +159,7 @@ if __name__ == '__main__':
             if device.type == 'cuda':
                 torch.cuda.empty_cache()
 
-    out_path = os.path.join(R8_DIR, 'A1_perturbation_target_diagnostic.json')
+    out_path = os.path.join(DIAG_DIR, 'A1_perturbation_target_diagnostic.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

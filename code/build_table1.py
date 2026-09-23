@@ -49,8 +49,8 @@ import common as C
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R8_DIR = os.path.join(RESULTS_DIR, 'leakfree_r8')
-os.makedirs(R8_DIR, exist_ok=True)
+TABLE1_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'table1_leak_audit')
+os.makedirs(TABLE1_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD004']
 QUADRANTS = ['T_W', 'V_W', 'V_F', 'T_F']
@@ -114,7 +114,7 @@ if __name__ == '__main__':
                 print(f"  seed={seed}: RMSE={rmse:.3f} Score={score:.1f} PICP={picp:.3f} "
                       f"MPIW={mpiw:.2f} ECE={ece:.4f}")
 
-    per_seed_path = os.path.join(R8_DIR, 'table1_2x2_per_seed.json')
+    per_seed_path = os.path.join(TABLE1_DIR, 'table1_2x2_per_seed.json')
     with open(per_seed_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {per_seed_path}")
@@ -141,7 +141,7 @@ if __name__ == '__main__':
             inter = (TW - VW) - (TF - VF)
             summary[ds].setdefault('contrasts', {})[metric] = {'Sel': sel, 'Norm': norm, 'Int': inter}
 
-    summary_path = os.path.join(R8_DIR, 'table1_2x2_summary.json')
+    summary_path = os.path.join(TABLE1_DIR, 'table1_2x2_summary.json')
     with open(summary_path, 'w') as fp:
         json.dump(summary, fp, indent=2, default=float)
     print(f"Saved -> {summary_path}")

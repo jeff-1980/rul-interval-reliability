@@ -41,8 +41,8 @@ import sweep_engine as E
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
-os.makedirs(R2_DIR, exist_ok=True)
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
+os.makedirs(CALIB_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 BACKBONES = ['LSTM', 'Transformer']
@@ -262,7 +262,7 @@ if __name__ == '__main__':
                 print(f"    mean-dominant: orderA={mean_dominant_A} orderB={mean_dominant_B} "
                       f"BOTH={mean_dominant_both}")
 
-    out_path = os.path.join(R2_DIR, 'frozen_decomposition_2x2.json')
+    out_path = os.path.join(CALIB_DIR, 'frozen_decomposition_2x2.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

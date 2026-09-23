@@ -30,7 +30,7 @@ import transformer_common as T2
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
 
 N_WARMUP = 50
 N_ROUNDS = 11
@@ -165,7 +165,7 @@ if __name__ == '__main__':
             for batch in BATCH_LEVELS:
                 all_out[ds][backbone][str(batch)] = measure_backbone_batch(ds, backbone, batch, device)
 
-    out_path = os.path.join(R2_DIR, f'latency_redesign_{run_tag}.json')
+    out_path = os.path.join(CALIB_DIR, f'latency_redesign_{run_tag}.json')
     with open(out_path, 'w') as fp:
         json.dump(all_out, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

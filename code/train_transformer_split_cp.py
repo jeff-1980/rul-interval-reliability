@@ -7,7 +7,7 @@ recorded honestly): on the LSTM side (train_lstm_split_cp_
 split_cp_leakfree.py), a separate NLL model was cloned and trained just
 for Split-CP, purely to get inference results on calib_units -- the
 architecture/data/loss are identical to the main NLL model
-(train_lstm), just retrained. The scope for this round explicitly caps
+(train_lstm), just retrained. The scope of this experiment explicitly caps
 Transformer training at "two heads (NLL, MSE) = 40 models", with no third
 head, so no clone-training is done here -- instead this reuses the NLL
 Transformer checkpoint already trained for head 1

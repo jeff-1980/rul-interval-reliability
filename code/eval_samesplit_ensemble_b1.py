@@ -2,7 +2,7 @@
 Inference-level re-evaluation (no retraining) of the same-split ensemble
 control (Table III / samesplit_ensemble.json). All 5 member checkpoints
 reuse existing weights (init_seed=42 reused from checkpoints_leakfree*/,
-the other 4 loaded from checkpoints_leakfree_r4_samesplit/) -- does not
+the other 4 loaded from results/checkpoints/samesplit_control/) -- does not
 call samesplit_ensemble_control.py's train_lstm/train_transformer (those
 two functions would unconditionally retrain 4 new models, which would
 violate "no retraining").
@@ -121,7 +121,7 @@ if __name__ == '__main__':
             print(f"  [{backbone}/{ds}] same-split ensemble: PICP={picp_ens:.4f} MPIW={mpiw_ens:.2f} "
                   f"ECE={ece_ens:.4f} IS={is_ens.mean():.3f} per_engine={compliance_rate_ge_090:.3f}")
 
-    out_path = os.path.join(M.R4_DIR, 'samesplit_ensemble.json')
+    out_path = os.path.join(M.SAMESPLIT_DIR, 'samesplit_ensemble.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

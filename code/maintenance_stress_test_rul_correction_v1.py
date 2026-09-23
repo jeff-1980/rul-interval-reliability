@@ -25,7 +25,7 @@ difference), and asserts that premature/at_risk/trigger-rate/cost
 ranking match the earlier file row for row.
 
 Inference only, no retraining, does not modify main.tex. Output:
-results/generated/leakfree_r4/C_maintenance_rul_corrected.json
+results/generated/intermediate/partition_and_rul_correction/C_maintenance_rul_corrected.json
 """
 import os
 import json
@@ -42,9 +42,9 @@ from maintenance_decision_two_sided import calib_sigma_fixed, sequences_for_unit
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
-R4_DIR = os.path.join(RESULTS_DIR, 'leakfree_r4')
-os.makedirs(R4_DIR, exist_ok=True)
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
+PARTITION_RUL_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'partition_and_rul_correction')
+os.makedirs(PARTITION_RUL_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 BACKBONES = ['LSTM', 'Transformer']
@@ -134,7 +134,7 @@ if __name__ == '__main__':
 
     with open(os.path.join(PROJ_DIR, 'results', 'canonical_splits.json')) as f:
         canon = json.load(f)
-    with open(os.path.join(R3_DIR, 'C_maintenance_full_onesided.json')) as f:
+    with open(os.path.join(ATTR_DECISION_DIR, 'C_maintenance_full_onesided.json')) as f:
         old_result = json.load(f)
 
     result = {}
@@ -308,7 +308,7 @@ if __name__ == '__main__':
             if device.type == 'cuda':
                 torch.cuda.empty_cache()
 
-    out_path = os.path.join(R4_DIR, 'C_maintenance_rul_corrected.json')
+    out_path = os.path.join(PARTITION_RUL_DIR, 'C_maintenance_rul_corrected.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

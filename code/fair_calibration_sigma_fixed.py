@@ -23,7 +23,7 @@ import transformer_common as T2
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 BACKBONES = ['LSTM', 'Transformer']
@@ -114,7 +114,7 @@ if __name__ == '__main__':
                                      'mean_ratio_calib_over_train': mean_calib / mean_train}
             print(f"  MEAN: train={mean_train:.3f}  calib={mean_calib:.3f}  ratio={mean_calib/mean_train:.3f}")
 
-    out_path = os.path.join(R2_DIR, 'fair_calibration_sigma_fixed.json')
+    out_path = os.path.join(CALIB_DIR, 'fair_calibration_sigma_fixed.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

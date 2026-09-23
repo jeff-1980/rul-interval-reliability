@@ -22,9 +22,9 @@ from interval_score import get_cp_q
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
-os.makedirs(R3_DIR, exist_ok=True)
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
+os.makedirs(ATTR_DECISION_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 BACKBONES = ['LSTM', 'Transformer']
@@ -99,7 +99,7 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}")
 
-    with open(os.path.join(R2_DIR, 'frozen_decomposition_2x2.json')) as f:
+    with open(os.path.join(CALIB_DIR, 'frozen_decomposition_2x2.json')) as f:
         existing = json.load(f)
     with open(os.path.join(PROJ_DIR, 'results', 'canonical_splits.json')) as f:
         canon = json.load(f)
@@ -186,7 +186,7 @@ if __name__ == '__main__':
                       f"C01={cc['C01_mean']:.4f}(std={cc['C01_std']:.4f}) "
                       f"C11={cc['C11_mean']:.4f}(std={cc['C11_std']:.4f})")
 
-    out_path = os.path.join(R3_DIR, 'B_attribution_raw_per_seed.json')
+    out_path = os.path.join(ATTR_DECISION_DIR, 'B_attribution_raw_per_seed.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

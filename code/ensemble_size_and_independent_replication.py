@@ -31,8 +31,8 @@ from interval_score import interval_score, wis, get_cp_q
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
-os.makedirs(R3_DIR, exist_ok=True)
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
+os.makedirs(ATTR_DECISION_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 N_BOOT = 2000
@@ -116,7 +116,7 @@ if __name__ == '__main__':
         print(f"  M={M}: n_groups={len(groups)}  PICP={a2_out[M]['picp_mean']:.4f}  IS={a2_out[M]['is_mean']:.2f}  "
               f"(per-group IS: {[round(v,1) for v in iss]})")
 
-    with open(os.path.join(R3_DIR, 'A2_fd004_msweep_IS.json'), 'w') as fp:
+    with open(os.path.join(ATTR_DECISION_DIR, 'A2_fd004_msweep_IS.json'), 'w') as fp:
         json.dump(a2_out, fp, indent=2, default=float)
 
     # ---- E: 3 disjoint M=5 ensembles, 4 datasets, IS/WIS + bootstrap vs single-model mechanisms ----
@@ -172,6 +172,6 @@ if __name__ == '__main__':
 
         e_out[ds] = ds_out
 
-    with open(os.path.join(R3_DIR, 'E_ensemble_independent_replication.json'), 'w') as fp:
+    with open(os.path.join(ATTR_DECISION_DIR, 'E_ensemble_independent_replication.json'), 'w') as fp:
         json.dump(e_out, fp, indent=2, default=float)
     print(f"\nSaved -> A2_fd004_msweep_IS.json, E_ensemble_independent_replication.json")

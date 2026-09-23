@@ -35,10 +35,10 @@ import run_sweep_noise_transformer_armc as PA
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
-R4_DIR = os.path.join(RESULTS_DIR, 'leakfree_r4')
-R6_DIR = os.path.join(RESULTS_DIR, 'leakfree_r6')
-os.makedirs(R6_DIR, exist_ok=True)
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
+PARTITION_RUL_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'partition_and_rul_correction')
+THRESHOLD_EXT_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'threshold_leftside_extension')
+os.makedirs(THRESHOLD_EXT_DIR, exist_ok=True)
 
 DS = 'FD001'
 BACKBONE = 'Transformer'
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     scalers_by_seed = PA.scalers_for_ds(DS)
     models_by_seed = {seed: E.load_models_for_seed(DS, BACKBONE, seed, device) for seed in C.SEEDS}
 
-    with open(os.path.join(R4_DIR, 'threshold_960_refinement.json')) as f:
+    with open(os.path.join(PARTITION_RUL_DIR, 'threshold_960_refinement.json')) as f:
         right = json.load(f)
     picp_clean = right['picp_clean']
     rel_threshold = right['rel_threshold']
@@ -147,7 +147,7 @@ if __name__ == '__main__':
         'left_points_raw': {str(lv): left_points[lv] for lv in NEW_LEFT_LEVELS_DB},
         'per_trial_first_crossing_from_clean': per_trial_results,
     }
-    out_path = os.path.join(R6_DIR, 'threshold_960_leftside_extension.json')
+    out_path = os.path.join(THRESHOLD_EXT_DIR, 'threshold_960_leftside_extension.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

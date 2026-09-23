@@ -20,15 +20,15 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 DEGRADATION_DIR = os.path.join(PROJ_DIR, 'results', 'degradation')
 GEN_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-GEN_R3_DIR = os.path.join(GEN_DIR, 'leakfree_r3')
+GEN_ATTR_DECISION_DIR = os.path.join(GEN_DIR, 'intermediate', 'attribution_and_decision')
 
-os.makedirs(GEN_R3_DIR, exist_ok=True)
+os.makedirs(GEN_ATTR_DECISION_DIR, exist_ok=True)
 
-MAPPING_R3 = {
+MAPPING = {
     'threshold_refined_grid_transformer_fd001_ensemble.json': 'D3_refined_grid_transformer_fd001_ensemble.json',
 }
 
 if __name__ == '__main__':
-    for src_name, dst_name in MAPPING_R3.items():
-        shutil.copy2(os.path.join(DEGRADATION_DIR, src_name), os.path.join(GEN_R3_DIR, dst_name))
-    print(f"Seeded {len(MAPPING_R3)} frozen file(s) into results/generated/.")
+    for src_name, dst_name in MAPPING.items():
+        shutil.copy2(os.path.join(DEGRADATION_DIR, src_name), os.path.join(GEN_ATTR_DECISION_DIR, dst_name))
+    print(f"Seeded {len(MAPPING)} frozen file(s) into results/generated/.")

@@ -1,5 +1,5 @@
 """
-Same-split ensemble control (the only training step in this round).
+Same-split ensemble control (the only training step in this experiment).
 
 Purpose: the existing Deep_Ensemble(M=5)'s 5 member models differ in both
 random initialisation and canonical_splits' engine-level fit/val/calib
@@ -27,7 +27,7 @@ Gate-check (evaluation-protocol self-certification, five items):
   2. Early-stopping criterion: same, same val_units, compared via
      best_val_rmse each epoch.
   3. Scaler fit only on fit_units (split_seed=42) (C.load_and_process_leakfree).
-  4. No conformal calibration this round (only NLL + moment-matching
+  4. No conformal calibration in this experiment (only NLL + moment-matching
      ensemble trained), so no calib-overlap concern; a future CP-norm
      would need the same split_seed=42's calib_units.
   5. fit/val/calib pairwise disjointness: already asserted non-overlapping
@@ -41,8 +41,8 @@ not MC-Dropout/CP-norm -- this task only cares about the "pure
 initialisation variance under the same split" contrast, not a full cost
 table.
 
-Output: results/generated/leakfree_r4/samesplit_ensemble.json
-Checkpoint directory: results/generated/checkpoints_leakfree_r4_samesplit/
+Output: results/generated/intermediate/samesplit/samesplit_ensemble.json
+Checkpoint directory: results/checkpoints/samesplit_control/
 """
 import os
 import json
@@ -67,9 +67,9 @@ from interval_score import interval_score, wis, ALPHA
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R4_DIR = os.path.join(RESULTS_DIR, 'leakfree_r4')
+SAMESPLIT_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'samesplit')
 CKPT_DIR = os.path.join(PROJ_DIR, 'results', 'checkpoints', 'samesplit_control')
-os.makedirs(R4_DIR, exist_ok=True)
+os.makedirs(SAMESPLIT_DIR, exist_ok=True)
 os.makedirs(CKPT_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
@@ -331,7 +331,7 @@ if __name__ == '__main__':
                   f"single-model IS across inits: {is_means_across_models.mean():.3f}"
                   f"+/-{is_means_across_models.std(ddof=1):.3f}")
 
-    out_path = os.path.join(R4_DIR, 'samesplit_ensemble.json')
+    out_path = os.path.join(SAMESPLIT_DIR, 'samesplit_ensemble.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

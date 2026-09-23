@@ -27,7 +27,7 @@ import sweep_engine as E
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R2_DIR = os.path.join(RESULTS_DIR, 'leakfree_r2')
+CALIB_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls')
 
 DATASETS = ['FD001', 'FD002']
 BACKBONES = ['LSTM', 'Transformer']
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     with open(os.path.join(PROJ_DIR, 'results', 'canonical_splits.json')) as f:
         canon = json.load(f)
-    with open(os.path.join(R2_DIR, 'drift_controls.json')) as f:
+    with open(os.path.join(CALIB_DIR, 'drift_controls.json')) as f:
         existing = json.load(f)
 
     for backbone in BACKBONES:
@@ -121,7 +121,7 @@ if __name__ == '__main__':
             if device.type == 'cuda':
                 torch.cuda.empty_cache()
 
-    out_path = os.path.join(R2_DIR, 'drift_controls.json')
+    out_path = os.path.join(CALIB_DIR, 'drift_controls.json')
     with open(out_path, 'w') as fp:
         json.dump(existing, fp, indent=2, default=float)
     print(f"\nSaved (bias_equal merged in) -> {out_path}")

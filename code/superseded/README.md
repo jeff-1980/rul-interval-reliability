@@ -14,7 +14,7 @@ V/W checkpoints:
   whole training file, training on an **80%** split (not the 60% canonical
   fit split). This was the original "V/W" cell.
 
-**R9 update: these two cells are no longer part of Table I.** Both scripts
+**Note: these two cells are no longer part of Table I.** Both scripts
 trained on a different *amount* of fit data than the V/F and T/F cells
 (100% and 80% respectively, vs. V/F/T/F's 60% canonical `fit_units`),
 confounding "scaler scope" and "selection criterion" -- the two variables

@@ -15,7 +15,7 @@ same as the ('mainarm', scheme, level_key, t) tag the T2 engine uses for
 Transformer -- the run_sweep_noise_lstm.py tag must be reproduced verbatim
 to get noise-injection instances identical to the published PICP curves.
 
-Output only, does not modify main.tex: leakfree_r3/H_lstm_exact_interp_attribution.json.
+Output only, does not modify main.tex: intermediate/attribution_and_decision/H_lstm_exact_interp_attribution.json.
 """
 import os
 import json
@@ -31,7 +31,7 @@ import sweep_engine as E
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 METHODS = ['NLL', 'CP_norm']
@@ -206,7 +206,7 @@ if __name__ == '__main__':
     with open(os.path.join(RESULTS_DIR, 'stepFD003_splitcp_leakfree_results.json')) as f:
         cp_003 = json.load(f)
 
-    with open(os.path.join(RESULTS_DIR, 'leakfree_r2', 'frozen_decomposition_2x2.json')) as f:
+    with open(os.path.join(RESULTS_DIR, 'intermediate', 'calibration_and_controls', 'frozen_decomposition_2x2.json')) as f:
         old_2x2 = json.load(f)
 
     result = {}
@@ -365,7 +365,7 @@ if __name__ == '__main__':
         if device.type == 'cuda':
             torch.cuda.empty_cache()
 
-    out_path = os.path.join(R3_DIR, 'H_lstm_exact_interp_attribution.json')
+    out_path = os.path.join(ATTR_DECISION_DIR, 'H_lstm_exact_interp_attribution.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

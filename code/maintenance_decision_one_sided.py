@@ -52,8 +52,8 @@ from maintenance_decision_two_sided import calib_sigma_fixed, get_raw_test_windo
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
-os.makedirs(R3_DIR, exist_ok=True)
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
+os.makedirs(ATTR_DECISION_DIR, exist_ok=True)
 
 DATASETS = ['FD001', 'FD002', 'FD003', 'FD004']
 BACKBONES = ['LSTM', 'Transformer']
@@ -289,7 +289,7 @@ if __name__ == '__main__':
             if device.type == 'cuda':
                 torch.cuda.empty_cache()
 
-    out_path = os.path.join(R3_DIR, 'C_maintenance_full_onesided.json')
+    out_path = os.path.join(ATTR_DECISION_DIR, 'C_maintenance_full_onesided.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")

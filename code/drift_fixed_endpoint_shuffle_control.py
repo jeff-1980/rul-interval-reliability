@@ -4,7 +4,7 @@ original script is no longer in code/ (presumably an inline one-off
 script that was never archived -- the same situation as
 relative_half_life_feat_oob.json); this reimplements it using
 `noise_injection.inject_drift_fixed_endpoint_shuffle_windows`, matching
-the existing structure of `leakfree_r3/D1_fixed_endpoint_shuffle.json`
+the existing structure of `intermediate/attribution_and_decision/D1_fixed_endpoint_shuffle.json`
 ({backbone:{k:PICP}}, k in {1,3,5}, FD002, 5% FS, heteroscedastic/NLL only),
 with noise shared across the 5 trials (new stable_seed tag
 'r5_d1_shuffle').
@@ -23,7 +23,7 @@ import sweep_engine as E
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR = os.path.dirname(BASE_DIR)
 RESULTS_DIR = os.path.join(PROJ_DIR, 'results', 'generated')
-R3_DIR = os.path.join(RESULTS_DIR, 'leakfree_r3')
+ATTR_DECISION_DIR = os.path.join(RESULTS_DIR, 'intermediate', 'attribution_and_decision')
 
 DS = 'FD002'
 BACKBONES = ['LSTM', 'Transformer']
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         if device.type == 'cuda':
             torch.cuda.empty_cache()
 
-    out_path = os.path.join(R3_DIR, 'D1_fixed_endpoint_shuffle.json')
+    out_path = os.path.join(ATTR_DECISION_DIR, 'D1_fixed_endpoint_shuffle.json')
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
