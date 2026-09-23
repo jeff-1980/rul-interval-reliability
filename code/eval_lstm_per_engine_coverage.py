@@ -1,10 +1,12 @@
 """
-STEP 4b：per-engine 覆盖率分布，leakfree checkpoint 版本。
+STEP 4b: per-engine coverage distribution, leakfree-checkpoint version.
 
-与 STEP4 逻辑一致，唯一区别：checkpoint 来自 `checkpoints_leakfree/`，且
-每个 seed 用它自己（canonical_splits.json 里对应的）fit_units 重建专属
-scaler（leakfree 协议下 scaler 逐 seed 不同，不能像旧版共享一份）。
-mc_json/cp_json 改读 `mcdropout_fixed_leakfree.json`/`split_cp_leakfree.json`。
+Same logic as STEP4; the only difference: checkpoints come from
+`checkpoints_leakfree/`, and each seed rebuilds its own scaler from its
+(canonical_splits.json-corresponding) fit_units (under the leakfree
+protocol the scaler differs per seed, so it can't be shared as in the old
+version). mc_json/cp_json now read
+`mcdropout_fixed_leakfree.json`/`split_cp_leakfree.json`.
 """
 import os
 import json
@@ -72,7 +74,7 @@ def infer_mc_dropout_full(mc_model, X_t, T, aleatory_var, batch=4096, seed=None)
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     with open(os.path.join(RESULTS_DIR, 'mcdropout_fixed_leakfree.json')) as f:

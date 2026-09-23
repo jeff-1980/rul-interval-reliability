@@ -1,8 +1,10 @@
 """
-T2-A7：Transformer 骨干 Deep Ensemble 在真正 clean（无扰动）测试集上的
-RMSE/PICP/MPIW/ECE，与 eval_lstm_fd003_deep_ensemble.py 同一协议（复用
-NLL 5 seeds checkpoint，逐成员用自己的 canonical fit_units scaler），4 数据集。
-供 cost table 主表行使用（区别于臂C扫描里 0.1%FS 那一档，这里是严格 clean）。
+Transformer backbone Deep Ensemble RMSE/PICP/MPIW/ECE on the genuinely
+clean (unperturbed) test set, same protocol as
+eval_lstm_fd003_deep_ensemble.py (reuses the NLL 5-seed checkpoints, each
+member using its own canonical fit_units scaler), 4 datasets. Feeds the
+cost table's main row (distinct from arm C's 0.1% FS level -- this is
+strictly clean).
 """
 import os
 import json
@@ -76,7 +78,7 @@ def run_dataset(ds, device):
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}  Backbone=Transformer  Deep Ensemble (clean)")
 

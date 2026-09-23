@@ -1,15 +1,20 @@
 """
-R2-4：延迟重新设计。
-- 去掉"期望倍数(M/T)作为接受/拒绝判据"——不再有PASS/FAIL，倍数只作诊断
-  注记随数字一起报告。
-- 报告全部重复测量的分布（中位数+IQR），不是单一中位数。
-- 补 batch=1 和 batch=32 两档（原有 batch=512 保留）。
-- CUDA-event（纯GPU核函数时间）与端到端 wall-clock（含Python/CPU调度、
-  H2D/D2H等）分开报告——两者此前一直混用同一套 CUDA-event 计时，这次
-  额外加一层 time.perf_counter() 包裹的端到端计时对照。
+Latency measurement redesign.
+- Drops "expected multiplier (M/T) as an accept/reject criterion" -- no
+  more PASS/FAIL, the multiplier is reported alongside the numbers as a
+  diagnostic annotation only.
+- Reports the full distribution of repeated measurements (median + IQR),
+  not a single median.
+- Adds batch=1 and batch=32 (the existing batch=512 is kept).
+- Reports CUDA-event timing (pure GPU kernel time) separately from
+  end-to-end wall-clock (including Python/CPU scheduling, H2D/D2H, etc.)
+  -- previously both used the same CUDA-event timing; this adds an
+  additional time.perf_counter()-wrapped end-to-end timing for
+  comparison.
 
-两骨干×4数据集×5机制×3个batch档，每个组合仍是50热身+11轮，报中位数和
-IQR，不做通过/不通过判定。
+2 backbones x 4 datasets x 5 mechanisms x 3 batch levels, each combination
+still 50 warmup + 11 rounds, reporting median and IQR, no pass/fail
+judgment.
 """
 import os
 import sys
@@ -126,7 +131,7 @@ def measure_backbone_batch(ds, backbone, batch, device):
                 m(X_t)
     results['Deep_Ensemble_M5'] = measure_both(ens_unit)
 
-    # 倍数诊断注记（不作判据）
+    # diagnostic ratio annotation (not used as a criterion)
     nll_med = results['NLL']['cuda_event']['median_ms']
     results['diagnostic_ratios'] = {
         'CP_over_NLL': results['CP_norm']['cuda_event']['median_ms'] / nll_med,

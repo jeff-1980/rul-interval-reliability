@@ -1,23 +1,30 @@
 """
-R4-2：维护表 RUL 修正——按发动机 ID 接回官方 RUL_FD00X.txt 的未截断值，重算
-480 行的 true_rul_at_trigger 与 excess_over_L。
+Maintenance-table RUL correction: reconnects each engine ID to the
+official RUL_FD00X.txt's uncapped value and recomputes
+true_rul_at_trigger/excess_over_L for all 480 rows.
 
-背景：C.create_sequences / V4.extract_raw_windows 在构造 mode='test' 的评估
-标签时统一做了 `min(true_ruls.iloc[unit-1].item(), 125)`——C_maintenance_full_
-onesided.json 里的 true_rul_at_trigger/excess_over_L 用的正是这个截断后的值。
-截断只影响真实RUL>=125的发动机；由于 L<=30、L+20<=50 << 125，截断永远不会把
-一台发动机从"at_risk"/"premature"的分类里改变（此断言在下面代码里显式检查），
-只会压低这些发动机在"premature"分组里对 true_rul_at_trigger/excess_over_L
-均值的贡献。
+Background: when building mode='test' evaluation labels, both
+C.create_sequences and V4.extract_raw_windows uniformly apply
+`min(true_ruls.iloc[unit-1].item(), 125)` -- the
+true_rul_at_trigger/excess_over_L values in
+C_maintenance_full_onesided.json use exactly this capped value. Capping
+only affects engines with a true RUL >= 125; since L<=30 and L+20<=50 <<
+125, capping can never flip an engine's "at_risk"/"premature"
+classification (this is explicitly checked in the code below) -- it only
+suppresses those engines' contribution to the mean
+true_rul_at_trigger/excess_over_L within the "premature" group.
 
-方法：逐字复刻 maintenance_decision_one_sided.py 的 triggered/at_risk/premature
-计算（同一套加噪/推理/单侧95%下界规则，完全确定性，不涉及新的随机性），
-额外在每个 engine 上打包官方未截断 RUL（true_ruls.iloc[unit-1].item()，
-不做 min(...,125)），用同一个 premature 布尔掩码分别算截断版和未截断版的
-true_rul_at_trigger/excess_over_L，对比差异（均值、最大差），并断言
-premature/at_risk/触发率/成本排序与旧文件逐行一致。
+Method: reproduces maintenance_decision_one_sided.py's
+triggered/at_risk/premature computation verbatim (same noise-injection /
+inference / one-sided 95% lower-bound rule, fully deterministic, no new
+randomness), additionally carries the official uncapped RUL for each
+engine (true_ruls.iloc[unit-1].item(), without the min(...,125)), uses
+the same premature boolean mask to compute both the capped and uncapped
+true_rul_at_trigger/excess_over_L, compares the difference (mean, max
+difference), and asserts that premature/at_risk/trigger-rate/cost
+ranking match the earlier file row for row.
 
-只做推理，不重训，不改 main.tex。输出：
+Inference only, no retraining, does not modify main.tex. Output:
 results/generated/leakfree_r4/C_maintenance_rul_corrected.json
 """
 import os
@@ -75,8 +82,9 @@ def onesided_cp_q(ds, backbone, seed, canon, device):
 
 
 def extract_raw_windows_with_uncapped(test_df_raw, feature_cols, true_ruls, mode='test'):
-    """与 V4.extract_raw_windows 逐字一致的窗口/顺序，额外并行返回未截断的
-    官方 RUL（true_ruls.iloc[unit-1].item()，不做 min(...,125)）。"""
+    """Same windowing/ordering as V4.extract_raw_windows verbatim, additionally
+    returns the uncapped official RUL in parallel (true_ruls.iloc[unit-1].item(),
+    without min(...,125))."""
     X_list, y_list, y_uncapped_list, u_list = [], [], [], []
     for unit in test_df_raw['unit_nr'].unique():
         unit_data = test_df_raw[test_df_raw['unit_nr'] == unit][feature_cols].values.astype(np.float64)
@@ -253,7 +261,7 @@ if __name__ == '__main__':
 
                         costs = {str(r): r * overall_unrecognised_rate + 1.0 * premature_rate for r in COST_RATIOS}
 
-                        # soft-check rates against the R3 stepC run: GPU forward passes are not
+                        # soft-check rates against the earlier run: GPU forward passes are not
                         # bit-deterministic across separate runs (cuDNN/attention kernel algorithm
                         # selection), so a boundary-case engine can flip triggered<->not-triggered
                         # by a sub-microsecond margin near lb==L; tolerate up to ~1 flipped cell
@@ -293,7 +301,7 @@ if __name__ == '__main__':
                         new_rankings[r] = tuple(sorted(new_costs, key=lambda m: new_costs[m]))
                     if old_rankings != new_rankings:
                         rankings_match = False
-                print(f"  [{condition}] rate/cost/rank identical to R3 stepC: {rankings_match}")
+                print(f"  [{condition}] rate/cost/rank identical to earlier run: {rankings_match}")
 
             for seed in C.SEEDS:
                 del mc_model_by_seed[seed], nll_model_by_seed[seed]

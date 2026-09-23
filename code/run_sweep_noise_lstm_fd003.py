@@ -1,11 +1,15 @@
 """
-FD003 补全 (4/6)：三臂噪声扫描，全部5方法（NLL/MC-Dropout/Ensemble/
-CP-norm/MSE）+ NLL/CP-norm冻结σ̂反事实，与
-`run_sweep_noise_lstm.py`同一协议，FD003单一工况（臂A=臂B）。
+FD003 completion (4/6): three-arm noise sweep, all 5 methods
+(NLL/MC-Dropout/Ensemble/CP-norm/MSE) + NLL/CP-norm frozen-sigma
+counterfactual, same protocol as `run_sweep_noise_lstm.py`, FD003's single
+operating condition (arm A = arm B).
 
-取代`train_lstm_fd003_nll_and_mechanism.py`里只算NLL+CP-norm的窄范围
-sweep——本脚本产出的`FD003_sweep_leakfree.json`是完整版，之前那份窄范围
-的产出文件保留不覆盖（文件名不同），完整版供代价表/per-engine下游使用。
+Supersedes the narrow-range sweep in
+`train_lstm_fd003_nll_and_mechanism.py` (which only computed NLL+CP-norm)
+-- this script's output `FD003_sweep_leakfree.json` is the full version;
+the earlier narrow-range output file is kept, not overwritten (different
+filename), and the full version is what downstream cost-table/per-engine
+analyses use.
 """
 import os
 import json
@@ -128,7 +132,7 @@ def run_arm(arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct, glob
         _, ls_cp = infer_nll(cp_model, X_clean_t)
         clean_sigma_cp[seed] = np.exp(ls_cp) * 125.0
 
-    # 2026-09-21 公平校准修复：aleatory_var 改在 calib_units 上现算。
+    # fair-calibration fix: aleatory_var is now computed directly on calib_units.
     aleatory_var_calib_by_seed = {
         seed: E.calib_aleatory_var(DS, 'LSTM', seed, device, mc_model=models_by_seed[seed][1])
         for seed in C.SEEDS
@@ -149,10 +153,11 @@ def run_arm(arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct, glob
                 X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                 trial_X.setdefault(t, {})[seed] = torch.tensor(X_test, dtype=torch.float32).to(device)
                 trial_y = y_test
-                # 2026-09-21 f_oob 口径统一：改在实际送入模型的末端窗口 X_test 上算，
-                # 见 run_sweep_noise_lstm.py 同日同条注释。
-                # R9-Part3: V4.feat_oob 全项目唯一实现（FD003 无工况设定列，
-                # sensor_mask 全True，数值上是no-op，但保持全项目同一实现）。
+                # f_oob convention: computed on the terminal window X_test actually fed to
+                # the model, matching the comment in run_sweep_noise_lstm.py.
+                # V4.feat_oob is this project's single implementation (FD003 has no
+                # operating-condition setting columns, so sensor_mask is all True -- a
+                # numeric no-op, but keeps one implementation across the project).
                 trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
 

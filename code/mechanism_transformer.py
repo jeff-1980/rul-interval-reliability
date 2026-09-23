@@ -1,20 +1,24 @@
 """
-T2-A6：算 clamp_frac 基线、绝对/相对半衰 f_oob、NLL/CP-norm 冻结σ̂分解——
-三项都是 Part A 要回答的两个问题所需的核心数据，逻辑与 LSTM 侧
-dose_response_frozen_sigma.py / clamp_frac.py
-一致。
+Computes the clamp_frac baseline, absolute/relative half-life f_oob, and
+NLL/CP-norm frozen-sigma decomposition -- all three are core data needed
+for Part A's two questions, matching the LSTM side's
+dose_response_frozen_sigma.py / clamp_frac.py logic.
 
-2026-09-19 更正：最初只用臂C（5档，feat_oob范围5.6%-16%）算半衰点，但
-LSTM 侧的半衰点计算是主SNR臂（9-11档，feat_oob可低至<0.1%）+臂C 两者
-pooled 后取 crossover——臂C自己的最小档feat_oob(5.6%左右)已经超过LSTM侧
-大多数半衰点所在的<2%区间，只用臂C测不到、且与LSTM不是同一feat_oob覆盖
-范围，如实发现后补跑了主SNR臂（run_sweep_noise_transformer_mainarm.py），本脚本
-现在把主臂(A_percondition+B_pooled)与臂C的点pool在一起再算crossover，
-与LSTM侧同一口径。
+Correction: half-life was originally computed using only arm C (5 levels,
+feat_oob range 5.6%-16%), but the LSTM side computes half-life by pooling
+the main SNR arm (9-11 levels, feat_oob as low as <0.1%) with arm C before
+taking the crossover -- arm C's own smallest level (feat_oob around 5.6%)
+already exceeds the <2% range where most of the LSTM side's half-life
+points fall, so arm C alone can't measure it and isn't the same feat_oob
+coverage as LSTM. After finding this, the main SNR arm was added
+(run_sweep_noise_transformer_mainarm.py), and this script now pools the
+main arm (A_percondition+B_pooled) with arm C's points before computing
+the crossover, matching the LSTM side's convention.
 
-clamp_frac 定义与 LSTM 侧一致：clean（近似clean，用主臂'inf'档，真正
-无噪声）输入下，log σ̂ 落在架构floor(log_sigma_min=-3.0)附近
-(<= min+CLAMP_EPS)的样本占比。
+clamp_frac's definition matches the LSTM side: under clean (approximately
+clean, using the main arm's 'inf' level, genuinely noise-free) input, the
+fraction of samples whose log sigma_hat lands near the architecture floor
+(log_sigma_min=-3.0) (<= min+CLAMP_EPS).
 """
 import os
 import json
@@ -40,7 +44,8 @@ def sigma_of(cell, method):
 
 
 def crossover(pts, threshold):
-    """pts: [(feat_oob, picp), ...]；分段线性插值找 picp 首次跌破 threshold 的 feat_oob。"""
+    """pts: [(feat_oob, picp), ...]; piecewise-linear interpolation to find
+    the feat_oob at which picp first drops below threshold."""
     pts = sorted(pts, key=lambda p: p[0])
     for i in range(len(pts) - 1):
         fo0, p0 = pts[i]
@@ -84,10 +89,10 @@ def collect_points(block, method, level_keys):
 
 
 def pooled_points(ds, method, armc_block, mainarm_ds_block):
-    """主SNR臂(A_percondition+B_pooled) + 臂C 三个来源pool在一起，去重
-    （按(feat_oob,picp)四舍五入到6位小数判重），与 LSTM 侧
-    dose_response_frozen_sigma.py 的 collect_points/去重
-    逻辑一致。"""
+    """Pools points from three sources -- main SNR arm (A_percondition +
+    B_pooled) and arm C -- deduplicated (by (feat_oob,picp) rounded to 6
+    decimals), matching the LSTM side's dose_response_frozen_sigma.py
+    collect_points/dedup logic."""
     snr_keys_all = ['inf', '40', '30', '25', '20', '15', '10', '5', '0', '-5', '-10']
     pct_keys = ['0.1', '0.5', '1', '2', '5']
     pts = []
@@ -103,9 +108,10 @@ def pooled_points(ds, method, armc_block, mainarm_ds_block):
 
 
 def compute_half_life(ds, armc_block, mainarm_ds_block):
-    """返回 {method: {picp_clean, abs_co, rel_co}}，abs 阈值固定0.80，rel 阈值
-    = picp_clean - 0.10（与主论文 relative_half_life_feat_oob.json 同一定义），
-    在主臂+臂C pooled 点上算，与 LSTM 侧同一覆盖范围。"""
+    """Returns {method: {picp_clean, abs_co, rel_co}}: abs threshold fixed
+    at 0.80, rel threshold = picp_clean - 0.10 (matching
+    relative_half_life_feat_oob.json's definition), computed on the pooled
+    main-arm + arm-C points, the same coverage range as the LSTM side."""
     out = {}
     for method in METHODS:
         pts = sorted(pooled_points(ds, method, armc_block, mainarm_ds_block), key=lambda p: p[0])
@@ -117,8 +123,10 @@ def compute_half_life(ds, armc_block, mainarm_ds_block):
 
 
 def compute_clamp_frac(ds, device):
-    """臂C最小档（0.1%FS，近似clean）下，NLL/CP-norm 的 log σ̂ 落在架构floor
-    附近的样本占比，5 seed 池化。Transformer log_sigma_min = T2.T2_LOG_SIGMA_MIN。"""
+    """Under arm C's smallest level (0.1% FS, approximately clean), the
+    fraction of NLL/CP-norm samples whose log sigma_hat lands near the
+    architecture floor, pooled over 5 seeds. Transformer log_sigma_min =
+    T2.T2_LOG_SIGMA_MIN."""
     _, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     with open(os.path.join(T2.PROJ_DIR, 'results', 'canonical_splits.json')) as f:
         canon = json.load(f)

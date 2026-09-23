@@ -1,7 +1,8 @@
 """
-STEP 6b (leakfree)：代价表 MSE 行，用 checkpoints_leakfree 的 MCDropoutMSE
-checkpoint（eval模式=标准MSE推理），逐 seed 用自己的 canonical fit_units
-scaler。固定 sigma 复用 mcdropout_fixed_leakfree.json 的 aleatory_var。
+STEP 6b (leakage-free): cost-table MSE row, using the checkpoints_leakfree
+MCDropoutMSE checkpoint (eval mode = standard MSE inference), each seed
+using its own canonical fit_units scaler. Fixed sigma reuses the
+aleatory_var from mcdropout_fixed_leakfree.json.
 """
 import os
 import json

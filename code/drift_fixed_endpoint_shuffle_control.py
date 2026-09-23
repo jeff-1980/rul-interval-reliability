@@ -1,10 +1,13 @@
 """
-R5-2：D1 固定终点乱序判别对照重新生成。原脚本已不在 code/ 里（推测是内联
-一次性脚本，未存档——与 relative_half_life_feat_oob.json 同样的情况），按
-`leakfree_r3/D1_fixed_endpoint_shuffle.json` 的既有结构（{backbone:{k:PICP}}，
-k in {1,3,5}，FD002，5%FS，heteroscedastic/NLL 单一机制）用
-`noise_injection.inject_drift_fixed_endpoint_shuffle_windows` 重新实现，
-5 trial 共享噪声（新 stable_seed 标签 'r5_d1_shuffle'）。
+Regenerates the D1 fixed-endpoint-shuffle discriminability control. The
+original script is no longer in code/ (presumably an inline one-off
+script that was never archived -- the same situation as
+relative_half_life_feat_oob.json); this reimplements it using
+`noise_injection.inject_drift_fixed_endpoint_shuffle_windows`, matching
+the existing structure of `leakfree_r3/D1_fixed_endpoint_shuffle.json`
+({backbone:{k:PICP}}, k in {1,3,5}, FD002, 5% FS, heteroscedastic/NLL only),
+with noise shared across the 5 trials (new stable_seed tag
+'r5_d1_shuffle').
 """
 import os
 import json
@@ -48,7 +51,7 @@ if __name__ == '__main__':
 
     train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(DS)
     full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-    full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+    full_scale = V4.sensor_only_scale(feat_cols, full_scale)
     X_raw_clean, y_ref, _ = V4.extract_raw_windows(test_df_raw, feat_cols, true_ruls, mode='test')
 
     result = {}

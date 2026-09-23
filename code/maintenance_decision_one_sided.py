@@ -1,32 +1,40 @@
 """
-R3-C：维护决策重算（"terminal-instant decision stress test"，不再称"首次
-维护时间"）。
+Maintenance decision recomputation ("terminal-instant decision stress
+test", not "time to first maintenance").
 
-1. 下界统一单侧95%：
-   - 高斯类机制（NLL/MSE-fixed/MC-Dropout/Ensemble）：mu - 1.645*sigma，
-     本来就是单侧95%正态分位数，不用改。
-   - CP-norm：原来用的是两侧alpha=0.10的conformal分位数(q_norm，对称区间
-     [mu-q*sigma, mu+q*sigma]覆盖90%两侧)。现在改用单侧alpha=0.05的
-     conformal下界：非一致性分数改用**带符号**的 s=(mu-y)/sigma（不取
-     绝对值），下界 = mu - q_lower*sigma，q_lower = ceil((n+1)(1-0.05))/n
-     分位数（对s，不对|s|），校准集重算（与Split-CP同一批calib_units）。
+1. Lower bound unified to a one-sided 95%:
+   - Gaussian-family mechanisms (NLL/MSE-fixed/MC-Dropout/Ensemble):
+     mu - 1.645*sigma is already a one-sided 95% normal quantile, unchanged.
+   - CP-norm: previously used a two-sided alpha=0.10 conformal quantile
+     (q_norm, symmetric interval [mu-q*sigma, mu+q*sigma] covering 90% both
+     sides). Now uses a one-sided alpha=0.05 conformal lower bound instead:
+     the nonconformity score is the **signed** s=(mu-y)/sigma (not absolute
+     value), lower bound = mu - q_lower*sigma, q_lower =
+     ceil((n+1)(1-0.05))/n quantile (of s, not |s|), recomputed on the
+     calibration set (same calib_units as Split-CP).
 
-2. 术语与量：
-   - "missed failure" 改名 "unrecognised maintenance need within lead time"，
-     同时报条件漏报率 = (真实RUL<=L 且未触发) / (真实RUL<=L 的发动机数)
-     （分母限定在"真正处于风险中"的发动机，不是全体发动机）。
-   - "wasted life" 拆成两列："true RUL at trigger"（触发时的真实RUL均值）
-     和 "excess over L"（=true RUL - L，即之前一直算的那个量，本来就没
-     除以125，不需要改动定义，只是现在明确注明"按立即维护计"——触发即
-     视为发动机在该时刻停止服役，excess就是那次决策浪费掉的寿命）。
+2. Terminology and quantities:
+   - "missed failure" renamed to "unrecognised maintenance need within
+     lead time", and reports a conditional miss rate = (true RUL<=L AND
+     not triggered) / (engines with true RUL<=L) (denominator restricted
+     to engines actually at risk, not the whole fleet).
+   - "wasted life" split into two columns: "true RUL at trigger" (mean
+     true RUL when triggered) and "excess over L" (= true RUL - L, the
+     same quantity computed all along, definition unchanged, just now
+     explicitly noted as "counted under immediate maintenance" -- a
+     trigger is treated as the engine going out of service at that
+     instant, and excess is the life wasted by that decision).
 
-3. 完整成本表：5机制×2骨干×4数据集×4条件(clean/noise1%/bias5%/drift5%)×
-   L∈{10,20,30}×成本比∈{5,20,100}，报成本、排序、跨机制配对差的bootstrap
-   区间（按发动机重采样，n=2000次），逐一穷举检查排序是否随成本比反转。
+3. Full cost table: 5 mechanisms x 2 backbones x 4 datasets x 4 conditions
+   (clean/noise1%/bias5%/drift5%) x L in {10,20,30} x cost ratio in
+   {5,20,100}, reporting cost, ranking, and bootstrap intervals for
+   pairwise cross-mechanism differences (resampled by engine, n=2000),
+   exhaustively checking whether rankings reverse across cost ratios.
 
-4. 全部改名为 "terminal-instant decision stress test"。
+4. Fully renamed to "terminal-instant decision stress test".
 
-只做推理，不重训。复用 maintenance_decision_two_sided.py 的扰动/加载逻辑。
+Inference only, no retraining. Reuses maintenance_decision_two_sided.py's
+perturbation/loading logic.
 """
 import os
 import json
@@ -59,8 +67,9 @@ N_BOOT = 2000
 
 
 def conformal_quantile_signed(scores_signed, alpha, n):
-    """单侧 conformal 分位数：对带符号分数 s=(mu-y)/sigma 取
-    ceil((n+1)(1-alpha))/n 分位数（不取绝对值），下界 = mu - q*sigma。"""
+    """One-sided conformal quantile: the signed score s=(mu-y)/sigma at the
+    ceil((n+1)(1-alpha))/n quantile (not absolute value), lower bound =
+    mu - q*sigma."""
     k = int(np.ceil((n + 1) * (1 - alpha)))
     k = min(k, n)
     level = k / n
@@ -68,8 +77,8 @@ def conformal_quantile_signed(scores_signed, alpha, n):
 
 
 def onesided_cp_q(ds, backbone, seed, canon, device):
-    """在 calib_units 上，用 NLL checkpoint 的 mu/sigma 重算单侧95%
-    (alpha=0.05) conformal 下界分位数 q_lower。"""
+    """On calib_units, recompute the one-sided 95% (alpha=0.05) conformal
+    lower-bound quantile q_lower from the NLL checkpoint's mu/sigma."""
     fit_units = canon[ds][str(seed)]['fit_units']
     calib_units = canon[ds][str(seed)]['calib_units']
     train_df, test_df, true_ruls, feat_cols, scaler = C.load_and_process_leakfree(ds, fit_units)
@@ -92,9 +101,10 @@ def cost_from_indicators(unrecognised, premature, ratio):
 
 
 def bootstrap_pairwise_ci(unrecog_a, prem_a, unrecog_b, prem_b, ratio, n_boot=N_BOOT, rng=None):
-    """unrecog_*/prem_*: (n_cells, n_engines) boolean。按发动机（列）重采样，
-    保持 cells 结构不变，重新算 cost_a-cost_b 的 bootstrap 分布，返回
-    (mean_diff, ci_lo, ci_hi)。正值=a比b成本更高（更差）。"""
+    """unrecog_*/prem_*: (n_cells, n_engines) boolean. Resamples by engine
+    (columns), keeping the cells structure fixed, recomputing the
+    bootstrap distribution of cost_a-cost_b. Returns
+    (mean_diff, ci_lo, ci_hi). Positive = a costs more (worse) than b."""
     n_engines = unrecog_a.shape[1]
     diffs = np.empty(n_boot)
     for i in range(n_boot):
@@ -122,7 +132,7 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw_probe, _, _, feat_cols_probe, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw_probe, feat_cols_probe)
-            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)  # R8-B1
+            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)
 
             scalers_by_seed = {}
             aleatory_var_by_seed = {}

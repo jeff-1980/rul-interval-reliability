@@ -1,15 +1,18 @@
 """
-FD003 补全：为 Deep Ensemble 规模扫描 / Appendix A 的 n15/n5 比值补训 10 个
-额外种子（leakfree协议），5 原始 + 10 新增 = 15 seeds。逐字复用
-train_lstm_extra_seeds.py 的训练逻辑（同一 EXTRA_SEEDS、
-同一超参、同一 QC 规则），仅将循环范围限定为 FD003（因为 C.DATASETS 不含
-FD003，且 FD003 的原始5-seed基线存在 stepFD003_nll_leakfree_results.json
-而非 step0c_leakfree_results.json）。
+FD003 completion: trains 10 additional seeds (leakage-free protocol) for
+the Deep Ensemble scale sweep / Appendix A's n15/n5 ratio, giving 5
+original + 10 new = 15 seeds. Reuses train_lstm_extra_seeds.py's training
+logic verbatim (same EXTRA_SEEDS, same hyperparameters, same QC rules),
+just restricting the loop range to FD003 (since C.DATASETS does not
+include FD003, and FD003's original 5-seed baseline lives in
+stepFD003_nll_leakfree_results.json rather than
+step0c_leakfree_results.json).
 
-边界（与 train_lstm_extra_seeds 一致，未改变）：
-  (a) 主表仍然只用原始5 seeds，这15个种子只用于集成规模扫描，进附录不进主表。
-  (b) 训练配置与原始5 seeds完全相同。
-  (c) QC：偏离种子如实记录，不排除。
+Boundaries (identical to train_lstm_extra_seeds, unchanged):
+  (a) The main table still uses only the original 5 seeds; these 15 seeds
+      are only for the ensemble-scale sweep, appendix only, not the main table.
+  (b) Training configuration is identical to the original 5 seeds.
+  (c) QC: outlier seeds are reported honestly, not excluded.
 """
 import os
 import json
@@ -133,7 +136,7 @@ def run_one_seed(ds_name, seed, device, use_amp, all_units):
         'dropout': 0.2, 'log_sigma_min': LOG_SIGMA_MIN, 'log_sigma_max': LOG_SIGMA_MAX,
         'seed': seed, 'dataset': ds_name, 'fit_units': fit_units, 'val_units': val_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-        'selection_protocol': 'canonical_split fit/val, leakfree scaler, extra-seed pool (FD003, 2026-09-18)',
+        'selection_protocol': 'canonical_split fit/val, leakfree scaler, extra-seed pool (FD003)',
     }, ckpt_path)
 
     return {'seed': seed, 'rmse': rmse, 'score': score, 'picp': picp, 'mpiw': mpiw, 'ece': ece,

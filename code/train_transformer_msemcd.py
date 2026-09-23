@@ -1,10 +1,11 @@
 """
-T2-A2：Transformer 骨干，MSE 训练 + MC-Dropout(Kendall&Gal修正)，leakfree 协议，
-4 数据集 × 5 seeds = 20 模型。
+Transformer backbone, MSE training + MC-Dropout (Kendall & Gal correction),
+leakfree protocol, 4 datasets x 5 seeds = 20 models.
 
-与 train_lstm_fd003_mse_mcdropout.py 逐字同一协议（纯MSE训练/canonical
-fit-val选择/leakfree scaler/T=50主T=100附/aleatory_var=fit_units残差方差），
-唯一区别是模型换成 T2.MC_Transformer，且循环全部4个数据集。
+Identical protocol to train_lstm_fd003_mse_mcdropout.py verbatim (pure MSE
+training / canonical fit-val selection / leakfree scaler / T=50 main, T=100
+extra / aleatory_var = fit_units residual variance); the only difference is
+swapping in T2.MC_Transformer and looping over all 4 datasets.
 """
 import os
 import json
@@ -74,8 +75,10 @@ def run_one_seed(ds_name, seed, device, use_amp):
 
     ckpt_path = T2.mc_ckpt_path('Transformer', ds_name, seed)
     if os.path.exists(ckpt_path):
-        # 断点续跑：checkpoint 已存在（此前训练完成后系统重启中断了后续数据集/
-        # 汇总json的写出），不重训，直接加载已训好的权重跳到评估阶段。
+        # resume: checkpoint already exists (an earlier system restart
+        # interrupted training after this checkpoint but before the summary
+        # json was written for later datasets) -- skip training, load the
+        # already-trained weights and jump to evaluation.
         print(f"   [{ds_name}] seed={seed}: checkpoint exists, resuming from disk (skip training)")
         ck = torch.load(ckpt_path, map_location=device, weights_only=False)
         model = T2.MC_Transformer(ck['input_dim'], ck['hidden_dim'], ck['dropout'], T2.SEQUENCE_LENGTH).to(device)
@@ -123,7 +126,7 @@ def run_one_seed(ds_name, seed, device, use_amp):
                     'fit_units': fit_units, 'val_units': val_units,
                     'best_val_rmse_cycles': best_val_rmse, 'train_epochs': T2.T2_EPOCHS,
                     'elapsed_train_s': elapsed,
-                    'selection_protocol': 'canonical_split fit/val, leakfree, Transformer backbone (T2, 2026-09-18)'},
+                    'selection_protocol': 'canonical_split fit/val, leakfree, Transformer backbone'},
                    ckpt_path)
 
     X_fit_t = torch.tensor(X_fit, dtype=torch.float32).to(device)
@@ -210,7 +213,9 @@ if __name__ == '__main__':
             continue
         print(f"\n{'=' * 20} {ds} {'=' * 20}")
         all_out[ds] = [run_one_seed(ds, seed, device, use_amp) for seed in C.SEEDS]
-        # 每个数据集跑完立即落盘，避免系统重启（此前发生过一次）再丢失整段进度
+        # save immediately after each dataset finishes, to avoid losing the
+        # whole segment of progress again to a system restart (has happened
+        # once before)
         with open(out_path, 'w') as fp:
             json.dump(all_out, fp, indent=2, default=float)
         print(f"  [checkpoint] saved partial results -> {out_path}")

@@ -1,24 +1,33 @@
 """
-T2 对照：Part A 要回答的两个问题。
+Backbone comparison: the two questions Part A needs answered.
 
-(a) 扰动下失效是否仍以 μ̂ 为主？方差贡献的符号在四个数据集上是否与 LSTM
-    一致？
-(b) 相对半衰的机制排序是否与 LSTM 一致？
+(a) Under perturbation, is failure still dominated by mu_hat? Is the sign
+    of the variance contribution consistent with LSTM across the four
+    datasets?
+(b) Is the mechanism ranking at the relative half-life point consistent
+    with LSTM?
 
-方法论说明（重要，如实记录）：LSTM 侧已有的
-`frozen_sigma_decomposition_leakfree.json`（FD001/2/4）实际是在**绝对**
-半衰点（PICP 首次跌破 0.80）计算的frozen-sigma分解，尽管论文正文
-`paper2_main.tex`的Table~attribution标题写的是"relative half-life
-point"——这是一处独立于本次T2任务、此前就存在的标注/实现不一致，本脚本
-不去动论文或旧结果文件（旧结果只读），而是从底层原始 dose-response 点
-（`dose_response_feat_oob_leakfree.json` 的 FD001/2/4 + FD003 侧
-`noise_sensitivity_leakfree_FD003.json`/`_armC_FD003.json`）**在本脚本内部
-重新计算**LSTM在**相对**半衰点的分解，使其与T2 Transformer侧（本来就按
-相对半衰点计算）严格同口径可比。这个重算结果只用于T2的(a)问题对比，
-不回写任何旧文件。已单独把这条不一致报给用户，供其决定是否需要回头修
-论文的Table~attribution标题或底层脚本。
+Methodology note (important, reported honestly): the LSTM side's existing
+`frozen_sigma_decomposition_leakfree.json` (FD001/2/4) actually computes
+its frozen-sigma decomposition at the **absolute** half-life point (PICP
+first drops below 0.80), even though the paper text's Table~attribution
+caption says "relative half-life point" -- this is a pre-existing
+labeling/implementation inconsistency, unrelated to this Transformer-side
+task, that this script does not fix (it does not touch the paper or old
+result files -- old results are read-only). Instead, it recomputes the
+LSTM side's decomposition at the **relative** half-life point from the
+underlying raw dose-response points (`dose_response_feat_oob_leakfree.json`
+for FD001/2/4, plus FD003's
+`noise_sensitivity_leakfree_FD003.json`/`_armC_FD003.json`) directly inside
+this script, so it is on the same footing as the Transformer side (which
+was already computed at the relative half-life point). This recomputed
+result is used only for question (a)'s comparison here and is not written
+back to any old file. The underlying inconsistency has been reported to
+the user separately, for them to decide whether the paper's
+Table~attribution caption or the underlying script needs revisiting.
 
-只读取 LSTM 已有结果 + Transformer 的 T2 产出，不改动任何已有文件。
+Only reads LSTM's existing results plus the Transformer side's outputs;
+does not modify any existing file.
 """
 import os
 import json

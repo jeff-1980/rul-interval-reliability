@@ -1,11 +1,13 @@
 """
-R2 补算(1)：公平校准版主表。MSE-fixed 与 MC-Dropout 的 sigma 改用校准集
-(calib_units，与 Split-CP 同一批发动机)残差估计，重出 clean 条件下的
-PICP/MPIW/ECE/per-engine + IS/WIS，两骨干×四数据集，与训练残差版并列。
-NLL/Deep_Ensemble/CP-norm 不受影响（sigma 来源不是train-fit残差），直接
-复用 interval_score.py 已有结果。
+Fair-calibration main table. MSE-fixed and MC-Dropout's sigma switches to
+calibration-set (calib_units, the same engines as Split-CP) residual
+estimation, regenerating clean-condition PICP/MPIW/ECE/per-engine + IS/WIS
+for both backbones x four datasets, alongside the training-residual
+version. NLL/Deep_Ensemble/CP-norm are unaffected (sigma doesn't come from
+train-fit residuals), reusing interval_score.py's existing results as-is.
 
-主表以本次(校准集版)为准；训练残差版保留作对照，不删除。
+The main table now uses this (calibration-set) version as the reference;
+the training-residual version is kept for comparison, not deleted.
 """
 import os
 import json
@@ -58,7 +60,7 @@ def summarize_compliance(engine_picp_dict):
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}")
 

@@ -1,25 +1,37 @@
 """
-STEP 0d：为 Deep Ensemble 规模扫描补训 10 个额外种子（leakfree协议），
-5 原始 + 10 新增 = 15 seeds/dataset。种子值沿用此前非leakfree版本的同一批
-确定性生成结果（不重新生成，保证与旧15-seed池的种子身份可比）：
+STEP 0d: trains 10 additional seeds for the Deep Ensemble scale sweep
+(leakfree protocol), 5 original + 10 new = 15 seeds/dataset. The seed
+values reuse the same deterministically-generated batch from an earlier
+non-leakfree version (not regenerated, to keep seed identity comparable
+with the old 15-seed pool):
   [8601, 16713, 19906, 21852, 38466, 40016, 40967, 51778, 52287, 90270]
 
-边界（与此前 an earlier extra-seeds retraining script (not included; superseded) 一致，未改变）：
-  (a) 主表仍然只用原始5 seeds，这15个种子只用于集成规模扫描，进附录不进主表。
-  (b) 训练配置与原始5 seeds完全相同（HeteroscedasticLSTM/gaussian_nll_loss/
-      150 epoch/batch 256/lr 1e-3），唯一区别是本次checkpoint选择用leakfree
-      协议（canonical_split的fit/val，scaler只在fit_units上拟合）。
-  (c) QC：每个新种子的clean-test RMSE/PICP/MPIW/ECE与原始5-seed(leakfree)
-      分布比对，|new-orig_mean| > max(3*orig_std, 5%*|orig_mean|) 记为偏离。
-      **用户明确指示（2026-09-17，与旧版不同）：偏离种子如实记录，不排除**
-      ——照常纳入集成规模扫描，不因偏离而丢弃。
+Boundaries (unchanged, matching an earlier extra-seeds retraining script
+(not included; superseded)):
+  (a) The main table still uses only the original 5 seeds; these 15 seeds
+      are only for the ensemble-scale sweep, appendix only, not the main
+      table.
+  (b) Training configuration is identical to the original 5 seeds
+      (HeteroscedasticLSTM/gaussian_nll_loss/150 epochs/batch 256/lr
+      1e-3); the only difference is that checkpoint selection here uses
+      the leakfree protocol (canonical_split's fit/val, scaler fit only on
+      fit_units).
+  (c) QC: each new seed's clean-test RMSE/PICP/MPIW/ECE is compared against
+      the original 5-seed (leakfree) distribution; |new-orig_mean| >
+      max(3*orig_std, 5%*|orig_mean|) is flagged as an outlier.
+      **Outlier seeds are recorded honestly, not excluded** -- they are
+      included in the ensemble-scale sweep as usual, never dropped for
+      being an outlier.
 
-canonical split：额外10个种子的三向切分现场用
-`C.compute_canonical_split(all_units, seed)` 计算（与STEP A同一函数，同一
-派生逻辑），一并写回 `canonical_splits.json`（追加，不覆盖已有的5-seed条目）。
+canonical split: the three-way split for the 10 additional seeds is
+computed on the fly with `C.compute_canonical_split(all_units, seed)`
+(same function, same derivation logic as STEP A), and written back into
+`canonical_splits.json` (appended, not overwriting the existing 5-seed
+entries).
 
-checkpoint 存到 `checkpoints_leakfree/{ds}_LSTM_extraseed{seed}.pt`
-（文件名模式与主5-seed不同，避免被STEP1/3/4/5主流程误加载）。
+Checkpoints are saved to `checkpoints_leakfree/{ds}_LSTM_extraseed{seed}.pt`
+(a different filename pattern from the main 5-seed set, to avoid being
+accidentally loaded by the STEP1/3/4/5 main pipeline).
 """
 import os
 import json
@@ -143,7 +155,7 @@ def run_one_seed(ds_name, seed, device, use_amp, all_units):
         'dropout': 0.2, 'log_sigma_min': LOG_SIGMA_MIN, 'log_sigma_max': LOG_SIGMA_MAX,
         'seed': seed, 'dataset': ds_name, 'fit_units': fit_units, 'val_units': val_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-        'selection_protocol': 'canonical_split fit/val, leakfree scaler, extra-seed pool (2026-09-17)',
+        'selection_protocol': 'canonical_split fit/val, leakfree scaler, extra-seed pool',
     }, ckpt_path)
 
     return {'seed': seed, 'rmse': rmse, 'score': score, 'picp': picp, 'mpiw': mpiw, 'ece': ece,
@@ -188,7 +200,7 @@ if __name__ == '__main__':
                 if flagged:
                     print(f"  ⚠️ QC: seed={r['seed']} {metric}={r[metric]:.4f} deviates from orig5 "
                           f"mean={orig_mean:.4f} by {deviation:.4f} (threshold={threshold:.4f}) "
-                          f"-- RECORDED, NOT EXCLUDED (per 2026-09-17 instruction)")
+                          f"-- RECORDED, NOT EXCLUDED")
         qc_report[ds] = qc_ds
 
     total_elapsed = time.time() - t_start_all

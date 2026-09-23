@@ -1,25 +1,33 @@
 """
-STEP 3b：Split-CP 的测试集泄漏修复 + 三向切分升级。
+STEP 3b: test-set leakage fix for Split-CP, plus an upgrade to a
+three-way split.
 
-原 `an earlier split-CP script (not included; superseded)` 的两个问题：
-  (a) checkpoint 选择判据是官方测试集 RMSE（与 STEP0/STEP1 同一个bug）；
-  (b) fit/calib 切分是 STEP3 自己单独派生的（80/20），与 STEP0/STEP1 的
-      train/val 划分不是同一份——三条线"同一台发动机在不同方法里被分到
-      不同角色"，方法间不严格可比。
+Two problems with `an earlier split-CP script (not included; superseded)`:
+  (a) checkpoint-selection criterion was official test-set RMSE (the same
+      bug as STEP0/STEP1);
+  (b) the fit/calib split was derived independently by STEP3 itself
+      (80/20), not the same split as STEP0/STEP1's train/val -- so the
+      same engine could land in different roles across the three
+      pipelines, making methods not strictly comparable.
 
-本脚本改用 `canonical_splits.json`（STEP A）里与 STEP0c/STEP1b **完全相同**
-的 (fit_units, val_units)，并读取同一份文件里的 calib_units（与 fit/val
-互不重叠，见 STEP A 的两步派生逻辑）。三向角色：
-  fit_units  (60%)：训练式全滑窗，用于梯度更新
-  val_units  (20%)：训练式全滑窗，checkpoint 选择判据（RMSE），与 STEP0c/
-             STEP1b 逐发动机一致
-  calib_units(20%)：训练式全滑窗，conformal score 校准，从未参与梯度/
-             checkpoint 选择
+This script instead uses the (fit_units, val_units) from
+`canonical_splits.json` (STEP A), **identical** to STEP0c/STEP1b, and
+reads calib_units from the same file (disjoint from fit/val, see STEP A's
+two-step derivation). Three-way roles:
+  fit_units   (60%): training-style full sliding windows, used for
+              gradient updates
+  val_units   (20%): training-style full sliding windows, the
+              checkpoint-selection criterion (RMSE), matching STEP0c/
+              STEP1b engine-for-engine
+  calib_units (20%): training-style full sliding windows, conformal
+              score calibration, never participates in gradient updates
+              or checkpoint selection
 
-scaler 同样只在 fit_units 上拟合（`C.load_and_process_leakfree`）。
+The scaler is likewise fit only on fit_units (`C.load_and_process_leakfree`).
 
-CP-abs/CP-norm 计算逻辑、ECE 20档口径、合规性检查与原 STEP3 逐字一致。
-checkpoint 存到 `checkpoints_leakfree/`。
+The CP-abs/CP-norm computation, 20-level ECE convention, and compliance
+check are identical to the original STEP3. Checkpoints are saved to
+`checkpoints_leakfree/`.
 """
 import os
 import json
@@ -53,7 +61,7 @@ with open(os.path.join(PROJ_DIR, 'results', 'canonical_splits.json')) as f:
 
 
 def sequences_for_units(df, feature_cols, unit_set):
-    """训练式全滑窗，label 为原始单位（未除125），用于 val RMSE 和 calib。"""
+    """Training-style full sliding windows, label in raw units (not divided by 125), used for val RMSE and calib."""
     X_list, y_list = [], []
     for unit in sorted(unit_set):
         unit_data = df[df['unit_nr'] == unit][feature_cols].values
@@ -138,10 +146,10 @@ def run_one_seed(ds_name, seed, device, use_amp):
         'seed': seed, 'dataset': ds_name, 'fit_units': fit_units,
         'val_units': val_units, 'calib_units': calib_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-        'selection_protocol': 'canonical_split fit/val/calib, leakfree scaler (2026-09-15)',
+        'selection_protocol': 'canonical_split fit/val/calib, leakfree scaler',
     }, ckpt_path)
 
-    # ---- calibration set 推理 ----
+    # ---- calibration-set inference ----
     X_calib, y_calib_raw = sequences_for_units(train_df[train_df['unit_nr'].isin(calib_units)], feat_cols, calib_units)
     y_calib = np.clip(y_calib_raw, 0, C.MAX_RUL)
     X_calib_t = torch.tensor(X_calib, dtype=torch.float32).to(device)
@@ -190,7 +198,7 @@ def run_one_seed(ds_name, seed, device, use_amp):
     print(f"   seed={seed}  n_fit={len(fit_units)} n_val={len(val_units)} n_calib_units={len(calib_units)} "
           f"n_calib_windows={n_calib}  train={elapsed:.1f}s  best_val_rmse={best_val_rmse:.3f}")
     print(f"      CP-norm: PICP={picp_norm:.3f} MPIW={mpiw_norm:.2f} ECE={ece_norm:.4f} "
-          f"|dev|={compliance_norm:.3f}{'  <-- 超出±0.03容差' if compliance_norm > 0.03 else ''}")
+          f"|dev|={compliance_norm:.3f}{'  <-- outside +/-0.03 tolerance' if compliance_norm > 0.03 else ''}")
 
     return {
         'seed': seed, 'train_epochs': EPOCHS, 'elapsed_train_s': elapsed, 'best_val_rmse': best_val_rmse,
@@ -225,7 +233,7 @@ if __name__ == '__main__':
         json.dump(all_out, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
 
-    print("\n=== 汇总（mean +/- std(ddof=1), n=5) ===")
+    print("\n=== summary (mean +/- std(ddof=1), n=5) ===")
     for ds in C.DATASETS:
         rs = all_out[ds]
         for variant in ['cp_abs', 'cp_norm']:
@@ -235,5 +243,5 @@ if __name__ == '__main__':
             dev = np.mean(np.abs(picps.mean() - 0.90))
             print(f"{ds} {variant}: PICP={picps.mean():.4f}+/-{picps.std(ddof=1):.4f}  "
                   f"MPIW={mpiws.mean():.2f}+/-{mpiws.std(ddof=1):.2f}  ECE={eces.mean():.4f}+/-{eces.std(ddof=1):.4f}  "
-                  f"|mean_PICP-0.90|={dev:.4f}{'  <-- D-C: 超出0.03容差' if dev > 0.03 else ''}")
+                  f"|mean_PICP-0.90|={dev:.4f}{'  <-- outside 0.03 tolerance' if dev > 0.03 else ''}")
     print("\nSTEP3b complete.")

@@ -1,26 +1,31 @@
 """
-R6-1（纯后处理，无新增推理，不需要 PYTHONHASHSEED）：
+Pure post-processing, no new inference, does not need PYTHONHASHSEED:
 
-(a) G/H 归因 JSON 的 interaction 字段改号：新定义 = (C11-C10)-(C01-C00)
-    = orderA_sigma_effect - orderB_sigma_effect，与旧定义
-    orderA_mu_effect - orderB_mu_effect 互为相反数（代数恒等：
-    total_delta = orderA_mu+orderA_sigma = orderB_mu+orderB_sigma，
-    所以 orderA_mu-orderB_mu == -(orderA_sigma-orderB_sigma)），直接
-    从已存的 C00/C10/C01/C11 重新算，不是简单取负号了事。
+(a) Re-signs the interaction field in the G/H attribution JSONs: the new
+    definition = (C11-C10)-(C01-C00) = orderA_sigma_effect -
+    orderB_sigma_effect, the negative of the old definition
+    orderA_mu_effect - orderB_mu_effect (algebraic identity: total_delta =
+    orderA_mu+orderA_sigma = orderB_mu+orderB_sigma, so orderA_mu-orderB_mu
+    == -(orderA_sigma-orderB_sigma)). Recomputed directly from the stored
+    C00/C10/C01/C11, not just negated.
 
-(b) |Δμ|-|Δσ| 的跨种子配对差 + 95% 区间：用
-    B_attribution_raw_per_seed.json 的逐 seed C00/C10/C01/C11
-    （16 个 cell：LSTM 8 + Transformer 8）。逐 seed 算
-    avg_mu = mean(orderA_mu, orderB_mu)，avg_sigma = mean(orderA_sigma,
-    orderB_sigma)（与正文"mean effect/scale effect 是两次序均值"同一
-    定义），再算 |avg_mu|-|avg_sigma|，对 5 个 seed 值做 bootstrap
-    （n=2000，有放回重采样 5 个种子，report mean/95% CI）。
+(b) Cross-seed paired difference of |delta_mu|-|delta_sigma| + 95% interval:
+    uses B_attribution_raw_per_seed.json's per-seed C00/C10/C01/C11 (16
+    cells: LSTM 8 + Transformer 8). Per seed, computes avg_mu =
+    mean(orderA_mu, orderB_mu), avg_sigma = mean(orderA_sigma,
+    orderB_sigma) (same definition as the manuscript's "mean effect/scale
+    effect is the two-order average"), then |avg_mu|-|avg_sigma|, and
+    bootstraps the 5 per-seed values (n=2000, resampling the 5 seeds with
+    replacement, reporting mean/95% CI).
 
-    **口径提醒**：B_attribution_raw_per_seed.json 里的 C00/C10/C01/C11
-    是在"最近实测网格点"（grid_point_used，与 frozen_decomposition_2x2.json
-    同一个点）上算的，不是 G/H 用的"精确插值交叉点"——这个 bootstrap 结果
-    严格来说和 G/H 报的 C 值不是同一个操作点，用户已经指定用这个文件，
-    这里如实标注这个口径差异，不悄悄改成别的数据源。
+    **Convention note**: the C00/C10/C01/C11 in
+    B_attribution_raw_per_seed.json are computed at the "nearest measured
+    grid point" (grid_point_used, the same point as
+    frozen_decomposition_2x2.json), not the "exact interpolated crossover"
+    used by G/H -- strictly speaking this bootstrap result is not the same
+    operating point as the C values G/H report. This file was specified by
+    the requester; this convention mismatch is noted honestly here rather
+    than silently switching to a different data source.
 """
 import os
 import json

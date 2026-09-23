@@ -1,19 +1,23 @@
 """
-STEP 1b：MC-Dropout/MSE checkpoint 的测试集泄漏修复（与 STEP0c 同一套
-canonical_splits.json，fit_units/val_units 逐发动机与 STEP0c/STEP3b 一致）。
+STEP 1b: fixes the test-set leakage in MC-Dropout/MSE checkpoints (uses
+the same canonical_splits.json as STEP0c; fit_units/val_units match
+STEP0c/STEP3b engine-by-engine).
 
-原 `mc_dropout_model.py` 同样每 epoch 在官方测试集上算 RMSE 选
-best_state，且 scaler 在全部 train 发动机（含 val）上拟合——两个问题与
-STEP0 完全同构，修复方式也完全同构：checkpoint 选择改用 val 集 RMSE，
-scaler 改用 `C.load_and_process_leakfree(ds, fit_units)`。
+The original `mc_dropout_model.py` likewise computes RMSE on the official
+test set at every epoch to select best_state, and fits the scaler on all
+train-side engines (including val) -- the same two problems as STEP0, and
+fixed the same way: checkpoint selection switches to val-set RMSE, and
+the scaler switches to `C.load_and_process_leakfree(ds, fit_units)`.
 
-架构/loss/aleatory方差定义与原 STEP1 逐字一致（MC_LSTM，纯MSE训练，
-T=50/100 dropout 采样，aleatory_var=训练残差方差——但"训练残差"现在必须
-用 fit_units 的残差算，不能再用全部train数据的残差，因为原定义就是
-"var(y_train - yhat_train)"，train 在新协议下等价于 fit_units）。
+Architecture/loss/aleatory-variance definition are identical to the
+original STEP1 (MC_LSTM, pure MSE training, T=50/100 dropout sampling,
+aleatory_var = training-residual variance -- but "training residual" now
+must be computed on fit_units' residuals, not all train data's, since the
+original definition is "var(y_train - yhat_train)" and train is
+equivalent to fit_units under the new protocol).
 
-checkpoint 存到 `checkpoints_leakfree/`（与 STEP0c/STEP3b 共用同一目录，
-文件名前缀区分方法）。
+Checkpoints are saved to `checkpoints_leakfree/` (shared with
+STEP0c/STEP3b, filename prefix distinguishes the method).
 """
 import os
 import json
@@ -136,10 +140,10 @@ def run_one_seed(ds_name, seed, device, use_amp):
         'dropout': 0.2, 'seed': seed, 'dataset': ds_name,
         'fit_units': fit_units, 'val_units': val_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-        'selection_protocol': 'canonical_split fit/val, leakfree scaler (2026-09-15)',
+        'selection_protocol': 'canonical_split fit/val, leakfree scaler',
     }, ckpt_path)
 
-    # ---- aleatory: fit_units 残差方差（eval, no dropout） ----
+    # ---- aleatory: fit_units residual variance (eval, no dropout) ----
     X_fit_t = torch.tensor(X_fit, dtype=torch.float32).to(device)
     yhat_fit_scaled = batched_forward(model, X_fit_t)
     yhat_fit = np.clip(yhat_fit_scaled * 125.0, 0, 125)
@@ -150,7 +154,7 @@ def run_one_seed(ds_name, seed, device, use_amp):
     if device.type == 'cuda':
         torch.cuda.empty_cache()
 
-    # ---- 官方测试集：评价一次 ----
+    # ---- official test set: evaluated once ----
     X_test, y_test = C.create_sequences(test_df, feat_cols, mode='test', true_ruls=true_ruls)
     X_test_t = torch.tensor(X_test, dtype=torch.float32).to(device)
 
@@ -216,7 +220,7 @@ if __name__ == '__main__':
         json.dump(all_out, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
 
-    print("\n=== 汇总（mean across 5 seeds, T=50） ===")
+    print("\n=== summary (mean across 5 seeds, T=50) ===")
     for ds in DATASETS:
         rs = all_out[ds]
         picp_new = np.mean([r['T50']['kendall_gal_full']['picp'] for r in rs])

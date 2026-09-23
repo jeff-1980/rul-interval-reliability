@@ -1,7 +1,8 @@
 """
-FD003 补全，最后一步：组装 COST_TABLE_FD003_leakfree.csv，与
-cost_table_lstm.py 同一列结构。延迟用池化全部独立
-latency run的中位数（不挑单次）。
+FD003 completion, last step: assembles COST_TABLE_FD003_leakfree.csv,
+with the same column structure as cost_table_lstm.py. Latency uses the
+median pooled over all independent latency runs (not a single run's
+value).
 """
 import os
 import json

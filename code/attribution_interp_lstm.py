@@ -1,18 +1,21 @@
 """
-R3-H（收尾第二轮 item 1）：LSTM 四组合归因改到精确插值点，方法与
-attribution_interp_transformer.py 对 Transformer 做的完全一致：
-C11 由交叉点定义直接得到；C10（frozen-sigma 曲线）在已有连续曲线上插值，不需
-新推理；C01（frozen-mu 曲线）只在夹住交叉点的两个实测网格点上做新推理
-（clean-mu 配 perturbed-sigma），再线性插值。
+Moves the LSTM four-combination attribution to the exact interpolation
+point, using the same method as attribution_interp_transformer.py does for
+Transformer: C11 comes directly from the crossover-point definition; C10
+(the frozen-sigma curve) is interpolated on the existing continuous curve,
+needing no new inference; C01 (the frozen-mu curve) only needs new
+inference at the two measured grid points bracketing the crossover
+(clean-mu paired with perturbed-sigma), then linearly interpolated.
 
-与 stepG 的区别只在数据源和噪声注入的 rng 标签——LSTM 的原始扫描由
-run_sweep_noise_lstm.py 产出，rng 标签是 (ds, arm_key, level_key, t)
-（arm_key 直接是 'A_percondition'/'B_pooled'/'C_fixedpct' 字面值），跟 T2 引擎
-给 Transformer 用的 ('mainarm', scheme, level_key, t) 标签不是一回事，必须
-逐字复刻 run_sweep_noise_lstm.py 的标签才能拿到与已发表 PICP 曲线
-完全一致的加噪实例。
+The only difference from the Transformer script is the data source and the
+noise-injection rng tag -- the LSTM's raw sweep is produced by
+run_sweep_noise_lstm.py, with rng tag (ds, arm_key, level_key, t) (arm_key
+is literally 'A_percondition'/'B_pooled'/'C_fixedpct'), which is not the
+same as the ('mainarm', scheme, level_key, t) tag the T2 engine uses for
+Transformer -- the run_sweep_noise_lstm.py tag must be reproduced verbatim
+to get noise-injection instances identical to the published PICP curves.
 
-只读输出：leakfree_r3/H_lstm_exact_interp_attribution.json。不改 main.tex。
+Output only, does not modify main.tex: leakfree_r3/H_lstm_exact_interp_attribution.json.
 """
 import os
 import json
@@ -114,8 +117,9 @@ def clean_mu_by_seed(ds, device, test_df_raw, feat_cols, true_ruls, scalers_by_s
 
 def mu_sigma_pert_replicates(point, ds, device, test_df_raw, feat_cols, true_ruls, scalers_by_seed,
                               models_by_seed, full_scale, global_std, km, cond_std):
-    """2026-09-21 item 2 扩展：与 sigma_pert_replicates 同一套 rng 派生，但同时保留
-    每个 seed 每个 trial 的 mu，见 stepG 同名函数同日同条注释。"""
+    """Extension: same rng derivation as sigma_pert_replicates, but also keeps
+    each seed's per-trial mu; see the same-named function and note in
+    attribution_interp_transformer.py."""
     fo, picp, kind, level_key, arm_key = point
     mus_by_seed = {seed: [] for seed in C.SEEDS}
     sigmas_by_seed = {seed: [] for seed in C.SEEDS}
@@ -171,7 +175,7 @@ def picp1(y_true, mu, sigma, z):
 
 def per_seed_C_at_point(mu_clean_by_seed, sigma_clean_by_seed, mus_pert_by_seed, sigmas_pert_by_seed, y_ref,
                          z_by_seed):
-    """见 stepG 同名函数同日同条注释。"""
+    """See the same-named function and note in attribution_interp_transformer.py."""
     out = {}
     for seed in C.SEEDS:
         mu0, sigma0 = mu_clean_by_seed[seed], sigma_clean_by_seed[seed]
@@ -210,7 +214,7 @@ if __name__ == '__main__':
         print(f"\n{'=' * 20} {ds} {'=' * 20}")
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)
 
         with open(os.path.join(PROJ_DIR, 'results', 'canonical_splits.json')) as f:
             canon = json.load(f)
@@ -222,8 +226,8 @@ if __name__ == '__main__':
 
         if ds in ('FD002', 'FD004'):
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
-            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
-            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}
+            global_std = V4.sensor_only_scale(feat_cols, global_std)
         else:
             km, cond_std = None, None
             global_std = np.std(train_df_raw[feat_cols].values, axis=0)

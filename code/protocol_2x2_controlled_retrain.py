@@ -1,31 +1,37 @@
 """
-R9-Part1：Table I 受控 2x2 补训——本轮唯一需要训练的一项。
+Table I controlled 2x2 retraining -- the only training step in this round.
 
-问题：原始 T/W（results/checkpoints/lstm_leaked_test_select_whole_file_scaler/,
-即历史上的 `checkpoints/`）在全部 train 发动机上拟合（100%），原始 V/W
-（`checkpoints_valselect/`）用 80% fit，而 V/F、T/F 都用 canonical_splits.json
-的 60% fit_units（给 calib 留出 20%）。这意味着 T/W、V/W 与 V/F、T/F 的对比
-里混进了"拟合数据量不同"这个额外变量，Table I 的 Sel./Norm./Int. 对照
-名义上只应该隔离"选模判据"和"scaler拟合范围"两个变量。
+Problem: the original T/W cell fit its checkpoint on 100% of the training
+engines, and the original V/W cell on 80%, while V/F and T/F both use
+canonical_splits.json's 60% fit_units (leaving 20% for calib). This means
+the T/W vs V/F/T/F comparisons mixed in an extra "amount of fit data"
+variable, when Table I's Sel./Norm./Int. contrasts are supposed to isolate
+only "selection criterion" and "scaler fit scope".
 
-本脚本重训 T/W'、V/W' 两格：
-  fit_units = canonical_splits.json 该 seed 的 60% fit 集（与 V/F、T/F 完全相同）
-  scaler    = 全部官方训练文件上拟合（W，未清洗，与原始 T/W/V/W 相同）
-  T/W' 选模：官方测试集 RMSE（与原始 T/W、以及 T/F 相同判据）
-  V/W' 选模：val_units 上的 RMSE（与原始 V/W、以及 V/F 相同判据）
-  epochs/optimizer/architecture/目标定义（C.create_sequences(mode='train')
-  的"下一周期RUL"标签）与 V/F（train_lstm.py）、T/F
-  （protocol_2x2_quadrant4.py）逐字一致。
+This script retrains the T/W' and V/W' cells:
+  fit_units = canonical_splits.json's 60% fit set for that seed (identical
+              to V/F and T/F)
+  scaler    = fit on the whole official training file (W, unfiltered, same
+              as the original T/W/V/W)
+  T/W' selection: official test-set RMSE (same criterion as the original
+                  T/W and as T/F)
+  V/W' selection: val_units RMSE (same criterion as the original V/W and
+                  as V/F)
+  epochs/optimizer/architecture/target definition (the "next-cycle RUL"
+  label from C.create_sequences(mode='train')) match V/F (train_lstm.py)
+  and T/F (protocol_2x2_quadrant4.py) exactly.
 
-LSTM only，FD001/FD002/FD004，5 seeds，共 2 格 x 3 数据集 x 5 seeds = 30 个模型。
+LSTM only, FD001/FD002/FD004, 5 seeds: 2 cells x 3 datasets x 5 seeds = 30 models.
 
-gate_check：复用 samesplit_ensemble_control.gate_check_split，对
-fit_units/val_units/calib_units 三者互不重叠做标准断言（对 T/W'、V/W' 都
-适用，因为这三个集合的定义与 V/F、T/F 完全相同，只是 T/W' 的"选模判据"
-本身按 Table I 的定义就是用测试集——这不是需要断言排除的"泄漏bug"，
-而是这一格存在的目的（复现"选模用测试集"这个历史错误，作为对照）。
-每个 checkpoint 的输出里显式记录 `gate_check` 字段，把这个"预期例外"
-写清楚，不是静默通过也不是误报断言失败。
+gate_check reuses samesplit_ensemble_control.gate_check_split, asserting
+fit_units/val_units/calib_units are pairwise disjoint (applies to both
+T/W' and V/W', since those three sets are defined identically to V/F/T/F
+-- T/W' selecting on the test set is, by Table I's own definition, the
+cell's entire purpose, reproducing the historical test-set-selection leak
+as a controlled comparison point, not a leak to be asserted away). Each
+checkpoint's metadata explicitly records this intentional exception, so
+it's neither silently passed nor mistakenly reported as an assertion
+failure.
 """
 import os
 import json
@@ -84,13 +90,14 @@ def run_one_cell(cell, ds_name, seed, device, use_amp):
     fit_units, val_units, calib_units = split['fit_units'], split['val_units'], split['calib_units']
     gate_ok = gate_check_split(ds_name, fit_units, val_units, calib_units)
 
-    # 全部官方训练文件上拟合 scaler（W）——与 V/F/T/F 的 fit-only scaler
-    # （load_and_process_leakfree）唯一的区别就在这一行。
+    # Scaler fit on the whole official training file (W) -- the only
+    # difference from V/F/T/F's fit-only scaler (load_and_process_leakfree).
     train_df, test_df, true_ruls, feat_cols = C.load_and_process(ds_name)
     input_dim = len(feat_cols)
 
-    # 训练数据仍然限定在 fit_units（60%，与 V/F、T/F 完全相同）——只有
-    # scaler 的拟合范围是"全部"，训练本身用的行数据量与 V/F/T/F 一致。
+    # Training data is still restricted to fit_units (60%, identical to
+    # V/F/T/F) -- only the scaler's fit range is "whole file"; the actual
+    # training row count matches V/F/T/F.
     X_fit, y_fit = C.create_sequences(train_df[train_df['unit_nr'].isin(fit_units)], feat_cols, mode='train')
     X_val, y_val = C.create_sequences(train_df[train_df['unit_nr'].isin(val_units)], feat_cols, mode='train')
     X_test, y_test = C.create_sequences(test_df, feat_cols, mode='test', true_ruls=true_ruls)
@@ -179,7 +186,7 @@ def run_one_cell(cell, ds_name, seed, device, use_amp):
         'cell': cell,
         'selection_protocol': (
             f"{sel_label} selection + whole-file scaler, fit_units=canonical 60% "
-            f"(R9-Part1, controlled 2x2, {ds_name} seed {seed})"
+            f"(controlled 2x2 retrain, {ds_name} seed {seed})"
         ),
         'gate_check': gate_check_record,
     }, ckpt_path)
@@ -194,7 +201,7 @@ if __name__ == '__main__':
     use_amp = device.type == 'cuda'
     if device.type == 'cuda':
         print(f"GPU: {torch.cuda.get_device_name(0)}")
-    print(f"Device: {device}  R9-Part1: controlled 2x2 (T/W', V/W')  DATASETS={DATASETS}  SEEDS={C.SEEDS}")
+    print(f"Device: {device}  Controlled 2x2 retrain (T/W', V/W')  DATASETS={DATASETS}  SEEDS={C.SEEDS}")
 
     out_path = os.path.join(R9_DIR, 'controlled_2x2_retrain_results.json')
     all_out = {}
@@ -214,4 +221,4 @@ if __name__ == '__main__':
                 json.dump(all_out, fp, indent=2, default=float)
 
     print(f"\nSaved -> {out_path}")
-    print("R9-Part1 complete: 30 controlled T/W'/V/W' checkpoints trained.")
+    print("Complete: 30 controlled T/W'/V/W' checkpoints trained.")

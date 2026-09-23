@@ -1,13 +1,16 @@
 """
-T2-A4b（补做）：Transformer 主 SNR 臂扫描，与臂C（run_sweep_noise_transformer_armc.py）
-合起来才能与 LSTM 侧的半衰点计算同一 feat_oob 覆盖范围——臂C自己最小档
-（0.1%FS）feat_oob 就有约5%-6%，而 LSTM 的半衰点大多落在<2% feat_oob，
-只用臂C测不到，如实发现后补上本脚本。
+T2-A4b (added later): Transformer main SNR-arm sweep. Only pooling this
+together with arm C (run_sweep_noise_transformer_armc.py) gives the same
+feat_oob coverage range as the LSTM side's half-life computation -- arm
+C's own smallest level (0.1% FS) already has feat_oob around 5%-6%, while
+the LSTM side's half-life mostly falls at <2% feat_oob, which arm C alone
+cannot measure; this script was added after finding that gap.
 
-FD001/FD003 单一工况：只跑 scheme='global'（A_percondition 在这类数据集上
-退化为 B_pooled，与 LSTM 侧处理一致，两个标签指向同一份结果）。
-FD002/FD004 多工况：跑 A_percondition(per_condition) + B_pooled(global)
-两个臂，与 LSTM 侧完全一致。
+FD001/FD003 (single operating condition): only runs scheme='global'
+(A_percondition degenerates to B_pooled on these datasets, matching the
+LSTM side's handling -- both labels point to the same result).
+FD002/FD004 (multiple operating conditions): runs both A_percondition
+(per_condition) and B_pooled (global) arms, matching the LSTM side exactly.
 """
 import os
 import json
@@ -30,7 +33,7 @@ OUT_PATH = os.path.join(T2.TRANSFORMER_DIR, 't2_transformer_mainarm_sweep_leakfr
 if __name__ == '__main__':
     C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    print(f"Device: {device}  Backbone=Transformer  Part A main-SNR-arm sweep (补做)  DATASETS={DATASETS}")
+    print(f"Device: {device}  Backbone=Transformer  Part A main-SNR-arm sweep (added later)  DATASETS={DATASETS}")
 
     all_out = {}
     if os.path.exists(OUT_PATH):
@@ -55,8 +58,8 @@ if __name__ == '__main__':
                             'note': 'single condition; A_percondition degenerates to B_pooled'}
         else:
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
-            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
-            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}
+            global_std = V4.sensor_only_scale(feat_cols, global_std)
             arm_a = E.run_snr_sweep(ds, 'Transformer', 'per_condition', SNR_LEVELS_ALL, device,
                                      scalers_by_seed, km=km, cond_std=cond_std)
             arm_b = E.run_snr_sweep(ds, 'Transformer', 'global', SNR_LEVELS_ALL, device,

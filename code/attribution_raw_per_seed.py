@@ -1,9 +1,11 @@
 """
-R3-B：四组合归因原始值，供 supplementary_attribution.tex。对已有
-frozen_decomposition_2x2.json 里每个 cell 记录的 (kind, level_key, arm_label)
-原样复用（保证与已发表数字完全一致，不重新定位crossover），只是这次额外
-按seed记录 C00/C10/C01/C11，从而算出跨seed std（此前的 R2 脚本只保存了
-汇总后的均值，没存每个seed自己的值）。
+Raw four-combination attribution values, for supplementary_attribution.tex.
+Reuses each cell's stored (kind, level_key, arm_label) from the existing
+frozen_decomposition_2x2.json as-is (guaranteeing exact agreement with the
+published numbers, not re-locating the crossover); the only addition is
+recording C00/C10/C01/C11 per seed, so the cross-seed std can be computed
+(the earlier script only saved the aggregated mean, not each seed's own
+value).
 """
 import os
 import json
@@ -36,8 +38,9 @@ def picp_z(y_true, mu, sigma, z):
 
 def infer_pooled_per_seed(backbone, ds, level_kind, level_key, arm_label, device, scalers_by_seed,
                            full_scale, global_std, km=None, cond_std=None):
-    """与 attribution_frozen_2x2_nearest_grid.py 的 infer_pooled 逐字一致，唯一区别是
-    返回逐 seed 的 (mu, sigma) 列表而不是堆叠数组（方便按seed算C值）。"""
+    """Identical to attribution_frozen_2x2_nearest_grid.py's infer_pooled verbatim,
+    the only difference is returning a per-seed (mu, sigma) list instead of a
+    stacked array (to make it easy to compute C values per seed)."""
     _, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     per_seed = {}
     y_ref = None
@@ -72,9 +75,10 @@ def infer_pooled_per_seed(backbone, ds, level_kind, level_key, arm_label, device
 
 
 def resolve_arm_label(backbone, ds, kind, level_key, actual_fo):
-    """grid_point_used 里没存 arm_label（R2脚本的疏漏），这里按 feat_oob 数值
-    反查是 A_percondition(per_condition) 还是 B_pooled(global) 命中的——
-    FD001/FD003 单一工况恒为 global；armc 类型不需要 arm_label。"""
+    """grid_point_used never stored arm_label (an omission in the earlier script);
+    this looks up whether A_percondition(per_condition) or B_pooled(global) was
+    hit by reverse-matching the feat_oob value -- FD001/FD003's single operating
+    condition is always global; the armc kind does not need an arm_label."""
     if kind != 'mainarm' or ds not in ('FD002', 'FD004'):
         return 'global'
     if backbone == 'LSTM':
@@ -115,13 +119,13 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-            full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+            full_scale = V4.sensor_only_scale(feat_cols, full_scale)
             global_std = np.std(train_df_raw[feat_cols].values, axis=0)
             scalers_by_seed = scalers_for(ds)
             if ds in ('FD002', 'FD004'):
                 km, cond_std, _ = V4.fit_condition_model(train_df_raw, feat_cols)
-                cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
-                global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
+                cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}
+                global_std = V4.sensor_only_scale(feat_cols, global_std)
             else:
                 km, cond_std = None, None
 

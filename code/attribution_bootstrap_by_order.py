@@ -1,28 +1,37 @@
 """
-R7-1（收尾第三轮 item 2，纯后处理，无新增推理，不需要 PYTHONHASHSEED）：
+Pure post-processing, no new inference, no PYTHONHASHSEED requirement.
 
-此前 attribution_bootstrap_order_averaged.py 的 |Delta_mu|-|Delta_sigma|
-bootstrap 有两个已知口径问题（该脚本自己的 docstring 已如实标注）：
-  (1) 用的是 B_attribution_raw_per_seed.json 的"最近实测网格点"C值，不是
-      G/H 用的"精确插值交叉点"——操作点不一致。
-  (2) 次序 A（先冻 sigma 再放 mu）与次序 B（先冻 mu 再放 sigma）的
-      mu_effect/sigma_effect 被平均成一个 avg_mu/avg_sigma 再做 bootstrap，
-      掩盖了两个次序各自是否稳健越过零。
+attribution_bootstrap_order_averaged.py's |Delta_mu|-|Delta_sigma| bootstrap
+has two known caveats (already documented honestly in that script's own
+docstring):
+  (1) It uses the "nearest measured grid point" C values from
+      B_attribution_raw_per_seed.json, not the "exact interpolated
+      crossover" that G/H use -- an operating-point mismatch.
+  (2) Order A (freeze sigma first, then release mu) and order B (freeze mu
+      first, then release sigma) have their mu_effect/sigma_effect averaged
+      into a single avg_mu/avg_sigma before bootstrapping, which masks
+      whether each order individually crosses zero robustly.
 
-本脚本改用 2026-09-21（本轮）新加到 G_transformer_exact_interp_attribution.json /
-H_lstm_exact_interp_attribution.json 里的 C00_per_seed/C10_per_seed/
-C01_per_seed/C11_per_seed 字段（在 G/H 自己的精确插值交叉点上，逐 seed 算出的
-四组合，C01 的两点新推理逐 seed 保留，见两脚本 mu_sigma_pert_replicates /
-per_seed_C_at_point）——次序 A、B 分别算 |mu_effect|-|sigma_effect| 的 5 个
-seed 值，各自单独 bootstrap（n=2000，有放回重采样 5 个种子，95% 区间），
-不再把两个次序平均到一起。
+This script instead uses the C00_per_seed/C10_per_seed/C01_per_seed/
+C11_per_seed fields added to G_transformer_exact_interp_attribution.json /
+H_lstm_exact_interp_attribution.json (the four combinations computed per
+seed, at G/H's own exact interpolated crossover point; C01's two-point new
+inference is kept per seed, see those scripts' mu_sigma_pert_replicates /
+per_seed_C_at_point) -- order A and order B each get their own 5 per-seed
+values of |mu_effect|-|sigma_effect|, bootstrapped separately (n=2000,
+resampling the 5 seeds with replacement, 95% interval), instead of
+averaging the two orders together.
 
-旧的"次序平均 + 最近网格点"版本原样保留在输出的 `_order_averaged` 字段下
-（逐字复用 attribution_bootstrap_order_averaged 的 bootstrap_abs_mu_minus_abs_sigma，数据源仍是
-B_attribution_raw_per_seed.json），供新旧对比，不删除、不覆盖。
+The old "order-averaged + nearest grid point" version is kept as-is under
+the output's `_order_averaged` field (reusing
+attribution_bootstrap_order_averaged's bootstrap_abs_mu_minus_abs_sigma
+verbatim, still sourced from B_attribution_raw_per_seed.json), for
+old-vs-new comparison -- not deleted or overwritten.
 
-同时先对 G/H 跑一遍 interaction 符号修正（该文件重新生成后 interaction 字段
-需要按 (C11-C10)-(C01-C00) 的约定重算，逐字复用 attribution_bootstrap_order_averaged.fix_interaction）。
+Also runs the interaction sign correction on G/H first (after
+regenerating those files, the interaction field needs recomputing under
+the (C11-C10)-(C01-C00) convention, reusing
+attribution_bootstrap_order_averaged.fix_interaction verbatim).
 """
 import os
 import json

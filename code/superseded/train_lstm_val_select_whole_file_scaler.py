@@ -1,26 +1,38 @@
 """
-STEP 0b：修复测试集泄漏——checkpoint 选择改用 train 侧切出的 val 集。
+STEP 0b: fixes the test-set leakage in checkpoint selection by switching
+to a val split carved out of the training side instead.
 
-背景：`train_lstm_leaked_test_select_whole_file_scaler.py` 每个 epoch
-结束都在官方测试集（test_{ds}.txt + RUL_{ds}.txt）上算 RMSE，150 个 epoch
-里最优的那个存为 checkpoint——这是模型选择阶段的测试集泄漏：梯度从未碰
-测试集，但"选哪个epoch保留"这个决策本身用了测试集表现，等价于用测试集
-做了一次隐式的超参数搜索（150个"候选模型"里选测试集表现最好的一个）。
+Background: `train_lstm_leaked_test_select_whole_file_scaler.py` computes
+RMSE on the official test set (test_{ds}.txt + RUL_{ds}.txt) at the end of
+every epoch and saves whichever of the 150 epochs is best as the
+checkpoint -- this is test-set leakage in the model-selection stage: no
+gradient ever touches the test set, but the decision of "which epoch to
+keep" itself uses test-set performance, which is equivalent to an implicit
+hyperparameter search over the test set (picking the best of 150
+"candidate models" by test performance).
 
-修复：按发动机单元把 train_{ds}.txt 切成 fit(80%)/val(20%)（种子派生，
-`common.split_units_two_way`，与 STEP3 现有的 fit/calib 切分用同一套
-逻辑，避免全项目出现两套不一致的切分实现）。val 集用全滑窗（与训练同分布，
-覆盖每台发动机从早期到临近失效的全部RUL区间，比"每台发动机一个截断点"
-的测试协议给出的早停信号更稳定，不依赖某个具体截断点的运气）。checkpoint
-选择只看 val RMSE。训练结束后，用被选中的 best_state 在官方测试集上**评价
-一次**（不参与任何选择决策），这是本次修复后测试集唯一被触碰的地方。
+Fix: split train_{ds}.txt into fit (80%) / val (20%) by engine unit
+(seed-derived, `common.split_units_two_way`, the same logic already used
+for STEP3's fit/calib split, avoiding two inconsistent split
+implementations across the project). The val set uses full sliding
+windows (same distribution as training, covering each engine's full RUL
+range from early life to near failure), giving a more stable
+early-stopping signal than the "one truncation point per engine" test
+protocol, and not dependent on the luck of any specific truncation point.
+Checkpoint selection looks only at val RMSE. After training, the selected
+best_state is evaluated on the official test set **once** (not
+participating in any selection decision) -- this is the only place the
+test set is touched after this fix.
 
-其余全部保持与 STEP0 逐字一致：同一套超参（150 epoch, batch 256, lr 1e-3,
-hidden_dim 64, log_sigma∈[-3,2], dropout 0.2）、同一个 HeteroscedasticLSTM
-架构、同一个 gaussian_nll_loss、同一 5 seeds、同一特征选择。
+Everything else stays identical to STEP0: same hyperparameters (150
+epochs, batch 256, lr 1e-3, hidden_dim 64, log_sigma in [-3,2], dropout
+0.2), same HeteroscedasticLSTM architecture, same gaussian_nll_loss, same
+5 seeds, same feature selection.
 
-checkpoint 落盘到**新目录** `checkpoints_valselect/`（不覆盖 `checkpoints/`
-里已标记 COMPROMISED 的旧文件，保留旧结果供退化幅度对比）。
+Checkpoints are saved to a **new directory** `checkpoints_valselect/`
+(does not overwrite the old files already marked COMPROMISED in
+`checkpoints/`, keeping the old results for comparing the degradation
+magnitude).
 """
 import os
 import json
@@ -129,7 +141,7 @@ def run_one_seed(ds_name, seed, device, use_amp, train_df, test_df, true_ruls, f
     model.load_state_dict(best_state)
     model.eval()
 
-    # ---- 官方测试集：本次修复后唯一被触碰的地方，只评价，不参与任何选择 ----
+    # ---- official test set: only touched here after the fix, evaluation only, no selection ----
     X_test, y_test = C.create_sequences(test_df, feat_cols, mode='test', true_ruls=true_ruls)
     X_test_t = torch.tensor(X_test, dtype=torch.float32).to(device)
     with torch.no_grad():
@@ -155,7 +167,7 @@ def run_one_seed(ds_name, seed, device, use_amp, train_df, test_df, true_ruls, f
         'seed': seed, 'dataset': ds_name, 'fit_units': sorted(fit_units),
         'val_units': sorted(val_units), 'val_frac': VAL_FRAC,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-        'selection_protocol': 'val_split_from_train_units (leakage-fixed, 2026-09-14)',
+        'selection_protocol': 'val_split_from_train_units (leakage-fixed)',
     }, ckpt_path)
 
     return {

@@ -1,22 +1,29 @@
 """
-R8-A2（诊断，推理级，不重训）：目标时刻对齐。
+Diagnostic, inference-level, no retraining: target-instant alignment.
 
-背景：训练集 RUL 标签 = (max_cycles - time_cycles).clip(125) —— 由于训练
-发动机跑到真正失效（run-to-failure），最后一行 time_cycles=max_cycles，
-RUL=0，即"这一行本身就是失效时刻"。测试集当前口径（V4.extract_raw_windows
-mode='test'）直接用官方 RUL_FD00X.txt 的值（clip到125）作为最后一行窗口
-的真值：`min(official_RUL, 125)`——official_RUL 是NASA给定的"测试文件最后
-一行之后还剩多少个运行周期"，与训练标签"这一行本身还剩多少个周期（含
-这一行）"是否是同一个计数起点，取决于official_RUL的确切定义，如果
-official_RUL衡量的是"最后一行之后"而不是"最后一行开始"，就会跟训练标签
-差1个周期。本诊断只做一件事：把测试真值换成
-`min(official_RUL - 1, 125)`（与训练标签同一计数惯例），看RMSE/PICP/IS/
-L=20提前触发率变化多大——不下结论哪个"对"，只如实报告差异幅度。
+Background: the training RUL label = (max_cycles - time_cycles).clip(125)
+-- since training engines run to actual failure (run-to-failure), the last
+row has time_cycles=max_cycles, RUL=0, i.e. "this row itself is the
+failure instant". The test-side convention (V4.extract_raw_windows
+mode='test') directly uses the official RUL_FD00X.txt value (clipped to
+125) as the last window's ground truth: min(official_RUL, 125) --
+official_RUL is NASA's stated "cycles remaining after the test file's last
+row"; whether that shares the same counting origin as the training label's
+"cycles remaining as of this row (inclusive)" depends on official_RUL's
+exact definition -- if it measures "after the last row" rather than "as of
+the last row", it's off by one cycle from the training label. This
+diagnostic does exactly one thing: switches the test ground truth to
+min(official_RUL - 1, 125) (matching the training label's counting
+convention) and reports how much RMSE/PICP/IS/L=20 premature-trigger-rate
+change -- no conclusion about which is "correct", just an honest report of
+the magnitude of the difference.
 
-模型输出（mu,sigma）在两种口径下完全相同（RUL标签只用于评估，不是模型
-输入），因此只需推理一次，用两套 y_true 分别算指标。
+Model output (mu, sigma) is identical under both conventions (the RUL
+label is only used for evaluation, not as model input), so one inference
+pass suffices, computing metrics against both y_true sets.
 
-全部4数据集×两骨干×NLL×5 seeds，clean 与 drift 5% 两个条件。
+All 4 datasets x both backbones x NLL x 5 seeds, clean and drift 5%
+conditions.
 """
 import os
 import json
@@ -79,17 +86,19 @@ if __name__ == '__main__':
     for ds in DATASETS:
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        # R9-Part4: extract_raw_windows(mode='test') 本身在 R8-B2 已经改成返回
-        # min(official_RUL-1,125)（见 noise_injection.py 的 R8-B2 注释），
-        # 这个脚本此前直接把它的 y_list 当 y_official 用——导致 y_official 和
-        # y_alt 实际上算的是同一件事（都已经减了1），A2 的整个对照失去意义。
-        # 现在改成 y_official / y_alt 都直接从 true_ruls 原始官方终端标签独立
-        # 构造，只借用 extract_raw_windows 的 X_raw_clean/u_ids（窗口划分与
-        # 单元编号，和 RUL 口径无关）。
+        # extract_raw_windows(mode='test') itself already returns
+        # min(official_RUL-1,125) (see noise_injection.py) -- this script
+        # used to take its y_list directly as y_official, which meant
+        # y_official and y_alt computed the same thing (both already
+        # minus one), collapsing this whole contrast to nothing. Now
+        # y_official / y_alt are both built independently from the raw
+        # official terminal label, only borrowing extract_raw_windows'
+        # X_raw_clean/u_ids (window layout and unit numbering, unrelated
+        # to the RUL convention).
         X_raw_clean, _y_ignored, u_ids = V4.extract_raw_windows(test_df_raw, feat_cols, true_ruls, mode='test')
         official_rul_raw = true_ruls.iloc[u_ids - 1]['RUL'].values.astype(np.float64)
-        y_official = np.minimum(official_rul_raw, C.MAX_RUL)          # 当前周期口径：官方RUL原样
-        y_alt = np.minimum(official_rul_raw - 1.0, C.MAX_RUL)          # 下一周期口径：与训练标签一致
+        y_official = np.minimum(official_rul_raw, C.MAX_RUL)          # current-cycle convention: official RUL as-is
+        y_alt = np.minimum(official_rul_raw - 1.0, C.MAX_RUL)          # next-cycle convention: matches training label
         assert not np.array_equal(y_official, y_alt), \
             f"{ds}: y_official and y_alt are identical -- the two conventions collapsed to the same array"
         X_raw_drift = V4.inject_drift_fixed_pct_windows(X_raw_clean, 5.0, full_scale)

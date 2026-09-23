@@ -1,8 +1,11 @@
 """
-T2 补测：Transformer 延迟的 batch-size 平台扫描 {512,1024,2048,4096}，
-与旧的 batch=512 platform 协议同一套 priming+2s时钟热身+50热身+11轮
-CUDA-event中位数方法，只测 NLL（先用最便宜的单一机制定位平台，找到后再
-用平台batch重测全部5行）。4个数据集分别测（不同input_dim/序列数）。
+T2 supplementary measurement: Transformer latency batch-size plateau sweep
+{512,1024,2048,4096}, using the same priming + 2s clock warm-up + 50
+warm-up iterations + 11-round CUDA-event median method as the old
+batch=512 protocol, measuring only NLL (locate the plateau first with the
+cheapest single mechanism, then re-measure all 5 rows at the plateau
+batch size once found). Measured separately for each of the 4 datasets
+(different input_dim/sequence counts).
 """
 import os
 import json
@@ -81,7 +84,7 @@ if __name__ == '__main__':
             del X_t
             torch.cuda.empty_cache()
 
-        # 平台判据：per-sample latency 从一档到下一档变化 <5% 视为已到平台
+        # plateau criterion: per-sample latency change <5% from one level to the next counts as plateaued
         plateau_batch = None
         levels = [str(b) for b in BATCH_LEVELS]
         for i in range(len(levels) - 1):

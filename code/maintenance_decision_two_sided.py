@@ -1,23 +1,27 @@
 """
-R2 补算(2)：维护决策案例分析，推理级。
+Maintenance decision case-study analysis, inference level.
 
-规则：90% PI 下界 mu - z*sigma <= L 时触发维护，L in {10,20,30} 周期。
-末端窗口口径（每台测试发动机一个决策，与主表同一口径，见R2项目0核实）。
+Rule: maintenance is triggered when the 90% PI lower bound
+mu - z*sigma <= L, for L in {10,20,30} cycles. End-window convention (one
+decision per test engine, same convention as the main table, verified
+against the project's split-0 assertion).
 
-条件：clean / 高斯1%FS(臂C) / drift 5%FS / bias 5%FS。
-机制：NLL, MSE_fixed(calib-based sigma), MC_Dropout_fixed(calib-based
-sigma), Deep_Ensemble, CP_norm。MSE/MC-Dropout 用校准集残差方差
-（与本轮"公平校准版主表"同一口径，不用训练集残差版）。
+Conditions: clean / Gaussian 1%FS (arm C) / drift 5%FS / bias 5%FS.
+Mechanisms: NLL, MSE_fixed (calib-based sigma), MC_Dropout_fixed
+(calib-based sigma), Deep_Ensemble, CP_norm. MSE/MC-Dropout use
+calibration-set residual variance (same convention as the "fair
+calibration" main table, not the training-set residual version).
 
-每个(backbone,ds,condition,method)算 5 个 seed（gaussian/bias 另有 5 个
-trial）独立的决策，late/early rate 是跨(seed,trial)cell 的平均——与全项目
-一贯的 grand_mean 统计口径一致，不是先平均 mu/sigma 再决策。
+Each (backbone,ds,condition,method) computes 5 seeds' (gaussian/bias also
+have 5 trials) independent decisions; late/early rate is the average
+across (seed,trial) cells -- matching the project-wide grand_mean
+statistical convention, not averaging mu/sigma first and then deciding.
 
 late_rate  = mean over engines[ true_RUL<=L and not triggered ]
 early_rate = mean over engines[ triggered and true_RUL>L+20 ]
 wasted_life = mean over "early triggered" engines of (true_RUL - L)
 
-Cost = r * late_rate + 1 * early_rate， r = c_late/c_early ∈ {5,20,100}。
+Cost = r * late_rate + 1 * early_rate, r = c_late/c_early in {5,20,100}.
 """
 import os
 import json
@@ -79,8 +83,8 @@ def calib_sigma_fixed(ds, backbone, seed, canon, device):
 
 
 def get_raw_test_window(ds, condition, trial, full_scale, rng_seed_tag):
-    """返回给定 condition/trial 下的原始（未标准化）末端窗口 (n_engines,T,F)，
-    None 表示 clean（无需按 trial 变化）。"""
+    """Returns the raw (unscaled) end-window (n_engines,T,F) for a given
+    condition/trial; None means clean (no trial-dependent variation)."""
     _, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     if condition == 'clean':
         X_raw, y_ref, _ = V4.extract_raw_windows(test_df_raw, feat_cols, true_ruls, mode='test')
@@ -121,7 +125,7 @@ if __name__ == '__main__':
             _, _, _, feat_cols_probe, _ = V4.load_raw_train_test_and_scaler(ds)
             train_df_raw_probe, _, _, _, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw_probe, feat_cols_probe)
-            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)  # R8-B1
+            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)
 
             scalers_by_seed = {}
             aleatory_var_by_seed = {}

@@ -1,18 +1,21 @@
 """
-R8（发布仓库导出前置任务）：重建 step0c_leakfree_ece_agg.json 的生成脚本——
-排查发现现有代码库里没有任何脚本产出这个文件（`grep` 全部 *.py 未命中），
-main.tex 的 Table~tab:leak 脚注引用了它（"ECE here is computed on the pooled
-predictions of the five seeds, ... 0.014 against 0.032 on FD001"），必须重建
-以证明这个数字是可复现的，不是凭空的。
+Reconstructs the generation script for step0c_leakfree_ece_agg.json --
+an audit found no script in the codebase that produces this file (a
+`grep` across all *.py found no match), yet main.tex's Table~tab:leak
+footnote cites it ("ECE here is computed on the pooled predictions of the
+five seeds, ... 0.014 against 0.032 on FD001"). This reconstruction proves
+the number is reproducible, not fabricated.
 
-方法：与 train_lstm.py 的官方测试集单次评估完全同源——
-用 checkpoints_leakfree/{ds}_LSTM_seed{seed}.pt（该脚本自己训练产出的
-checkpoint）+ 该 seed 自己的 fit_units 对应 scaler（同一个
-load_and_process_leakfree 调用）算出该 seed 的 (mu, sigma, y_test)，
-但不像原脚本那样"每个seed各自算一次ECE再看"，而是把5个seed的
-(mu, sigma, y_test) 直接在样本维度拼接（pool），只算一次ECE——这正是
-脚注说的"pooled predictions"，与Table~tab:clean报的"5个seed各自ECE
-的平均"是两种不同的聚合顺序。
+Method: uses the exact same source as train_lstm.py's single official
+test-set evaluation -- computes each seed's (mu, sigma, y_test) from
+checkpoints_leakfree/{ds}_LSTM_seed{seed}.pt (the checkpoint that
+pipeline itself trained) plus that seed's own fit_units-derived scaler
+(the same load_and_process_leakfree call), but instead of computing each
+seed's ECE separately as the original script does, concatenates the 5
+seeds' (mu, sigma, y_test) along the sample dimension (pooling) and
+computes ECE once -- this is exactly what the footnote's "pooled
+predictions" means, a different aggregation order from Table~tab:clean's
+"average of each seed's own ECE".
 """
 import os
 import json

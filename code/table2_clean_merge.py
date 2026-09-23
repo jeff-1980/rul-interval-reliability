@@ -1,18 +1,23 @@
 """
-R8（发布仓库导出前置任务）：重建 leakfree_r2/table2_clean_full.json 的生成脚本
-——排查发现现有代码库没有任何脚本产出这个文件。这个文件本身不含任何新计算，
-是把已有的、各自独立算出的分方法结果文件按 (backbone, dataset, method) 合并
-成 Table II 用的统一形状：
-  - MSE_fixed / MC_Dropout_fixed：直接取 leakfree_r2/fair_calibration_main_table.json
-    （这两个机制的 sigma 来自校准集残差方差，"公平校准"修复后的口径，picp_mean/
-    mpiw_mean/ece_mean/per_engine_compliance/interval_score_mean/wis_mean 六个
-    字段已经是这张表要的形状，不需要再算）。
-  - NLL / CP_norm：sigma 来自模型自己的方差头/conformal校准，不受"公平校准"
-    修复影响，picp/mpiw/ece 取5个seed的均值（main.tex Table tab:leak 脚注：
-    "Table tab:clean reports the mean of per-seed ECE"），per_engine 取
-    per_engine_coverage_leakfree.json 的 compliance_rate_ge_090，is/wis 取
-    interval_score_wis_clean.json。
-  - Deep_Ensemble：本身就是单点估计（不是5个seed各自ensemble再平均），直接取用。
+Rebuilds the generator script for leakfree_r2/table2_clean_full.json --
+an audit found no existing script in the codebase actually produces this
+file. This file contains no new computation itself; it merges existing,
+independently-computed per-method result files into the unified shape
+needed for Table II, keyed by (backbone, dataset, method):
+  - MSE_fixed / MC_Dropout_fixed: taken directly from
+    leakfree_r2/fair_calibration_main_table.json (these two mechanisms'
+    sigma comes from calibration-set residual variance, the "fair
+    calibration"-fixed convention; the six fields picp_mean/mpiw_mean/
+    ece_mean/per_engine_compliance/interval_score_mean/wis_mean are
+    already in the shape this table needs, no recomputation required).
+  - NLL / CP_norm: sigma comes from the model's own variance head /
+    conformal calibration, unaffected by the "fair calibration" fix;
+    picp/mpiw/ece is the mean over 5 seeds (main.tex Table tab:leak
+    footnote: "Table tab:clean reports the mean of per-seed ECE"),
+    per_engine comes from per_engine_coverage_leakfree.json's
+    compliance_rate_ge_090, is/wis comes from interval_score_wis_clean.json.
+  - Deep_Ensemble: already a single-point estimate (not 5 separate
+    per-seed ensembles averaged), taken as-is.
 """
 import os
 import json

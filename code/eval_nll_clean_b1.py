@@ -1,16 +1,19 @@
 """
-R8-B1（推理级，不重训）：重新评估三个"训练脚本里捎带算出来的NLL clean-
-condition结果"文件——checkpoint 权重不变，只重算依赖官方测试集真值的
-字段（rmse/score/picp/mpiw/ece；sigma_mean 与 y 无关，不变）。q值/
-calib-based 量不在这三个文件里，不涉及。
+Inference-level, no retraining: re-evaluates three "NLL clean-condition
+result files computed as a byproduct of the training scripts" --
+checkpoint weights are unchanged, only the fields that depend on the
+official test-set labels are recomputed (rmse/score/picp/mpiw/ece;
+sigma_mean is independent of y and unchanged). q values / calib-based
+quantities are not in these three files and are not touched.
 
-覆盖：
+Covers:
   step0c_leakfree_results.json          (LSTM, FD001/FD002/FD004)
   stepFD003_nll_leakfree_results.json   (LSTM, FD003)
-  t2_transformer_nll_leakfree_results.json (Transformer, 全部4个数据集)
+  t2_transformer_nll_leakfree_results.json (Transformer, all 4 datasets)
 
-非评估字段（n_fit_units/n_val_units/n_val_windows/best_val_rmse/
-elapsed_train_s等）原样保留自旧文件（训练没有重跑，这些字段本来就没变）。
+Non-evaluation fields (n_fit_units/n_val_units/n_val_windows/
+best_val_rmse/elapsed_train_s, etc.) are kept as-is from the old files
+(training was not rerun, so these fields are unchanged anyway).
 """
 import os
 import json
@@ -119,4 +122,4 @@ if __name__ == '__main__':
         json.dump(old3, fp, indent=2, default=float)
     print(f"Saved -> {path3}")
 
-    print("\nR8-B1 NLL clean re-eval complete (no retraining).")
+    print("\nNLL clean re-eval complete (no retraining).")

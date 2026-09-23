@@ -1,13 +1,16 @@
 """
-STEP 6 (leakfree)：用全部 leakfree 产出重建三张代价表。
+STEP 6 (leakfree): rebuilds the three cost tables using all leakfree
+outputs.
 
-延迟列**不重测**（与用户指令一致：延迟只取决于架构/batch，与权重无关）——
-直接从旧的 `COST_TABLE_{ds}.csv`（STEP6k，platform batch=512池化中位数）
-原样搬过来。params 列现场用相同架构重新实例化计数（架构未变，数字应与
-旧表一致，作为交叉验证）。
+The latency column is **not remeasured** (latency depends only on
+architecture/batch, not on weights) -- carried over as-is from the
+earlier `COST_TABLE_{ds}.csv` (batch=512, pooled median). The params
+column is recomputed on the spot by re-instantiating the same
+architecture (architecture unchanged, so the number should match the
+earlier table, serving as a cross-check).
 
-其余全部列（PICP/MPIW/ECE/per-engine/coverage_half_life_feat_oob）改用
-leakfree 数据源。
+All other columns (PICP/MPIW/ECE/per-engine/coverage_half_life_feat_oob)
+switch to the leakfree data source.
 """
 import os
 import json

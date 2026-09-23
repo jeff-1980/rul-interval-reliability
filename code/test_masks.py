@@ -1,6 +1,7 @@
 """
-R9 单元测试：Part2（增益显式掩码）+ Part3（feat_oob 统一实现）。
-不是 pytest 套件，直接跑（python3 test_masks.py），assert 失败即报错退出。
+Unit tests: explicit gain masking + the unified feat_oob implementation.
+Not a pytest suite -- run directly (python3 test_masks.py); an assert
+failure exits with an error.
 """
 import os
 import json
@@ -49,7 +50,7 @@ def test_gain_mask():
 
 
 def test_feat_oob_fd002_drift5pct():
-    """Cross-check against the R9-fixed drift-5% sensors-only f_oob on FD002
+    """Cross-check against the fixed drift-5% sensors-only f_oob on FD002
     (mirrors the computation in diagnostic_perturbation_target_a1.py's
     variant_scale_and_mask('sensors',...) + feat_oob call)."""
     ds = 'FD002'
@@ -98,4 +99,4 @@ def test_feat_oob_fd002_drift5pct():
 if __name__ == '__main__':
     test_gain_mask()
     test_feat_oob_fd002_drift5pct()
-    print("\nALL R9 MASK TESTS PASS")
+    print("\nALL MASK TESTS PASS")

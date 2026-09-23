@@ -1,38 +1,48 @@
 """
-R4-1：同划分集成对照（本轮唯一需要训练的项）。
+Same-split ensemble control (the only training step in this round).
 
-目的：现有 Deep_Ensemble(M=5) 的 5 个成员模型彼此之间既换了随机初始化，也换了
-canonical_splits 里的 engine 级 fit/val/calib 划分（seed 同时控制两者）——集成
-的方差来源里混了"划分方差"和"初始化方差"，无法单独归因。本脚本固定
-canonical_splits[ds]['42'] 这一套 fit/val/calib 划分，只换 5 个模型的初始化
-种子 {42,2024,7,888,123}，得到"纯初始化方差"下的集成，与现有跨划分集成
-并列比较。
+Purpose: the existing Deep_Ensemble(M=5)'s 5 member models differ in both
+random initialisation and canonical_splits' engine-level fit/val/calib
+split (the seed controls both at once) -- the ensemble's variance mixes
+"split variance" with "initialisation variance", which can't be attributed
+separately. This script fixes canonical_splits[ds]['42']'s fit/val/calib
+split and varies only the 5 models' initialisation seeds
+{42,2024,7,888,123}, giving an ensemble under "pure initialisation
+variance" to compare side-by-side with the existing cross-split ensemble.
 
-init_seed=42 的模型与现有 checkpoints_leakfree*/{ds}_{backbone}_seed42.pt
-完全同源（同一份split_seed=42+同一个init_seed=42），直接复用，不重训；
-只需新训 4 个模型（init_seed∈{2024,7,888,123}）每个 (backbone,ds)，
-2 backbones × 4 datasets × 4 new inits = 32 个新模型。
+The init_seed=42 model is identical to the existing
+checkpoints_leakfree*/{ds}_{backbone}_seed42.pt (same split_seed=42 +
+init_seed=42), reused directly, not retrained; only 4 new models
+(init_seed in {2024,7,888,123}) per (backbone,ds) need training:
+2 backbones x 4 datasets x 4 new inits = 32 new models.
 
-训练协议（架构/超参/EPOCHS/checkpoint选择判据）与
-train_lstm.py（LSTM）/ train_transformer_nll.py
-（Transformer）逐字一致，唯一区别：torch.manual_seed 用 init_seed，
-但 fit_units/val_units 固定用 canonical_splits[ds]['42']，不随 init_seed变。
+Training protocol (architecture/hyperparameters/EPOCHS/checkpoint
+selection criterion) matches train_lstm.py (LSTM) / train_transformer_nll.py
+(Transformer) exactly; the only difference: torch.manual_seed uses
+init_seed, but fit_units/val_units are fixed from canonical_splits[ds]['42'],
+not varying with init_seed.
 
-Gate-check（评价协议门禁自证，五项）：
-  1. checkpoint 选择判据的 DataLoader 来源 = val_units（X_val_t），非 test。
-  2. 早停判据同上，同一 val_units，每 epoch 用 best_val_rmse 比较。
-  3. scaler 只在 fit_units（split_seed=42）上 fit（C.load_and_process_leakfree）。
-  4. 本轮不做 conformal 校准（只训 NLL + moment-matching ensemble），无 calib
-     重叠问题；若后续要接 CP-norm，需用同一 split_seed=42 的 calib_units。
-  5. fit/val/calib 三者互斥性：读 canonical_splits.json 生成时已断言不重叠
-     （STEP A），这里额外重新断言一次 fit_units ∩ val_units = ∅ 且两者都不
-     含 calib_units，作为本脚本自己的运行时自证，不信任旧断言。
+Gate-check (evaluation-protocol self-certification, five items):
+  1. Checkpoint-selection DataLoader source = val_units (X_val_t), not test.
+  2. Early-stopping criterion: same, same val_units, compared via
+     best_val_rmse each epoch.
+  3. Scaler fit only on fit_units (split_seed=42) (C.load_and_process_leakfree).
+  4. No conformal calibration this round (only NLL + moment-matching
+     ensemble trained), so no calib-overlap concern; a future CP-norm
+     would need the same split_seed=42's calib_units.
+  5. fit/val/calib pairwise disjointness: already asserted non-overlapping
+     when canonical_splits.json was generated; this script re-asserts
+     fit_units intersect val_units = empty and neither overlaps
+     calib_units at runtime, as its own self-certification, not trusting
+     the earlier assertion.
 
-只算 NLL 单模型 + Deep_Ensemble(M=5)（moment-matching），不含 MC-Dropout/
-CP-norm——本任务只关心"同划分下纯初始化方差"这一个对照，不是完整代价表。
+Computes only the single-model NLL + Deep_Ensemble(M=5) (moment-matching),
+not MC-Dropout/CP-norm -- this task only cares about the "pure
+initialisation variance under the same split" contrast, not a full cost
+table.
 
-输出：results/generated/leakfree_r4/samesplit_ensemble.json
-checkpoint 目录：results/generated/checkpoints_leakfree_r4_samesplit/
+Output: results/generated/leakfree_r4/samesplit_ensemble.json
+Checkpoint directory: results/generated/checkpoints_leakfree_r4_samesplit/
 """
 import os
 import json
@@ -140,7 +150,7 @@ def train_lstm(ds, init_seed, fit_units, val_units, device, use_amp):
         'dropout': 0.2, 'log_sigma_min': C.LOG_SIGMA_MIN, 'log_sigma_max': C.LOG_SIGMA_MAX,
         'seed': init_seed, 'dataset': ds, 'fit_units': fit_units, 'val_units': val_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': 150,
-        'selection_protocol': f'R4 same-split ensemble control: split_seed={SPLIT_SEED}, init_seed={init_seed}',
+        'selection_protocol': f'same-split ensemble control: split_seed={SPLIT_SEED}, init_seed={init_seed}',
     }, ckpt_path)
     print(f"    [LSTM/{ds}] init_seed={init_seed} train={elapsed:.1f}s best_val_rmse={best_val_rmse:.3f} -> {ckpt_path}")
     return ckpt_path
@@ -198,7 +208,7 @@ def train_transformer(ds, init_seed, fit_units, val_units, device, use_amp):
         'dropout': T2.T2_DROPOUT, 'log_sigma_min': T2.T2_LOG_SIGMA_MIN, 'log_sigma_max': T2.T2_LOG_SIGMA_MAX,
         'seed': init_seed, 'dataset': ds, 'fit_units': fit_units, 'val_units': val_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': T2.T2_EPOCHS,
-        'selection_protocol': f'R4 same-split ensemble control: split_seed={SPLIT_SEED}, init_seed={init_seed}',
+        'selection_protocol': f'same-split ensemble control: split_seed={SPLIT_SEED}, init_seed={init_seed}',
     }, ckpt_path)
     print(f"    [Transformer/{ds}] init_seed={init_seed} train={elapsed:.1f}s best_val_rmse={best_val_rmse:.3f} -> {ckpt_path}")
     return ckpt_path

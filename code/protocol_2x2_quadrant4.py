@@ -1,19 +1,26 @@
 """
-R2-7：协议 2x2 补全，唯一需要训练的一项。
+Completes the 2x2 evaluation-protocol grid; this is the one quadrant that
+still needs training.
 
-已有三个象限：
-  原始(Stage0)：test-select + full-train scaler   （两者都"泄漏"）
-  Stage1      ：val-select  + full-train scaler   （选模修复，scaler仍泄漏）
-  Stage2/leakfree（本项目主协议）：val-select + fit-only scaler（两者都干净）
-缺的第四象限：
-  test-select + fit-only scaler（scaler已修复，但选模判据仍用测试集）
-本脚本补训这一象限：LSTM，5 seeds，FD001/FD002/FD004（与原始 Stage0/1/2
-对比范围一致，不含 FD003——FD003 本来就没有泄漏基线，见 Limitations）。
+Three quadrants already exist:
+  original: test-select + full-train scaler (both "leaky")
+  val-select fix: val-select + full-train scaler (selection fixed, scaler
+    still leaky)
+  leakfree (this project's main protocol): val-select + fit-only scaler
+    (both clean)
+The missing fourth quadrant:
+  test-select + fit-only scaler (scaler fixed, but the selection criterion
+  still uses the test set)
+This script trains that quadrant: LSTM, 5 seeds, FD001/FD002/FD004 (same
+comparison scope as the other three quadrants; excludes FD003, which
+never had a leaky baseline to begin with -- see Limitations).
 
-训练配置（隐藏层/dropout/log_sigma范围/epoch/batch/lr）与 Stage0/1/2 逐字
-一致；scaler 用 canonical_splits.json 的 fit_units（与 Stage2 相同的
-fit-only scaler，不重新拟合出一个新的"错误"scaler）；checkpoint 选择判据
-换成官方测试集 RMSE（与 Stage0 相同，不用 val_units）。
+Training configuration (hidden size/dropout/log_sigma range/epoch/batch/lr)
+is identical to the other three quadrants; the scaler uses
+canonical_splits.json's fit_units (the same fit-only scaler as the
+leakfree quadrant, not a newly-fit "wrong" scaler); checkpoint selection
+uses official test-set RMSE (same as the original quadrant, not
+val_units).
 """
 import os
 import json
@@ -58,11 +65,12 @@ def run_one_seed(ds_name, seed, device, use_amp):
     torch.manual_seed(seed); np.random.seed(seed); random.seed(seed)
 
     fit_units = CANON[ds_name][str(seed)]['fit_units']
-    # fit-only scaler（与 leakfree/Stage2 完全同一份定义），但训练用全部
-    # fit_units 数据（不再单独切出 val_units 用于选模——这个象限的选模判据
-    # 是测试集，不是 val，所以训练数据沿用 fit_units 即可，与 Stage0 的
-    # "全部train数据训练"精神一致，只是这里的"全部"限定在 fit_units 内，
-    # 因为 scaler 本身就只在 fit_units 上定义）
+    # fit-only scaler (identical definition to the leakfree quadrant), but
+    # trains on all of fit_units (no separate val_units carve-out here --
+    # this quadrant's selection criterion is the test set, not val, so
+    # training data stays as fit_units, matching the original quadrant's
+    # "train on all training data" spirit, just with "all" scoped to
+    # fit_units since the scaler itself is only defined on fit_units)
     train_df, test_df, true_ruls, feat_cols, scaler = C.load_and_process_leakfree(ds_name, fit_units)
     input_dim = len(feat_cols)
 
@@ -97,7 +105,7 @@ def run_one_seed(ds_name, seed, device, use_amp):
             amp_scaler.step(optimizer)
             amp_scaler.update()
 
-        # 选模判据：官方测试集 RMSE（与 Stage0 原始协议相同，不用 val_units）
+        # selection criterion: official test-set RMSE (same as the original protocol, not val_units)
         model.eval()
         with torch.no_grad():
             with autocast(device_type=device.type, enabled=use_amp):
@@ -127,7 +135,7 @@ def run_one_seed(ds_name, seed, device, use_amp):
     torch.save({'state_dict': best_state, 'input_dim': input_dim, 'hidden_dim': C.HIDDEN_DIM,
                 'dropout': 0.2, 'log_sigma_min': C.LOG_SIGMA_MIN, 'log_sigma_max': C.LOG_SIGMA_MAX,
                 'seed': seed, 'dataset': ds_name, 'fit_units': fit_units,
-                'selection_protocol': 'test-set RMSE selection + fit-only scaler (R2-7, 2026-09-19)'}, ckpt_path)
+                'selection_protocol': 'test-set RMSE selection + fit-only scaler'}, ckpt_path)
 
     return {'seed': seed, 'rmse': rmse, 'score': score, 'picp': picp, 'mpiw': mpiw, 'ece': ece,
             'best_test_rmse_selection': best_test_rmse, 'elapsed_train_s': elapsed}
@@ -138,7 +146,7 @@ if __name__ == '__main__':
     use_amp = device.type == 'cuda'
     if device.type == 'cuda':
         print(f"GPU: {torch.cuda.get_device_name(0)}")
-    print(f"Device: {device}  R2-7: test-select + fit-only-scaler quadrant  DATASETS={DATASETS}  SEEDS={C.SEEDS}")
+    print(f"Device: {device}  test-select + fit-only-scaler quadrant  DATASETS={DATASETS}  SEEDS={C.SEEDS}")
 
     out_path = os.path.join(R2_DIR, 'protocol_2x2_quadrant4_testselect_fitonlyscaler.json')
     all_out = {}
@@ -156,4 +164,4 @@ if __name__ == '__main__':
             json.dump(all_out, fp, indent=2, default=float)
 
     print(f"\nSaved -> {out_path}")
-    print("R2-7 complete.")
+    print("quadrant-4 protocol complete.")

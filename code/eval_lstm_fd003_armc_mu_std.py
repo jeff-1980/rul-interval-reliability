@@ -1,7 +1,7 @@
 """
-FD003 补全：臂C下 μ̂ 跨样本 std 相对 clean 的变化率，与 eval_lstm_armc_mu_std 同一
-统计口径，scoped to FD003（single condition, arm C only needed for this
-specific number）。
+FD003 completion: arm C's mu_hat cross-sample std relative-to-clean rate
+of change, same statistical convention as eval_lstm_armc_mu_std, scoped
+to FD003 (single condition, arm C only needed for this specific number).
 """
 import os
 import json

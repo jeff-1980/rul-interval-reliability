@@ -1,14 +1,18 @@
 """
-R8-B1（FD003 分支，推理级，不重训）：重跑 train_lstm_fd003_nll_and_mechanism.py
-的 STEP4 以后部分（三臂扫描 + clamp_frac + 冻结σ̂分解），跳过 STEP1-3（训练
-NLL/CP-norm checkpoint）——R8 全篇"只做推理，不重训"，FD003 的 NLL/SplitCP
-checkpoint 权重保持原样，只是重新算一遍它们在新协议（B2: 测试真值
-min(官方RUL-1,125)）下的评估指标。FD003 没有工况设定列（get_feature_names
-只给14个传感器），B1 的"传感器/设定"限制对它是 no-op，不需要额外处理。
+FD003 branch, inference-level, no retraining: reruns the STEP4-and-later
+part of train_lstm_fd003_nll_and_mechanism.py (three-arm sweep +
+clamp_frac + frozen-sigma decomposition), skipping STEP1-3 (training the
+NLL/CP-norm checkpoints) -- this task is inference-only throughout, so
+FD003's NLL/SplitCP checkpoint weights stay as-is; only their evaluation
+metrics are recomputed under the corrected protocol (test-label target:
+min(official RUL-1, 125)). FD003 has no operating-condition setting
+columns (get_feature_names returns only 14 sensors), so the
+sensor/setting restriction is a no-op for it and needs no extra handling.
 
-直接 import train_lstm_fd003_nll_and_mechanism 复用 run_sweep_arm /
-crossover_feat_oob / interp 等函数（import 本身只读 canonical_splits.json，
-不触发任何训练——原脚本的训练代码全部在 `if __name__=='__main__':` 内）。
+Imports train_lstm_fd003_nll_and_mechanism directly to reuse run_sweep_arm
+/ crossover_feat_oob / interp etc. (the import itself only reads
+canonical_splits.json and triggers no training -- the original script's
+training code is entirely inside `if __name__=='__main__':`).
 """
 import os
 import json
@@ -101,4 +105,4 @@ if __name__ == '__main__':
     with open(os.path.join(M.LEAKFREE_DIR, 'FD003_frozen_sigma_decomposition_leakfree.json'), 'w') as fp:
         json.dump(decomposition, fp, indent=2, default=float)
     print("\nSaved -> leakfree/FD003_sweep_leakfree.json, leakfree/FD003_frozen_sigma_decomposition_leakfree.json")
-    print("R8-B1 FD003 mechanism eval complete (no retraining).")
+    print("FD003 mechanism eval complete (no retraining).")

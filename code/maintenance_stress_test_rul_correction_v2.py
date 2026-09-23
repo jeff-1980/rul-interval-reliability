@@ -1,28 +1,40 @@
 """
-R4-2b：未截断 RUL 修正重做，底本固定为 leakfree_r3/C_maintenance_full_onesided.json
-（单侧95%规则），要求 premature_rate 与底本逐行一致，不再只是"容差内"。
+Uncapped RUL-correction rerun, baseline fixed to
+leakfree_r3/C_maintenance_full_onesided.json (one-sided 95% rule), requires
+premature_rate to match the baseline row-for-row, not just "within
+tolerance".
 
-上一版（maintenance_stress_test_rul_correction_v1.py）重新推理时，NLL/CP-norm/
-MSE-fixed/Deep-Ensemble 四种机制的 premature_rate 出现了最多 0.0044 的偏差
-——排查后确认原因是 PyTorch/cuDNN 默认允许非确定性算法选择（LSTM/Transformer
-的 cuDNN kernel 在多次调用间可能选择不同的规约顺序），不是逻辑错误。本版在
-装载模型之前设置 `torch.backends.cudnn.deterministic=True` +
-`torch.backends.cudnn.benchmark=False`（以及 `torch.use_deterministic_algorithms
-(True, warn_only=True)`），消除这四种机制的推理路径里的非确定性来源——它们
-的前向传播在 eval() 模式下没有任何依赖运行时随机数的步骤，理论上应能与底本
-逐比特一致。
+When the previous version (maintenance_stress_test_rul_correction_v1.py)
+was rerun, the premature_rate of the four deterministic mechanisms
+(NLL/CP-norm/MSE-fixed/Deep-Ensemble) showed deviations of up to 0.0044 --
+investigation traced this to PyTorch/cuDNN allowing non-deterministic
+algorithm selection by default (the cuDNN kernel for LSTM/Transformer can
+pick a different reduction order across calls), not a logic error. This
+version sets `torch.backends.cudnn.deterministic=True` +
+`torch.backends.cudnn.benchmark=False` (plus
+`torch.use_deterministic_algorithms(True, warn_only=True)`) before loading
+the models, removing that source of non-determinism from these four
+mechanisms' inference path -- their forward pass in eval() mode has no
+step that depends on runtime randomness, so it should in principle match
+the baseline bit-for-bit.
 
-**MC_Dropout_fixed 是唯一例外，如实说明**：`sweep_engine.infer_mc_dropout`
-用 `mc_model.train()` 做 T=50 次真实的随机 dropout 采样，而
-`maintenance_decision_one_sided.py`（底本的生成脚本）全文没有在调用它之前
-设置过 `torch.manual_seed(...)`——底本那次跑出来的 dropout 采样结果，用的是
-当时进程里未被记录、事后也无法回放的全局 RNG 状态。这意味着 MC_Dropout_fixed
-这一档的 premature_rate**原则上不可能被逐比特复现**，不是这一版脚本能力不够，
-是底本本身没有留下可回放的随机性凭证。本版对 MC_Dropout_fixed 改为在每次
-调用前用确定性标签播种（保证本脚本自己可重复），premature_rate 会保留与
-底本的小幅差异，并在输出里明确标注这一点，不假装它也逐行一致。
+**MC_Dropout_fixed is the one exception, reported honestly**:
+`sweep_engine.infer_mc_dropout` uses `mc_model.train()` to do T=50 real
+random dropout samples, and `maintenance_decision_one_sided.py` (the
+baseline's generating script) never called `torch.manual_seed(...)`
+before invoking it anywhere in the file -- the dropout samples in that
+baseline run used whatever global RNG state the process happened to be in
+at the time, which was never logged and can't be replayed after the fact.
+This means MC_Dropout_fixed's premature_rate **cannot in principle be
+reproduced bit-for-bit**, not because this version of the script is
+inadequate, but because the baseline itself left no replayable record of
+its randomness. This version seeds MC_Dropout_fixed deterministically
+before each call (so this script is reproducible against itself);
+premature_rate will retain a small difference from the baseline, and this
+is flagged explicitly in the output rather than pretending it also
+matches row-for-row.
 
-只做推理，不重训，不改 main.tex。输出：
+Inference only, no retraining, does not touch main.tex. Output:
 results/generated/leakfree_r4/C_maintenance_rul_corrected_v2.json
 """
 import os
@@ -89,7 +101,7 @@ def extract_raw_windows_with_uncapped(test_df_raw, feature_cols, true_ruls, mode
             continue
         if mode == 'test':
             X_list.append(unit_data[-C.SEQUENCE_LENGTH:])
-            raw_val = true_ruls.iloc[unit - 1].item() - 1  # R8-B2, see common.create_sequences
+            raw_val = true_ruls.iloc[unit - 1].item() - 1  # see common.create_sequences
             y_list.append(min(raw_val, C.MAX_RUL))
             y_uncapped_list.append(raw_val)
             u_list.append(unit)
@@ -150,7 +162,7 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw_probe, _, _, feat_cols_probe, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw_probe, feat_cols_probe)
-            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)  # R8-B1
+            full_scale = V4.sensor_only_scale(feat_cols_probe, full_scale)
 
             scalers_by_seed = {}
             aleatory_var_by_seed = {}

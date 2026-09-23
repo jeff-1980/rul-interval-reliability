@@ -1,14 +1,18 @@
 """
-T2-B：三种确定性劣化（bias/drift/gain）× 两骨干（LSTM/Transformer）× 四数据集，
-臂C绝对尺度（{0.1,0.5,1,2,5}% FS，工况无关，归一化前注入原始读数，模型不
-重训，5模型×5trial共享流设计），产物落 leakfree_t2/。
+T2-B: three deterministic degradation types (bias/drift/gain) x two
+backbones (LSTM/Transformer) x four datasets, arm-C absolute scale
+({0.1,0.5,1,2,5}% FS, condition-independent, injected into the raw
+readings before normalization, models not retrained, 5-model x 5-trial
+shared-stream design), output goes to leakfree_t2/.
 
-LSTM 侧复用已有 checkpoints_leakfree/ 下的 checkpoint（不重训，只是新的
-扰动类型下重新推理）；Transformer 侧复用 T2 训练产出的 checkpoint。
+The LSTM side reuses existing checkpoints under checkpoints_leakfree/ (not
+retrained, just re-running inference under the new perturbation type); the
+Transformer side reuses checkpoints from T2 training.
 
-按 (backbone, degradation, dataset) 为最小单位增量保存 + 断点续跑，任何一次
-中断（例如系统重启）只丢当前正在跑的那一个 (backbone,degradation,dataset)
-组合，不影响已完成的。
+Saves incrementally at the (backbone, degradation, dataset) granularity
+with resume-on-restart support, so any interruption (e.g. a system
+restart) only loses the one (backbone,degradation,dataset) combination
+currently in progress, without affecting already-completed ones.
 """
 import os
 import json
@@ -47,7 +51,7 @@ def save_all(all_out):
 def run_one(backbone, degradation, ds, device):
     train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-    full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+    full_scale = V4.sensor_only_scale(feat_cols, full_scale)
     scalers_by_seed = PA.scalers_for_ds(ds)
 
     if degradation == 'bias':
@@ -55,7 +59,7 @@ def run_one(backbone, degradation, ds, device):
                                        is_pct=True, device=device, scalers_by_seed=scalers_by_seed,
                                        full_scale=full_scale)
     elif degradation == 'gain':
-        # R9-Part2: gain's multiplier doesn't depend on full_scale_range, so
+        # gain's multiplier doesn't depend on full_scale_range, so
         # sensor_only_scale() above has no effect on it -- bind sensor_mask
         # explicitly instead.
         gain_fn = functools.partial(V4.inject_gain_fixed_pct_raw, sensor_mask=V4.sensor_mask_for(feat_cols))

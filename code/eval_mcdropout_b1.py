@@ -1,16 +1,20 @@
 """
-R8-B1（推理级，不重训）：重新评估 MC-Dropout/MSE 三个文件。checkpoint 权重
-不变；aleatory_var 用 fit_units 残差（训练标签，不读官方RUL文件，B2不影响，
-为代码简单也一并重算）。T=50/100 的 dropout 采样本身是活随机数——原始
-训练脚本从未播种过（与本项目更早发现的同类问题同源），这里用
-C.stable_seed 播种，保证本轮自己的两次独立重跑逐比特一致，但不assert
-与本轮之前的旧基线逐比特一致（旧基线的具体采样序列本来就没有留下可
-回放的随机性凭证）。
+Inference-level re-evaluation (no retraining) of MC-Dropout/MSE across
+three result files. Checkpoint weights are unchanged; aleatory_var uses
+fit_units residuals (training labels, does not read the official RUL
+file; unaffected by the RUL-1 fix, recomputed anyway for code
+simplicity). The T=50/100 dropout sampling itself is live randomness --
+the original training scripts never seeded it (the same class of issue
+found elsewhere in this project) -- here it is seeded via C.stable_seed,
+guaranteeing two independent reruns of this pass are bit-identical to
+each other, but NOT asserting bit-identity against the earlier baseline
+(the earlier baseline's exact sampling sequence was never recorded in a
+replayable way).
 
-覆盖：
+Covers:
   mcdropout_fixed_leakfree.json               (LSTM, FD001/FD002/FD004)
-  stepFD003_mcdropout_mse_leakfree_results.json (LSTM, FD003, 含 mse_row)
-  t2_transformer_msemcd_leakfree_results.json  (Transformer, 全部4个数据集, 含 mse_row)
+  stepFD003_mcdropout_mse_leakfree_results.json (LSTM, FD003, includes mse_row)
+  t2_transformer_msemcd_leakfree_results.json  (Transformer, all 4 datasets, includes mse_row)
 """
 import os
 import json
@@ -167,4 +171,4 @@ if __name__ == '__main__':
         json.dump(out3, fp, indent=2, default=float)
     print(f"Saved -> {p3}")
 
-    print("\nR8-B1 MC-Dropout/MSE re-eval complete (no retraining).")
+    print("\nMC-Dropout/MSE re-eval complete (no retraining).")

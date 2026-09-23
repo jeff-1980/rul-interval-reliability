@@ -1,7 +1,8 @@
 """
-FD003 补全 (3/6)：Deep Ensemble，复用已有的FD003 NLL 5 seeds checkpoint
-（`train_lstm_fd003_nll_and_mechanism.py`产出），逐成员用自己的canonical
-fit_units scaler（与eval_lstm_deep_ensemble.py同一协议）。
+FD003 completion (3/6): Deep Ensemble, reusing the existing FD003 NLL
+5-seed checkpoints (produced by `train_lstm_fd003_nll_and_mechanism.py`),
+each member using its own canonical fit_units scaler (same protocol as
+eval_lstm_deep_ensemble.py).
 """
 import os
 import json
@@ -35,7 +36,7 @@ def infer(model, X_t, batch=8192):
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}")
 

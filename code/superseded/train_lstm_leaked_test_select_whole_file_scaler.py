@@ -1,15 +1,19 @@
 """
-Original (pre-audit) checkpoint training script, kept for provenance only
-原 rul_nll_gpu.py / E3_run_save_ece.py 从未 torch.save 过模型权重，只留了预测 .npy。
-本脚本原样复用 E3 的 LSTM 训练管线（同一套超参、同一 5 seeds、同一数据处理），
-唯一区别：额外把 best_state（早停选出的最优权重）落盘到
-results/checkpoints/ (this script's own output dir, not the release's checkpoints/lstm/)，供 STEP 1-5（MC Dropout 修正 / Deep Ensemble /
-Split-CP / per-engine / 噪声敏感性）复用，避免每个 STEP 都重训。
+Original (pre-audit) checkpoint training script, kept for provenance only.
+The earlier training pipeline this reuses never called torch.save on
+model weights, only leaving prediction .npy files. This script reuses that
+LSTM training pipeline as-is (same hyperparameters, same 5 seeds, same
+data processing), with one addition: it also saves best_state (the
+early-stopping-selected best weights) to
+results/checkpoints/ (this script's own output dir, not the release's
+checkpoints/lstm/), for reuse by later steps (MC Dropout fix / Deep
+Ensemble / Split-CP / per-engine / noise sensitivity), avoiding
+retraining at every step.
 
-只训 LSTM（不训 Transformer）：STEP 0 复现闸门表只列了单套 RMSE/PICP/MPIW/ECE，
+Trains only LSTM (not Transformer).
 
-
-不写入任何已有 results 子目录（铁律 3：旧结果只读）。
+Does not write into any existing results subdirectory (old results are
+read-only).
 """
 
 import os
@@ -30,7 +34,7 @@ from torch.amp import autocast, GradScaler
 from scipy import stats
 
 # ==========================================
-# 路径配置
+# path configuration
 # ==========================================
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 PROJ_DIR   = os.path.dirname(BASE_DIR)
@@ -57,7 +61,7 @@ def setup_device():
     return device, use_amp
 
 # ==========================================
-# 配置（与 CLAUDE.md / E3 锁定超参保持一致，逐字不改）
+# configuration (hyperparameters kept identical to the original pipeline)
 # ==========================================
 class Config:
     def __init__(self, device, use_amp):
@@ -95,7 +99,7 @@ class Config:
         self.conf_levels = np.arange(0.05, 1.00, 0.05)
 
 # ==========================================
-# 数据处理（与 E3 完全一致）
+# data processing (identical to the original pipeline)
 # ==========================================
 class DataHandler:
     def __init__(self, config, dataset_name):
@@ -148,7 +152,7 @@ class DataHandler:
         return np.array(X_list), np.array(y_list)
 
 # ==========================================
-# 模型（与 E3 完全一致）
+# model (identical to the original pipeline)
 # ==========================================
 class HeteroscedasticLSTM(nn.Module):
     def __init__(self, input_size, hidden_dim, dropout, log_sigma_min, log_sigma_max):
@@ -199,7 +203,7 @@ def compute_ece(mu_all, sigma_all, ytrue_all, conf_levels):
     return ece, empirical
 
 # ==========================================
-# 单 seed 训练 + checkpoint 落盘
+# single-seed training + checkpoint save
 # ==========================================
 def run_one_seed(cfg, seed, data_bundle, input_dim, ds_name):
     gc.collect()
@@ -279,7 +283,7 @@ def run_one_seed(cfg, seed, data_bundle, input_dim, ds_name):
           f"PICP={picp:.3f}  MPIW={mpiw:.2f}  sigma_mean={sigma_np.mean():.2f}  "
           f"Time={elapsed:.1f}s")
 
-    # === 新增：落盘 checkpoint（原 E3 脚本从未做过这一步）===
+    # === addition: save checkpoint (the original pipeline never did this) ===
     ckpt_path = os.path.join(CKPT_DIR, f"{ds_name}_LSTM_seed{seed}.pt")
     torch.save({
         'state_dict':    best_state,
@@ -297,7 +301,7 @@ def run_one_seed(cfg, seed, data_bundle, input_dim, ds_name):
     return rmse, score, picp, mpiw, sigma_np.mean(), elapsed, mu_np, sigma_np, y_test
 
 # ==========================================
-# 主程序
+# main
 # ==========================================
 if __name__ == '__main__':
     device, use_amp = setup_device()

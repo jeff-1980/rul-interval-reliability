@@ -1,21 +1,28 @@
 """
-R3-G（收尾取数 item 3）：Transformer 四组合归因改为"与 LSTM 同法"的精确插值点
-（total loss 恰好 = picp_clean - 0.10），而不是此前 frozen_decomposition_2x2.json
-用的"最近实测网格点"。
+Transformer four-combination attribution, switched to the exact interpolated
+crossover point ("same method as LSTM": total loss exactly equals
+picp_clean - 0.10) instead of the "nearest measured grid point" that
+frozen_decomposition_2x2.json used before.
 
-C00 (mu_clean,sigma_clean) 和 C10 (mu_pert,sigma_clean，即 frozen-sigma 曲线)
-已有跨全网格的连续曲线（t2_transformer_mainarm_sweep_leakfree.json +
-t2_transformer_armC_sweep_leakfree.json 里的 NLL/CP_norm 和
-NLL_frozen_sigma/CP_norm_frozen_sigma），插值不需要新推理。
+C00 (mu_clean,sigma_clean) and C10 (mu_pert,sigma_clean, the frozen-sigma
+curve) already have continuous curves across the full grid (NLL/CP_norm and
+NLL_frozen_sigma/CP_norm_frozen_sigma in
+t2_transformer_mainarm_sweep_leakfree.json +
+t2_transformer_armC_sweep_leakfree.json), so interpolation needs no new
+inference.
 
-C01 (mu_clean,sigma_pert，即 frozen-mu 曲线) 此前从未算过连续曲线（旧的
-frozen_decomposition_2x2.json 只在单个最近网格点做过一次推理）。本脚本只在
-恰好夹住精确交叉点的两个"实测网格点"上做新推理算 frozen-mu PICP，再和
-C00/C10 用同一个插值权重做线性插值，得到交叉点上精确的四组合。
+C01 (mu_clean,sigma_pert, the frozen-mu curve) never had a continuous curve
+computed before (the old frozen_decomposition_2x2.json only ran inference
+once, at a single nearest grid point). This script only runs new inference
+for frozen-mu PICP at the two "measured grid points" that bracket the exact
+crossover, then linearly interpolates with C00/C10 using the same
+interpolation weight to get the exact four-combination values at the
+crossover.
 
-新增的唯一"新计算"是 C01；C00/C10/交叉点位置全部复用已有数据，不重跑训练。
-只读输出：leakfree_r3/G_transformer_exact_interp_attribution.json。不改
-main.tex，不写 tex。
+The only "new computation" added is C01; C00/C10/crossover location all
+reuse existing data, no retraining. Read-only output:
+leakfree_r3/G_transformer_exact_interp_attribution.json. Does not modify
+main.tex or write any tex.
 """
 import os
 import json
@@ -119,10 +126,12 @@ def clean_mu_by_seed(ds, backbone, device, test_df_raw, feat_cols, true_ruls, sc
 
 def mu_sigma_pert_replicates(point, ds, backbone, device, test_df_raw, feat_cols, true_ruls, scalers_by_seed,
                               models_by_seed, full_scale, global_std, km, cond_std):
-    """2026-09-21 item 2 扩展：与 sigma_pert_replicates 同一套 rng 派生，但同时保留
-    每个 seed 每个 trial 的 mu（此前只保留 sigma，供 frozen-mu 的 C01 用；现在
-    C10/C11 的逐 seed 值也需要同一批扰动推理下的 mu），避免为拿 mu 再重新推理
-    一遍（推理结果对同一 point/trial/seed 完全确定，复用同一次前向）。
+    """Extends sigma_pert_replicates: same rng derivation, but also keeps
+    each seed's each trial's mu (previously only sigma was kept, for
+    frozen-mu's C01; now C10/C11's per-seed values also need the mu from
+    the same batch of perturbed inference), avoiding a second inference
+    pass just to get mu (inference is fully deterministic for the same
+    point/trial/seed, so the same forward pass is reused).
     Returns dict seed -> list of N_TRIALS mu arrays, dict seed -> list of N_TRIALS
     sigma arrays (both perturbed), y_ref."""
     fo, picp, kind, level_key, scheme = point
@@ -182,10 +191,11 @@ def picp1(y_true, mu, sigma, z):
 
 def per_seed_C_at_point(mu_clean_by_seed, sigma_clean_by_seed, mus_pert_by_seed, sigmas_pert_by_seed, y_ref,
                          z_by_seed):
-    """2026-09-21 item 2：在单个 bracket 点上，对每个 seed 分别算 C00/C10/C01/C11
-    （C00 与扰动点无关，仍是常数；C10/C01/C11 是该 seed 在 N_TRIALS 次扰动
-    replicate 上的 PICP 均值 -- 与 grand_and_marginal_stats 的 model_marginal
-    定义一致：先对 trial 取均值，得到每个 seed 一个值）。"""
+    """At a single bracket point, computes C00/C10/C01/C11 separately for
+    each seed (C00 is constant, independent of the perturbed point; C10/C01/
+    C11 are that seed's mean PICP over the N_TRIALS perturbation replicates
+    -- matching grand_and_marginal_stats's model_marginal definition:
+    average over trials first, giving one value per seed)."""
     out = {}
     for seed in C.SEEDS:
         mu0, sigma0 = mu_clean_by_seed[seed], sigma_clean_by_seed[seed]
@@ -224,12 +234,12 @@ if __name__ == '__main__':
         print(f"\n{'=' * 20} {ds} {'=' * 20}")
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)
         scalers_by_seed = PA.scalers_for_ds(ds)
         if ds in ('FD002', 'FD004'):
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
-            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
-            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}
+            global_std = V4.sensor_only_scale(feat_cols, global_std)
         else:
             km, cond_std = None, None
             global_std = np.std(train_df_raw[feat_cols].values, axis=0)
@@ -307,7 +317,7 @@ if __name__ == '__main__':
             dom_A = abs(orderA_mu) > abs(orderA_sigma)
             dom_B = abs(orderB_mu) > abs(orderB_sigma)
 
-            # 2026-09-21 item 2: interpolate C00/C10/C01/C11 per seed between A and B (frac,
+            # interpolate C00/C10/C01/C11 per seed between A and B (frac,
             # same weight as the grand-mean crossover) -- C00 is point-independent so A==B there.
             c00_ps, c10_ps, c01_ps, c11_ps = [], [], [], []
             for seed in C.SEEDS:

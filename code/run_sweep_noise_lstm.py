@@ -1,30 +1,31 @@
 """
-STEP 5 (leakfree 全量重跑)：三臂噪声敏感性扫描（臂A/B主SNR+扩展-5/-10dB、
-臂C工况无关%FS）+ 冻结σ̂反事实分解，全部改用 checkpoints_leakfree/ +
-canonical_splits.json 的逐seed scaler。取代旧版 noise_sensitivity_v4*.json
-（NLL/MC-Dropout/Ensemble/CP-norm 四方法标准指标）以及此前的 MSE代理分解
-（mu_vs_clamp_decomposition.json，已被用户否定：两模型均值函数与训练目标
-不同，差值识别不出因果）。
+Three-arm noise-sensitivity sweep (arms A/B main SNR + extended -5/-10dB,
+arm C condition-independent %FS) plus frozen-sigma counterfactual
+decomposition, using the leakage-free checkpoints and canonical_splits.json's
+per-seed scaler throughout.
 
-冻结σ̂反事实分解（新方法论，2026-09-15）：
-  同一个 NLL（或 CP-norm）模型、同一批扰动样本，比较两种推理：
-    真实：  (mu_noisy, sigma_noisy)          <- 正常推理，σ̂随噪声变化
-    反事实：(mu_noisy, sigma_clean)          <- σ̂冻结在clean输入下的取值，
-                                                只让μ̂随扰动变化
-  两者的 mu 完全相同（同一次noisy前向的输出），唯一变量是 sigma 用哪个——
-  因此 PICP_真实 与 PICP_反事实 之间的差值，可以严格因果地全部归因于 σ̂
-  本身对噪声的响应（而不是像 MSE 代理法那样依赖两个不同训练目标的模型
-  的均值差异，那个差值同时混了模型间随机差异和目标函数差异，识别不出
-  "只是μ̂"这一件事）。
-    ΔPICP_total    = PICP_clean - PICP_真实(level)      <- 总退化
-    ΔPICP_mu_only  = PICP_clean - PICP_反事实(level)    <- 若σ̂完全不变，
-                                                            退化多少（纯μ̂效应）
-    ΔPICP_sigma    = ΔPICP_total - ΔPICP_mu_only        <- σ̂实际变化的净效应
-                                                            （clamp饱和等）
-    sigma_contribution_fraction = ΔPICP_sigma / ΔPICP_total
-sigma_clean 是逐样本数组（不是标量），每个测试窗口用它自己在clean输入下
-的 σ̂，配对到该测试窗口在噪声输入下的 μ̂——真正的逐样本反事实配对，不是
-"用一个全局平均σ套所有样本"这种近似。
+Frozen-sigma counterfactual decomposition: for the same NLL (or CP-norm)
+model and the same batch of perturbed samples, compare two inferences:
+    real:         (mu_noisy, sigma_noisy)  <- normal inference, sigma varies with noise
+    counterfactual: (mu_noisy, sigma_clean) <- sigma frozen at its clean-input
+                                                value, only mu varies with the perturbation
+  The two share the exact same mu (output of the same noisy forward pass);
+  the only variable is which sigma is used -- so the difference between
+  PICP_real and PICP_counterfactual can be attributed strictly causally to
+  sigma's own response to the noise (unlike an MSE-proxy approach, which
+  would depend on the mean-function difference between two differently
+  trained models, confounding random model-to-model variation with the
+  objective-function difference, and cannot isolate "just mu").
+    delta_PICP_total    = PICP_clean - PICP_real(level)          <- total degradation
+    delta_PICP_mu_only  = PICP_clean - PICP_counterfactual(level) <- degradation if
+                                                                       sigma never changed (pure mu effect)
+    delta_PICP_sigma    = delta_PICP_total - delta_PICP_mu_only  <- net effect of
+                                                                       sigma's actual change (clamp saturation etc.)
+    sigma_contribution_fraction = delta_PICP_sigma / delta_PICP_total
+sigma_clean is a per-sample array (not a scalar): each test window uses its
+own sigma under clean input, paired with that same window's mu under noisy
+input -- a genuine per-sample counterfactual pairing, not an approximation
+using one global average sigma for every sample.
 """
 import os
 import json
@@ -117,8 +118,9 @@ def infer_mse_fixed(mc_model, X_t, sigma_fixed, batch=8192):
 
 
 def infer_mc_dropout(mc_model, X_t, T, aleatory_var, batch=4096, seed=None):
-    """seed: 2026-09-21 复现性修复，见 sweep_engine.infer_mc_dropout 同名参数
-    的说明——T=50 dropout 采样此前从未播种，跨进程不可复现。"""
+    """seed: see sweep_engine.infer_mc_dropout's parameter of the same name
+    -- T=50 dropout sampling was previously never seeded and thus not
+    reproducible across processes."""
     if seed is not None:
         torch.manual_seed(seed)
     mc_model.train()
@@ -136,8 +138,9 @@ def infer_mc_dropout(mc_model, X_t, T, aleatory_var, batch=4096, seed=None):
 
 def run_dataset_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, snr_or_pct_levels,
                      is_pct, global_std=None, km=None, cond_std=None, full_scale=None, scalers_by_seed=None):
-    """scalers_by_seed: {seed: scaler} 逐seed的leakfree scaler（noise injection
-    需要scaler.transform，来自各自的 canonical fit_units）。"""
+    """scalers_by_seed: {seed: scaler}, each seed's leakage-free scaler
+    (noise injection needs scaler.transform, from that seed's canonical
+    fit_units)."""
     out = {'NLL': {}, 'MC_Dropout_fixed': {}, 'Deep_Ensemble': {}, 'CP_norm': {}, 'MSE_fixed': {}, 'feat_oob': {},
            'NLL_frozen_sigma': {}, 'CP_norm_frozen_sigma': {}}
 
@@ -157,8 +160,8 @@ def run_dataset_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, snr_or_p
         _, ls_cp = infer_nll(cp_model, X_clean_t)
         clean_sigma_cp[seed] = np.exp(ls_cp) * 125.0
 
-    # 2026-09-21 公平校准修复：aleatory_var 改在 calib_units 上现算
-    # （与 Table II 同一口径），不再读 MC_JSON 里的训练残差版本。
+    # Fair-calibration fix: aleatory_var computed fresh on calib_units
+    # (matching Table II), not read from MC_JSON's training-residual version.
     aleatory_var_calib_by_seed = {
         seed: E.calib_aleatory_var(ds, 'LSTM', seed, device, mc_model=models_by_seed[seed][1])
         for seed in C.SEEDS
@@ -168,9 +171,10 @@ def run_dataset_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, snr_or_p
         level_key = ('inf' if (not is_pct and np.isinf(level)) else str(level))
         trial_X, trial_y, trial_feat_oob = {}, None, []
         for t in range(N_TRIALS):
-            # 同一份原始（未标准化）噪声实例，5个seed共用——"shared noise
-            # trial"设计不因scaler逐seed不同而破坏；每个seed只是各自把这份
-            # 同样的加噪原始值，用自己的scaler标准化。
+            # The same raw (unscaled) noise instance is shared across all 5
+            # seeds -- the "shared noise trial" design must not break just
+            # because the scaler differs per seed; each seed only scales
+            # this same noisy raw value with its own scaler.
             rng = np.random.RandomState((C.stable_seed(ds, arm, level_key, t)))
             if is_pct:
                 raw_noisy = V4.inject_noise_fixed_pct_raw(test_df_raw, feat_cols, level, rng, full_scale)
@@ -185,11 +189,12 @@ def run_dataset_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, snr_or_p
                 X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                 trial_X.setdefault(t, {})[seed] = torch.tensor(X_test, dtype=torch.float32).to(device)
                 trial_y = y_test
-                # 2026-09-21 f_oob 口径统一：改在实际送入模型的末端窗口 X_test 上算，
-                # 不再用 scale_and_package 返回的整段轨迹 scaled_feat（那包含大量从未
-                # 进模型的历史行，稀释/扭曲了比例）。与 drift 分支（已用窗口化
-                # X_scaled）以及 PICP 自身的 5 模型 x 5 trial 汇总口径对齐。
-                # R9-Part3: 分母限定到传感器列（V4.feat_oob 全项目唯一实现）。
+                # f_oob computed on the windowed X_test actually fed to the
+                # model, not the full-trajectory scaled_feat scale_and_package
+                # returns (which dilutes the ratio with rows never seen by
+                # the model), matching the drift branch and PICP's own
+                # 5-model x 5-trial aggregation. Denominator restricted to
+                # sensor columns via the single project-wide V4.feat_oob.
                 trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
 
@@ -298,7 +303,7 @@ if __name__ == '__main__':
             _, _, _, _, scaler = V4.load_raw_train_test_and_scaler_leakfree(ds, fit_units)
             scalers_by_seed[seed] = scaler
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)
 
         if ds == 'FD001':
             print("  --- main+extended SNR grid (single condition: A==B) ---")
@@ -309,8 +314,8 @@ if __name__ == '__main__':
                                  'note': 'FD001 single condition; per-condition degenerates to pooled'}
         else:
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
-            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
-            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}
+            global_std = V4.sensor_only_scale(feat_cols, global_std)
             print("  --- main+extended SNR grid, arm=A_percondition ---")
             main_a = run_dataset_arm(ds, 'A_percondition', test_df_raw, true_ruls, feat_cols, device,
                                       SNR_LEVELS_ALL, is_pct=False, km=km, cond_std=cond_std, scalers_by_seed=scalers_by_seed)

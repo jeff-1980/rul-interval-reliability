@@ -1,13 +1,17 @@
 """
-R5-3："等幅值 bias" 对照（main.tex 里 Table~tab:controls 的 "Bias of equal
-end magnitude" 行）此前也没有单独的生成脚本留存（同 D1/relative_half_life
-的情况）。定义直接取自正文："a bias of magnitude equal to the ramp's end
-value"——用 `V4.inject_bias_fixed_pct_raw` 在同一个 PCT=5.0（与漂移斜坡的
-终值幅度相同，因为两者都定义成 full_scale 的同一百分比）上做逐通道随机
-符号的固定偏置，与 `drift_controls.py` 的 reverse/shuffled/
-singlech/continuous 四个对照同一套 NLL/MSE/Ensemble PICP 口径，跑完后把
-结果合并写回 `drift_controls.json` 的 'bias_equal' 键（先读一次已重跑过的
-drift_controls.json，做原地追加，不覆盖其余变体）。
+"Bias of equal end magnitude" control (the main.tex Table~tab:controls
+row of that name) had no standalone generation script preserved from
+earlier (same situation as D1/relative_half_life). The definition is
+taken directly from the manuscript text: "a bias of magnitude equal to
+the ramp's end value" -- implemented via `V4.inject_bias_fixed_pct_raw`
+at the same PCT=5.0 (matching the drift ramp's end-value magnitude, since
+both are defined as the same percentage of full_scale), a fixed,
+per-channel random-sign bias, using the same NLL/MSE/Ensemble PICP
+convention as `drift_controls.py`'s four controls (reverse/shuffled/
+singlech/continuous). After running, the result is merged back into the
+'bias_equal' key of `drift_controls.json` (reading the already-rerun
+drift_controls.json once and appending in place, without overwriting the
+other variants).
 """
 import os
 import json
@@ -55,7 +59,7 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-            full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+            full_scale = V4.sensor_only_scale(feat_cols, full_scale)
             scalers_by_seed = scalers_for(ds, canon)
             X_raw_clean, y_ref, _ = V4.extract_raw_windows(test_df_raw, feat_cols, true_ruls, mode='test')
 
@@ -78,7 +82,7 @@ if __name__ == '__main__':
                 for seed in C.SEEDS:
                     scaler = scalers_by_seed[seed]
                     X_scaled = V4.scale_raw_windows(X_raw, scaler)
-                    fo = V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols))  # R9-Part3
+                    fo = V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols))
                     trial_fo.append(fo)
                     X_t = torch.tensor(X_scaled, dtype=torch.float32).to(device)
                     mu, ls = E.infer_nll(nll_model_by_seed[seed], X_t)
@@ -86,7 +90,7 @@ if __name__ == '__main__':
                     trial_mu.append(mu); trial_sigma.append(sigma)
                     all_picp['NLL'].append(E.picp_mpiw(y_ref, mu, sigma)[0])
 
-                    # 2026-09-21 公平校准修复：aleatory_var 改用校准集残差方差。
+                    # fair-calibration fix: aleatory_var uses the calibration-set residual variance.
                     aleatory_var = E.calib_aleatory_var(ds, backbone, seed, device, mc_model=mc_model_by_seed[seed])
                     mu_mse, sigma_mse = E.infer_mse_fixed(mc_model_by_seed[seed], X_t, sigma_fixed=float(np.sqrt(aleatory_var)))
                     all_picp['MSE_fixed'].append(E.picp_mpiw(y_ref, mu_mse, sigma_mse)[0])

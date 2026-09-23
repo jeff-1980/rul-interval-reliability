@@ -1,18 +1,27 @@
 """
-R2-5：漂移对照（推理级，不重训）。两骨干 × FD001/FD002，5%FS 档，四个
-对照变体：
-  (1) reverse   反向斜坡：k·FS -> 0（原版 0 -> k·FS）
-  (2) shuffled  同幅值分布时间乱序：同一组幅值，随机打乱到各时间步
-  (3) singlech  单通道：只在一个通道上加标准斜坡（其余通道 clean）
-  (4) continuous 连续轨迹：在整条测试轨迹（物理时间顺序）上生成连续斜坡
-                再切出末端窗口，同一物理时刻在各窗口中扰动一致
-对每个变体报 PICP（NLL/MSE/Ensemble）、f_oob、σ̂均值变化（相对clean）。
-这是检验"漂移被读成退化"假说的直接对照——如果(4)连续版本的PICP/f_oob
-明显不同于原版（每窗口独立重新起算），说明原版效应部分来自"按窗口重新
-起算斜坡"这个人为设计，而不是真实连续漂移本身。
+Drift controls (inference-level, no retraining). Two backbones x
+FD001/FD002, 5% FS level, four control variants:
+  (1) reverse: reversed ramp, k*FS -> 0 (original is 0 -> k*FS)
+  (2) shuffled: same-magnitude distribution, time-shuffled -- same set of
+      magnitudes, randomly shuffled across timesteps
+  (3) singlech: single channel -- ramp applied to only one channel (rest
+      stay clean)
+  (4) continuous: continuous trajectory -- generates a continuous ramp
+      over the whole test trajectory (in physical time order), then slices
+      out the terminal windows, so the perturbation at a given physical
+      instant is consistent across windows
+Reports PICP (NLL/MSE/Ensemble), f_oob, and sigma_hat mean shift (relative
+to clean) for each variant. This is a direct control for the "drift is
+being read as degradation" hypothesis -- if variant (4)'s PICP/f_oob
+differs materially from the original (which restarts the ramp
+independently per window), it means part of the original effect comes
+from the artificial "restart the ramp per window" design, not genuine
+continuous drift itself.
 
-singlech 选用 full_scale_range 最大的通道（代表信号绝对幅度最大的传感器）
-作为代表通道，理由和选择标准写进输出，不藏在代码里。
+singlech picks the channel with the largest full_scale_range (the sensor
+with the largest absolute signal magnitude) as the representative channel;
+the rationale and selection criterion are written into the output, not
+hidden in the code.
 """
 import os
 import json
@@ -47,7 +56,7 @@ def scalers_for(ds, canon):
 
 def run_variant(ds, backbone, variant, device, scalers_by_seed, full_scale, models_by_seed,
                  X_raw_clean, y_ref, channel_idx=None):
-    sensor_mask = V4.sensor_mask_for(C.get_feature_names(ds))  # R9-Part3
+    sensor_mask = V4.sensor_mask_for(C.get_feature_names(ds))
     all_picp = {'NLL': [], 'MSE_fixed': [], 'Deep_Ensemble': []}
     all_feat_oob = []
     all_sigma_mean = {'NLL': []}
@@ -78,7 +87,7 @@ def run_variant(ds, backbone, variant, device, scalers_by_seed, full_scale, mode
             sigma = np.exp(ls) * 125.0
             trial_mu.append(mu); trial_sigma.append(sigma)
 
-            # 2026-09-21 公平校准修复：aleatory_var 改用校准集残差方差。
+            # fair-calibration fix: aleatory_var now uses the calibration-set residual variance.
             aleatory_var = E.calib_aleatory_var(ds, backbone, seed, device, mc_model=mc_model)
             mu_mc, sigma_mc = E.infer_mc_dropout(mc_model, X_t, T=50, aleatory_var=aleatory_var)
             mu_mse, sigma_mse = E.infer_mse_fixed(mc_model, X_t, sigma_fixed=float(np.sqrt(aleatory_var)))
@@ -124,7 +133,7 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-            full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+            full_scale = V4.sensor_only_scale(feat_cols, full_scale)
             scalers_by_seed = scalers_for(ds, canon)
             channel_idx = int(np.argmax(full_scale))
             print(f"  singlech representative channel: {feat_cols[channel_idx]} (largest full_scale={full_scale[channel_idx]:.2f})")
@@ -158,7 +167,7 @@ if __name__ == '__main__':
                       f"MSE_PICP={r['picp_MSE_fixed']:.3f}  Ens_PICP={r['picp_Deep_Ensemble']:.3f}  "
                       f"sigma_mean={r['sigma_mean_NLL']:.2f}")
 
-            # variant (4): continuous trajectory -- 需要单独的窗口提取路径
+            # variant (4): continuous trajectory -- needs its own window-extraction path
             X_raw_continuous = V4.inject_drift_continuous_trajectory_raw(test_df_raw, feat_cols, PCT, full_scale)
             r4_picp_nll, r4_picp_mse, r4_picp_ens, r4_fo, r4_sigma = [], [], [], [], []
             nll_mu_grid4, nll_sigma_grid4 = [], []
@@ -166,7 +175,7 @@ if __name__ == '__main__':
                 nll_model, mc_model, _ = models_by_seed[seed]
                 scaler = scalers_by_seed[seed]
                 X_scaled = V4.scale_raw_windows(X_raw_continuous, scaler)
-                fo = V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols))  # R9-Part3
+                fo = V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols))
                 r4_fo.append(fo)
                 X_t = torch.tensor(X_scaled, dtype=torch.float32).to(device)
                 mu, ls = E.infer_nll(nll_model, X_t)

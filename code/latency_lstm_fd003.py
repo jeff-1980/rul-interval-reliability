@@ -1,13 +1,16 @@
 """
-FD003 补全 (6/6)：延迟，platform batch=512协议，与
-an earlier unified-platform latency script (not included; superseded)逐字同一协议（priming pass+2s时钟
-热身+方法间不empty_cache+50热身+11轮中位数），只测FD003。延迟与权重
-无关，用leakfree checkpoint测（架构相同，数字应与旧checkpoint一致，
-不是重新定义延迟口径）。
+FD003 completion (6/6): latency, platform batch=512 protocol, identical
+protocol to an earlier unified-platform latency script (not included;
+superseded) (priming pass + 2s clock warmup + no empty_cache between
+methods + 50 warmup + 11-round median), FD003 only. Latency doesn't
+depend on the weights, so it's measured with the leakfree checkpoints
+(same architecture, so the numbers should match the old checkpoints --
+this isn't redefining the latency convention).
 
-用法：`python3 latency_lstm_fd003.py <run_tag>`，独立运行
-多次(如run1/run2/run3)取不同run_tag，之后用
-池化全部独立运行的原始轮次取中位数，不挑单次运行。
+Usage: `python3 latency_lstm_fd003.py <run_tag>`, run independently
+multiple times (e.g. run1/run2/run3) with different run_tags, then pool
+the raw rounds across all independent runs and take the median -- don't
+cherry-pick a single run.
 """
 import os
 import sys

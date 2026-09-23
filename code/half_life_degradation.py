@@ -1,11 +1,14 @@
 """
-Part B 补充：bias/drift/gain 三类劣化各自的绝对/相对半衰 f_oob，两骨干×
-四数据集×五机制。之前只算了"与高斯噪声臂C比，PICP偏离多少"这个重合度
-指标，没有单独给每类劣化自己的半衰点——用户现在要这张表。
+Part B supplement: the absolute/relative half-life f_oob for each of the
+three degradation types (bias/drift/gain), 2 backbones x 4 datasets x 5
+mechanisms. Previously only a "how much does PICP deviate compared to the
+Gaussian-noise arm C" overlap metric was computed, without giving each
+degradation type its own half-life point -- this script produces that
+table.
 
-每类劣化只用自己的5档点（不跨类型pool），逻辑与
-mechanism_transformer.py的compute_half_life一致（abs阈值0.80，
-rel阈值picp_clean-0.10）。
+Each degradation type uses only its own 5 levels (not pooled across
+types), with logic matching mechanism_transformer.py's compute_half_life
+(abs threshold 0.80, rel threshold picp_clean-0.10).
 """
 import os
 import json

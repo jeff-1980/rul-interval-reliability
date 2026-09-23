@@ -1,26 +1,30 @@
 """
-FD003 补充：§6.2 基线clamp_frac vs σ̂贡献占比对应关系的第四个点。
+FD003 supplement: the fourth point for the baseline clamp_frac vs.
+sigma-contribution-fraction relationship.
 
-范围说明（与用户指令对齐，刻意收窄）：只训练 NLL 与 CP-norm（clamp_frac
-表1 + 冻结σ̂分解只需要这两个有σ̂头的方法），不训练 MC-Dropout/不算
-Deep Ensemble/MSE——这些不是"基线clamp_frac vs σ̂贡献占比"这个具体
-交叉验证点需要的东西，为控制本次追加的计算规模，明确不做，不是遗漏。
-若后续需要FD003完整代价表（含MC-Dropout/Ensemble/MSE/per-engine），
-是独立的、更大的任务，需要用户另外确认再做。
+Scope (deliberately narrow): trains only NLL and CP-norm (the clamp_frac
+table + frozen-sigma decomposition only need these two sigma-headed
+methods); does not train MC-Dropout or compute Deep Ensemble/MSE -- those
+aren't needed for this specific cross-validation point, deliberately out
+of scope to bound this addition's compute, not an oversight. A full FD003
+cost table (with MC-Dropout/Ensemble/MSE/per-engine) would be a separate,
+larger task.
 
-数据来源：FD003官方C-MAPSS数据集，此前从未被拷入本项目 DATA_DIR，
-2026-09-18 从本机另一份已有的标准NASA C-MAPSS发行版拷贝补齐（
-train/test/RUL三个文件行数与格式核实一致：100 train engines,
-100 test engines匹配RUL_FD003.txt的100行,26列标准格式），不是新造数据。
+Data source: FD003's official C-MAPSS dataset, never previously copied
+into this project's DATA_DIR; copied in from another local copy of the
+same standard NASA C-MAPSS release (verified matching row counts/format:
+100 train engines, 100 test engines matching RUL_FD003.txt's 100 rows,
+26-column standard format) -- not fabricated data.
 
-工况核实：KMeans k=6 vs k=1 惯性比=0.074，setting_3恒为100，与FD001
-同构（单一工况）——`common.get_feature_names`已相应更新，FD003复用
-FD001的14特征集，不用FD002/FD004那套"丢6个随工况变化传感器"的选择
-（那是为多工况场景设计的，FD003不适用）。
+Condition check: KMeans k=6 vs k=1 inertia ratio=0.074, setting_3 always
+100, isomorphic to FD001 (single condition) -- common.get_feature_names
+updated accordingly; FD003 reuses FD001's 14-feature set rather than
+FD002/FD004's "drop the 6 condition-varying sensors" selection (designed
+for multi-condition datasets, not applicable to FD003).
 
-协议：与FD001/FD002/FD004完全一致的canonical三向切分(fit60%/val20%/
-calib20%)+leakfree scaler，5个canonical seeds。因单一工况，臂A退化为
-臂B（与FD001同理）。
+Protocol: identical canonical three-way split (fit60%/val20%/calib20%) +
+leakage-free scaler as FD001/FD002/FD004, the same 5 canonical seeds.
+Single-condition, so arm A degenerates to arm B (same as FD001).
 """
 import os
 import json
@@ -159,7 +163,7 @@ def train_nll_one_seed(seed, device, use_amp):
     torch.save({'state_dict': best_state, 'input_dim': input_dim, 'hidden_dim': C.HIDDEN_DIM, 'dropout': 0.2,
                 'log_sigma_min': C.LOG_SIGMA_MIN, 'log_sigma_max': C.LOG_SIGMA_MAX, 'seed': seed, 'dataset': DS,
                 'fit_units': fit_units, 'val_units': val_units, 'best_val_rmse_cycles': best_val_rmse,
-                'train_epochs': EPOCHS, 'selection_protocol': 'canonical_split fit/val, leakfree (FD003, 2026-09-18)'},
+                'train_epochs': EPOCHS, 'selection_protocol': 'canonical_split fit/val, leakage-free (FD003)'},
                ckpt_path)
     return {'seed': seed, 'rmse': rmse, 'score': score, 'picp': picp, 'mpiw': mpiw, 'ece': ece,
             'sigma_mean': float(sigma_np.mean()), 'best_val_rmse': best_val_rmse, 'elapsed_train_s': elapsed}
@@ -246,7 +250,7 @@ def train_cp_one_seed(seed, device, use_amp):
                 'log_sigma_min': C.LOG_SIGMA_MIN, 'log_sigma_max': C.LOG_SIGMA_MAX, 'seed': seed, 'dataset': DS,
                 'fit_units': fit_units, 'val_units': val_units, 'calib_units': calib_units,
                 'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-                'selection_protocol': 'canonical_split fit/val/calib, leakfree (FD003, 2026-09-18)'}, ckpt_path)
+                'selection_protocol': 'canonical_split fit/val/calib, leakage-free (FD003)'}, ckpt_path)
 
     X_calib, y_calib_raw = sequences_for_units(train_df[train_df['unit_nr'].isin(calib_units)], feat_cols, calib_units)
     y_calib = np.clip(y_calib_raw, 0, C.MAX_RUL)
@@ -279,7 +283,7 @@ def train_cp_one_seed(seed, device, use_amp):
     print(f"   [CP-norm] seed={seed} n_calib_units={len(calib_units)} n_calib_windows={n_calib} "
           f"train={elapsed:.1f}s best_val_rmse={best_val_rmse:.3f} "
           f"PICP={picp_norm:.3f} MPIW={mpiw_norm:.2f} ECE={ece_norm:.4f} |dev|={compliance:.3f}"
-          f"{'  <-- 超出±0.03容差' if compliance > 0.03 else ''}")
+          f"{'  <-- outside +/-0.03 tolerance' if compliance > 0.03 else ''}")
 
     return {'seed': seed, 'rmse': rmse, 'score': score,
             'cp_norm': {'picp': picp_norm, 'mpiw': mpiw_norm, 'ece': ece_norm, 'q': q_norm,
@@ -344,10 +348,12 @@ def run_sweep_arm(arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct
                 X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                 X_t = torch.tensor(X_test, dtype=torch.float32).to(device)
                 trial_y = y_test
-                # R9-Part3: 同一类此前在 clamp_frac/threshold_refinement/armC_mu_std
-                # 修过的旧bug（此前只用 seed[0]+整段轨迹 scaled_feat）——改成5个seed
-                # 各自在窗口化X_test上算，取平均；V4.feat_oob 分母限定传感器列
-                # （FD003无工况设定列，这里是no-op，但保持全项目同一实现）。
+                # Same bug class fixed elsewhere (clamp_frac/threshold_refinement/
+                # armC_mu_std): previously used only seed[0] + the full-trajectory
+                # scaled_feat -- now averages all 5 seeds on the windowed X_test;
+                # V4.feat_oob restricts the denominator to sensor columns (FD003
+                # has no setting columns, so this is a no-op, but keeps the same
+                # implementation project-wide).
                 fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
 
                 mu_n, ls_n = infer_nll(nll_models[seed], X_t)

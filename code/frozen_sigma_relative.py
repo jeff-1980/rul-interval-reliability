@@ -1,17 +1,22 @@
 """
-STEP 5m：LSTM 冻结σ̂分解，改在**相对**半衰点（PICP从clean跌10点）计算，
-不是`frozen_sigma_decomposition_leakfree.json`原来用的**绝对**半衰点
-（PICP首次跌破0.80）——2026-09-19核实：论文`paper2_main.tex`
-Table~attribution标题写"relative half-life point"，但底层文件实际是绝对
-半衰点算的，标注与实现不一致。本脚本重新计算相对半衰点版本，写到新文件
-`frozen_sigma_decomposition_RELATIVE_leakfree.json`，不覆盖/不修改旧的
-绝对版本文件（旧结果只读，新旧并存，各自命名清楚）。
+STEP 5m: LSTM frozen-sigma-hat decomposition, recomputed at the **relative**
+half-life point (PICP dropping 10 points from clean) instead of the
+**absolute** half-life point (PICP first dropping below 0.80) originally
+used by `frozen_sigma_decomposition_leakfree.json` -- verified: the
+manuscript's attribution table is labeled "relative half-life point", but
+the underlying file was actually computed at the absolute half-life
+point, a label/implementation mismatch. This script recomputes the
+relative-half-life version and writes it to a new file
+`frozen_sigma_decomposition_RELATIVE_leakfree.json`, without overwriting
+or modifying the old absolute-version file (old results are read-only;
+old and new coexist, each clearly named).
 
-数据源：FD001/FD002/FD004 从 `dose_response_feat_oob_leakfree.json`
-（已经pool了主臂A+B+臂C）；FD003 从 `noise_sensitivity_leakfree_FD003.json`
-（主臂，单一工况A=B退化）+ `noise_sensitivity_leakfree_armC_FD003.json`
-现场pool。逻辑与 dose_response_frozen_sigma.py 完全
-一致，只改阈值来源（picp_clean-0.10 而不是固定0.80）。
+Data sources: FD001/FD002/FD004 from `dose_response_feat_oob_leakfree.json`
+(already pooling the main arm A+B and arm C); FD003 from
+`noise_sensitivity_leakfree_FD003.json` (main arm, single-condition A=B
+degradation) + `noise_sensitivity_leakfree_armC_FD003.json`, pooled here.
+The logic matches dose_response_frozen_sigma.py exactly, only the
+threshold source changes (picp_clean-0.10 instead of a fixed 0.80).
 """
 import os
 import json
@@ -129,4 +134,4 @@ if __name__ == '__main__':
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
-    print("(旧的绝对半衰点版本 frozen_sigma_decomposition_leakfree.json 保留不动)")
+    print("(old absolute-half-life version frozen_sigma_decomposition_leakfree.json left unchanged)")

@@ -1,11 +1,13 @@
 """
-FD003 补全 (2/6)：MSE 模型 5 seeds + MC-Dropout(Kendall&Gal修正) 5 seeds。
+FD003 completion (2/6): MSE model, 5 seeds + MC-Dropout (Kendall & Gal
+correction), 5 seeds.
 
-与 train_lstm_mcdropout.py 逐字同一协议（MC_LSTM架构/纯MSE训练/
-canonical fit-val选择/leakfree scaler/T=50主T=100附/aleatory_var=fit_units
-残差方差），只是数据集固定为FD003，且复用已经在
-`train_lstm_fd003_nll_and_mechanism.py`里extend好的canonical_splits.json
-FD003条目（不重新切分）。
+Uses the exact same protocol as train_lstm_mcdropout.py (MC_LSTM
+architecture, pure MSE training, canonical fit-val selection, leakage-free
+scaler, T=50 main / T=100 appendix, aleatory_var = fit_units residual
+variance), just with the dataset fixed to FD003, reusing the FD003 entry
+of canonical_splits.json already extended in
+`train_lstm_fd003_nll_and_mechanism.py` (no re-splitting).
 """
 import os
 import json
@@ -122,7 +124,7 @@ def run_one_seed(seed, device, use_amp):
     torch.save({'state_dict': best_state, 'input_dim': input_dim, 'hidden_dim': HIDDEN_DIM, 'dropout': 0.2,
                 'seed': seed, 'dataset': DS, 'fit_units': fit_units, 'val_units': val_units,
                 'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-                'selection_protocol': 'canonical_split fit/val, leakfree (FD003, 2026-09-18)'}, ckpt_path)
+                'selection_protocol': 'canonical_split fit/val, leakfree (FD003)'}, ckpt_path)
 
     X_fit_t = torch.tensor(X_fit, dtype=torch.float32).to(device)
     yhat_fit_scaled = batched_forward(model, X_fit_t)

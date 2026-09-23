@@ -1,11 +1,14 @@
 """
-T2-A8：组装 COST_TABLE_{DS}_Transformer_leakfree.csv，与
-cost_table_lstm_fd003.py 同一列结构，4 数据集。
-半衰(abs/rel)取自 mechanism_transformer.py 产出的
-t2_transformer_half_life_feat_oob.json（臂C，5档，见该脚本顶部关于范围
-选择的说明——不是主SNR臂+臂C两者合并，与 LSTM 侧口径不完全相同，如实
-在 NOTES 里记录）。延迟列先留空/占位，由 latency_transformer.py 统一批量
-重测后单独回填（10行同会话协议）。
+Assembles COST_TABLE_{DS}_Transformer_leakfree.csv, same column structure
+as cost_table_lstm_fd003.py, 4 datasets.
+Half-life (abs/rel) comes from mechanism_transformer.py's
+t2_transformer_half_life_feat_oob.json (arm C, 5 levels; see that
+script's docstring for the scope rationale -- this is not the pooled
+main-SNR-arm + arm-C convention used on the LSTM side, and that
+difference is reported honestly in NOTES). The latency column is left
+blank/placeholder for now, to be backfilled separately once
+latency_transformer.py's batch remeasurement is done (same protocol as
+the 10-row latency tables elsewhere).
 """
 import os
 import json

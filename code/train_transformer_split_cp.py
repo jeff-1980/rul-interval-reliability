@@ -1,16 +1,23 @@
 """
-T2-A3：Transformer 骨干 Split-CP（norm），leakfree 协议，4 数据集 × 5 seeds。
+T2-A3: Transformer-backbone Split-CP (norm), leakage-free protocol, 4
+datasets x 5 seeds.
 
-方法论说明（与 LSTM 先例的刻意差异，如实记录）：LSTM 侧（train_lstm_split_cp_
-split_cp_leakfree.py）为 Split-CP 单独克隆训练了一份 NLL 模型，只是为了
-获得 calib_units 上的推理结果——架构/数据/损失与主 NLL 模型（train_lstm）
-完全相同，只是重新训练了一遍。用户本次任务把 Transformer 训练量明确限定
-为"两个头（NLL、MSE）=40个模型"，没有第三个头，因此这里不再克隆训练，
-直接复用头1（train_transformer_nll.py）已经训好的 NLL Transformer
-checkpoint，只是补做一次它从未做过的 calib_units 前向推理，据此计算
-CP-abs/CP-norm 分位数。这是与 LSTM 先例的方法论差异，非疏漏。
+Methodology note (a deliberate difference from the LSTM precedent,
+recorded honestly): on the LSTM side (train_lstm_split_cp_
+split_cp_leakfree.py), a separate NLL model was cloned and trained just
+for Split-CP, purely to get inference results on calib_units -- the
+architecture/data/loss are identical to the main NLL model
+(train_lstm), just retrained. The scope for this round explicitly caps
+Transformer training at "two heads (NLL, MSE) = 40 models", with no third
+head, so no clone-training is done here -- instead this reuses the NLL
+Transformer checkpoint already trained for head 1
+(train_transformer_nll.py) as-is, and only adds the calib_units forward
+pass it had never done, from which the CP-abs/CP-norm quantiles are
+computed. This is a deliberate methodology difference from the LSTM
+precedent, not an oversight.
 
-CP-abs/CP-norm 计算逻辑、ECE 20档口径、合规性检查与 train_lstm_split_cp 逐字一致。
+CP-abs/CP-norm computation logic, the 20-bin ECE convention, and the
+compliance check are identical to train_lstm_split_cp.
 """
 import os
 import json
@@ -108,7 +115,7 @@ def run_one_seed(ds_name, seed, device):
 
     print(f"   [{ds_name}] seed={seed} n_calib_units={len(calib_units)} n_calib_windows={n_calib}  "
           f"CP-norm: PICP={picp_norm:.3f} MPIW={mpiw_norm:.2f} ECE={ece_norm:.4f} "
-          f"|dev|={compliance_norm:.3f}{'  <-- 超出±0.03容差' if compliance_norm > 0.03 else ''}")
+          f"|dev|={compliance_norm:.3f}{'  <-- outside +/-0.03 tolerance' if compliance_norm > 0.03 else ''}")
 
     return {
         'seed': seed, 'n_calib_units': len(calib_units), 'n_calib_windows': int(n_calib),

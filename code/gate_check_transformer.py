@@ -1,20 +1,27 @@
 """
-T2 强制前置检查：评价协议门禁（CLAUDE.md "评价协议门禁"五项自证），针对
-新增的 Transformer 骨干训练管线（train_transformer_nll.py /
-train_transformer_msemcd.py）。训练产出在被写进下游表格前必须先跑通
-本脚本，全部 PASS 才可继续。
+Mandatory pre-flight check: evaluation-protocol gate (five-item
+self-certification), for the Transformer backbone training pipeline
+(train_transformer_nll.py / train_transformer_msemcd.py). Training output
+must pass this script before being written into any downstream table --
+proceed only if everything PASSes.
 
-五项：
-  1. checkpoint 选择判据的 DataLoader 来源 —— 必须是 val_units，不是 test。
-  2. 早停判据的 DataLoader 来源 —— 同上（本管线选择判据和早停判据是同一个
-     val-RMSE，只有一项，与 LSTM 管线一致）。
-  3. scaler 的 fit 范围是否含 val/test —— 必须只在 fit_units 上 fit。
-  4. conformal 校准集是否与选模集合（fit ∪ val）重叠 —— 必须不重叠。
-  5. 各 split 单元编号是否有断言保证不重叠 —— canonical_splits.json 里
-     fit/val/calib 三者互不重叠、并集覆盖全部 units。
+Five items:
+  1. Checkpoint-selection DataLoader source -- must be val_units, not test.
+  2. Early-stopping-criterion DataLoader source -- same as above (this
+     pipeline's selection criterion and early-stopping criterion are the
+     same val-RMSE, a single item, matching the LSTM pipeline).
+  3. Whether the scaler's fit range includes val/test -- must be fit only
+     on fit_units.
+  4. Whether the conformal calibration set overlaps the model-selection set
+     (fit union val) -- must not overlap.
+  5. Whether each split's unit numbering is asserted non-overlapping --
+     canonical_splits.json's fit/val/calib must be pairwise disjoint, union
+     covering all units.
 
-第1-3项是训练代码的程序事实，用源码静态检查（grep 训练循环里选择判据变量
-来源）；第4-5项是可以直接对 canonical_splits.json 数据验证的事实。
+Items 1-3 are facts about the training code, checked via static source
+inspection (grepping the training loop's selection-criterion variable
+source); items 4-5 are facts directly verifiable against
+canonical_splits.json's data.
 """
 import os
 import re
@@ -31,17 +38,21 @@ CANON_PATH = os.path.join(T2.PROJ_DIR, 'results', 'canonical_splits.json')
 
 
 def check_1_2_3_static(script_path, label):
-    """静态检查：早停/checkpoint选择判据用 val_units 派生的 X_val_t，不用
-    test_df/X_test_t；scaler 调用是 load_and_process_leakfree(ds, fit_units)
-    （fit_units-only fit），不是 load_and_process(ds)（全量train fit）。"""
+    """Static check: early-stopping/checkpoint-selection criterion uses
+    X_val_t (derived from val_units), not test_df/X_test_t; the scaler
+    call is load_and_process_leakfree(ds, fit_units) (fit_units-only fit),
+    not load_and_process(ds) (fit on the whole training file)."""
     src = open(script_path).read()
     results = {}
 
-    # item 1&2: 选择/早停判据来源 —— 训练循环内比较 best_val_rmse 时用的必须是
-    # 从 X_val_t 计算出的 curr_val_rmse，且训练循环体内不得出现 X_test_t/test_df
+    # items 1&2: selection/early-stopping criterion source -- the
+    # best_val_rmse comparison inside the training loop must come from
+    # X_val_t-derived curr_val_rmse, and the training loop body must not
+    # reference X_test_t/test_df
     train_loop_uses_val = bool(re.search(r'curr_val_rmse.*mean_squared_error\(y_val_cycles', src)) or \
         bool(re.search(r'r = np\.sqrt\(mean_squared_error\(y_val_cycles', src))
-    # 确认 test 只在训练循环结束后（best_state load 之后）才出现，不在 epoch loop 内参与选择
+    # confirm test only appears after the training loop ends (after
+    # best_state is loaded), not participating in selection inside the epoch loop
     epoch_loop_match = re.search(r'for epoch in range\(T2\.T2_EPOCHS\):(.*?)elapsed = time\.time\(\) - t0', src, re.S)
     if epoch_loop_match is None:
         epoch_loop_match = re.search(r'for _ in range\(T2\.T2_EPOCHS\):(.*?)elapsed = time\.time\(\) - t0', src, re.S)
@@ -51,7 +62,7 @@ def check_1_2_3_static(script_path, label):
     results['item1_checkpoint_selection_uses_val_not_test'] = train_loop_uses_val and not test_leaks_into_loop
     results['item2_early_stop_uses_val_not_test'] = train_loop_uses_val and not test_leaks_into_loop
 
-    # item 3: scaler fit range —— 必须调用 load_and_process_leakfree(ds_name, fit_units)
+    # item 3: scaler fit range -- must call load_and_process_leakfree(ds_name, fit_units)
     uses_leakfree_loader = 'C.load_and_process_leakfree(ds_name, fit_units)' in src
     uses_leaky_loader = bool(re.search(r'C\.load_and_process\([^_]', src))  # load_and_process( without _leakfree
     results['item3_scaler_fit_units_only'] = uses_leakfree_loader and not uses_leaky_loader
@@ -66,8 +77,9 @@ def check_1_2_3_static(script_path, label):
 
 
 def check_4_5_data(canon):
-    """数据检查：对 T2 用到的每个 (dataset, seed)，fit/val/calib 三者互不重叠，
-    并集覆盖全部 unit。calib 与 fit∪val（选模集合）不重叠即是 item4。"""
+    """Data check: for every (dataset, seed) the Transformer pipeline uses,
+    fit/val/calib are pairwise disjoint, union covering all units. calib
+    not overlapping fit union val (the selection set) is item 4."""
     all_pass = True
     per_ds = {}
     for ds in DATASETS:

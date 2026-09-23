@@ -1,28 +1,31 @@
 """
-R2-1：冻结分解 2x2。对 NLL/CP-norm，两骨干，四数据集，在相对半衰点附近
-（取已有扫描网格中离 rel_co 最近的一档，main-arm 优先于 armC，因为大多数
-crossover 落在 main-arm 覆盖的低 feat_oob 区间——见 T2 阶段发现）算四个
-组合：
-  C(mu0,sigma0)：clean 输入下的真实预测
-  C(mu1,sigma0)：扰动 mu，冻结 clean sigma（已有"冻结σ̂"反事实的定义）
-  C(mu0,sigma1)：冻结 clean mu，扰动 sigma（新增，此前从未算过）
-  C(mu1,sigma1)：扰动输入下的真实预测（原始"real"曲线）
-两种分解次序：
-  次序A（先冻sigma）：mu效应=C(mu1,s0)-C(mu0,s0)；sigma效应=C(mu1,s1)-C(mu1,s0)
-  次序B（先冻mu）：   sigma效应=C(mu0,s1)-C(mu0,s0)；mu效应=C(mu1,s1)-C(mu0,s1)
-  交互项 = [C(mu1,s1)-C(mu1,s0)] - [C(mu0,s1)-C(mu0,s0)]
-        = mu效应(次序A) - mu效应(次序B)（等价定义，两种写法结果一致）
-"均值主导"（|mu效应| > |sigma效应|）只有在次序A和次序B下都成立才报告为
-成立。
+Frozen decomposition 2x2. For NLL/CP-norm, both backbones, four datasets,
+near the relative half-life point (the nearest level to rel_co in the
+existing sweep grid, main-arm preferred over armC since most crossovers
+fall in main-arm's low-feat_oob range), computes four combinations:
+  C(mu0,sigma0): true prediction on clean input
+  C(mu1,sigma0): perturbed mu, frozen clean sigma (the existing
+                 "frozen-sigma" counterfactual)
+  C(mu0,sigma1): frozen clean mu, perturbed sigma (new)
+  C(mu1,sigma1): true prediction on perturbed input (the original "real" curve)
+Two decomposition orders:
+  Order A (freeze sigma first): mu effect=C(mu1,s0)-C(mu0,s0); sigma effect=C(mu1,s1)-C(mu1,s0)
+  Order B (freeze mu first):    sigma effect=C(mu0,s1)-C(mu0,s0); mu effect=C(mu1,s1)-C(mu0,s1)
+  Interaction = [C(mu1,s1)-C(mu1,s0)] - [C(mu0,s1)-C(mu0,s0)]
+              = mu effect(order A) - mu effect(order B) (equivalent definitions)
+"Mean dominance" (|mu effect| > |sigma effect|) is only reported as holding
+if it holds under both orders.
 
-LSTM 的 CP-norm 复用 NLL 权重（T2阶段已核实bit-exact），因此 mu/sigma 的
-per-sample 值对 NLL 和 CP-norm 是同一份，只是区间宽度公式不同（NLL 用
-z=1.645；CP-norm 用该 seed 自己校准出的 q_norm）——本脚本只做一次推理，
-两个方法共用。
+LSTM's CP-norm reuses the NLL weights (verified bit-exact), so the
+per-sample mu/sigma values are the same for NLL and CP-norm, differing
+only in the interval-width formula (NLL uses z=1.645; CP-norm uses that
+seed's own calibrated q_norm) -- this script does one inference pass,
+shared by both methods.
 
-只做推理，不重训。定位"离crossover最近的一档"时优先在 main-arm 网格里找
-（SNR档，转换feat_oob做比较），因为T2阶段发现大多数模型的相对半衰点落在
-main-arm覆盖的<2%feat_oob区间，armC自己的最小档(约5%-6%)反而经常超出。
+Inference only, no retraining. Looks up the nearest grid point primarily
+in the main-arm grid (SNR levels, compared via feat_oob) since most
+models' relative half-life falls in main-arm's <2% feat_oob range, while
+armC's own smallest level (about 5-6%) often overshoots it.
 """
 import os
 import json
@@ -65,12 +68,14 @@ def get_rel_co(backbone, ds, method):
 
 
 def nearest_grid_point(ds, backbone, target_fo):
-    """在 main-arm 的两个 scheme（A_percondition + B_pooled，多工况数据集
-    两者feat_oob不同，必须都纳入候选——否则会漏掉两臂之间的覆盖区间，
-    错误地把'inf'/clean当成"最近"点，2026-09-19调试时发现过这个bug）+
-    armC（pct档）里，找 feat_oob 离 target_fo 最近的一档，返回
-    ('mainarm', level, arm_label, actual_feat_oob) 或 ('armc', level, None, fo)。
-    arm_label ∈ {'global','per_condition'} 告诉 infer_pooled 用哪个注入方案。
+    """Searches both main-arm schemes (A_percondition + B_pooled -- their
+    feat_oob differs on multi-condition datasets, so both must be
+    candidates, or the coverage gap between the two arms could wrongly
+    pick 'inf'/clean as "nearest") plus armC (pct levels) for the level
+    whose feat_oob is nearest target_fo. Returns
+    ('mainarm', level, arm_label, actual_feat_oob) or
+    ('armc', level, None, fo). arm_label in {'global','per_condition'}
+    tells infer_pooled which injection scheme to use.
     """
     candidates = []
     if backbone == 'LSTM':
@@ -85,7 +90,7 @@ def nearest_grid_point(ds, backbone, target_fo):
             mainfile = json.load(f)[ds]
 
     arm_keys = [('A_percondition', 'per_condition'), ('B_pooled', 'global')] if ds in ('FD002', 'FD004') \
-        else [('B_pooled', 'global')]  # FD001/FD003 单一工况，A=B退化，只用B_pooled，避免per_condition无km可用
+        else [('B_pooled', 'global')]  # FD001/FD003 single-condition: A=B, use B_pooled only (no km for per_condition)
     for arm_key, arm_label in arm_keys:
         for k, fo in mainfile[arm_key]['feat_oob'].items():
             candidates.append(('mainarm', k, arm_label, fo))
@@ -103,8 +108,9 @@ def nearest_grid_point(ds, backbone, target_fo):
     for k, fo in armc['feat_oob'].items():
         candidates.append(('armc', k, None, fo))
 
-    # 去掉 feat_oob 近似0(clean/inf)的候选——半衰点定义就是"离开clean若干"，
-    # 不应该被"离目标最近"这个纯数值比较意外选中clean本身
+    # Drop candidates with feat_oob approx 0 (clean/inf) -- half-life is
+    # defined as "some distance from clean", so a plain nearest-value
+    # comparison should not accidentally pick clean itself
     candidates = [c for c in candidates if c[3] > 1e-6]
     best = min(candidates, key=lambda c: abs(c[3] - target_fo) if target_fo is not None else abs(c[3]))
     return best
@@ -112,10 +118,11 @@ def nearest_grid_point(ds, backbone, target_fo):
 
 def infer_pooled(backbone, ds, level_kind, level_key, device, scalers_by_seed, full_scale, global_std,
                   arm_label=None, km=None, cond_std=None):
-    """对给定 (level_kind, level_key)，5 seed 池化推理，返回 (mu1, sigma1, y)
-    —— 扰动输入下的 mu/sigma（clean 时 level_key='inf' 或对应最小档也走同
-    一路径，只是不注入噪声）。arm_label='per_condition' 时需要 km/cond_std
-    （多工况数据集的臂A方案）。"""
+    """For a given (level_kind, level_key), pooled 5-seed inference,
+    returning (mu1, sigma1, y) -- mu/sigma under perturbed input (clean
+    goes through the same path with level_key='inf' or the matching
+    smallest level, just without noise injection). arm_label='per_condition'
+    needs km/cond_std (arm A's scheme for multi-condition datasets)."""
     _, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     all_mu, all_sigma, y_ref = [], [], None
     for seed in C.SEEDS:
@@ -171,13 +178,13 @@ if __name__ == '__main__':
             print(f"\n{'=' * 20} {backbone} / {ds} {'=' * 20}")
             train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
             full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-            full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+            full_scale = V4.sensor_only_scale(feat_cols, full_scale)
             global_std = np.std(train_df_raw[feat_cols].values, axis=0)
             scalers_by_seed = scalers_for(ds)
             if ds in ('FD002', 'FD004'):
                 km, cond_std, _ = V4.fit_condition_model(train_df_raw, feat_cols)
-                cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
-                global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
+                cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}
+                global_std = V4.sensor_only_scale(feat_cols, global_std)
             else:
                 km, cond_std = None, None
 
@@ -225,11 +232,11 @@ if __name__ == '__main__':
                 c00 = float(np.mean(picps['00'])); c10 = float(np.mean(picps['10']))
                 c01 = float(np.mean(picps['01'])); c11 = float(np.mean(picps['11']))
 
-                mu_effect_A = c10 - c00       # 次序A：先冻sigma，看mu效应
-                sigma_effect_A = c11 - c10    # 次序A：再放开sigma
-                sigma_effect_B = c01 - c00    # 次序B：先冻mu，看sigma效应
-                mu_effect_B = c11 - c01       # 次序B：再放开mu
-                interaction = mu_effect_A - mu_effect_B  # 等价 sigma_effect_A - sigma_effect_B 的负值
+                mu_effect_A = c10 - c00       # order A: freeze sigma first, mu effect
+                sigma_effect_A = c11 - c10    # order A: then release sigma
+                sigma_effect_B = c01 - c00    # order B: freeze mu first, sigma effect
+                mu_effect_B = c11 - c01       # order B: then release mu
+                interaction = mu_effect_A - mu_effect_B  # equals -(sigma_effect_A - sigma_effect_B)
                 total = c11 - c00
 
                 mean_dominant_A = abs(mu_effect_A) > abs(sigma_effect_A)

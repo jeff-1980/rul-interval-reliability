@@ -1,33 +1,39 @@
 """
-R8-A1（诊断，推理级，不重训）：扰动对象三分对照。
+Diagnostic, inference-level, no retraining: three-way contrast of what
+gets perturbed.
 
-现状核实：noise_injection.py 的全部注入函数都对传入的 feature_cols
-统一注入——FD002/FD004 的 feature_cols = SETTING_NAMES(3) + 15个传感器，
-意味着当前所有退化实验（高斯/bias/gain/drift）在这两个数据集上，"传感器
-噪声/漂移/偏置/增益"也同等地加到了3个工况设定列上。工况设定是指令量
-（commanded operating regime），不是传感器读数，物理上不应该被"传感器
-退化"污染——这是本轮要诊断的问题。
+Background: every injection function in noise_injection.py perturbs
+whatever feature_cols it's given uniformly -- FD002/FD004's feature_cols =
+SETTING_NAMES(3) + 15 sensors, meaning every degradation experiment
+(Gaussian/bias/gain/drift) on these two datasets adds "sensor noise/drift/
+bias/gain" equally to the 3 operating-condition setting columns. Settings
+are a commanded regime, not a sensor reading, and physically should not be
+corrupted by "sensor degradation" -- this is what this diagnostic checks.
 
-实现：不改动任何注入函数本身，只把传给它们的 full_scale_range（每通道
-噪声/漂移/偏置/增益幅度的基准）在不需要扰动的列上置零——那些列的
-delta/noise_std 变成0，等价于"不扰动"，同时保持窗口形状/列顺序不变
-（模型输入维度不变，只是某些列的值不再改变）。
+Implementation: doesn't modify any injection function itself, just zeroes
+the full_scale_range (the per-channel noise/drift/bias/gain magnitude
+reference) passed to them on the columns that shouldn't be perturbed --
+those columns' delta/noise_std become 0, equivalent to "not perturbed",
+while window shape/column order stay unchanged (model input dimension
+unchanged, only some columns' values stop changing).
 
-三个变体：
-  sensors  -- 只扰动15个传感器列，3个工况设定列保持clean
-  settings -- 只扰动3个工况设定列，15个传感器列保持clean
-  joint    -- 当前口径，18列一起扰动（对照，等价于现有 pipeline）
+Three variants:
+  sensors  -- perturb only the 15 sensor columns, 3 setting columns stay clean
+  settings -- perturb only the 3 setting columns, 15 sensor columns stay clean
+  joint    -- the current convention, all 18 columns perturbed together
+              (control, equivalent to the existing pipeline)
 
-只测 FD002/FD004（唯一有工况设定列的数据集）、两骨干、NLL机制、5 seeds，
-drift 5% 与 高斯 scheme C（armC，fixed-pct）1%。
+Tests only FD002/FD004 (the only datasets with setting columns), both
+backbones, NLL mechanism, 5 seeds, drift 5% and Gaussian scheme C
+(armC, fixed-pct) 1%.
 
-决策指标（L=20）复用 maintenance_decision_one_sided.py 的口径：
-triggered = (mu - Z_SCORE*sigma) <= L；at_risk = y<=L；
-premature = triggered & (y > L+20)；unrecognised = at_risk & ~triggered。
-（NLL 的下界本来就是 mu-1.645*sigma，等价于单侧95%下界，不需要额外的
-CP 重校准。）
+Decision metric (L=20) matches maintenance_decision_one_sided.py's
+convention: triggered = (mu - Z_SCORE*sigma) <= L; at_risk = y<=L;
+premature = triggered & (y > L+20); unrecognised = at_risk & ~triggered.
+(NLL's lower bound is already mu-1.645*sigma, equivalent to a one-sided
+95% lower bound, no extra CP recalibration needed.)
 
-只读诊断，不改 main.tex，不写 tex。
+Read-only diagnostic; does not modify main.tex or write any tex.
 """
 import os
 import json
@@ -120,9 +126,10 @@ if __name__ == '__main__':
                             sigma = np.exp(ls) * 125.0
                             lo, hi = mu - Z * sigma, mu + Z * sigma
                             picp_cells.append(float(np.mean((y_this >= lo) & (y_this <= hi))))
-                            # R9-Part3: V4.feat_oob 全项目唯一实现（keep_mask 仍是本脚本
-                            # 自己的"本变体实际被扰动的列"，sensors/settings/joint 三个
-                            # 变体各不相同——这里只是把归约公式改走共用函数，掩码语义不变）。
+                            # keep_mask is this script's own "columns actually
+                            # perturbed under this variant" (differs across
+                            # sensors/settings/joint) -- V4.feat_oob is only
+                            # the shared reduction formula, mask semantics unchanged.
                             foob_cells.append(V4.feat_oob(X_scaled, keep_mask))
 
                             lb = mu - Z * sigma

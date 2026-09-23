@@ -1,13 +1,16 @@
 """
-R8-B1（推理级，不重训）：重新评估同划分集成对照（Table III / samesplit_
-ensemble.json）。5 个成员 checkpoint 全部复用已有权重（init_seed=42 的从
-checkpoints_leakfree*/ 复用，其余4个从 checkpoints_leakfree_r4_samesplit/
-加载）——不调用 samesplit_ensemble_control.py 的 train_lstm/
-train_transformer（那两个函数会无条件重训4个新模型，不符合"不重训"）。
+Inference-level re-evaluation (no retraining) of the same-split ensemble
+control (Table III / samesplit_ensemble.json). All 5 member checkpoints
+reuse existing weights (init_seed=42 reused from checkpoints_leakfree*/,
+the other 4 loaded from checkpoints_leakfree_r4_samesplit/) -- does not
+call samesplit_ensemble_control.py's train_lstm/train_transformer (those
+two functions would unconditionally retrain 4 new models, which would
+violate "no retraining").
 
-直接 import samesplit_ensemble_control 复用其 ckpt_path_r4 /
-load_model_generic / gate_check_split 等函数（import 本身不触发训练，训练
-代码全在 if __name__=='__main__': 内）。
+Directly imports samesplit_ensemble_control to reuse its ckpt_path_r4 /
+load_model_generic / gate_check_split functions (the import itself does
+not trigger training; the training code all lives inside
+if __name__=='__main__':).
 """
 import os
 import json
@@ -122,4 +125,4 @@ if __name__ == '__main__':
     with open(out_path, 'w') as fp:
         json.dump(result, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
-    print("R8-B1 samesplit ensemble re-eval complete (no retraining).")
+    print("Samesplit ensemble re-eval complete (no retraining).")

@@ -1,14 +1,19 @@
 """
-STEP 2c：Deep Ensemble 用 STEP0c 的新 checkpoint 重算（不重训，纯推理）。
+STEP 2c: recomputes Deep Ensemble using STEP0c's new checkpoints
+(inference only, no retraining).
 
-⚠️ 关键细节：leakfree 协议下每个 seed 的 scaler 只在**该 seed 自己的
-fit_units（60%，逐seed不同）**上拟合，不再是全项目共享一个scaler——5个
-成员各自期望的输入标准化方式不同（各自训练时看到的[-1,1]映射不同）。
-因此本脚本对每个成员**单独**用该 seed 的 `canonical_splits.json[...]
-['fit_units']` 重建它自己的 scaler，用它自己的 scaler 变换测试集，
-不能像旧版一样让5个成员共用同一份 `C.load_and_process(ds)` 输出。
+Key detail: under the leakage-free protocol, each seed's scaler is fit
+only on that seed's own fit_units (60%, different per seed), not a
+single project-wide shared scaler -- the 5 members each expect a
+different input normalization (each saw a different [-1,1] mapping
+during its own training). So this script rebuilds each member's own
+scaler **individually** from that seed's
+`canonical_splits.json[...]['fit_units']`, and transforms the test set
+with that member's own scaler, rather than letting all 5 members share a
+single `C.load_and_process(ds)` output as the old version did.
 
-合并公式与 STEP2 逐字一致（Lakshminarayanan 2017 高斯混合）：
+The combination formula matches STEP2 exactly (Lakshminarayanan 2017
+Gaussian mixture):
   mu_ens = mean_m(mu_m)
   sigma_ens^2 = mean_m(sigma_m^2 + mu_m^2) - mu_ens^2
 """
@@ -43,7 +48,7 @@ def infer(model, X_t, batch=8192):
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}  CKPT_DIR={CKPT_DIR}")
 

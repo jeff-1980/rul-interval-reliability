@@ -1,17 +1,24 @@
 """
-R6-2：9.6%阈值加密，补左侧点。已有右侧点覆盖 [2.83%, 11.83%]（0dB..-5dB）；
-这里在 clean(0%) 和 2.83%(0dB) 之间再加两档：SNR=2dB(~1.4%)、SNR=1dB(~1.9%)
-——探测过，同一条主臂SNR轴，实际达到值不是正好1%/2%，如实报告真实值，不
-硬凑整数。
+Densifies the 9.6% threshold crossover by adding left-side points. Existing
+right-side points cover [2.83%, 11.83%] (0dB..-5dB); this adds two more
+levels between clean(0%) and 2.83%(0dB): SNR=2dB(~1.4%), SNR=1dB(~1.9%)
+-- probed empirically, since on the same main-arm SNR axis the actually
+achieved values are not exactly 1%/2%; the true values are reported as-is
+rather than rounded to convenient integers.
 
-逐 trial 报"从 clean 起首次交叉"：把 clean(0%,picp_clean) 也当成曲线起点，
-和该 trial 自己的 7 个点（新增2个左侧 + 已有0dB..-4.5dB右侧，不含最右端
--5dB，避免跳过中间可能的多次穿越）按 feat_oob 从小到大排序，从 clean 起
-向右扫描，找第一次跌破 rel_threshold 的位置线性插值。如果这条 trial 专属
-曲线在扫到的所有新点上都还没跌破（即最左侧新点 SNR=1dB 那里 PICP 仍
->= threshold，跌破发生在 1dB 点和原来最近的 0dB/2.83% 点之间，或者更远），
-按用户要求统一标"<=2.84%"（用原始最小已测点的百分比做上界标签，不用
-插值猜测更靠左的具体数字）。
+Reports "first crossover from clean" per trial: treats clean(0%,picp_clean)
+as the curve's starting point, sorts it together with that trial's own 7
+points (the 2 new left-side points plus the existing 0dB..-4.5dB right-side
+points, excluding the rightmost -5dB to avoid skipping a possible multiple
+crossing in between) by feat_oob ascending, and scans rightward from clean
+to linearly interpolate the first point where it drops below
+rel_threshold. If this trial's own curve has not yet dropped below the
+threshold at any of the scanned new points (i.e. PICP is still >=
+threshold at the leftmost new point, SNR=1dB, meaning the crossing happens
+somewhere between the 1dB point and the previously nearest 0dB/2.83% point,
+or further left), it is uniformly labeled "<=2.84%" (using the smallest
+originally measured point's percentage as an upper-bound label, rather
+than guessing a more specific number further left by extrapolation).
 """
 import os
 import json
@@ -71,9 +78,10 @@ if __name__ == '__main__':
             raw_noisy = V4.inject_noise_raw(test_df_raw, feat_cols, level, rng, 'global', global_std=global_std)
             mu_mem, sigma_mem = [], []
             y_ref = None
-            # 2026-09-21（本轮）：见 threshold_crossover_refinement.py 同日
-            # 同条注释——此前只用第一个seed的scaler+整段轨迹算feat_oob，现在改成
-            # 5个seed各自在窗口化X_test上算，取平均。
+            # see threshold_crossover_refinement.py's matching comment --
+            # previously feat_oob was computed once using the first seed's
+            # scaler + the full trajectory; now each of the 5 seeds computes
+            # it on its own windowed X_test and the results are averaged.
             fo_this_trial_per_seed = []
             for seed in C.SEEDS:
                 scaler = scalers_by_seed[seed]
@@ -85,7 +93,7 @@ if __name__ == '__main__':
                 sigma = np.exp(ls) * 125.0
                 mu_mem.append(mu); sigma_mem.append(sigma)
                 y_ref = y_test
-                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                # V4.feat_oob is the project's only implementation, denominator restricted to sensor columns.
                 fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
             fo_this_trial = float(np.mean(fo_this_trial_per_seed))
             mu_mem = np.stack(mu_mem); sigma_mem = np.stack(sigma_mem)

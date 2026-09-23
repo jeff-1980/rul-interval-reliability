@@ -1,15 +1,22 @@
 """
-T2-A4：Transformer 骨干自己的臂C（固定%FS）扫描，4 数据集，供计算 Transformer
-自身的 clamp_frac / 绝对+相对半衰 f_oob / 冻结σ̂分解——即 Part A 要回答的两个
-问题("扰动下失效是否仍以μ̂为主、方差贡献符号是否与LSTM一致"、"相对半衰的
-机制排序是否与LSTM一致")所需的 Transformer 侧原始数据。
+Arm-C (fixed %FS) sweep for the Transformer backbone itself, 4 datasets,
+providing Transformer's own clamp_frac / absolute+relative half-life
+f_oob / frozen-sigma decomposition -- the raw Transformer-side data needed
+to answer Part A's two questions ("under perturbation, is failure still
+dominated by mu_hat, and is the sign of the variance contribution
+consistent with LSTM", "is the mechanism ranking at the relative
+half-life point consistent with LSTM").
 
-范围说明（如实记录）：只用臂C（5档固定%FS，条件无关），不重复 LSTM 侧当年
-额外做的主SNR臂（A/B，9+2档）。理由：(a) 臂C本身已经给出跨越
-0.37%-2%feat_oob量级的5个点，半衰/clamp_frac/冻结σ̂分解在这个范围内已经
-稳定收敛（FD003当初也是这样验证的）；(b) Part B的三类新增确定性劣化本来就
-只要求臂C同一套绝对尺度，Part A自己的基线用同一套尺度可以和Part B的高斯
-噪声基线直接放在同一张剂量-反应图上比较，不需要额外算一遍主SNR臂。
+Scope note (reported honestly): only uses arm C (5 fixed-%FS levels,
+condition-independent), not the extra main SNR arm (A/B, 9+2 levels) that
+was additionally run on the LSTM side. Rationale: (a) arm C alone already
+gives 5 points spanning the 0.37%-2% feat_oob range, and the
+half-life/clamp_frac/frozen-sigma decomposition already converges stably
+within that range (this was verified the same way for FD003); (b) Part
+B's three new deterministic degradation types already only require arm
+C's absolute-scale levels, so Part A's own baseline on the same scale can
+be plotted directly against Part B's Gaussian-noise baseline on the same
+dose-response chart, without needing to compute the main SNR arm again.
 """
 import os
 import json
@@ -58,7 +65,7 @@ if __name__ == '__main__':
         t0 = time.time()
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)
         scalers_by_seed = scalers_for_ds(ds)
 
         result = E.run_df_perturb_sweep(

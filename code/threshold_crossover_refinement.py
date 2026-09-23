@@ -1,20 +1,27 @@
 """
-R4-3：9.6% 阈值加密验证。Transformer/FD001/Deep_Ensemble 的相对半衰交叉点
-（原两点 0dB->2.846%、-5dB->11.86% 之间线性插值得到 9.607%，D3 轮已用一份
-稀疏网格证实这不是插值伪影）——本轮在 [2.85%, 11.86%] 区间内新增 6 个主臂
-Gaussian-SNR 档位 {-1,-2,-3,-3.5,-4,-4.5} dB（先探测过，armC 的固定%FS
-方案要到几十%FS才能进入这个feat_oob区间，不是"同一量纲"的加密，弃用；改用
-和原两个端点同一条主臂SNR轴上的档位，是名副其实的"区间内加密"），5 个
-trial 共享噪声（与主臂 run_snr_sweep 完全一致的 rng 标签
-('mainarm','global',level_key,t)，可精确复现原两个端点的历史值）。
+Densified verification of the 9.6% crossover threshold. Transformer /
+FD001 / Deep_Ensemble's relative half-life crossover point (linear
+interpolation between the two existing points 0dB->2.846% and
+-5dB->11.86% gives 9.607%; a sparse grid check already confirmed this is
+not an interpolation artifact) -- this adds 6 new main-arm Gaussian-SNR
+levels {-1,-2,-3,-3.5,-4,-4.5} dB inside the [2.85%, 11.86%] bracket
+(the armC fixed-%FS scheme only reaches this feat_oob range at tens of
+%FS, which is not densifying "the same axis", so it was dropped in favor
+of levels on the same main-arm SNR axis as the two existing bracket
+points -- a genuine "densification within the bracket"), with the same 5
+trials sharing noise (identical rng tag ('mainarm','global',level_key,t)
+as the main-arm run_snr_sweep, exactly reproducing the two existing
+points' historical values).
 
-额外做的事：不仅报 grand-mean 的 PICP，还逐 trial 单独追踪 Ensemble PICP
-（5 seed 的 moment-matching集成，对每个 trial 单独算一条 PICP-vs-foob 曲线），
-在同一个 rel_threshold=picp_clean-0.10 下分别对 5 条 trial 专属曲线插值出 5 个
-交叉点，报其范围——衡量"9.6%"这个数字对噪声实现本身的敏感度，而不仅仅是
-对网格密度的敏感度（D3 轮已验证的是后者）。
+Also done: beyond the grand-mean PICP, per-trial Ensemble PICP is tracked
+separately (the 5-seed moment-matching ensemble, one PICP-vs-feat_oob
+curve per trial), and interpolating each of the 5 trial-specific curves
+at the same rel_threshold=picp_clean-0.10 gives 5 crossover points, whose
+range is reported -- this measures the sensitivity of the "9.6%" figure
+to the noise realization itself, not just to grid density (which was
+already verified separately).
 
-只做推理，不重训。输出：
+Inference only, no retraining. Output:
 results/generated/leakfree_r4/threshold_960_refinement.json
 """
 import os
@@ -78,12 +85,12 @@ if __name__ == '__main__':
 
             mu_mem, sigma_mem = [], []
             y_ref = None
-            # 2026-09-21（本轮）：此前这里只用 C.SEEDS[0] 一个seed的scaler算
-            # fo_this_trial（`if fo_this_trial is None` 只在第一个seed触发），
-            # 且用 scale_and_package 返回的整段轨迹 scaled_feat——两个口径问题
-            # 与主扫描脚本（sweep_engine.py等）此前的旧bug是同一类，只是这个
-            # 脚本当时漏了没改。现在改成5个seed各自在窗口化X_test上算，取平均，
-            # 与PICP自身的5模型汇总、以及本轮修的其它文件同一口径。
+            # Previously this used only C.SEEDS[0]'s scaler to compute
+            # fo_this_trial, on the whole-trajectory scaled_feat returned
+            # by scale_and_package -- the same class of bug fixed in the
+            # main sweep scripts (sweep_engine.py etc.), just missed here.
+            # Fixed to compute per-seed on the windowed X_test and average,
+            # matching PICP's own 5-model aggregation convention.
             fo_this_trial_per_seed = []
             for seed in C.SEEDS:
                 scaler = scalers_by_seed[seed]
@@ -95,7 +102,7 @@ if __name__ == '__main__':
                 sigma = np.exp(ls) * 125.0
                 mu_mem.append(mu); sigma_mem.append(sigma)
                 y_ref = y_test
-                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                # V4.feat_oob is the project's single implementation; denominator restricted to sensor columns.
                 fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
             fo_this_trial = float(np.mean(fo_this_trial_per_seed))
 

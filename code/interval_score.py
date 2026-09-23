@@ -1,18 +1,20 @@
 """
-R2-2：区间评分（Winkler interval score, alpha=0.1）与 WIS，全部方法×骨干×
-数据集，clean 条件（对应主 Table 3 的干净条件行）。定义：
+Interval score (Winkler interval score, alpha=0.1) and WIS, all
+methods x backbones x datasets, clean condition (corresponding to the
+clean-condition row of the main Table 3). Definitions:
 
   IS_alpha(l,u,y) = (u-l) + (2/alpha)(l-y) if y<l
                   = (u-l) + (2/alpha)(y-u) if y>u
                   = (u-l)                  otherwise
 
-  WIS（Bracher et al. 2021，单档区间 K=1，中位数用 mu 代替，对称正态假设下
-  中位数=均值）：
+  WIS (Bracher et al. 2021, single interval K=1, median replaced by mu
+  under the symmetric-Gaussian assumption that median=mean):
     WIS = (1/(K+0.5)) * [0.5*|y-mu| + (alpha/2)*IS_alpha(l,u,y)]
         = (1/1.5) * [0.5*|y-mu| + 0.05*IS_0.1(l,u,y)]
 
-只做推理，不重训。MC-Dropout/Ensemble/MSE 的 mu,sigma 构造与既有代价表
-逐字一致（复用 sweep_engine.py 的 infer_* 函数）。
+Inference only, no retraining. MC-Dropout/Ensemble/MSE's mu,sigma
+construction is identical to the existing cost tables (reuses
+sweep_engine.py's infer_* functions).
 """
 import os
 import json
@@ -80,7 +82,7 @@ def get_aleatory_var(backbone, ds, seed):
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}")
 

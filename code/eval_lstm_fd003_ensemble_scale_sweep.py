@@ -1,8 +1,10 @@
 """
-FD003 补全：集成规模扫描 M∈{2,3,5,10}，leakfree协议，15-seed池（5原始+10额外）。
-逐字复用 eval_lstm_ensemble_scale_sweep.py 的 disjoint 分组/推理/
-集成逻辑，仅限定数据集为 FD003，噪声方案用 'global'（与 FD001 相同，因为
-FD003 经 KMeans 核实为单一工况）。
+FD003 completion: ensemble-scale sweep M in {2,3,5,10}, leakfree protocol,
+15-seed pool (5 original + 10 additional). Reuses
+eval_lstm_ensemble_scale_sweep.py's disjoint grouping/inference/ensemble
+logic verbatim, restricted to the FD003 dataset only, using noise scheme
+'global' (same as FD001, since FD003 was verified via KMeans to be a
+single operating condition).
 """
 import os
 import json

@@ -1,14 +1,20 @@
 """
-STEP 5j：leakfree 数据的 feat_oob 剂量-反应汇总 + 冻结σ̂反事实分解。
+STEP 5j: feat_oob dose-response summary for the leakfree data + frozen-sigma
+counterfactual decomposition.
 
-取代旧的 an earlier pooled dose-response script (not included; superseded)（池化点+半衰交叉点）与
-an earlier MSE-proxy decomposition script (not included; superseded, see results/superseded/)（MSE代理分解，已被用户否定）。
+Supersedes an earlier pooled dose-response script (not included;
+superseded) (pooled points + half-life crossover) and an earlier
+MSE-proxy decomposition script (not included; superseded, see
+results/superseded/) (MSE-proxy decomposition, rejected by the user).
 
-分解不再依赖第二个模型（MSE）做"纯μ̂"代理——直接用同一个 NLL/CP-norm
-模型在冻结σ̂反事实下的 PICP 曲线（`NLL_frozen_sigma`/`CP_norm_frozen_sigma`，
-STEP5的leakfree全量重跑已经算好，逐样本配对，见该脚本docstring），因为
-真实曲线和反事实曲线共享完全相同的 feat_oob 网格点（同一批trial/level），
-插值几乎是精确匹配，不是跨模型近似。
+The decomposition no longer relies on a second model (MSE) as a "pure
+mu_hat" proxy -- it uses the same NLL/CP-norm model's PICP curve directly
+under the frozen-sigma counterfactual (`NLL_frozen_sigma` /
+`CP_norm_frozen_sigma`, already computed by STEP5's full leakfree rerun,
+paired sample-for-sample; see that script's docstring), because the real
+curve and the counterfactual curve share exactly the same feat_oob grid
+points (the same batch of trials/levels), so the interpolation is close
+to an exact match rather than a cross-model approximation.
 """
 import os
 import json

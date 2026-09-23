@@ -1,16 +1,20 @@
 """
-STEP 2e：n=5 vs n=15 种子间方差对比，leakfree协议。
+STEP 2e: n=5 vs n=15 seed-to-seed variance comparison, leakfree protocol.
 
-R8-B（本轮）：额外10个种子不再从一个单独的训练脚本产出的结果文件读取（那
-会与本轮"不重训"矛盾）；改为直接从已有的
-`results/checkpoints/lstm/{ds}_LSTM_extraseed{seed}.pt`（10个额外种子的
-checkpoint，仍是原始训练权重，本轮未重训）做推理，用本仓库统一的测试真值
-口径（min(官方RUL-1,125)，本轮起对全部表格生效）重新计算 rmse/picp/mpiw。
-5-seed 侧直接读取本轮已更新的 `step0c_leakfree_results.json`。
+The 10 additional seeds are no longer read from a separate training
+script's result file (that would conflict with "no retraining" here);
+instead, inference is run directly against the existing
+`results/checkpoints/lstm/{ds}_LSTM_extraseed{seed}.pt` (the 10 additional
+seeds' checkpoints, still the original training weights, not retrained
+here), recomputing rmse/picp/mpiw under this repo's unified test-label
+convention (min(official RUL-1,125), which applies to all tables from
+here on). The 5-seed side reads directly from the already-updated
+`step0c_leakfree_results.json`.
 
-同一统计口径的旧版（非leakfree）：对每个数据集×指标(rmse/picp/mpiw)，
-比较原始5 seeds的均值/std 与 全部15 seeds（5原始+10额外）的均值/std，
-报告 std_ratio_15_over_5。
+Same statistical convention as the old (non-leakfree) version: for each
+dataset x metric (rmse/picp/mpiw), compares the original 5 seeds' mean/std
+against all 15 seeds' (5 original + 10 additional) mean/std, reporting
+std_ratio_15_over_5.
 """
 import os
 import json
@@ -85,5 +89,5 @@ if __name__ == '__main__':
     with open(out_path, 'w') as fp:
         json.dump(results, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
-    print("STEP2e complete (R8: extra-10-seed metrics recomputed by inference from existing "
+    print("STEP2e complete (extra-10-seed metrics recomputed by inference from existing "
           "checkpoints under min(official_RUL-1,125), no retraining).")

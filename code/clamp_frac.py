@@ -1,11 +1,15 @@
 """
-STEP 5k：机制诊断表1（三臂 feat_oob vs clamp_frac 配对序列），leakfree checkpoint。
+STEP 5k: mechanism-diagnostic table 1 (three-arm feat_oob vs clamp_frac
+paired sequence), leakfree checkpoints.
 
-只算 NLL / CP-norm 的 log_sigma → clamp_frac，不跑 MC-Dropout/Ensemble/MSE
-（那些在完整 sweep `run_sweep_noise_lstm.py` 里已经跑过，PICP/σ̂
-数字直接复用其输出；本脚本只补 clamp_frac 这一个此前 leakfree sweep 没有
-记录的量）。噪声注入协议与完整sweep一致：每个trial的原始噪声共享（同一份
-物理扰动），每个seed各自用自己的leakfree scaler标准化。
+Only computes NLL / CP-norm's log_sigma -> clamp_frac; does not rerun
+MC-Dropout/Ensemble/MSE (those already ran in the full sweep
+`run_sweep_noise_lstm.py`, whose PICP/sigma_hat numbers are reused
+directly; this script only fills in clamp_frac, the one quantity the
+earlier leakfree sweep didn't record). Noise-injection protocol matches
+the full sweep: each trial's raw noise is shared (the same physical
+perturbation), with each seed standardizing it via its own leakfree
+scaler.
 """
 import os
 import json
@@ -72,10 +76,11 @@ def run_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct,
                 ls_c = infer_log_sigma(cp_models[seed], X_t)
                 nll_ls_pool.append(ls_n)
                 cp_ls_pool.append(ls_c)
-                # 2026-09-21（本轮）：此前只在 seed==C.SEEDS[0] 时记一次，且用整段轨迹
-                # scaled_feat——同一类此前漏掉的旧bug，见 threshold_crossover_refinement.py
-                # 同日同条注释。改成5个seed各自在窗口化X_test上算，取平均。
-                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                # fixed a bug: this was previously recorded once at seed==C.SEEDS[0] using the
+                # full-trajectory scaled_feat -- the same class of bug also fixed in
+                # threshold_crossover_refinement.py. Now computed per seed on the windowed
+                # X_test and averaged.
+                # V4.feat_oob is this project's single implementation, denominator scoped to sensor columns.
                 fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
             feat_oob_trials.append(float(np.mean(fo_this_trial_per_seed)))
 
@@ -109,7 +114,7 @@ if __name__ == '__main__':
             _, _, _, _, scaler = V4.load_raw_train_test_and_scaler_leakfree(ds, fit_units)
             scalers_by_seed[seed] = scaler
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)
 
         if ds == 'FD001':
             print("  --- arm B_pooled (single condition, A==B) ---")
@@ -119,8 +124,8 @@ if __name__ == '__main__':
             main_results[ds] = {'A_percondition': r, 'B_pooled': r}
         else:
             km, cond_std, global_std = V4.fit_condition_model(train_df_raw, feat_cols)
-            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}  # R8-B1
-            global_std = V4.sensor_only_scale(feat_cols, global_std)  # R8-B1
+            cond_std = {c: V4.sensor_only_scale(feat_cols, v) for c, v in cond_std.items()}
+            global_std = V4.sensor_only_scale(feat_cols, global_std)
             print("  --- arm A_percondition ---")
             ra = run_arm(ds, 'A_percondition', test_df_raw, true_ruls, feat_cols, device, SNR_LEVELS_ALL,
                          is_pct=False, km=km, cond_std=cond_std, scalers_by_seed=scalers_by_seed)

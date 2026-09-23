@@ -1,11 +1,16 @@
 """
-T2-A1：Transformer 骨干，NLL 头，leakfree 协议，4 数据集 × 5 seeds = 20 模型。
+T2-A1: Transformer backbone, NLL head, leakfree protocol, 4 datasets x 5
+seeds = 20 models.
 
-架构/超参逐字复用 E3_run_save_ece.py 的 HeteroscedasticTransformer（见
-transformer_common.py 顶部说明）；训练协议（checkpoint 选择/早停用 canonical_split
-的 val_units、scaler 只在 fit_units 上 fit、engine 级三向切分互不重叠）与
-LSTM 的 train_lstm.py / train_lstm_extra_seeds.py
-完全一致——这是与 LSTM 可比的前提，两条线除了模型本身，训练/选择协议逐字相同。
+Architecture/hyperparameters reuse the HeteroscedasticTransformer verbatim
+from an earlier (not-included) training script (see the note at the top of
+transformer_common.py); the training protocol (checkpoint selection /
+early stopping use canonical_split's val_units, scaler fit only on
+fit_units, engine-level three-way split pairwise non-overlapping) is
+identical to the LSTM side's train_lstm.py / train_lstm_extra_seeds.py --
+this is the precondition for comparability with LSTM: the two lines are
+identical in training/selection protocol, differing only in the model
+itself.
 """
 import os
 import json
@@ -122,7 +127,7 @@ def run_one_seed(ds_name, seed, device, use_amp, all_units):
         'dropout': T2.T2_DROPOUT, 'log_sigma_min': T2.T2_LOG_SIGMA_MIN, 'log_sigma_max': T2.T2_LOG_SIGMA_MAX,
         'seed': seed, 'dataset': ds_name, 'fit_units': fit_units, 'val_units': val_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': T2.T2_EPOCHS,
-        'selection_protocol': 'canonical_split fit/val, leakfree scaler, Transformer backbone (T2, 2026-09-18)',
+        'selection_protocol': 'canonical_split fit/val, leakfree scaler, Transformer backbone (T2)',
     }, ckpt_path)
 
     return {'seed': seed, 'rmse': rmse, 'score': score, 'picp': picp, 'mpiw': mpiw, 'ece': ece,

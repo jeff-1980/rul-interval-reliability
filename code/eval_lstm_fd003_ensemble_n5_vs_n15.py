@@ -1,8 +1,9 @@
 """
-FD003 补全：n=5 vs n=15 种子间 PICP/RMSE/MPIW 方差对比，leakfree协议。
-逐字复用 eval_lstm_ensemble_n5_vs_n15.py 的统计口径，仅数据源
-换成 FD003 专用文件（stepFD003_nll_leakfree_results.json /
-stepFD003_extra_seeds_leakfree_results.json）。
+FD003 completion: n=5 vs n=15 seed-to-seed PICP/RMSE/MPIW variance
+comparison, leakfree protocol. Reuses eval_lstm_ensemble_n5_vs_n15.py's
+statistical convention exactly, only swapping the data source for
+FD003-specific files (stepFD003_nll_leakfree_results.json /
+stepFD003_extra_seeds_leakfree_results.json).
 """
 import os
 import json

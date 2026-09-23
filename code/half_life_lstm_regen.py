@@ -1,14 +1,18 @@
 """
-R5-1：LSTM 侧 relative_half_life_feat_oob.json 的生成脚本此前在 code/ 里已经
-找不到了（推测是当年一次性内联脚本，没有存成文件——supplementary_attribution
-之类的产物也发生过同样的事）。本脚本用与 Transformer 侧
-`mechanism_transformer.py::compute_half_life/pooled_points/crossover` 逐字
-相同的定义重新生成，数据源换成 LSTM 的 noise_sensitivity_leakfree(.json/_armC)
-+ FD003 专用文件，口径完全对齐（主SNR臂 A_percondition+B_pooled + 臂C，
-pool后去重，abs阈值0.80，rel阈值picp_clean-0.10）。
+The generation script for the LSTM side's relative_half_life_feat_oob.json
+could no longer be found in code/ (presumably an ad-hoc, one-off inline
+script that was never saved as a file -- the same thing happened to some
+of the supplementary_attribution artifacts). This script regenerates it
+using the exact same definitions as the Transformer side's
+`mechanism_transformer.py::compute_half_life/pooled_points/crossover`,
+with the data source swapped for LSTM's
+noise_sensitivity_leakfree(.json/_armC) + the FD003-specific file, fully
+matching convention (main SNR arm A_percondition+B_pooled + arm C, pooled
+and deduplicated, abs threshold 0.80, rel threshold picp_clean-0.10).
 
-不涉及新的随机扰动注入（只读已经算好的 dose-response 点做插值），不需要
-PYTHONHASHSEED 断言。
+No new random perturbation injection is involved (only reads already
+computed dose-response points and interpolates), so no PYTHONHASHSEED
+assertion is needed.
 """
 import os
 import json

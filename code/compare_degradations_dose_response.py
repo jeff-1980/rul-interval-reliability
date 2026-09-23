@@ -1,17 +1,22 @@
 """
-T2-B 核心问题：把 bias/drift/gain 三类确定性劣化 + 高斯噪声（臂C）画在
-同一条 f_oob 轴上，剂量-反应曲线是否重合？
+Core question: plotting the three deterministic degradation types
+(bias/drift/gain) plus Gaussian noise (arm C) on the same f_oob axis --
+do the dose-response curves coincide?
 
-方法：对每个 (backbone, dataset, method)，取四类扰动各自的
-(feat_oob, PICP) 点集，在共同 feat_oob 网格上插值对比 PICP，用最大绝对
-偏差和平均绝对偏差衡量"重合程度"。不做曲线拟合，只报测量到的分离量。
+Method: for each (backbone, dataset, method), take each perturbation
+type's (feat_oob, PICP) point set, interpolate PICP on a common feat_oob
+grid, and measure "coincidence" via max absolute deviation and mean
+absolute deviation. No curve fitting -- only the measured separation is
+reported.
 
-高斯噪声基线：LSTM 用已有的 armC 数据（`noise_sensitivity_leakfree_armC*.json`/
-`noise_sensitivity_leakfree*.json` 里的臂C部分，或直接用
-`dose_response_feat_oob_leakfree.json`里已经pool好的点，这里为了和bias/
-drift/gain同一档位{0.1,0.5,1,2,5}%FS严格对齐，直接从原始 armC 扫描文件取
-臂C部分，不用主SNR臂的点）；Transformer 用 T2 Part A 自己的 armC 扫描
-（`t2_transformer_armC_sweep_leakfree.json`，本来就只有臂C）。
+Gaussian-noise baseline: for LSTM, uses the existing arm-C data (the arm-C
+portion of `noise_sensitivity_leakfree_armC*.json` /
+`noise_sensitivity_leakfree*.json`, or the already-pooled points in
+`dose_response_feat_oob_leakfree.json`; to align strictly with
+bias/drift/gain's shared levels {0.1,0.5,1,2,5}% FS, this pulls the arm-C
+portion directly from the raw arm-C sweep file, not the main SNR arm's
+points). For Transformer, uses its own arm-C sweep
+(`t2_transformer_armC_sweep_leakfree.json`, which only has arm C anyway).
 """
 import os
 import json
@@ -81,8 +86,8 @@ if __name__ == '__main__':
                 drift_pts = points_from_block(degr[backbone]['drift'][ds], method)
                 gain_pts = points_from_block(degr[backbone]['gain'][ds], method)
 
-                # 共同比较网格：用高斯噪声(armC)自己的 feat_oob 值作为参照点，
-                # 在其它三类曲线上插值取同一批 feat_oob 处的 PICP
+                # common comparison grid: use the Gaussian-noise (arm C) feat_oob values as
+                # reference points, interpolating the other three curves at the same feat_oob values
                 ref_fo = [p[0] for p in gaussian]
                 gaussian_picp = [p[1] for p in gaussian]
                 bias_picp = [interp(bias_pts, x) for x in ref_fo]

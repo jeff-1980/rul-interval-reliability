@@ -1,12 +1,15 @@
 """
-R2-3：公平校准对照。固定方差(MSE-fixed)与 MC-Dropout 的残差尺度
-（aleatory_var）此前一直用 fit_units（训练集）残差估计；现在改用
-calib_units（与 Split-CP 同一批发动机）残差估计，两个版本并列报告，
-说明差异。只做推理，不重训——用已有的 MC/MSE 模型 checkpoint，只是换一批
-数据算残差方差。
+Fair-calibration control. Fixed-variance (MSE-fixed) and MC-Dropout's
+residual scale (aleatory_var) had always been estimated from fit_units
+(training set) residuals; this switches to calib_units (the same engines
+as Split-CP) residuals instead, reporting both versions side by side to
+show the difference. Inference only, no retraining -- uses the existing
+MC/MSE model checkpoints, just computes the residual variance on a
+different data subset.
 
-calib_units 上的推理沿用 train_transformer_split_cp.py 的全滑窗
-sequences_for_units 逻辑（label=训练式RUL，与 CP 用的是同一份数据/标签）。
+Inference on calib_units reuses train_transformer_split_cp.py's full
+sliding-window sequences_for_units logic (label = training-style RUL, the
+same data/labels CP uses).
 """
 import os
 import json

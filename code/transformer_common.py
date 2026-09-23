@@ -1,17 +1,24 @@
 """
-T2 升级实验包共用模块：Transformer 骨干定义 + checkpoint 加载调度。
+Shared module for the Transformer-backbone experiment package: Transformer
+backbone definitions + checkpoint-loading dispatch.
 
-架构逐字复用 E3_run_save_ece.py 的 HeteroscedasticTransformer / MC_Transformer
-定义（2026-09-18 用户确认：the earlier manuscript draft 描述的"1D-Conv embedding"与实际代码
-不符，实际是 nn.Linear 投影 + 可学习加性位置编码，按代码为准，不引入 Conv1d）。
-超参同样逐字复用：hidden_dim=64, nhead=4, dim_feedforward=128, num_layers=2,
-dropout=0.2, log_sigma_min=-3.0, log_sigma_max=2.0, epochs=150, lr=1e-3,
-batch=256 —— 在旧（泄漏）协议下确定，本次未在新协议下重新搜索/调参，
-只是训练时的模型选择判据换成 canonical_split 的 val_units（不用测试集）。
+The architecture reuses the earlier HeteroscedasticTransformer /
+MC_Transformer definitions verbatim (confirmed against the actual code:
+the earlier manuscript draft's description of a "1D-Conv embedding" does
+not match the implementation, which is actually an nn.Linear projection
+plus a learnable additive positional encoding, with no Conv1d -- the code
+is authoritative). Hyperparameters are likewise reused verbatim:
+hidden_dim=64, nhead=4, dim_feedforward=128, num_layers=2, dropout=0.2,
+log_sigma_min=-3.0, log_sigma_max=2.0, epochs=150, lr=1e-3, batch=256 --
+these were determined under the old (leaky) protocol and were not
+re-searched/re-tuned under the new protocol here; only the training-time
+model-selection criterion changed to canonical_split's val_units (no
+longer the test set).
 
-MC_Transformer 是 HeteroscedasticTransformer 去掉 sigma 头、纯 MSE 训练的单输出
-版本，用于 MC-Dropout（测试时 dropout 采样）和 Fixed-variance/MSE 行，与 LSTM 侧
-MC_LSTM 的角色完全对应。
+MC_Transformer is a single-output, pure-MSE-trained version of
+HeteroscedasticTransformer with the sigma head removed, used for
+MC-Dropout (test-time dropout sampling) and the Fixed-variance/MSE rows --
+its role exactly mirrors MC_LSTM on the LSTM side.
 """
 import os
 import torch
@@ -43,7 +50,7 @@ os.makedirs(T2_CKPT_DIR, exist_ok=True)
 
 
 class HeteroscedasticTransformer(nn.Module):
-    """逐字复用 E3_run_save_ece.py 第170-196行。"""
+    """Reuses the earlier training pipeline's definition verbatim."""
     def __init__(self, input_size, hidden_dim, dropout, seq_len, log_sigma_min, log_sigma_max):
         super().__init__()
         self.log_sigma_min = log_sigma_min
@@ -70,9 +77,9 @@ class HeteroscedasticTransformer(nn.Module):
 
 
 class MC_Transformer(nn.Module):
-    """HeteroscedasticTransformer 去掉 sigma 头的单输出 MSE 版本，与 MC_LSTM
-    （mc_dropout_model.py）角色对应：用于 MC-Dropout 测试时采样和
-    Fixed-variance/MSE 行。"""
+    """Single-output MSE version of HeteroscedasticTransformer with the
+    sigma head removed, mirroring MC_LSTM (mc_dropout_model.py): used for
+    MC-Dropout test-time sampling and the Fixed-variance/MSE rows."""
     def __init__(self, input_size, hidden_dim, dropout, seq_len):
         super().__init__()
         self.pos_embedding = nn.Parameter(torch.randn(1, seq_len, hidden_dim))
@@ -94,9 +101,10 @@ class MC_Transformer(nn.Module):
 
 
 def load_checkpoint_model_t2(backbone, ckpt_path, device):
-    """backbone-dispatching checkpoint loader，用于 NLL(Heteroscedastic*)模型。
-    LSTM 分支直接复用 common.load_checkpoint_model；Transformer 分支
-    额外需要 seq_len（固定=SEQUENCE_LENGTH，两骨干共用同一窗口长度）。"""
+    """Backbone-dispatching checkpoint loader for NLL (Heteroscedastic*)
+    models. The LSTM branch reuses common.load_checkpoint_model directly;
+    the Transformer branch additionally needs seq_len (fixed =
+    SEQUENCE_LENGTH, shared window length across both backbones)."""
     if backbone == 'LSTM':
         return C.load_checkpoint_model(ckpt_path, device)
     elif backbone == 'Transformer':
@@ -111,7 +119,7 @@ def load_checkpoint_model_t2(backbone, ckpt_path, device):
 
 
 def load_checkpoint_mc_model_t2(backbone, ckpt_path, device):
-    """backbone-dispatching checkpoint loader，用于 MC-Dropout/MSE(MC_*)模型。"""
+    """Backbone-dispatching checkpoint loader for MC-Dropout/MSE (MC_*) models."""
     if backbone == 'LSTM':
         import mc_dropout_model as S1
         ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
@@ -131,7 +139,7 @@ def load_checkpoint_mc_model_t2(backbone, ckpt_path, device):
 def nll_ckpt_path(backbone, ds, seed, extra=False):
     tag = 'extraseed' if extra else 'seed'
     if backbone == 'LSTM':
-        # 复用已有的 leakfree LSTM checkpoint（不重训）
+        # reuses the existing leakage-free LSTM checkpoint (no retraining)
         d = os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm')
         return os.path.join(d, f"{ds}_LSTM_{tag}{seed}.pt")
     return os.path.join(T2_CKPT_DIR, f"{ds}_Transformer_{tag}{seed}.pt")

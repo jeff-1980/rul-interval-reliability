@@ -1,24 +1,33 @@
 """
-STEP 0c：在 STEP0b（只修了checkpoint选择泄漏）基础上，再修 scaler 泄漏——
-STEP0b 仍然调用 `C.load_and_process(ds)` 一次性对全部 train 发动机（含 val）
-拟合 MinMaxScaler，val 的特征分布因此渗进了 scaler 的 min/max 参数。
+STEP 0c: builds on STEP0b (which only fixed the checkpoint-selection
+leakage) by also fixing the scaler leakage -- STEP0b still calls
+`C.load_and_process(ds)`, which fits MinMaxScaler on all train-side
+engines at once (including val), so val's feature distribution leaks into
+the scaler's min/max parameters.
 
-本脚本用 `C.load_and_process_leakfree(ds, fit_units)`：scaler 只在
-fit_units（60%）上拟合，val/calib/test 全部只 transform。fit_units/
-val_units 从 `canonical_splits.json`（STEP A，全项目统一切分）读取，不再
-自行切分——与 STEP1b/STEP3b 使用完全相同的 (fit_units, val_units)，三条
-训练线的 train/val 划分逐发动机一致。
+This script uses `C.load_and_process_leakfree(ds, fit_units)`: the
+scaler is fit only on fit_units (60%), and val/calib/test are all
+transform-only. fit_units/val_units are read from
+`canonical_splits.json` (the project-wide unified split) rather than
+split locally here -- using exactly the same (fit_units, val_units) as
+STEP1b/STEP3b, so the train/val split matches across all three training
+lines, engine-by-engine.
 
-checkpoint 选择判据、训练超参、架构与 STEP0/STEP0b 逐字一致，只改
-数据来源（fit=60%而非80%，因为要给calib留出20%，即便STEP0本身不用calib，
-也不能让STEP0的梯度碰到calib_units——否则STEP3做校准时，"calib从未被
-任何模型的梯度见过"这个split-CP前提对STEP0训练出的东西就不成立，虽然
-STEP0和STEP3是不同模型，但保持三线fit集合完全一致是用户明确要求的
-"三条线的划分必须逐发动机一致"）。
+Checkpoint-selection criterion, training hyperparameters, and
+architecture are identical to STEP0/STEP0b; only the data source changes
+(fit=60% instead of 80%, to leave 20% for calib -- even though STEP0
+itself doesn't use calib, its gradient still must not touch
+calib_units, otherwise STEP3's calibration precondition that "calib was
+never seen by any model's gradient" would not hold for what STEP0
+trained. STEP0 and STEP3 are different models, but keeping the fit set
+identical across all three training lines -- "the split must match
+engine-by-engine across all three lines" -- was an explicit
+requirement).
 
-checkpoint 存到新目录 `checkpoints_leakfree/`，同时使 `checkpoints/`
-（原始，选择+scaler双重泄漏）与 `checkpoints_valselect/`（只修了选择
-泄漏，scaler仍泄漏）都成为历史版本，不删除，仅不再使用。
+Checkpoints are saved to a new directory `checkpoints_leakfree/`, leaving
+`checkpoints/` (original, double leakage in both selection and scaler)
+and `checkpoints_valselect/` (only the selection leakage fixed, scaler
+still leaky) as historical versions -- not deleted, just no longer used.
 """
 import os
 import json
@@ -144,7 +153,7 @@ def run_one_seed(ds_name, seed, device, use_amp):
         'seed': seed, 'dataset': ds_name,
         'fit_units': fit_units, 'val_units': val_units,
         'best_val_rmse_cycles': best_val_rmse, 'train_epochs': EPOCHS,
-        'selection_protocol': 'canonical_split fit/val, leakfree scaler (2026-09-15)',
+        'selection_protocol': 'canonical_split fit/val, leakfree scaler',
     }, ckpt_path)
 
     return {'seed': seed, 'n_fit_units': len(fit_units), 'n_val_units': len(val_units),

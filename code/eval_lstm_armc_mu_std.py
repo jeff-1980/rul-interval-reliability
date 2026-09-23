@@ -1,9 +1,11 @@
 """
-STEP 5l：机制诊断表2（臂C下 μ̂ 跨样本 std 相对 clean 的变化率），leakfree。
+STEP 5l: mechanism-diagnostic table 2 (arm C's mu_hat cross-sample std,
+relative-to-clean rate of change), leakage-free.
 
-与本脚本的历史版本同一统计口径（NLL模型，5 seeds×5 trials池化，
-mu_std_across_samples + 相对clean变化率），改用 checkpoints_leakfree +
-canonical_splits.json 的逐seed scaler。
+Matches this script's earlier version's statistical convention (NLL
+model, pooled over 5 seeds x 5 trials, mu_std_across_samples +
+relative-to-clean rate of change), switched to checkpoints_leakfree + a
+per-seed scaler from canonical_splits.json.
 """
 import os
 import json
@@ -46,7 +48,7 @@ if __name__ == '__main__':
         print(f"\n{'=' * 20} {ds} (Arm C, leakfree) {'=' * 20}")
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        full_scale = V4.sensor_only_scale(feat_cols, full_scale)  # R8-B1
+        full_scale = V4.sensor_only_scale(feat_cols, full_scale)
 
         models_by_seed, scalers_by_seed = {}, {}
         for seed in C.SEEDS:
@@ -71,9 +73,11 @@ if __name__ == '__main__':
                     X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                     X_t = torch.tensor(X_test, dtype=torch.float32).to(device)
                     all_mu.append(infer_mu(models_by_seed[seed], X_t))
-                    # R9-Part3: 同一类此前在 clamp_frac/threshold_refinement 等文件
-                    # 修过的旧bug（此前只用 seed[0]+整段轨迹 scaled_feat，这里之前漏改）
-                    # ——改成5个seed各自在窗口化X_test上算，取平均；分母限定传感器列。
+                    # same class of bug already fixed in clamp_frac.py /
+                    # threshold_crossover_refinement.py and elsewhere (previously
+                    # used only seed[0] + the whole-trajectory scaled_feat,
+                    # missed here) -- fixed to compute per-seed on the
+                    # windowed X_test and average; denominator restricted to sensor columns.
                     fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
                 all_feat_oob.append(float(np.mean(fo_this_trial_per_seed)))
 

@@ -1,36 +1,44 @@
 """
-E5b：SHAP 跨seed稳定性，leakfree checkpoint + KernelSHAP（按用户指示从原版
-GradientExplainer换成KernelSHAP，方法论变化，明确记录）。
+SHAP cross-seed stability, leakage-free checkpoints + KernelSHAP (switched
+from an earlier GradientExplainer version to KernelSHAP; a deliberate
+methodology change, recorded explicitly).
 
-与原 E5_shap_stability.py 的区别：
-  1. 用 checkpoints_leakfree/ 的5个seed checkpoint（不重训），每个seed用
-     自己的 canonical fit_units scaler。
-  2. Explainer 从 GradientExplainer 换成 KernelExplainer——按14个传感器
-     通道（而非"每个时间步×每个传感器"的420维）做特征粒度：对每个被解释
-     样本，coalition mask 决定哪些传感器通道被替换成background轨迹（其余
-     时间步保持该样本原值），forward拿mu，比原版"420维梯度归因再按时间步
-     聚合"更接近标准的"分组SHAP"做法，模型无关（不依赖梯度）。
-  3. nsamples=200（KernelSHAP系数估计的coalition采样数，显式设置而非
-     'auto'的~2076，为了在合理时间内跑完5seed×50个解释样本，明确记录为
-     方法论参数变化，不是偷工减料——原GradientExplainer本身就是精确解析
-     梯度，不存在"采样数"这个概念，两者的"精度"不是同一件事，不能直接比
-     数值大小）。
-  4. 【2026-09-18 修正】被解释样本数 N_EXP：上一版误设为50，用户核对发现
-     与the earlier (pre-audit) version（`n_exp = min(200, len(X_te))`，FD001测试集100条→the earlier version's actual
-     explain了全部100条）不一致。已改为同一公式 `min(N_EXP=200, len(X_test))`，
-     FD001下同样得到100——与background(n_bg=200)、test数（min(200,实际数)）
-     两项配置现在与the earlier (pre-audit) version完全对齐，只有explainer本身（KernelSHAP vs
-     GradientExplainer）和nsamples这个KernelSHAP特有参数是刻意的方法论
-     变化，不是配置疏漏。
-  5. 【2026-09-18 新增】收敛测试：nsamples 支持命令行传参（`python3
-     shap_stability.py 800`），用于对比 baseline(200) vs
-     4x(800) 的跨seed Spearman是否收敛（ρ差异小→已收敛，差异大→200太
-     小，采样噪声主导排名不稳定）。若两档最终都到不了0.7，整个SHAP
-     附录按用户指示删除，不勉强保留弱结果。
+Differences from the earlier version:
+  1. Uses the leakage-free checkpoints' 5 seeds (no retraining), each seed
+     with its own canonical fit_units scaler.
+  2. Explainer switched from GradientExplainer to KernelExplainer --
+     feature granularity is per sensor channel (14 channels, not the
+     "per-timestep x per-sensor" 420-dim version): for each explained
+     sample, a coalition mask decides which sensor channels get replaced
+     with the background trajectory (other timesteps keep that sample's
+     original value), then a forward pass gives mu. Closer to the standard
+     "grouped SHAP" approach than the earlier "420-dim gradient
+     attribution aggregated by timestep", and model-agnostic (no gradient
+     dependency).
+  3. nsamples=200 (KernelSHAP's coalition-sampling count for coefficient
+     estimation, set explicitly rather than 'auto''s ~2076, to finish 5
+     seeds x 50 explained samples in reasonable time -- a deliberate
+     methodology parameter change, not a shortcut: the earlier
+     GradientExplainer computed exact analytic gradients and has no
+     "sample count" concept at all, so the two methods' "precision" isn't
+     directly comparable).
+  4. Number of explained samples N_EXP: matches the earlier version's own
+     formula, `n_exp = min(200, len(X_te))` (for FD001's 100-window test
+     set, this explains all 100) -- background (n_bg=200) and test-sample
+     count now align with the earlier version exactly; only the explainer
+     itself (KernelSHAP vs. GradientExplainer) and nsamples (a
+     KernelSHAP-specific parameter) are the deliberate methodology change.
+  5. Convergence check: nsamples takes a command-line argument
+     (`python3 shap_stability.py 800`), to compare baseline(200) vs.
+     4x(800)'s cross-seed Spearman for convergence (small rho difference
+     -> converged; large difference -> 200 is too small, sampling noise
+     dominates rank instability). If neither setting reaches 0.7, the
+     whole SHAP appendix is dropped rather than keeping a weak result.
 
-输出：leakfree/shap_ranking_leakfree{_ns<N>}.csv（Table 4 对应，N=800时
-文件名带后缀区分）+ leakfree/shap_spearman_leakfree{_ns<N>}.json（5×5
-跨seed相关矩阵）+ 与the earlier (pre-audit) version baseline_shap_ranking.csv 的排名差异对比。
+Output: leakfree/shap_ranking_leakfree{_ns<N>}.csv (Table 4, filename
+suffixed when N=800) + leakfree/shap_spearman_leakfree{_ns<N>}.json (5x5
+cross-seed correlation matrix) + a rank-difference comparison against the
+earlier baseline_shap_ranking.csv.
 """
 import os
 import json
@@ -76,8 +84,9 @@ class _MuWrapper(nn.Module):
 
 
 def make_mask_predict_fn(wrapper_cpu, X_sample, bg_mean_traj):
-    """X_sample: (30,14) 被解释样本；bg_mean_traj: (30,14) background均值轨迹。
-    mask: (n_coalitions, 14) 二值，1=保留该传感器通道原值，0=替换为background。
+    """X_sample: (30,14) the sample being explained; bg_mean_traj: (30,14)
+    background mean trajectory. mask: (n_coalitions, 14) binary, 1=keep
+    that sensor channel's original value, 0=replace with background.
     """
     n_feat = X_sample.shape[1]
 

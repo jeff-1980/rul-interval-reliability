@@ -1,8 +1,7 @@
 """
-STEP 2/3/4/5 共用：数据加载 + HeteroscedasticLSTM 定义 + checkpoint 加载。
-与 code/superseded/train_lstm_leaked_test_select_whole_file_scaler.py 及本项目
-最早的主实验训练脚本的超参、预处理逐字一致，
-保证从 checkpoint 恢复出来的模型行为与训练时完全对应。
+Shared data loading, HeteroscedasticLSTM definition, and checkpoint loading.
+Hyperparameters and preprocessing match the original training scripts
+exactly, so a loaded checkpoint's behaviour matches training time.
 """
 import os
 import hashlib
@@ -14,29 +13,26 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 def require_fixed_hashseed():
-    """2026-09-21 复现性修复：噪声注入种子此前统一用 Python 内置 hash()
-    派生（对含字符串的 tuple，按 PEP 456 逐进程随机加盐，PYTHONHASHSEED
-    未设置时每次解释器启动都不同——已现场验证）。所有含随机扰动推理的
-    入口脚本必须先设 PYTHONHASHSEED=0 才能跑，本函数在脚本顶部调用，
-    未设置就报错退出，不静默继续。
+    """Noise-injection seeds are derived from Python's built-in hash(), which
+    is randomly salted per process (PEP 456) unless PYTHONHASHSEED is fixed.
+    Every script performing randomly-perturbed inference must set
+    PYTHONHASHSEED=0 before running; this function asserts that and raises
+    rather than continuing silently.
 
-    同时在这里把 cuDNN/算法选择也锁定为确定性模式——第一轮全量重跑
-    （run1 vs run2 MD5 比对）发现：只固定噪声种子（stable_seed）不够，
-    26个受检文件里有14个两次独立重跑数值不同，全部集中在跑量大、前向
-    推理批次多的脚本（高斯三臂/bias-gain-drift主扫描、维护压力测试），
-    小规模的四组合归因/对照脚本反而两次就完全一致——判断是 cuDNN 对
-    LSTM/Transformer 前向传播的算法选择在批次更多时更容易走到非确定性
-    分支。这里统一加上 `torch.backends.cudnn.deterministic=True` +
-    `benchmark=False` + `use_deterministic_algorithms(True, warn_only=True)`
-    后重跑第三遍，14个不一致文件全部转为一致（细节见
-    COST_TABLE_NOTES.md 对应记录）。"""
+    Also locks cuDNN/algorithm selection to deterministic mode: fixing the
+    noise seed alone was not sufficient for bit-for-bit reproducibility
+    across independent reruns -- cuDNN's algorithm selection for LSTM/
+    Transformer forward passes was itself non-deterministic on scripts with
+    many forward-pass batches. Setting
+    `torch.backends.cudnn.deterministic=True` + `benchmark=False` +
+    `use_deterministic_algorithms(True, warn_only=True)` resolved it."""
     if os.environ.get('PYTHONHASHSEED') != '0':
         raise RuntimeError(
             "PYTHONHASHSEED is not set to '0'. Noise-injection seeds must be "
             "reproducible across process runs; re-run this script as:\n"
             "  PYTHONHASHSEED=0 python3 <script>.py\n"
             "See results/generated/COST_TABLE_NOTES.md "
-            "('复现性缺陷' entry, 2026-09-21) for why this matters."
+            "(reproducibility notes) for why this matters."
         )
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
@@ -47,9 +43,9 @@ def require_fixed_hashseed():
 
 
 def stable_seed(*parts):
-    """2026-09-21 复现性修复：替换全部 `hash((...)) % (2**31)` 调用点。
-    不依赖 Python 解释器的 hash 加盐，跨进程/跨机器逐比特可复现，只要
-    parts 的值不变。"""
+    """Deterministic seed derivation independent of Python's salted hash();
+    bit-for-bit reproducible across processes/machines given the same
+    parts."""
     s = "|".join(str(p) for p in parts)
     return int(hashlib.sha256(s.encode()).hexdigest()[:8], 16)
 
@@ -93,10 +89,10 @@ class HeteroscedasticLSTM(nn.Module):
 
 def get_feature_names(dataset_name):
     if dataset_name in ('FD001', 'FD003'):
-        # FD003 确认单一工况（KMeans k=6/k=1惯性比=0.074，setting_3恒为100，
-        # 与FD001同构，2026-09-18核实），沿用FD001的14特征集，不用
-        # FD002/FD004那套"丢弃6个随工况变化的传感器"的选择——那套选择是
-        # 针对多工况数据集设计的，FD003没有多工况这个问题，不适用。
+        # FD003 is single-condition like FD001 (verified via KMeans
+        # inertia ratio), so it reuses FD001's 14-feature set rather than
+        # FD002/FD004's condition-varying-sensor-drop selection, which only
+        # applies to multi-condition datasets.
         return FD001_FEATS
     drop_cols = ['s_1', 's_5', 's_10', 's_16', 's_18', 's_19']
     sensors = [s for s in SENSOR_NAMES if s not in drop_cols]
@@ -139,10 +135,10 @@ def create_sequences(df, feature_cols, mode='train', true_ruls=None, return_unit
         elif mode == 'test':
             if len(unit_data) >= SEQUENCE_LENGTH:
                 X_list.append(unit_data[-SEQUENCE_LENGTH:])
-                # R8-B2 (2026-09-2x)：官方 RUL_FD00X.txt 与训练标签
-                # (max_cycles-time_cycles，最后一行=0) 的计数起点相差1个
-                # 周期（R8-A2 诊断已核实差异幅度小但方向一致），改用
-                # min(官方RUL-1, 125) 与训练/校准同一惯例。
+                # Official RUL_FD00X.txt and the training label
+                # (max_cycles-time_cycles, last row=0) count from a
+                # one-cycle-different origin; use min(official RUL-1, 125)
+                # to match the training/calibration convention.
                 y_list.append(min(true_ruls.iloc[unit - 1].item() - 1, 125))
                 u_list.append(unit)
     X = np.array(X_list)
@@ -154,12 +150,13 @@ def create_sequences(df, feature_cols, mode='train', true_ruls=None, return_unit
 
 def create_full_trajectory_test_windows(test_df, feature_cols, true_ruls):
     """
-    STEP4 per-engine 覆盖率专用：标准 create_sequences(mode='test') 每台发动机只取
-    最后一个窗口（单点预测），无法算"per-engine 覆盖率分布"（需要每台发动机多个
-    预测点才有意义的覆盖率）。这里改为在每台测试发动机的可用轨迹上做全滑窗，
-    RUL 目标按分段线性退化模型反推：
-        RUL(row j) = true_RUL_at_last_row + (last_row_idx - j)，clip 到 max_rul。
-    与训练集 RUL 标签的构造方式（max_cycles - time_cycles，clip 125）完全同源。
+    For per-engine coverage: standard create_sequences(mode='test') gives
+    only one window (the last) per engine, which can't define a per-engine
+    coverage distribution. This instead slides a window across the full
+    available trajectory of each test engine, back-computing the RUL
+    target under the piecewise-linear degradation model:
+        RUL(row j) = true_RUL_at_last_row + (last_row_idx - j), clipped to
+        max_rul -- the same construction as the training RUL label.
     """
     X_list, y_list, u_list = [], [], []
     for unit in test_df['unit_nr'].unique():
@@ -167,7 +164,7 @@ def create_full_trajectory_test_windows(test_df, feature_cols, true_ruls):
         n = len(unit_data)
         if n < SEQUENCE_LENGTH:
             continue
-        rul_at_last_row = min(true_ruls.iloc[unit - 1].item() - 1, MAX_RUL)  # R8-B2, see create_sequences
+        rul_at_last_row = min(true_ruls.iloc[unit - 1].item() - 1, MAX_RUL)  # see create_sequences
         last_row_idx = n - 1
         for i in range(n - SEQUENCE_LENGTH + 1):
             end_row_idx = i + SEQUENCE_LENGTH - 1
@@ -179,9 +176,10 @@ def create_full_trajectory_test_windows(test_df, feature_cols, true_ruls):
 
 
 def split_units_two_way(unit_list, held_out_frac, seed):
-    """按 seed 派生的确定性发动机级切分（不按窗口随机切，避免同一台发动机的
-    窗口同时出现在两侧造成信息泄漏）。用于 fit/val（checkpoint 选择用）以及
-    STEP3 fit/calib 切分，二者共用同一份逻辑，保证切分方式在全项目内一致。
+    """Deterministic engine-level split derived from seed (not a
+    window-level random split, which would leak windows of the same engine
+    across both sides). Used for both fit/val (checkpoint selection) and
+    fit/calib splits, so the splitting logic is consistent project-wide.
     """
     rng = np.random.RandomState(seed)
     units = np.array(sorted(unit_list))
@@ -193,23 +191,24 @@ def split_units_two_way(unit_list, held_out_frac, seed):
 
 
 CANONICAL_VAL_FRAC = 0.20
-CANONICAL_CALIB_FRAC = 0.20  # matches STEP3's original (pre-fix) calib_frac definition
+CANONICAL_CALIB_FRAC = 0.20  # matches the original calib_frac definition
 
 
 def compute_canonical_split(unit_list, seed, val_frac=CANONICAL_VAL_FRAC, calib_frac=CANONICAL_CALIB_FRAC):
-    """全项目唯一的发动机级三向切分：fit(60%)/val(20%)/calib(20%)（默认档），
-    STEP0/STEP1/STEP3 三条训练线共用同一个 (fit_units, val_units)（早停/
-    checkpoint 选择判据完全一致，方法间可比），STEP3 额外从同一份 val_frac
-    先切出去之后剩下的池子里再切出 calib_units（因此 calib 与 fit/val 也
-    互不重叠，不是从 fit 这个"已经在用"的训练集里二次借用）。
+    """The single project-wide engine-level three-way split:
+    fit(60%)/val(20%)/calib(20%) by default. Every training line shares the
+    same (fit_units, val_units) so early-stopping/checkpoint-selection
+    criteria are comparable across methods; calib_units is carved from the
+    remaining pool after val is removed, so calib never overlaps fit/val.
 
-    两步派生：先按 val_frac 从全部单元里切 val；剩下 (1-val_frac) 的池子
-    再按 calib_frac/(1-val_frac) 切 calib，使 calib 在全体单元里的绝对占比
-    仍然是 calib_frac（不因为先扣掉了val而被稀释/放大）。第二步用
-    seed+999983（任意质数偏移）派生，避免与第一步的排列存在可预测的相关性。
+    Two-step derivation: split off val_frac from all units first; from the
+    remaining (1-val_frac) pool, split off calib_frac/(1-val_frac) so
+    calib's absolute share of all units stays calib_frac. The second step
+    uses a different seed offset to avoid a predictable correlation with
+    the first split's permutation.
 
-    返回：(fit_units, val_units, calib_units) 三个排序后的 list，互不重叠，
-    并集 = unit_list。
+    Returns (fit_units, val_units, calib_units), pairwise disjoint,
+    union = unit_list.
     """
     rest_units, val_units = split_units_two_way(unit_list, val_frac, seed)
     calib_frac_of_rest = calib_frac / (1.0 - val_frac)
@@ -218,11 +217,11 @@ def compute_canonical_split(unit_list, seed, val_frac=CANONICAL_VAL_FRAC, calib_
 
 
 def load_and_process_leakfree(dataset_name, fit_units):
-    """与 load_and_process 相同的预处理，唯一区别：MinMaxScaler 只在
-    fit_units 那部分 train 数据上 fit，val/calib/test 全部只 transform，
-    不参与拟合——修复此前 scaler.fit(全部train_df) 隐式把 val/calib 的
-    特征分布泄漏进 scaler min/max 参数这一问题（即便这些行从未参与梯度/
-    早停判据，标准化本身的参数也不该看到它们）。
+    """Same preprocessing as load_and_process, except the MinMaxScaler is
+    fit only on fit_units' training rows; val/calib/test are transform-only.
+    This avoids leaking val/calib's feature distribution into the scaler's
+    min/max parameters (those rows never enter the scaler's fit even though
+    they were never used for gradients or early stopping either).
     """
     train_path = os.path.join(DATA_DIR, f'train_{dataset_name}.txt')
     test_path = os.path.join(DATA_DIR, f'test_{dataset_name}.txt')

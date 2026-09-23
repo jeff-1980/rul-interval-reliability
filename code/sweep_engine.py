@@ -1,20 +1,26 @@
 """
-T2 通用扰动扫描引擎：与 run_sweep_noise_lstm_fd003.py 的 run_arm() 同一
-协议（5 seed 模型 × N_TRIALS 共享噪声流、NLL/MC-Dropout/Ensemble/CP-norm/
-MSE-fixed 五机制 + NLL/CP-norm 冻结σ̂反事实、feat_oob 记录），泛化出两个维度：
-  1. backbone ∈ {LSTM, Transformer} —— 模型加载走 transformer_common 的 checkpoint
-     调度（Transformer 的 CP-norm 复用 NLL checkpoint，见该文件顶部说明）。
-  2. 扰动类型 —— 分两类调用方式：
-     (a) run_df_perturb_sweep：扰动在整张 raw df 上一次性注入（噪声/bias/
-         gain 都属于这类，注入函数签名统一为
-         inject_fn(test_df_raw, feat_cols, level, rng, full_scale) -> raw_noisy）。
-     (b) run_drift_sweep：drift 需要窗口内部按位置施加斜坡，必须先把 raw df
-         窗口化（未标准化）再注入，见 noise_injection.extract_raw_windows /
-         inject_drift_fixed_pct_windows。
+Generic perturbation-sweep engine, matching run_sweep_noise_lstm_fd003.py's
+run_arm() protocol (5-seed models x N_TRIALS shared noise stream, five
+mechanisms NLL/MC-Dropout/Ensemble/CP-norm/MSE-fixed, plus NLL/CP-norm
+frozen-sigma counterfactuals and feat_oob logging), generalised along two
+axes:
+  1. backbone in {LSTM, Transformer} -- model loading goes through
+     transformer_common's checkpoint dispatch (Transformer's CP-norm reuses
+     the NLL checkpoint, see that file's header).
+  2. Perturbation type -- two call patterns:
+     (a) run_df_perturb_sweep: perturbation injected once over the whole
+         raw df (noise/bias/gain all fall here, with a unified injection
+         signature inject_fn(test_df_raw, feat_cols, level, rng,
+         full_scale) -> raw_noisy).
+     (b) run_drift_sweep: drift needs a position-dependent ramp inside each
+         window, so the raw df must be windowed (unscaled) before
+         injection; see noise_injection.extract_raw_windows /
+         inject_drift_fixed_pct_windows.
 
-LSTM 侧复用已有 checkpoint（不重训）；Transformer 侧复用 T2 训练产出的
-checkpoint。CP-norm 的 q / q_by_level、MC-Dropout 的 aleatory_var 从对应
-backbone 已有的结果文件读取（适配层 load_mc_cp_for_seed）。
+LSTM side reuses existing checkpoints (no retraining); Transformer side
+reuses checkpoints from T2 training. CP-norm's q / q_by_level and
+MC-Dropout's aleatory_var are read from each backbone's existing result
+files (adapter: load_mc_cp_for_seed).
 """
 import os
 import json
@@ -42,11 +48,11 @@ def _load_json(path):
 
 
 def load_mc_cp_for_seed(ds, backbone):
-    """返回 (mc_by_seed, cp_by_seed) 两个 dict[seed_str] -> record，统一
-    LSTM(FD001/2/4 用 mcdropout_fixed_leakfree.json + split_cp_leakfree.json
-    的 dataset-keyed 结构；FD003 用 stepFD003_*_leakfree_results.json 的
-    flat-list 结构) 与 Transformer(leakfree_t2/t2_transformer_*_results.json，
-    dataset-keyed) 三种来源格式的差异。"""
+    """Returns (mc_by_seed, cp_by_seed), two dict[seed_str] -> record,
+    unifying the differing source formats across LSTM (FD001/2/4's
+    dataset-keyed mcdropout_fixed_leakfree.json + split_cp_leakfree.json;
+    FD003's flat-list stepFD003_*_leakfree_results.json) and Transformer's
+    dataset-keyed leakfree_t2/t2_transformer_*_results.json."""
     key = (ds, backbone)
     if key in _MC_CP_CACHE:
         return _MC_CP_CACHE[key]
@@ -85,13 +91,15 @@ def _sequences_for_units(df, feature_cols, unit_set):
 
 
 def calib_aleatory_var(ds, backbone, seed, device, mc_model=None):
-    """2026-09-21 公平校准修复：此前全部退化/噪声扫描里 MSE-fixed/MC-Dropout
-    的 aleatory_var 来自 load_mc_cp_for_seed() 读的旧结果文件——那是训练集
-    残差方差，跟 Table II 的"公平校准"版本（校准集残差方差，
-    maintenance_decision_two_sided.calib_sigma_fixed / fair_calibration_main_table
-    同一定义）不是一回事。这里复刻同一个计算，改成在 calib_units 上现算，
-    贯穿所有退化扫描，不再读那个训练残差版文件。按 (ds,backbone,seed) 缓存，
-    避免同一扫描里对不同 level 重复计算。"""
+    """Fair-calibration fix: MSE-fixed/MC-Dropout's aleatory_var across every
+    degradation/noise sweep used to come from load_mc_cp_for_seed()'s
+    result files -- training-residual variance, not the same thing as
+    Table II's fair-calibration version (calibration-set residual variance,
+    same definition as maintenance_decision_two_sided.calib_sigma_fixed /
+    fair_calibration_main_table). This recomputes it on calib_units
+    directly, used throughout every degradation sweep instead of reading
+    the training-residual file. Cached by (ds,backbone,seed) to avoid
+    recomputing across levels within the same sweep."""
     key = (ds, backbone, seed)
     if key in _CALIB_ALEATORY_CACHE:
         return _CALIB_ALEATORY_CACHE[key]
@@ -127,7 +135,7 @@ def load_models_for_seed(ds, backbone, seed, device):
         cp_ckpt = os.path.join(T2.PROJ_DIR, 'results', 'checkpoints', 'lstm', f"{ds}_SplitCP_seed{seed}.pt")
         cp_model = C.load_checkpoint_model(cp_ckpt, device)
     else:
-        cp_model = nll_model  # Transformer: CP 复用 NLL checkpoint，见文件顶部说明
+        cp_model = nll_model  # Transformer: CP reuses the NLL checkpoint, see file header
     return nll_model, mc_model, cp_model
 
 
@@ -166,13 +174,14 @@ def infer_nll(model, X_t, batch=8192):
 
 
 def infer_mc_dropout(mc_model, X_t, T, aleatory_var, batch=4096, seed=None):
-    """seed: 2026-09-21 复现性修复——T=50 的 dropout 采样本身是活的随机数
-    （mc_model.train()），此前从未播种，导致跨进程不可复现（run1 vs run2
-    的 MD5 比对发现只有这个机制的数字不一致）。传入确定性 seed（用
-    C.stable_seed 派生）后在采样前 torch.manual_seed，使其也可复现——
-    代价是这是一次"新的"确定性采样，不等同于旧结果里那次未记录种子的
-    采样，旧结果里的 MC_Dropout_fixed 具体数字因此无法逐比特复现，只有
-    此后的重跑之间能互相复现。"""
+    """seed: T=50 dropout sampling (mc_model.train()) is live randomness,
+    previously never seeded, so it wasn't reproducible across processes.
+    Passing a deterministic seed (derived via C.stable_seed) and calling
+    torch.manual_seed before sampling makes it reproducible going forward
+    -- this is a "new" deterministic sample, not the same as any
+    pre-existing result's unrecorded sampling, so those older
+    MC_Dropout_fixed numbers can't be recovered bit-for-bit, only future
+    reruns are mutually reproducible."""
     if seed is not None:
         torch.manual_seed(seed)
     mc_model.train()
@@ -219,8 +228,9 @@ def _eval_one_level(level_key, trial_X, trial_y, ds, backbone, models_by_seed, c
 
     for i, seed in enumerate(C.SEEDS):
         nll_model, mc_model, cp_model = models_by_seed[seed]
-        # 2026-09-21 公平校准修复：aleatory_var 改用校准集残差方差
-        # （与 Table II 同一口径），不再读训练残差版结果文件。
+        # Fair-calibration fix: aleatory_var now uses calibration-set
+        # residual variance (matching Table II), not the training-residual
+        # result file.
         aleatory_var = aleatory_var_calib_by_seed[seed]
         q_norm = cp_by_seed[str(seed)]['cp_norm']['q']
         q_norm_by_level = cp_by_seed[str(seed)]['cp_norm']['q_by_level']
@@ -305,11 +315,12 @@ def _clean_sigmas(ds, backbone, device, test_df_raw, feat_cols, true_ruls, scale
 
 def run_df_perturb_sweep(ds, backbone, perturb_name, inject_fn, levels, is_pct, device,
                           scalers_by_seed, full_scale=None, global_std=None):
-    """levels: 数值列表；inject_fn(test_df_raw, feat_cols, level, rng, full_scale) -> raw_noisy
-    （bias/gain/armC-gaussian 三者统一走这条路径，签名一致，只是 inject_fn 不同）。
-    level_key 规则：is_pct=True 时用 str(level)（如 armC/bias/gain 的 0.1/0.5/1/2/5），
-    is_pct=False 时 inf 记为 'inf'（用于噪声 SNR 档，本函数目前只服务 pct 类扰动，
-    SNR 类沿用旧 run_arm，不在本引擎重复）。"""
+    """levels: list of values; inject_fn(test_df_raw, feat_cols, level, rng,
+    full_scale) -> raw_noisy (bias/gain/armC-gaussian all share this path,
+    same signature, different inject_fn). level_key: str(level) when
+    is_pct=True (e.g. armC/bias/gain's 0.1/0.5/1/2/5); 'inf' for is_pct=False
+    (noise SNR levels; this function currently only serves pct-type
+    perturbations, SNR-type still uses the older run_arm)."""
     _, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     out = _empty_out()
 
@@ -331,10 +342,11 @@ def run_df_perturb_sweep(ds, backbone, perturb_name, inject_fn, levels, is_pct, 
                 X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                 trial_X.setdefault(t, {})[seed] = torch.tensor(X_test, dtype=torch.float32).to(device)
                 trial_y = y_test
-                # 2026-09-21 f_oob 口径统一：改在实际送入模型的末端窗口 X_test 上算，
-                # 不再用 scale_and_package 返回的整段轨迹 scaled_feat（drift 分支已经
-                # 是窗口化的 X_scaled，这里补齐到同一口径，与 PICP 的 5x5 汇总对齐）。
-                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                # f_oob computed on the windowed X_test actually fed to the
+                # model (not the full-trajectory scaled_feat scale_and_package
+                # returns), matching the drift branch and PICP's own 5x5
+                # aggregation. Denominator restricted to sensor columns via
+                # the single project-wide V4.feat_oob implementation.
                 trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
         _eval_one_level(level_key, trial_X, trial_y, ds, backbone, models_by_seed, clean_sigma_nll, clean_sigma_cp, out,
@@ -349,16 +361,17 @@ def run_df_perturb_sweep(ds, backbone, perturb_name, inject_fn, levels, is_pct, 
 
 
 def run_snr_sweep(ds, backbone, scheme, levels, device, scalers_by_seed, global_std=None, km=None, cond_std=None):
-    """主 SNR 臂（高斯噪声，per_condition 或 global 方案），与 LSTM 侧
-    run_sweep_noise_lstm.py / run_sweep_noise_lstm_fd003.py
-    的主臂逐字同一协议——2026-09-19 补做：Part A 最初只跑了臂C（5档，
-    feat_oob范围5.6%-16%），但 LSTM 侧的半衰点主要落在主SNR臂覆盖的
-    <2% feat_oob 区间内，臂C单独测不到那个区间，导致"相对半衰机制排序"
-    对比不是同一 feat_oob 范围内的比较——如实发现后补上主臂，使
-    Transformer 与 LSTM 的半衰点计算基于同一套（主臂+臂C）pooled 数据，
-    口径完全对齐。scheme='per_condition' 用于 FD002/FD004（多工况），
-    scheme='global' 用于 FD001/FD003（单一工况，等价于旧协议里
-    A_percondition退化为B_pooled的情形）。"""
+    """Main SNR arm (Gaussian noise, per_condition or global scheme),
+    matching the LSTM side's run_sweep_noise_lstm.py /
+    run_sweep_noise_lstm_fd003.py main-arm protocol exactly -- added so
+    that the Transformer and LSTM half-life computations are based on the
+    same (main arm + arm C) pooled data across the same feat_oob range
+    (arm C alone doesn't cover the <2% feat_oob region where the LSTM
+    half-life mostly falls, so a main-arm-only vs. arm-C-only comparison
+    would not be over the same feat_oob range). scheme='per_condition' for
+    FD002/FD004 (multi-condition); scheme='global' for FD001/FD003
+    (single-condition, equivalent to A_percondition degenerating to
+    B_pooled)."""
     _, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     out = _empty_out()
 
@@ -381,8 +394,7 @@ def run_snr_sweep(ds, backbone, scheme, levels, device, scalers_by_seed, global_
                 X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                 trial_X.setdefault(t, {})[seed] = torch.tensor(X_test, dtype=torch.float32).to(device)
                 trial_y = y_test
-                # 2026-09-21 f_oob 口径统一：见 run_df_perturb_sweep 同日同条注释。
-                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                # See run_df_perturb_sweep's comment on the same f_oob convention.
                 trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
         _eval_one_level(level_key, trial_X, trial_y, ds, backbone, models_by_seed, clean_sigma_nll, clean_sigma_cp, out,
@@ -397,10 +409,11 @@ def run_snr_sweep(ds, backbone, scheme, levels, device, scalers_by_seed, global_
 
 
 def run_drift_sweep(ds, backbone, levels, device, scalers_by_seed, full_scale):
-    """drift：窗口级注入（每窗口独立 0->k*FS 斜坡），走
-    extract_raw_windows(mode='test') + inject_drift_fixed_pct_windows +
-    scale_raw_windows，其余（5模型×5trial共享流、五机制、冻结σ̂、feat_oob）
-    与 run_df_perturb_sweep 完全一致。"""
+    """drift: window-level injection (each window independently re-zeroes
+    its 0->k*FS ramp), via extract_raw_windows(mode='test') +
+    inject_drift_fixed_pct_windows + scale_raw_windows; everything else
+    (5-model x 5-trial shared stream, five mechanisms, frozen sigma,
+    feat_oob) matches run_df_perturb_sweep exactly."""
     _, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
     out = _empty_out()
 
@@ -416,15 +429,16 @@ def run_drift_sweep(ds, backbone, levels, device, scalers_by_seed, full_scale):
         level_key = str(level)
         X_raw_drifted = V4.inject_drift_fixed_pct_windows(X_raw_clean, level, full_scale)
         trial_X, trial_y, trial_feat_oob = {}, y_test_fixed, []
-        # drift 是确定性斜坡（无随机成分），N_TRIALS 个 trial 在扰动本身上退化为
-        # 完全相同的注入；仍保留 N_TRIALS 维度只是为了与其它扰动类型共用同一套
-        # grand_and_marginal_stats 聚合代码路径（trial 间方差在此应为 0，属预期）。
+        # drift is a deterministic ramp (no randomness), so all N_TRIALS
+        # trials degenerate to the identical injection; the N_TRIALS axis
+        # is kept only to share grand_and_marginal_stats' aggregation code
+        # path with the other perturbation types (zero trial-to-trial
+        # variance here is expected).
         for t in range(N_TRIALS):
             for seed in C.SEEDS:
                 scaler = scalers_by_seed[seed]
                 X_scaled = V4.scale_raw_windows(X_raw_drifted, scaler)
                 trial_X.setdefault(t, {})[seed] = torch.tensor(X_scaled, dtype=torch.float32).to(device)
-                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
                 trial_feat_oob.append(V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
         _eval_one_level(level_key, trial_X, trial_y, ds, backbone, models_by_seed, clean_sigma_nll, clean_sigma_cp, out,

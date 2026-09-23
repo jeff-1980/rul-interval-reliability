@@ -1,13 +1,17 @@
 """
-R8-B1（推理级，不重训）：重新评估 Split-CP 的三个文件。checkpoint 权重不变；
-calib 集上标定的 q/q_by_level 只依赖训练标签（不读官方RUL文件），B2 不影响，
-重算一遍不会变，只是为了代码简单在这里也一并重算（不额外读旧文件）。
-真正受 B2 影响的是 rmse/score/picp/mpiw/ece（依赖官方测试集真值）。
+Inference-level re-evaluation (no retraining) of the three Split-CP
+result files. Checkpoint weights are unchanged; the q/q_by_level
+calibrated on the calib set depends only on training labels (never reads
+the official RUL files), so it is unaffected by the RUL-1 test-label fix
+and recomputing it produces the same values -- it is only recomputed here
+for code simplicity (no extra reading of old files). What the RUL-1 fix
+actually affects is rmse/score/picp/mpiw/ece (which depend on the
+official test-set ground truth).
 
-覆盖：
+Covers:
   split_cp_leakfree.json            (LSTM, FD001/FD002/FD004, cp_abs+cp_norm)
   stepFD003_splitcp_leakfree_results.json (LSTM, FD003, cp_norm only)
-  t2_transformer_splitcp_leakfree_results.json (Transformer, 全部4个数据集, cp_abs+cp_norm)
+  t2_transformer_splitcp_leakfree_results.json (Transformer, all 4 datasets, cp_abs+cp_norm)
 """
 import os
 import json
@@ -161,4 +165,4 @@ if __name__ == '__main__':
         json.dump(out3, fp, indent=2, default=float)
     print(f"Saved -> {p3}")
 
-    print("\nR8-B1 SplitCP re-eval complete (no retraining).")
+    print("\nSplitCP re-eval complete (no retraining).")

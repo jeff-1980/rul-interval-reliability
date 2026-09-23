@@ -1,16 +1,21 @@
 """
-R3-A.2 + R3-E：
-A.2: FD004 的 M-sweep (M in {2,3,5,10}) 补算 IS，对照上一稿 Table 7 的
-     PICP(0.910->0.937)，看"无收益"是否成立、指标是否变了。
-E:   15-seed 池组 3 个不相交 M=5 集成（LSTM，4 数据集），报每个集成的
-     IS/WIS，与单模型机制（NLL/MSE-fixed）的配对差 bootstrap 区间（按
-     发动机重采样，因为末端口径一发动机一样本，"按发动机重采样"就是
-     标准的逐样本bootstrap）。
+Two parts:
+Part 1: FD004's M-sweep (M in {2,3,5,10}) -- computes IS to check against
+     an earlier draft's Table 7 PICP(0.910->0.937), to see whether the
+     "no benefit" finding still holds and whether the metric changed.
+Part 2: 3 disjoint M=5 ensembles grouped from the 15-seed pool (LSTM, 4
+     datasets), reporting each ensemble's IS/WIS and the paired-difference
+     bootstrap interval against the single-model mechanisms
+     (NLL/MSE-fixed) (resampled by engine, since the end-window convention
+     gives one sample per engine, so "resample by engine" is the standard
+     per-sample bootstrap).
 
-复用 leakfree/ensemble_scale_sweep_leakfree.json（FD001/2/4）+
-leakfree/FD003_ensemble_scale_sweep_leakfree.json 里已经记录的
-disjoint group_seeds（保证与已发表的PICP数字用的是同一批分组，不重新
-随机分组），只重新做推理拿到per-engine mu/sigma/y以算IS/WIS。
+Reuses the disjoint group_seeds already recorded in
+leakfree/ensemble_scale_sweep_leakfree.json (FD001/2/4) +
+leakfree/FD003_ensemble_scale_sweep_leakfree.json (guaranteeing the same
+grouping as the already-published PICP numbers, no re-randomizing the
+grouping), only re-running inference to get per-engine mu/sigma/y for
+computing IS/WIS.
 """
 import os
 import json
@@ -51,7 +56,7 @@ def nll_ckpt_for_seed(ds, seed):
 
 
 def infer_group_mu_sigma(ds, group_seeds, device):
-    """clean 条件下，逐 seed NLL 推理，返回 (mu_members, sigma_members, y)。"""
+    """Under the clean condition, per-seed NLL inference, returns (mu_members, sigma_members, y)."""
     canon = json.load(open(os.path.join(PROJ_DIR, 'results', 'canonical_splits.json')))
     mu_mem, sigma_mem, y_ref = [], [], None
     for seed in group_seeds:

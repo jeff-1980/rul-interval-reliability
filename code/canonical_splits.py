@@ -1,7 +1,10 @@
 """
-STEP A：全项目唯一的发动机级三向切分（fit/val/calib），一次算好、落盘，
-STEP0/STEP1/STEP3 全部从这份文件读取，不各自重新切分（保证三条训练线
-的 train/val 划分逐发动机一致，方法间可比；calib 与三者也互不重叠）。
+STEP A: the single project-wide engine-level three-way split (fit/val/
+calib), computed once and saved to disk; STEP0/STEP1/STEP3 all read it
+from this file rather than re-splitting themselves (guaranteeing the
+train/val split is identical engine-for-engine across all three training
+pipelines, making methods comparable; calib is disjoint from all three
+too).
 """
 import os
 import json
@@ -46,11 +49,12 @@ if __name__ == '__main__':
 
     notes_path = os.path.join(RESULTS_DIR, 'CANONICAL_SPLITS_NOTES.md')
     with open(notes_path, 'w') as fp:
-        fp.write("# 全项目唯一的发动机级三向切分（fit/val/calib），逐发动机编号\n\n")
-        fp.write("生成脚本：`canonical_splits.py`，数据：`canonical_splits.json`。\n")
-        fp.write("STEP0/STEP1/STEP3 全部从这份文件读取 fit_units/val_units（+STEP3 额外读 "
-                  "calib_units），不各自重新切分。三者互不重叠（assert 已在生成时验证），"
-                  "并集等于该数据集全部 train 发动机。\n")
+        fp.write("# Project-wide engine-level three-way split (fit/val/calib), per-engine numbering\n\n")
+        fp.write("Generation script: `canonical_splits.py`, data: `canonical_splits.json`.\n")
+        fp.write("STEP0/STEP1/STEP3 all read fit_units/val_units from this file (STEP3 also reads "
+                  "calib_units), rather than re-splitting themselves. The three are pairwise disjoint "
+                  "(asserted at generation time), and their union equals all of that dataset's train "
+                  "engines.\n")
         fp.write("".join(report_lines))
     print(f"Saved -> {notes_path}")
     print("STEP A complete.")

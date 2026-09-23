@@ -1,28 +1,31 @@
 """
-STEP 1 (E-A)：MC Dropout 区间构造修正
+MC Dropout interval construction fix.
 
-诊断（已确认，见 code/E2_mc_dropout.py::run_mc）：
-  旧实现 MC_LSTM 是纯 MSE 训练、无 sigma 头的模型；测试时用 model.train() 打开
-  dropout 采样 T=50 次，sigma = samples.std(0) —— 只有 dropout 采样方差
-  （epistemic），从未叠加任何观测噪声/aleatory 项。
-  这正是旧 PICP 只有 0.488/0.413/0.397、MPIW 只有 12.70-15.14 周期的原因。
+Diagnosis (confirmed): the earlier MC_LSTM implementation is a pure-MSE
+model with no sigma head; at test time it turned on dropout via
+model.train() and sampled T=50 times, with sigma = samples.std(0) -- only
+the dropout-sampling variance (epistemic), never adding any observation-
+noise/aleatory term. This is exactly why the earlier PICP was only
+0.488/0.413/0.397 and MPIW only 12.70-15.14 cycles.
 
-修正（Kendall & Gal 2017 回归型完整式）：
+Fix (Kendall & Gal 2017's full regression form):
   mu_hat    = (1/T) sum_t mu_t
   sigma^2   = (1/T) sum_t sigma_t^2          <- aleatory
-            + (1/T) sum_t (mu_t - mu_hat)^2  <- epistemic (dropout采样方差)
+            + (1/T) sum_t (mu_t - mu_hat)^2  <- epistemic (dropout sampling variance)
 
-  本基线模型没有 sigma 头（纯 MSE），按任务书 STEP1.2 的替代方案：
-  aleatory 项用【训练集残差方差】(ddof=1) 代入，作为标量加到每个样本的
-  epistemic 方差上：
+  This baseline model has no sigma head (pure MSE), so the aleatory term
+  is substituted with the training-set residual variance (ddof=1), added
+  as a scalar to each sample's epistemic variance:
   sigma_total^2 = var(y_train - yhat_train) + samples.var(axis=0)
 
-保留旧实现（variant="sampling_only"，sigma=samples.std(0)）与新实现
-（variant="kendall_gal_full"）在同一 json 里逐 seed 对照，同时记录 T=50（主）
-和 T=100（敏感性附注）。
+Keeps the earlier implementation (variant="sampling_only",
+sigma=samples.std(0)) alongside the fix (variant="kendall_gal_full") in
+the same json, per-seed, side by side, recording both T=50 (main) and
+T=100 (sensitivity note).
 
-不重训 NLL 模型（STEP0 已产出并落盘），本步骤需要独立重训 MC_LSTM
-（MSE、无 sigma 头架构，旧实现同样从未存过 checkpoint）。
+Does not retrain the NLL model (already produced and saved); this step
+needs an independent retraining of MC_LSTM (MSE, no sigma-head
+architecture; the earlier implementation never saved a checkpoint either).
 """
 
 import os
@@ -130,7 +133,7 @@ class DataHandler:
 
 
 class MC_LSTM(nn.Module):
-    """与旧 E2_mc_dropout.py 完全一致：单输出 LSTM（MSE训练），无 sigma 头"""
+    """Matches the earlier implementation exactly: single-output LSTM (MSE-trained), no sigma head"""
     def __init__(self, in_dim, H, drop):
         super().__init__()
         self.lstm = nn.LSTM(in_dim, H, 2, batch_first=True, dropout=drop)
@@ -168,7 +171,7 @@ def compute_ece(mu_all, sigma_all, ytrue_all, conf_levels):
 
 
 def batched_forward(model, X_t, batch=4096):
-    """eval()、无 dropout 前向，用于算训练残差（防止大 train 集 OOM）"""
+    """eval() forward, no dropout, used to compute training residuals (avoids OOM on large training sets)"""
     model.eval()
     outs = []
     with torch.no_grad():
@@ -221,7 +224,7 @@ def run_one_seed(cfg, seed, bundle, in_dim, ds_name):
 
     model.load_state_dict(best_s)
 
-    # checkpoint 落盘（旧实现从未存过）
+    # save checkpoint (the earlier implementation never saved one)
     ckpt_path = os.path.join(CKPT_DIR, f"{ds_name}_MCDropoutMSE_seed{seed}.pt")
     torch.save({
         'state_dict': best_s, 'input_dim': in_dim, 'hidden_dim': cfg.hidden_dim,
@@ -229,7 +232,7 @@ def run_one_seed(cfg, seed, bundle, in_dim, ds_name):
         'best_val_rmse_scaled': best_r, 'train_epochs': cfg.epochs,
     }, ckpt_path)
 
-    # ---- aleatory: 训练残差方差（eval，无 dropout） ----
+    # ---- aleatory: training residual variance (eval, no dropout) ----
     X_tr_t = torch.tensor(X_tr, dtype=torch.float32).to(cfg.device)
     yhat_train_scaled = batched_forward(model, X_tr_t)
     yhat_train = np.clip(yhat_train_scaled * 125.0, 0, 125)
@@ -240,7 +243,7 @@ def run_one_seed(cfg, seed, bundle, in_dim, ds_name):
     if cfg.device.type == 'cuda':
         torch.cuda.empty_cache()
 
-    # ---- MC dropout 采样：T=100，T=50 取前50个复用，避免多跑一遍 ----
+    # ---- MC dropout sampling: T=100, T=50 reuses the first 50, avoiding a second pass ----
     model.train()  # keep dropout active
     T_max = cfg.mc_T_extra
     samples = []
@@ -258,13 +261,13 @@ def run_one_seed(cfg, seed, bundle, in_dim, ds_name):
         mu    = np.clip(s.mean(0), 0, 125)
         eps_var = s.var(0)                    # population var, matches (1/T)sum(mu_t-mu)^2
 
-        # variant A: 旧实现，只用 dropout 采样方差
+        # variant A: the earlier implementation, dropout-sampling variance only
         sigma_sampling = np.sqrt(eps_var)
         rmse, score = calc(y_te, mu)
         p_s, w_s = picp_mpiw(y_te, mu, sigma_sampling, cfg.z_score)
         ece_s = compute_ece(mu, sigma_sampling, y_te, cfg.conf_levels)
 
-        # variant B: Kendall & Gal 完整式，aleatory(训练残差方差,标量) + epistemic
+        # variant B: Kendall & Gal's full form, aleatory (training residual variance, scalar) + epistemic
         sigma_full = np.sqrt(aleatory_var + eps_var)
         p_f, w_f = picp_mpiw(y_te, mu, sigma_full, cfg.z_score)
         ece_f = compute_ece(mu, sigma_full, y_te, cfg.conf_levels)
@@ -322,8 +325,8 @@ if __name__ == '__main__':
         json.dump(all_out, fp, indent=2, default=float)
     print(f"\nSaved -> {out_path}")
 
-    # ---- 汇总打印：修正前后 PICP 对照 + "+43.8pp" 主张判定 ----
-    print("\n=== 汇总（mean across 5 seeds, T=50） ===")
+    # ---- summary: before/after PICP comparison ----
+    print("\n=== Summary (mean across 5 seeds, T=50) ===")
     for ds in cfg.target_datasets:
         rs = all_out[ds]
         picp_old = np.mean([r['T50']['sampling_only']['picp'] for r in rs])

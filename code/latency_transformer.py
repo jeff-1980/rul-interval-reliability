@@ -1,13 +1,18 @@
 """
-T2-A9：统一延迟重测，10行（5 LSTM + 5 Transformer）× 4 数据集，同一会话、
-batch=512协议，与 an earlier unified-platform latency script (not included; superseded) / latency_lstm_fd003.py
-逐字同一协议（priming pass + 2s GPU时钟热身 + 方法间不empty_cache + 50热身 +
-11轮CUDA-event中位数）。LSTM 五行也在本次会话内重测（不是照抄旧数字），
-以保证10行延迟比值在同一次GPU状态下可比——这是用户任务里"LSTM五行一并
-重测以保同会话"的明确要求。
+T2-A9: unified latency re-measurement, 10 rows (5 LSTM + 5 Transformer)
+x 4 datasets, same session, batch=512 protocol, using the exact same
+protocol as an earlier unified-platform latency script (not included;
+superseded) / latency_lstm_fd003.py (priming pass + 2s GPU clock warm-up +
+no empty_cache between methods + 50 warm-up iterations + median over 11
+CUDA-event rounds). The 5 LSTM rows are also re-measured in this same
+session (not copied from old numbers), so that all 10 rows' latency
+ratios are comparable under the same GPU state -- an explicit requirement
+for this task ("re-measure the 5 LSTM rows together to keep them in the
+same session").
 
-四个硬判据分别在 LSTM 内部和 Transformer 内部各自检查一次（CP≈NLL、
-Ensemble≈5×NLL、MCDropout≈50×NLL、MSE≈NLL），共 4x2=8 项。
+The four hard criteria are each checked once inside LSTM and once inside
+Transformer (CP~=NLL, Ensemble~=5xNLL, MCDropout~=50xNLL, MSE~=NLL), 4x2=8
+items in total.
 """
 import os
 import sys

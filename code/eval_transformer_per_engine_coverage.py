@@ -1,8 +1,9 @@
 """
-T2-A5：Transformer 骨干 per-engine 覆盖率分布，4 数据集，与
-eval_lstm_fd003_per_engine_coverage.py 同一协议（全滑窗 full-trajectory
-per-engine PICP，5 seed 平均），Split-CP 复用 NLL checkpoint（同
-sweep_engine.py 的方法论差异说明）。
+T2-A5: Transformer-backbone per-engine coverage distribution, 4 datasets,
+using the same protocol as eval_lstm_fd003_per_engine_coverage.py
+(full-trajectory sliding windows, per-engine PICP, averaged over 5
+seeds); Split-CP reuses the NLL checkpoint (same methodology-difference
+note as sweep_engine.py).
 """
 import os
 import json
@@ -75,7 +76,7 @@ def run_dataset(ds, device):
         covered_mse = (y_full >= mu_mse - Z_SCORE * sigma_mse) & (y_full <= mu_mse + Z_SCORE * sigma_mse)
         picp_mse_per_seed.append(per_engine_picp(covered_mse, u_full))
 
-        # CP: Transformer 复用 NLL 模型（同 sweep_engine.py 说明，不重训 SplitCP clone）
+        # CP: Transformer reuses the NLL model (same note as sweep_engine.py, no SplitCP clone retrain)
         q_norm = cp_by_seed[str(seed)]['cp_norm']['q']
         covered_cp = (y_full >= mu - q_norm * sigma) & (y_full <= mu + q_norm * sigma)
         picp_cp_per_seed.append(per_engine_picp(covered_cp, u_full))
@@ -112,7 +113,7 @@ def run_dataset(ds, device):
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Device: {device}  Backbone=Transformer  per-engine coverage")
 

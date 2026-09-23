@@ -1,6 +1,6 @@
 """
-FD003 补全 (5/6)：per-engine 覆盖率分布，与 eval_lstm_per_engine_coverage.py
-同一协议，scoped to FD003。
+FD003 completion (5/6): per-engine coverage distribution, same protocol
+as eval_lstm_per_engine_coverage.py, scoped to FD003.
 """
 import os
 import json
@@ -73,7 +73,7 @@ def infer_mc_dropout_full(mc_model, X_t, T, aleatory_var, batch=4096, seed=None)
 
 
 if __name__ == '__main__':
-    C.require_fixed_hashseed()  # R8-B5: root-caused run1-vs-run2 MD5 mismatch to missing cuDNN determinism here
+    C.require_fixed_hashseed()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     method_results = {}
