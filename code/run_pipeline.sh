@@ -77,10 +77,9 @@ run 20_maintenance_rul_corrected maintenance_stress_test_rul_correction_v2.py
 # cells were replaced. ---
 run 30_table1 build_table1.py
 
-# --- Phase 6: Table II clean benchmark + cost tables + per-engine +
-# ensembles. Per-engine / ensemble / fair-calibration / interval-score
-# must run BEFORE table2_merge and the cost tables, which read their
-# output files. ---
+# --- Phase 6: Table II clean benchmark + per-engine + ensembles.
+# Per-engine / ensemble / fair-calibration / interval-score must run
+# BEFORE table2_merge, which reads their output files. ---
 run 33_fair_main_table fair_calibration_main_table.py
 run 34_fair_sigma_fixed fair_calibration_sigma_fixed.py
 run 35_interval_score interval_score.py
@@ -93,9 +92,6 @@ run 44_deep_ensemble_transformer eval_transformer_deep_ensemble.py
 run 45_mse_row_recomputed eval_lstm_mse_fixed_training_residual.py
 run 31_table2_merge table2_clean_merge.py
 run 32_ece_pooled clean_ece_pooled_reconstruction.py
-run 36_cost_table_lstm cost_table_lstm.py
-run 37_cost_table_lstm_fd003 cost_table_lstm_fd003.py
-run 38_cost_table_transformer cost_table_transformer.py
 run 46_armc_mu_std_lstm eval_lstm_armc_mu_std.py
 run 47_armc_mu_std_fd003 eval_lstm_fd003_armc_mu_std.py
 run 48_ensemble_scale_sweep eval_lstm_ensemble_scale_sweep.py

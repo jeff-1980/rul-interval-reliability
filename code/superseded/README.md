@@ -1,4 +1,6 @@
-# Superseded training scripts
+# Superseded scripts
+
+## Training scripts
 
 These two scripts are kept for provenance only. They are the original
 (pre-audit) training pipelines behind the historical, uncontrolled T/W and
@@ -38,3 +40,15 @@ not here -- they will not run from within `code/superseded/` without that
 import resolving (e.g. by running them from `code/` directly, or adding
 `code/` to `PYTHONPATH`). They are included for readability and provenance,
 not as a tested/runnable part of the reproduction pipeline.
+
+## Cost tables
+
+`cost_table_lstm.py`, `cost_table_lstm_fd003.py`, and
+`cost_table_transformer.py` assembled a per-method cost table (PICP/MPIW/
+ECE/per-engine/coverage-half-life plus a carried-over latency column and a
+recomputed parameter count) for each backbone/sub-dataset. No table or
+figure in the manuscript or supplementary material reads their output, so
+as of this release they are no longer run by `run_pipeline.sh`, no longer
+published under `results/clean/`, and kept here for provenance only. Like
+the training scripts above, they import sibling modules from `code/` and
+are not runnable as-is from this directory.

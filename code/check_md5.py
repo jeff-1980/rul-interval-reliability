@@ -16,10 +16,6 @@ clean/fair_calibration_sigma_fixed.json
 clean/interval_score_wis_clean.json
 clean/lstm_clean_ece_pooled.json
 clean/lstm_clean_per_seed.json
-clean/lstm_cost_table_fd001.csv
-clean/lstm_cost_table_fd002.csv
-clean/lstm_cost_table_fd003.csv
-clean/lstm_cost_table_fd004.csv
 clean/lstm_deep_ensemble.json
 clean/lstm_fd003_clean_per_seed.json
 clean/lstm_fd003_deep_ensemble.json
@@ -34,10 +30,6 @@ clean/table1_2x2_per_seed.json
 clean/table1_2x2_summary.json
 clean/table2_clean_full.json
 clean/transformer_clean_per_seed.json
-clean/transformer_cost_table_fd001.csv
-clean/transformer_cost_table_fd002.csv
-clean/transformer_cost_table_fd003.csv
-clean/transformer_cost_table_fd004.csv
 clean/transformer_deep_ensemble.json
 clean/transformer_mcdropout_mse_per_seed.json
 clean/transformer_per_engine_coverage.json

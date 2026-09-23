@@ -1,6 +1,6 @@
 # Reproducing the result files
 
-This document covers reproduction of the **74 result files** listed below,
+This document covers reproduction of the **66 result files** listed below,
 all of them `run_pipeline.sh` outputs (including
 `results/diagnostics/A1_perturbation_target_diagnostic.json`, folded into
 the pipeline because it is now cited in the main text). The
@@ -92,7 +92,7 @@ or was superseded by a file that is.
 ## Scope: what is and isn't guaranteed
 
 **Reproducible (verified bit-identical across two independent reruns,
-2026-09-23)**: 71 of the 74 files below, for every mechanism except
+2026-09-23)**: 63 of the 66 files below, for every mechanism except
 MC-Dropout's own live T=50/T=100 sampling, which is reproducible only if
 you re-run the unmodified code with the seed it itself derives via
 `stable_seed(...)` at each call site -- there is no way to recover the
@@ -112,7 +112,7 @@ field in these files differs.
 diagnostic run once, to motivate the RUL-1 convention change -- see
 `results/diagnostics/README.md`). It was produced by the same inference
 code as the verified files above, just not run twice for this experiment,
-and is not one of the 74.
+and is not one of the 66.
 
 **Not covered by this document**: model training (checkpoint weights
 depend on training-time CUDA kernel selection and are not asserted
@@ -175,7 +175,7 @@ export RUL_DATA_DIR=/path/to/cmapss   # or place the data at ../data/
 bash run_pipeline.sh myrun
 ```
 
-This runs, in order, all 74 files below (see `run_pipeline.sh` for the
+This runs, in order, all 66 files below (see `run_pipeline.sh` for the
 exact list and grouping) using the checkpoints already provided under
 `results/checkpoints/` -- including the T/W', V/W' controlled-2x2
 checkpoints under `results/checkpoints/lstm_2x2_controlled/`, needed by
@@ -189,11 +189,11 @@ output to its released name and location under `results/{category}/` (see
 `results/table_provenance.csv` for the mapping).
 
 To verify reproducibility yourself: run the pipeline twice (snapshotting
-the 74 released files between runs), then compare MD5s -- this is exactly
+the 66 released files between runs), then compare MD5s -- this is exactly
 what `code/check_md5.py` does (edit its snapshot directory to point at
 your two runs' outputs).
 
-## The 74 files and their MD5 (this environment, this codebase revision)
+## The 66 files and their MD5 (this environment, this codebase revision)
 
 ```
 e44c3ba1cb450a033c38d5265fa7b6da  results/attribution/attribution_bootstrap_by_order_exact_interp.json
@@ -206,13 +206,9 @@ e44c3ba1cb450a033c38d5265fa7b6da  results/attribution/attribution_bootstrap_by_o
 4e94153e156f3e364b40d7e658d556f4  results/clean/interval_score_wis_clean.json
 b5cef65b1ca68222953f281b66772e2b  results/clean/lstm_clean_ece_pooled.json
 257121a8c7298b25f8fa095146b68b10  results/clean/lstm_clean_per_seed.json
-84ff29024b6f3cd353db731285980074  results/clean/lstm_cost_table_fd001.csv
-996b38b4b4f92293350037f2287137e2  results/clean/lstm_cost_table_fd002.csv
-ca1080cd46b1ed13b42f71597a60a54e  results/clean/lstm_cost_table_fd003.csv
-22e34420bcc95b764954c2e8bb44813f  results/clean/lstm_cost_table_fd004.csv
-cefb9738704d9b8c339fa96e8c648a7b  results/clean/lstm_deep_ensemble.json  [latency-exempt]
+d87441bb342adf92ceb576666310edfb  results/clean/lstm_deep_ensemble.json  [latency-exempt]
 f626e302ed56853b26157d0f4fd1950c  results/clean/lstm_fd003_clean_per_seed.json
-ffd6b8ce0798ce7a52858839d422fee7  results/clean/lstm_fd003_deep_ensemble.json  [latency-exempt]
+c46d7879923ef1c75dfaf0a72080b054  results/clean/lstm_fd003_deep_ensemble.json  [latency-exempt]
 49feffe11c5ce4448b486b7177520803  results/clean/lstm_fd003_mcdropout_mse_per_seed.json
 b767bdd8397c053ad09baf08d6638755  results/clean/lstm_fd003_per_engine_coverage.json
 5d8b31f2ef54d28d1d74d41e052025a2  results/clean/lstm_fd003_split_cp_per_seed.json
@@ -224,11 +220,7 @@ f87936901feedae5f06087819eff5552  results/clean/lstm_mse_fixed_training_residual
 c2edca9074181ec23bbe7804a1bc2612  results/clean/table1_2x2_summary.json
 b08c164f298672ea9a69568ea6105211  results/clean/table2_clean_full.json
 56b674100806aaff1620bc55c9115bea  results/clean/transformer_clean_per_seed.json
-5899e342f25c2acff54086dae6488134  results/clean/transformer_cost_table_fd001.csv
-044c04348e663de00354b6f9505d3628  results/clean/transformer_cost_table_fd002.csv
-714950ae40fd00faaad78f250b2c0159  results/clean/transformer_cost_table_fd003.csv
-249c02b037755f8fda67299ff574cd6c  results/clean/transformer_cost_table_fd004.csv
-2bfe20e057667bca2dc24878febf076a  results/clean/transformer_deep_ensemble.json  [latency-exempt]
+1e4e526a34b96d57900f4f0bb7bcd666  results/clean/transformer_deep_ensemble.json  [latency-exempt]
 e27dc0f858719f0d694e50350c93108a  results/clean/transformer_mcdropout_mse_per_seed.json
 5846814338ca186be28b656cfa0e5d7d  results/clean/transformer_per_engine_coverage.json
 9fb6a2c0b4fbd6e6e562aa7e860c243b  results/clean/transformer_split_cp_per_seed.json
@@ -277,15 +269,15 @@ fe82a360216851aa1a1d67faec927a45  results/seeds/ensemble_size_sweep_fd004_interv
 
 ## Numerical self-consistency of this manifest
 
-- 71 files bit-identical across two independent reruns (2026-09-23) -- the
-  MD5s above, all 74 of them `run_pipeline.sh` outputs.
+- 63 files bit-identical across two independent reruns (2026-09-23) -- the
+  MD5s above, all 66 of them `run_pipeline.sh` outputs.
 - 3 files identical except for `latency_ms_per_sample` (wall-clock timing,
   explicitly out of scope) -- the MD5s above are from the second of the
   two runs; a fresh run's `latency_ms_per_sample` value will differ from
   it but every other field will match.
-- 74 = 71 + 3, matching the file count claimed at the top of this
+- 66 = 63 + 3, matching the file count claimed at the top of this
   document.
 - 1 additional file (`results/diagnostics/A2_target_alignment_diagnostic.json`)
-  exists alongside these 74 but is excluded from the reproducibility claim
+  exists alongside these 66 but is excluded from the reproducibility claim
   for the documented reason given above (single-run diagnostic, not
   independently re-verified).
