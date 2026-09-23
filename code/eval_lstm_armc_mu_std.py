@@ -65,13 +65,17 @@ if __name__ == '__main__':
                     raw_noisy = test_df_raw[feat_cols].values.astype(np.float64)
                 else:
                     raw_noisy = V4.inject_noise_fixed_pct_raw(test_df_raw, feat_cols, pct, rng, full_scale)
+                fo_this_trial_per_seed = []
                 for seed in C.SEEDS:
                     df_noisy, scaled_feat = V4.scale_and_package(test_df_raw, feat_cols, raw_noisy, scalers_by_seed[seed])
                     X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                     X_t = torch.tensor(X_test, dtype=torch.float32).to(device)
                     all_mu.append(infer_mu(models_by_seed[seed], X_t))
-                    if seed == C.SEEDS[0]:
-                        all_feat_oob.append(float(np.mean((scaled_feat < -1.0) | (scaled_feat > 1.0))))
+                    # R9-Part3: 同一类此前在 clamp_frac/threshold_refinement 等文件
+                    # 修过的旧bug（此前只用 seed[0]+整段轨迹 scaled_feat，这里之前漏改）
+                    # ——改成5个seed各自在窗口化X_test上算，取平均；分母限定传感器列。
+                    fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
+                all_feat_oob.append(float(np.mean(fo_this_trial_per_seed)))
 
             all_mu = np.concatenate(all_mu)
             mu_std = float(np.std(all_mu, ddof=1))

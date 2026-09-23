@@ -13,6 +13,7 @@ LSTM 侧复用已有 checkpoints_leakfree/ 下的 checkpoint（不重训，只�
 import os
 import json
 import time
+import functools
 
 import numpy as np
 import torch
@@ -54,7 +55,11 @@ def run_one(backbone, degradation, ds, device):
                                        is_pct=True, device=device, scalers_by_seed=scalers_by_seed,
                                        full_scale=full_scale)
     elif degradation == 'gain':
-        return E.run_df_perturb_sweep(ds, backbone, 'gain', V4.inject_gain_fixed_pct_raw, PCT_LEVELS,
+        # R9-Part2: gain's multiplier doesn't depend on full_scale_range, so
+        # sensor_only_scale() above has no effect on it -- bind sensor_mask
+        # explicitly instead.
+        gain_fn = functools.partial(V4.inject_gain_fixed_pct_raw, sensor_mask=V4.sensor_mask_for(feat_cols))
+        return E.run_df_perturb_sweep(ds, backbone, 'gain', gain_fn, PCT_LEVELS,
                                        is_pct=True, device=device, scalers_by_seed=scalers_by_seed,
                                        full_scale=full_scale)
     elif degradation == 'drift':

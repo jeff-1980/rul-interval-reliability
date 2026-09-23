@@ -334,7 +334,8 @@ def run_df_perturb_sweep(ds, backbone, perturb_name, inject_fn, levels, is_pct, 
                 # 2026-09-21 f_oob 口径统一：改在实际送入模型的末端窗口 X_test 上算，
                 # 不再用 scale_and_package 返回的整段轨迹 scaled_feat（drift 分支已经
                 # 是窗口化的 X_scaled，这里补齐到同一口径，与 PICP 的 5x5 汇总对齐）。
-                trial_feat_oob.append(float(np.mean((X_test < -1.0) | (X_test > 1.0))))
+                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
         _eval_one_level(level_key, trial_X, trial_y, ds, backbone, models_by_seed, clean_sigma_nll, clean_sigma_cp, out,
                          device, aleatory_var_calib_by_seed)
@@ -381,7 +382,8 @@ def run_snr_sweep(ds, backbone, scheme, levels, device, scalers_by_seed, global_
                 trial_X.setdefault(t, {})[seed] = torch.tensor(X_test, dtype=torch.float32).to(device)
                 trial_y = y_test
                 # 2026-09-21 f_oob 口径统一：见 run_df_perturb_sweep 同日同条注释。
-                trial_feat_oob.append(float(np.mean((X_test < -1.0) | (X_test > 1.0))))
+                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
         _eval_one_level(level_key, trial_X, trial_y, ds, backbone, models_by_seed, clean_sigma_nll, clean_sigma_cp, out,
                          device, aleatory_var_calib_by_seed)
@@ -422,7 +424,8 @@ def run_drift_sweep(ds, backbone, levels, device, scalers_by_seed, full_scale):
                 scaler = scalers_by_seed[seed]
                 X_scaled = V4.scale_raw_windows(X_raw_drifted, scaler)
                 trial_X.setdefault(t, {})[seed] = torch.tensor(X_scaled, dtype=torch.float32).to(device)
-                trial_feat_oob.append(float(np.mean((X_scaled < -1.0) | (X_scaled > 1.0))))
+                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                trial_feat_oob.append(V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
         _eval_one_level(level_key, trial_X, trial_y, ds, backbone, models_by_seed, clean_sigma_nll, clean_sigma_cp, out,
                          device, aleatory_var_calib_by_seed)

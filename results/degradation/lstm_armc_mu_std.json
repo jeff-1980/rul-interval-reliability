@@ -2,36 +2,36 @@
   "FD001": {
     "clean": {
       "mu_std_across_samples": 41.04887390136719,
-      "feat_oob": 0.00010908456235273584,
+      "feat_oob": 4.761904761904762e-06,
       "n_predictions_pooled": 2500
     },
     "0.1pctFS": {
       "mu_std_across_samples": 41.04787826538086,
-      "feat_oob": 0.00010799371672920849,
+      "feat_oob": 1.4285714285714287e-05,
       "n_predictions_pooled": 2500,
       "mu_std_pct_change_vs_clean": -0.0024254891588998354
     },
     "0.5pctFS": {
       "mu_std_across_samples": 41.0395393371582,
-      "feat_oob": 0.00011235709922331793,
+      "feat_oob": 2.2857142857142858e-05,
       "n_predictions_pooled": 2500,
       "mu_std_pct_change_vs_clean": -0.022740122497424894
     },
     "1pctFS": {
       "mu_std_across_samples": 41.06394577026367,
-      "feat_oob": 0.00011453879047037264,
+      "feat_oob": 3.714285714285715e-05,
       "n_predictions_pooled": 2500,
       "mu_std_pct_change_vs_clean": 0.036716887612311296
     },
     "2pctFS": {
       "mu_std_across_samples": 41.10697937011719,
-      "feat_oob": 0.0001723536085173226,
+      "feat_oob": 6.857142857142858e-05,
       "n_predictions_pooled": 2500,
       "mu_std_pct_change_vs_clean": 0.14155191903587083
     },
     "5pctFS": {
       "mu_std_across_samples": 41.22135925292969,
-      "feat_oob": 0.0014475521424208045,
+      "feat_oob": 0.001467619047619048,
       "n_predictions_pooled": 2500,
       "mu_std_pct_change_vs_clean": 0.42019508739009565
     }
@@ -39,36 +39,36 @@
   "FD002": {
     "clean": {
       "mu_std_across_samples": 40.436676025390625,
-      "feat_oob": 1.1440936980050276e-05,
+      "feat_oob": 7.026789635485287e-06,
       "n_predictions_pooled": 6325
     },
     "0.1pctFS": {
       "mu_std_across_samples": 40.43291473388672,
-      "feat_oob": 0.013147924777473776,
+      "feat_oob": 0.015767764602547214,
       "n_predictions_pooled": 6325,
       "mu_std_pct_change_vs_clean": -0.009301683208442985
     },
     "0.5pctFS": {
       "mu_std_across_samples": 40.481990814208984,
-      "feat_oob": 0.03526717856687554,
+      "feat_oob": 0.042312516469038206,
       "n_predictions_pooled": 6325,
       "mu_std_pct_change_vs_clean": 0.11206358502342213
     },
     "1pctFS": {
       "mu_std_across_samples": 41.04555130004883,
-      "feat_oob": 0.054642241900633826,
+      "feat_oob": 0.06615195432586737,
       "n_predictions_pooled": 6325,
       "mu_std_pct_change_vs_clean": 1.5057500628288134
     },
     "2pctFS": {
       "mu_std_across_samples": 42.172035217285156,
-      "feat_oob": 0.0756494366155747,
+      "feat_oob": 0.09117505489679403,
       "n_predictions_pooled": 6325,
       "mu_std_pct_change_vs_clean": 4.291547581222751
     },
     "5pctFS": {
       "mu_std_across_samples": 46.60083770751953,
-      "feat_oob": 0.1057260255165583,
+      "feat_oob": 0.1286689503732982,
       "n_predictions_pooled": 6325,
       "mu_std_pct_change_vs_clean": 15.243987112734892
     }
@@ -76,36 +76,36 @@
   "FD004": {
     "clean": {
       "mu_std_across_samples": 38.46455383300781,
-      "feat_oob": 6.605091042418165e-05,
+      "feat_oob": 0.004331926863572433,
       "n_predictions_pooled": 5925
     },
     "0.1pctFS": {
       "mu_std_across_samples": 38.45404052734375,
-      "feat_oob": 0.005916004809584661,
+      "feat_oob": 0.00689957805907173,
       "n_predictions_pooled": 5925,
       "mu_std_pct_change_vs_clean": -0.027332451871677908
     },
     "0.5pctFS": {
       "mu_std_across_samples": 38.58751678466797,
-      "feat_oob": 0.02856931032065695,
+      "feat_oob": 0.03216315049226441,
       "n_predictions_pooled": 5925,
       "mu_std_pct_change_vs_clean": 0.3196786116225202
     },
     "1pctFS": {
       "mu_std_across_samples": 38.5385627746582,
-      "feat_oob": 0.04641330076619057,
+      "feat_oob": 0.05370389123300516,
       "n_predictions_pooled": 5925,
       "mu_std_pct_change_vs_clean": 0.19240816355675727
     },
     "2pctFS": {
       "mu_std_across_samples": 39.1390495300293,
-      "feat_oob": 0.06643427530019465,
+      "feat_oob": 0.07793492733239568,
       "n_predictions_pooled": 5925,
       "mu_std_pct_change_vs_clean": 1.7535513344305982
     },
     "5pctFS": {
       "mu_std_across_samples": 43.59162139892578,
-      "feat_oob": 0.0978259814626098,
+      "feat_oob": 0.11545616502578529,
       "n_predictions_pooled": 5925,
       "mu_std_pct_change_vs_clean": 13.329330656419177
     }

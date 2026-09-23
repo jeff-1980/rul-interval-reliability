@@ -25,7 +25,7 @@
   },
   "FD002": {
     "NLL": {
-      "crossover_feat_oob_relative": 0.008654369784804565,
+      "crossover_feat_oob_relative": 0.010385243741765478,
       "picp_clean": 0.9130434782608696,
       "picp_clean_real": 0.9130434782608696,
       "picp_clean_frozen_sigma_counterfactual": 0.9130434782608696,
@@ -36,20 +36,20 @@
       "sigma_contribution_fraction": 0.08871279584741988
     },
     "CP_norm": {
-      "crossover_feat_oob_relative": 0.008229379058631905,
+      "crossover_feat_oob_relative": 0.009875254870358284,
       "picp_clean": 0.9320158102766798,
       "picp_clean_real": 0.9320158102766798,
       "picp_clean_frozen_sigma_counterfactual": 0.9320158102766798,
-      "picp_frozen_sigma_counterfactual_at_crossover": 0.8463386929659619,
+      "picp_frozen_sigma_counterfactual_at_crossover": 0.846338692965962,
       "delta_picp_total": 0.09999999999999998,
-      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.08567711731071792,
-      "delta_picp_sigma_contribution": 0.014322882689282057,
-      "sigma_contribution_fraction": 0.1432288268928206
+      "delta_picp_mu_only_frozen_sigma_counterfactual": 0.08567711731071781,
+      "delta_picp_sigma_contribution": 0.014322882689282168,
+      "sigma_contribution_fraction": 0.1432288268928217
     }
   },
   "FD004": {
     "NLL": {
-      "crossover_feat_oob_relative": 0.011689131851380074,
+      "crossover_feat_oob_relative": 0.01402695822165609,
       "picp_clean": 0.8847257383966245,
       "picp_clean_real": 0.8847257383966245,
       "picp_clean_frozen_sigma_counterfactual": 0.8803375527426159,
@@ -60,7 +60,7 @@
       "sigma_contribution_fraction": -0.014534784537171278
     },
     "CP_norm": {
-      "crossover_feat_oob_relative": 0.011855452910111908,
+      "crossover_feat_oob_relative": 0.01422654349213429,
       "picp_clean": 0.8769620253164558,
       "picp_clean_real": 0.8769620253164558,
       "picp_clean_frozen_sigma_counterfactual": 0.8752742616033755,

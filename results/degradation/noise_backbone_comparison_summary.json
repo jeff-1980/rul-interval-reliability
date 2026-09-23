@@ -84,21 +84,21 @@
     },
     "FD002": {
       "NLL": {
-        "crossover_feat_oob_relative": 0.008654369784804565,
+        "crossover_feat_oob_relative": 0.010385243741765478,
         "sigma_contribution_fraction": 0.08871279584741988
       },
       "CP_norm": {
-        "crossover_feat_oob_relative": 0.008229379058631905,
-        "sigma_contribution_fraction": 0.1432288268928206
+        "crossover_feat_oob_relative": 0.009875254870358284,
+        "sigma_contribution_fraction": 0.1432288268928217
       }
     },
     "FD004": {
       "NLL": {
-        "crossover_feat_oob_relative": 0.011689131851380074,
+        "crossover_feat_oob_relative": 0.01402695822165609,
         "sigma_contribution_fraction": -0.014534784537171278
       },
       "CP_norm": {
-        "crossover_feat_oob_relative": 0.011855452910111908,
+        "crossover_feat_oob_relative": 0.01422654349213429,
         "sigma_contribution_fraction": -0.04761872897265597
       }
     },

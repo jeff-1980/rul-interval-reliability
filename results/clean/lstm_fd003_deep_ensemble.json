@@ -8,7 +8,7 @@
     "picp": 0.91,
     "mpiw": 40.631229400634766,
     "ece": 0.07631578947368416,
-    "latency_ms_per_sample": 0.982356071472168,
+    "latency_ms_per_sample": 1.0685133934020996,
     "member_seeds": [
       42,
       2024,

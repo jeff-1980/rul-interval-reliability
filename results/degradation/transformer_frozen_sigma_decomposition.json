@@ -23,7 +23,7 @@
   },
   "FD002": {
     "NLL": {
-      "crossover_feat_oob_relative": 0.007931659854137296,
+      "crossover_feat_oob_relative": 0.009517991824964756,
       "picp_clean_real": 0.891699604743083,
       "picp_clean_frozen_sigma_counterfactual": 0.891699604743083,
       "picp_frozen_sigma_counterfactual_at_crossover": 0.8031145392753268,
@@ -33,7 +33,7 @@
       "sigma_contribution_fraction": 0.1141493453224385
     },
     "CP_norm": {
-      "crossover_feat_oob_relative": 0.00791242208238256,
+      "crossover_feat_oob_relative": 0.009494906498859071,
       "picp_clean_real": 0.9114624505928853,
       "picp_clean_frozen_sigma_counterfactual": 0.9114624505928853,
       "picp_frozen_sigma_counterfactual_at_crossover": 0.8230498355399539,
@@ -67,7 +67,7 @@
   },
   "FD004": {
     "NLL": {
-      "crossover_feat_oob_relative": 0.004474103683963777,
+      "crossover_feat_oob_relative": 0.005368924420756532,
       "picp_clean_real": 0.8421940928270043,
       "picp_clean_frozen_sigma_counterfactual": 0.8411814345991562,
       "picp_frozen_sigma_counterfactual_at_crossover": 0.745398623140129,
@@ -77,7 +77,7 @@
       "sigma_contribution_fraction": 0.0421718854097275
     },
     "CP_norm": {
-      "crossover_feat_oob_relative": 0.004446006698734766,
+      "crossover_feat_oob_relative": 0.005335208038481719,
       "picp_clean_real": 0.850464135021097,
       "picp_clean_frozen_sigma_counterfactual": 0.8462447257383967,
       "picp_frozen_sigma_counterfactual_at_crossover": 0.7547375765511951,

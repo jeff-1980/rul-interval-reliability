@@ -1,38 +1,37 @@
 # Superseded training scripts
 
 These two scripts are kept for provenance only. They are the original
-(pre-audit) training pipelines behind two of the four cells in Table I
-(the 2x2 leakage-audit protocol experiment):
+(pre-audit) training pipelines behind the historical, uncontrolled T/W and
+V/W checkpoints:
 
 - `train_lstm_leaked_test_select_whole_file_scaler.py` -- selects the
   checkpoint by *test-set* RMSE each epoch, and fits the feature scaler on
-  the whole training file (both leakage-affected). This is the "T/W" cell.
+  the whole training file (both leakage-affected), training on **all**
+  training-file engines (not the 60% canonical fit split used everywhere
+  else in this release). This was the original "T/W" cell.
 - `train_lstm_val_select_whole_file_scaler.py` -- selects the checkpoint by
   held-out validation RMSE (not test), but still fits the scaler on the
-  whole training file. This is the "V/W" cell.
+  whole training file, training on an **80%** split (not the 60% canonical
+  fit split). This was the original "V/W" cell.
 
-**Re-running either script will not reproduce the checkpoints shipped in
-this release.** Training involves non-deterministic GPU kernel selection
-(see `README.md`'s scope-of-reproducibility note); running either script
-again will train a *different* set of weights, not recover the exact ones
-used to compute Table I.
+**R9 update: these two cells are no longer part of Table I.** Both scripts
+trained on a different *amount* of fit data than the V/F and T/F cells
+(100% and 80% respectively, vs. V/F/T/F's 60% canonical `fit_units`),
+confounding "scaler scope" and "selection criterion" -- the two variables
+Table I's Sel./Norm./Int. contrasts are supposed to isolate -- with a third,
+undocumented variable (fit-data volume). Table I now uses **T/W'** and
+**V/W'**, retrained by `protocol_2x2_controlled_retrain.py` with the same
+60% canonical `fit_units` as every other cell, changing only the scaler
+scope (whole-file) and selection criterion (test set for T/W', `val_units`
+for V/W'). See that script's docstring and `results/table_provenance.csv`
+for the full protocol.
 
-**The actual T/W and V/W checkpoint weights ARE shipped in this release**,
-under:
-
-- `results/checkpoints/lstm_leaked_test_select_whole_file_scaler/` (T/W, 15
-  files: 3 datasets x 5 seeds)
-- `results/checkpoints/lstm_leaked_val_select_whole_file_scaler/` (V/W, 15
-  files: 3 datasets x 5 seeds)
-
-These are deliberately kept in directories separate from
-`results/checkpoints/lstm/`, which holds the current, leakage-audited V/F
-protocol's checkpoints -- the two must never be confused, since T/W and V/W
-are the leakage-affected baselines Table I contrasts against V/F, not
-alternative copies of the same weights. `code/build_table1.py` reads all
-four quadrants (T/W, V/W, V/F, T/F) from their respective directories and
-recomputes Table I's numbers by inference only, from these existing
-checkpoints -- no retraining.
+The checkpoints these two superseded scripts produced are kept for
+provenance under `results/superseded/checkpoints_tw_vw_uncontrolled/`
+(re-running either script will not reproduce them bit-for-bit -- training
+involves non-deterministic GPU kernel selection, see `README.md`'s
+scope-of-reproducibility note). They are **not** read by
+`code/build_table1.py` any more.
 
 Both scripts import `common.py`, which lives one directory up in `code/`,
 not here -- they will not run from within `code/superseded/` without that

@@ -85,7 +85,8 @@ if __name__ == '__main__':
                 sigma = np.exp(ls) * 125.0
                 mu_mem.append(mu); sigma_mem.append(sigma)
                 y_ref = y_test
-                fo_this_trial_per_seed.append(float(np.mean((X_test < -1.0) | (X_test > 1.0))))
+                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
             fo_this_trial = float(np.mean(fo_this_trial_per_seed))
             mu_mem = np.stack(mu_mem); sigma_mem = np.stack(sigma_mem)
             mu_ens = mu_mem.mean(0)

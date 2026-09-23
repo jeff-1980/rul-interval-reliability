@@ -8,12 +8,10 @@ Deep Ensemble/MSE——这些不是"基线clamp_frac vs σ̂贡献占比"这个�
 若后续需要FD003完整代价表（含MC-Dropout/Ensemble/MSE/per-engine），
 是独立的、更大的任务，需要用户另外确认再做。
 
-数据来源：FD003官方C-MAPSS数据集，此前从未被拷入本项目 DATA_DIR
-（/home/jeffwork/rul_project/data/），2026-09-18 从
-a separate local copy of（同一份标准NASA C-MAPSS发行版，
+数据来源：FD003官方C-MAPSS数据集，此前从未被拷入本项目 DATA_DIR，
+2026-09-18 从本机另一份已有的标准NASA C-MAPSS发行版拷贝补齐（
 train/test/RUL三个文件行数与格式核实一致：100 train engines,
-100 test engines匹配RUL_FD003.txt的100行,26列标准格式）拷贝补齐，
-不是新造数据。
+100 test engines匹配RUL_FD003.txt的100行,26列标准格式），不是新造数据。
 
 工况核实：KMeans k=6 vs k=1 惯性比=0.074，setting_3恒为100，与FD001
 同构（单一工况）——`common.get_feature_names`已相应更新，FD003复用
@@ -339,14 +337,18 @@ def run_sweep_arm(arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct
                 raw_noisy = V4.inject_noise_fixed_pct_raw(test_df_raw, feat_cols, level, rng, full_scale)
             else:
                 raw_noisy = V4.inject_noise_raw(test_df_raw, feat_cols, level, rng, 'global', global_std=global_std)
+            fo_this_trial_per_seed = []
             for i, seed in enumerate(C.SEEDS):
                 scaler = scalers_by_seed[seed]
                 df_noisy, scaled_feat = V4.scale_and_package(test_df_raw, feat_cols, raw_noisy, scaler)
                 X_test, y_test = C.create_sequences(df_noisy, feat_cols, mode='test', true_ruls=true_ruls)
                 X_t = torch.tensor(X_test, dtype=torch.float32).to(device)
                 trial_y = y_test
-                if seed == C.SEEDS[0]:
-                    feat_oob_trials.append(float(np.mean((scaled_feat < -1.0) | (scaled_feat > 1.0))))
+                # R9-Part3: 同一类此前在 clamp_frac/threshold_refinement/armC_mu_std
+                # 修过的旧bug（此前只用 seed[0]+整段轨迹 scaled_feat）——改成5个seed
+                # 各自在窗口化X_test上算，取平均；V4.feat_oob 分母限定传感器列
+                # （FD003无工况设定列，这里是no-op，但保持全项目同一实现）。
+                fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
 
                 mu_n, ls_n = infer_nll(nll_models[seed], X_t)
                 sigma_n = np.exp(ls_n) * 125.0
@@ -368,6 +370,7 @@ def run_sweep_arm(arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct
                 sigma_c_frozen = clean_sigma_cp[seed]
                 picp_cf, mpiw_cf = picp_mpiw_z(y_test, mu_c, sigma_c_frozen, z=q_norm)
                 cp_frozen_cells[i].append({'picp': picp_cf, 'mpiw': mpiw_cf})
+            feat_oob_trials.append(float(np.mean(fo_this_trial_per_seed)))
 
         def agg(cells_dict, key):
             arr = np.array([[cells_dict[i][t][key] for t in range(N_TRIALS)] for i in range(5)])

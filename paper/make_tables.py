@@ -272,3 +272,9 @@ nv=J('degradation/lstm_ensemble_n5_vs_n15_variance.json')
 M['NFiveFifteen']=", ".join(f"{nv[ds]['picp']['std_ratio_15_over_5']:.2f}" for ds in ['FD001','FD002','FD004'])
 with open('tables/numbers.tex','w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
+ir=J('seeds/ensemble_independent_replication.json')
+_bs=[ir[ds]['bootstrap_single_nll_minus_ensemble_group0'] for ds in DS]
+M['IndepSigN']={0:'none',1:'one',2:'two',3:'three',4:'all four'}[sum(b['ci95_lo']>0 for b in _bs)]
+M['IndepPosN']={0:'none',1:'one',2:'two',3:'three',4:'all four'}[sum(b['mean_diff']>0 for b in _bs)]
+with open('tables/numbers.tex','w') as f:
+    for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")

@@ -57,8 +57,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "0",
-          "target_rel_co": 0.008654369784804565,
-          "actual_feat_oob": 0.009426438296003514
+          "target_rel_co": 0.010385243741765478,
+          "actual_feat_oob": 0.011311725955204214
         },
         "C_mu0_sigma0": 0.9130434782608695,
         "C_mu1_sigma0": 0.7636363636363636,
@@ -82,8 +82,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.008229379058631905,
-          "actual_feat_oob": 0.007239350021958717
+          "target_rel_co": 0.009875254870358284,
+          "actual_feat_oob": 0.00868722002635046
         },
         "C_mu0_sigma0": 0.9320158102766797,
         "C_mu1_sigma0": 0.891699604743083,
@@ -161,8 +161,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "-5",
-          "target_rel_co": 0.011689131851380074,
-          "actual_feat_oob": 0.016783559931239256
+          "target_rel_co": 0.01402695822165609,
+          "actual_feat_oob": 0.02014027191748711
         },
         "C_mu0_sigma0": 0.8818565400843881,
         "C_mu1_sigma0": 0.6691983122362869,
@@ -186,8 +186,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "-5",
-          "target_rel_co": 0.011855452910111908,
-          "actual_feat_oob": 0.016783559931239256
+          "target_rel_co": 0.01422654349213429,
+          "actual_feat_oob": 0.02014027191748711
         },
         "C_mu0_sigma0": 0.8818565400843882,
         "C_mu1_sigma0": 0.6616033755274262,
@@ -267,8 +267,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.007931659854137296,
-          "actual_feat_oob": 0.00720245937637242
+          "target_rel_co": 0.009517991824964756,
+          "actual_feat_oob": 0.008642951251646904
         },
         "C_mu0_sigma0": 0.891699604743083,
         "C_mu1_sigma0": 0.790513833992095,
@@ -292,8 +292,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "5",
-          "target_rel_co": 0.00791242208238256,
-          "actual_feat_oob": 0.00720245937637242
+          "target_rel_co": 0.009494906498859071,
+          "actual_feat_oob": 0.008642951251646904
         },
         "C_mu0_sigma0": 0.9114624505928853,
         "C_mu1_sigma0": 0.8142292490118577,
@@ -371,8 +371,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "0",
-          "target_rel_co": 0.004474103683963777,
-          "actual_feat_oob": 0.00529395218002813
+          "target_rel_co": 0.005368924420756532,
+          "actual_feat_oob": 0.006352742616033755
         },
         "C_mu0_sigma0": 0.8573839662447258,
         "C_mu1_sigma0": 0.6059071729957806,
@@ -396,8 +396,8 @@
         "grid_point_used": {
           "kind": "mainarm",
           "level_key": "inf",
-          "target_rel_co": 0.004446006698734766,
-          "actual_feat_oob": 0.0036099390529770277
+          "target_rel_co": 0.005335208038481719,
+          "actual_feat_oob": 0.004331926863572433
         },
         "C_mu0_sigma0": 0.8573839662447258,
         "C_mu1_sigma0": 0.8573839662447258,

@@ -69,8 +69,12 @@ run 19_maintenance_one_sided maintenance_decision_one_sided.py
 run 20_maintenance_rul_corrected maintenance_stress_test_rul_correction_v2.py
 
 # --- Phase 5: Table I (2x2 protocol, 4 quadrants, no retraining -- reads
-# the T/W, V/W, V/F, T/F checkpoints already shipped under
-# results/checkpoints/) ---
+# the T/W', V/W', V/F, T/F checkpoints already shipped under
+# results/checkpoints/. T/W' and V/W' (results/checkpoints/lstm_2x2_controlled/)
+# were trained once by protocol_2x2_controlled_retrain.py -- that script is
+# not part of this pipeline and is not asserted bit-reproducible (training,
+# not inference); see code/superseded/README.md for why the original T/W/V/W
+# cells were replaced. ---
 run 30_table1 build_table1.py
 
 # --- Phase 6: Table II clean benchmark + cost tables + per-engine +
@@ -101,7 +105,12 @@ run 51_compare_backbones compare_backbones_noise.py
 run 52_compare_degradations compare_degradations_dose_response.py
 run 54_ensemble_n5_vs_n15 eval_lstm_ensemble_n5_vs_n15.py
 
-# --- Phase 7: publish results/generated/ outputs to their released
+# --- Phase 7: pre-flight diagnostic now cited in the main text (not a
+# run_pipeline.sh output historically, but held to the same reproducibility
+# bar -- see REPRODUCE.md) ---
+run 55_a1_perturbation_target diagnostic_perturbation_target_a1.py
+
+# --- Phase 8: publish results/generated/ outputs to their released
 # names/locations under results/{category}/ ---
 run 53_publish_results publish_results.py
 

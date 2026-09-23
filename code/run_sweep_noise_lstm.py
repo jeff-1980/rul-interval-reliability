@@ -189,7 +189,8 @@ def run_dataset_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, snr_or_p
                 # 不再用 scale_and_package 返回的整段轨迹 scaled_feat（那包含大量从未
                 # 进模型的历史行，稀释/扭曲了比例）。与 drift 分支（已用窗口化
                 # X_scaled）以及 PICP 自身的 5 模型 x 5 trial 汇总口径对齐。
-                trial_feat_oob.append(float(np.mean((X_test < -1.0) | (X_test > 1.0))))
+                # R9-Part3: 分母限定到传感器列（V4.feat_oob 全项目唯一实现）。
+                trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
 
         nll_cells = [[None] * N_TRIALS for _ in range(5)]

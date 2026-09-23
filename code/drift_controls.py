@@ -47,6 +47,7 @@ def scalers_for(ds, canon):
 
 def run_variant(ds, backbone, variant, device, scalers_by_seed, full_scale, models_by_seed,
                  X_raw_clean, y_ref, channel_idx=None):
+    sensor_mask = V4.sensor_mask_for(C.get_feature_names(ds))  # R9-Part3
     all_picp = {'NLL': [], 'MSE_fixed': [], 'Deep_Ensemble': []}
     all_feat_oob = []
     all_sigma_mean = {'NLL': []}
@@ -70,7 +71,7 @@ def run_variant(ds, backbone, variant, device, scalers_by_seed, full_scale, mode
             nll_model, mc_model, _ = models_by_seed[seed]
             scaler = scalers_by_seed[seed]
             X_scaled = V4.scale_raw_windows(X_drifted, scaler)
-            fo = float(np.mean((X_scaled < -1.0) | (X_scaled > 1.0)))
+            fo = V4.feat_oob(X_scaled, sensor_mask)
             trial_feat_oob.append(fo)
             X_t = torch.tensor(X_scaled, dtype=torch.float32).to(device)
             mu, ls = E.infer_nll(nll_model, X_t)
@@ -165,7 +166,7 @@ if __name__ == '__main__':
                 nll_model, mc_model, _ = models_by_seed[seed]
                 scaler = scalers_by_seed[seed]
                 X_scaled = V4.scale_raw_windows(X_raw_continuous, scaler)
-                fo = float(np.mean((X_scaled < -1.0) | (X_scaled > 1.0)))
+                fo = V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols))  # R9-Part3
                 r4_fo.append(fo)
                 X_t = torch.tensor(X_scaled, dtype=torch.float32).to(device)
                 mu, ls = E.infer_nll(nll_model, X_t)

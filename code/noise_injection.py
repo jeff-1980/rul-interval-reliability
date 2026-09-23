@@ -104,6 +104,23 @@ def sensor_only_scale(feature_cols, scale):
     return scale
 
 
+def sensor_mask_for(feature_cols):
+    """R9-Part2/3：单一权威来源，给出"这一列是传感器（非工况设定）"的布尔
+    掩码，供 inject_gain_fixed_pct_raw 的显式掩码参数和 feat_oob() 的分母
+    共用——避免两处各自重新推导 is_setting 逻辑而漂移不同步。"""
+    return np.array([c not in C.SETTING_NAMES for c in feature_cols])
+
+
+def feat_oob(X_scaled, sensor_mask):
+    """R9-Part3：全项目唯一的 f_oob 实现。X_scaled: (..., n_feat) 已标准化到
+    [-1,1] 的数组（窗口化或未窗口化均可，最后一维是特征列）；sensor_mask:
+    长度 n_feat 的布尔数组，True=传感器列。分母只统计 sensor_mask 选中的列
+    ——工况设定列在 R8-B1 后从不被扰动，若仍计入分母会把比例稀释/失真
+    （FD002 5% drift 原先的18列分母给出9.53%，限定到15个传感器列后是
+    11.43%，两者相差 18/15=1.2 倍，正是被稀释的量）。"""
+    return float(np.mean((X_scaled[..., sensor_mask] < -1.0) | (X_scaled[..., sensor_mask] > 1.0)))
+
+
 def inject_noise(test_df_raw, feature_cols, scaler, snr_db, rng, scheme,
                   global_std=None, km=None, cond_std=None):
     """scheme: 'global' (train-set pooled std, 臂B) or 'per_condition' (train-set per-cluster std, 臂A)"""
@@ -180,17 +197,29 @@ def inject_bias_fixed_pct_raw(test_df_raw, feature_cols, pct, rng, full_scale_ra
     return raw_vals + bias[None, :]
 
 
-def inject_gain_fixed_pct_raw(test_df_raw, feature_cols, pct, rng, full_scale_range=None):
+def inject_gain_fixed_pct_raw(test_df_raw, feature_cols, pct, rng, full_scale_range=None, sensor_mask=None):
     """T2 Part B：确定性增益误差。每通道乘 (1±k)，k=pct/100，符号按 trial
     逐通道随机。直接作用于原始物理单位（未去均值），因此大直流偏置通道
     （如 s9≈9050rpm）在同样的 k% 下会有远大于其他通道的绝对位移——这是
     增益误差的真实物理行为，如实计入 feat_oob，不做去偏置处理。
     full_scale_range 参数保留仅为与其它注入函数同一调用签名，增益误差本身
-    不依赖全幅量程（相对误差直接乘在读数上）。"""
+    不依赖全幅量程（相对误差直接乘在读数上）。
+
+    R9-Part2：sensor_mask（长度 n_feat 的布尔数组，True=传感器列，见
+    sensor_mask_for）显式控制哪些列真正被乘以 (1±k)——被掩掉的列
+    factor 恒为1（乘数不变）。此前 R8-B1 的 sensor_only_scale 只对
+    full_scale_range 置零，但增益误差的 factor 根本不依赖 full_scale_range
+    （见上），所以R8并未真正让增益注入变成"仅传感器"，工况设定列在
+    R8之后仍被 (1±k) 乘过——这是本轮发现并修复的真实 bug，不是文档
+    完善。sensor_mask=None 保留旧行为（全部列都乘），仅用于未来任何
+    明确需要18列联合注入的对照场景；本项目现在的全部调用点都必须显式
+    传入 sensor_mask。"""
     raw_vals = test_df_raw[feature_cols].values.astype(np.float64)
     n_feat = raw_vals.shape[1]
     sign = rng.choice([-1.0, 1.0], size=n_feat)
     factor = 1.0 + (pct / 100.0) * sign
+    if sensor_mask is not None:
+        factor = np.where(np.asarray(sensor_mask), factor, 1.0)
     return raw_vals * factor[None, :]
 
 

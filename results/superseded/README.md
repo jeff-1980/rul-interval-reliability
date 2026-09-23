@@ -27,3 +27,12 @@ attribution,decision,latency,seeds}/`. Quoting Appendix A directly:
 
 None of these three files are used to produce any number reported in the
 current manuscript or supplementary material.
+
+## checkpoints_tw_vw_uncontrolled/
+
+Added in R9. The original T/W and V/W checkpoints for Table I (trained on
+100% and 80% of the training-file engines respectively, rather than the
+60% canonical `fit_units` split used by every other cell) -- see
+`code/superseded/README.md` for why they were replaced by the controlled
+T/W'/V/W' cells. Kept for provenance only; not read by
+`code/build_table1.py`.

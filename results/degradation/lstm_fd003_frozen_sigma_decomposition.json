@@ -1,6 +1,6 @@
 {
   "NLL": {
-    "crossover_feat_oob": 0.0016367026855889893,
+    "crossover_feat_oob": 0.0004838211382113832,
     "picp_clean_real": 0.858,
     "picp_clean_frozen_sigma_counterfactual": 0.858,
     "picp_frozen_sigma_counterfactual_at_crossover": 0.8035658536585365,
@@ -11,7 +11,7 @@
     "clamp_frac_at_clean": 0.404
   },
   "CP_norm": {
-    "crossover_feat_oob": 0.007808321285639004,
+    "crossover_feat_oob": 0.0053482213438734985,
     "picp_clean_real": 0.8959999999999999,
     "picp_clean_frozen_sigma_counterfactual": 0.8959999999999999,
     "picp_frozen_sigma_counterfactual_at_crossover": 0.8094324110671935,

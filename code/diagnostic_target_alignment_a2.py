@@ -79,8 +79,19 @@ if __name__ == '__main__':
     for ds in DATASETS:
         train_df_raw, test_df_raw, true_ruls, feat_cols, _ = V4.load_raw_train_test_and_scaler(ds)
         full_scale = V4.fit_fullscale_range(train_df_raw, feat_cols)
-        X_raw_clean, y_official, u_ids = V4.extract_raw_windows(test_df_raw, feat_cols, true_ruls, mode='test')
-        y_alt = np.minimum(true_ruls.iloc[u_ids - 1]['RUL'].values.astype(np.float64) - 1.0, C.MAX_RUL)
+        # R9-Part4: extract_raw_windows(mode='test') 本身在 R8-B2 已经改成返回
+        # min(official_RUL-1,125)（见 noise_injection.py 的 R8-B2 注释），
+        # 这个脚本此前直接把它的 y_list 当 y_official 用——导致 y_official 和
+        # y_alt 实际上算的是同一件事（都已经减了1），A2 的整个对照失去意义。
+        # 现在改成 y_official / y_alt 都直接从 true_ruls 原始官方终端标签独立
+        # 构造，只借用 extract_raw_windows 的 X_raw_clean/u_ids（窗口划分与
+        # 单元编号，和 RUL 口径无关）。
+        X_raw_clean, _y_ignored, u_ids = V4.extract_raw_windows(test_df_raw, feat_cols, true_ruls, mode='test')
+        official_rul_raw = true_ruls.iloc[u_ids - 1]['RUL'].values.astype(np.float64)
+        y_official = np.minimum(official_rul_raw, C.MAX_RUL)          # 当前周期口径：官方RUL原样
+        y_alt = np.minimum(official_rul_raw - 1.0, C.MAX_RUL)          # 下一周期口径：与训练标签一致
+        assert not np.array_equal(y_official, y_alt), \
+            f"{ds}: y_official and y_alt are identical -- the two conventions collapsed to the same array"
         X_raw_drift = V4.inject_drift_fixed_pct_windows(X_raw_clean, 5.0, full_scale)
 
         result[ds] = {}

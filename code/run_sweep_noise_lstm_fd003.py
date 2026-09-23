@@ -151,7 +151,9 @@ def run_arm(arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct, glob
                 trial_y = y_test
                 # 2026-09-21 f_oob 口径统一：改在实际送入模型的末端窗口 X_test 上算，
                 # 见 run_sweep_noise_lstm.py 同日同条注释。
-                trial_feat_oob.append(float(np.mean((X_test < -1.0) | (X_test > 1.0))))
+                # R9-Part3: V4.feat_oob 全项目唯一实现（FD003 无工况设定列，
+                # sensor_mask 全True，数值上是no-op，但保持全项目同一实现）。
+                trial_feat_oob.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
         out['feat_oob'][level_key] = float(np.mean(trial_feat_oob))
 
         nll_cells = [[None] * N_TRIALS for _ in range(5)]

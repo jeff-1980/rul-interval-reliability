@@ -78,7 +78,7 @@ if __name__ == '__main__':
                 for seed in C.SEEDS:
                     scaler = scalers_by_seed[seed]
                     X_scaled = V4.scale_raw_windows(X_raw, scaler)
-                    fo = float(np.mean((X_scaled < -1.0) | (X_scaled > 1.0)))
+                    fo = V4.feat_oob(X_scaled, V4.sensor_mask_for(feat_cols))  # R9-Part3
                     trial_fo.append(fo)
                     X_t = torch.tensor(X_scaled, dtype=torch.float32).to(device)
                     mu, ls = E.infer_nll(nll_model_by_seed[seed], X_t)

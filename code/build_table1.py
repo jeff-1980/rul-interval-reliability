@@ -1,23 +1,30 @@
 """
-R8-B3：Table I（2x2 协议实验）四格在新协议（B2：测试真值统一为
-min(官方RUL-1,125)）下重新推理。四个checkpoint 全部复用已有权重，不重训：
+R8-B3 + R9-Part1：Table I（2x2 协议实验）四格在新协议下重新推理。
 
-  T/W: results/checkpoints/lstm_leaked_test_select_whole_file_scaler/{ds}_LSTM_seed{seed}.pt
-       （code/superseded/train_lstm_leaked_test_select_whole_file_scaler.py
-       训出，test-select + whole-file scaler；该 checkpoint 本身随本发布仓库一起提供）
-  V/W: results/checkpoints/lstm_leaked_val_select_whole_file_scaler/{ds}_LSTM_seed{seed}.pt
-       （code/superseded/train_lstm_val_select_whole_file_scaler.py
-       训出，val-select + whole-file scaler；该 checkpoint 本身随本发布仓库一起提供）
-  V/F: results/checkpoints/lstm/{ds}_LSTM_seed{seed}.pt
-       （train_lstm.py 训出，val-select + fit-only scaler，
-       本项目主协议）
-  T/F: results/checkpoints/lstm_drift_controls/{ds}_LSTM_testselect_fitonlyscaler_seed{seed}.pt
-       （protocol_2x2_quadrant4.py 训出，test-select + fit-only scaler）
+R9-Part1（本轮）：T/W、V/W 两格换成"受控"版本 T/W'、V/W'——旧版 T/W 在
+全部train发动机上拟合（100%），旧版 V/W 用 80% fit，与 V/F、T/F 用的
+canonical_splits.json 60% fit_units 不是同一拟合数据量，混进了一个额外
+变量。T/W'、V/W' 由 protocol_2x2_controlled_retrain.py 重新训练，
+fit_units 与 V/F、T/F 完全相同，只保留"选模判据"和"scaler拟合范围"两个
+变量。旧版 T/W（全部发动机）、V/W（80%）的 checkpoint 已移入
+code/superseded/ + results/superseded/，不再是 Table I 的数据来源，仅存
+档供溯源。
 
-T/W、V/W 用"整份训练文件"拟合的 scaler（C.load_and_process，泄漏版）；
+  T/W': results/generated/checkpoints_r9_2x2_controlled/{ds}_LSTM_testselect_wholefilescaler_seed{seed}.pt
+        （protocol_2x2_controlled_retrain.py 训出，fit_units=60%canonical，
+        test-select + whole-file scaler）
+  V/W': results/generated/checkpoints_r9_2x2_controlled/{ds}_LSTM_valselect_wholefilescaler_seed{seed}.pt
+        （同上，val-select + whole-file scaler）
+  V/F : results/generated/checkpoints_leakfree/{ds}_LSTM_seed{seed}.pt
+        （train_lstm.py 训出，val-select + fit-only scaler，
+        本项目主协议）
+  T/F : results/generated/checkpoints_leakfree_r2/{ds}_LSTM_testselect_fitonlyscaler_seed{seed}.pt
+        （protocol_2x2_quadrant4.py 训出，test-select + fit-only scaler）
+
+T/W'、V/W' 用"整份训练文件"拟合的 scaler（C.load_and_process，泄漏版）；
 V/F、T/F 用"只在 fit_units 上拟合"的 scaler（C.load_and_process_leakfree，
 本项目主协议）——这是每格自己训练时用的同一个 scaler，不是本脚本另外
-选的。
+选的。四格的 fit_units（训练数据本身，60% canonical）现在完全相同。
 
 数据集范围：FD001/FD002/FD004（与 protocol_2x2_quadrant4.py 一致，不含
 FD003——FD003 本来就没有泄漏基线）。5 seeds，每格每个(ds,seed)一条记录。
@@ -44,9 +51,9 @@ QUADRANTS = ['T_W', 'V_W', 'V_F', 'T_F']
 
 def ckpt_path_for(quadrant, ds, seed):
     if quadrant == 'T_W':
-        return os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm_leaked_test_select_whole_file_scaler', f"{ds}_LSTM_seed{seed}.pt")
+        return os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm_2x2_controlled', f"{ds}_LSTM_testselect_wholefilescaler_seed{seed}.pt")
     if quadrant == 'V_W':
-        return os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm_leaked_val_select_whole_file_scaler', f"{ds}_LSTM_seed{seed}.pt")
+        return os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm_2x2_controlled', f"{ds}_LSTM_valselect_wholefilescaler_seed{seed}.pt")
     if quadrant == 'V_F':
         return os.path.join(PROJ_DIR, 'results', 'checkpoints', 'lstm', f"{ds}_LSTM_seed{seed}.pt")
     if quadrant == 'T_F':

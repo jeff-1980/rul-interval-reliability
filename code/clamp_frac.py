@@ -75,7 +75,8 @@ def run_arm(ds, arm, test_df_raw, true_ruls, feat_cols, device, levels, is_pct,
                 # 2026-09-21（本轮）：此前只在 seed==C.SEEDS[0] 时记一次，且用整段轨迹
                 # scaled_feat——同一类此前漏掉的旧bug，见 threshold_crossover_refinement.py
                 # 同日同条注释。改成5个seed各自在窗口化X_test上算，取平均。
-                fo_this_trial_per_seed.append(float(np.mean((X_test < -1.0) | (X_test > 1.0))))
+                # R9-Part3: V4.feat_oob 全项目唯一实现，分母限定传感器列。
+                fo_this_trial_per_seed.append(V4.feat_oob(X_test, V4.sensor_mask_for(feat_cols)))
             feat_oob_trials.append(float(np.mean(fo_this_trial_per_seed)))
 
         nll_clamp = float(np.mean(np.concatenate(nll_ls_pool) <= (C.LOG_SIGMA_MIN + CLAMP_EPS)))

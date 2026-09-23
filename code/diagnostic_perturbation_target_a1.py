@@ -120,8 +120,10 @@ if __name__ == '__main__':
                             sigma = np.exp(ls) * 125.0
                             lo, hi = mu - Z * sigma, mu + Z * sigma
                             picp_cells.append(float(np.mean((y_this >= lo) & (y_this <= hi))))
-                            oob = (X_scaled[:, :, keep_mask] < -1.0) | (X_scaled[:, :, keep_mask] > 1.0)
-                            foob_cells.append(float(np.mean(oob)))
+                            # R9-Part3: V4.feat_oob 全项目唯一实现（keep_mask 仍是本脚本
+                            # 自己的"本变体实际被扰动的列"，sensors/settings/joint 三个
+                            # 变体各不相同——这里只是把归约公式改走共用函数，掩码语义不变）。
+                            foob_cells.append(V4.feat_oob(X_scaled, keep_mask))
 
                             lb = mu - Z * sigma
                             triggered = lb <= L
