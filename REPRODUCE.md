@@ -1,11 +1,35 @@
 # Reproducing the result files
 
-This document covers reproduction of the **66 result files** listed below,
+This document has two levels, matching the paper's Data Availability
+section.
+
+## Level 1: reader reproducibility (tables from the released result files)
+
+Anyone who clones this repository can regenerate every table and number
+quoted in the paper and its supplement, from the result files already
+released here, without a GPU, PyTorch, or the raw C-MAPSS data:
+
+```bash
+git clone https://github.com/jeff-1980/rul-interval-reliability
+cd rul-interval-reliability
+python paper/make_tables.py .
+```
+
+This (re)writes every file under `paper/tables/`, including
+`numbers.tex`'s `\NReproBit` macro, purely from `results/` and
+`REPRODUCE.md`'s own MD5 manifest below (nothing is hardcoded). Diffing
+the output against what is already committed at this tag should show no
+changes. This is the level the paper's Data Availability section claims
+is reproducible by any reader.
+
+## Level 2: author verification (result files from the released checkpoints)
+
+This level covers reproduction of the **66 result files** listed below,
 all of them `run_pipeline.sh` outputs (including
 `results/diagnostics/A1_perturbation_target_diagnostic.json`, folded into
-the pipeline because it is now cited in the main text). The
-current protocol, relative to the predecessor pipeline, is inference-level
-except for one deliberate retraining (noted below):
+the pipeline because it is now cited in the main text). The current
+protocol, relative to the predecessor pipeline, is inference-level except
+for one deliberate retraining (noted below):
 
 - **Sensor-only perturbation on FD002/FD004.** These two datasets' feature
   columns are 3 operating-condition settings + 15 sensor channels. Every
@@ -38,7 +62,7 @@ This list supersedes the predecessor 32-file list entirely -- every file
 in that list is either included below (with updated content and checksum)
 or was superseded by a file that is.
 
-## What changed in this experiment
+### What changed in this experiment
 
 1. **Table I's T/W and V/W cells retrained as T/W', V/W'.** The original
    T/W cell fit its checkpoint on 100% of the training-file engines, and
@@ -89,7 +113,7 @@ or was superseded by a file that is.
    `assert not np.array_equal(y_official, y_alt)` guarding against a
    regression.
 
-## Scope: what is and isn't guaranteed
+### Scope: what is and isn't guaranteed
 
 **Reproducible (verified bit-identical across two independent reruns,
 2026-09-23)**: 63 of the 66 files below, for every mechanism except
@@ -129,7 +153,7 @@ reproducible here). This now includes:
 any file not listed below, and anything under `results/superseded/` or
 `code/superseded/`.
 
-## Two root causes fixed in the prior round (found via the double-run diagnosis)
+### Two root causes fixed in the prior round (found via the double-run diagnosis)
 
 The first attempt at the two-independent-reruns check in that round
 surfaced 15 of 71 files differing between runs. Per this project's
@@ -149,7 +173,7 @@ runs:
    seed via `common.stable_seed(dataset, ..., seed, tag)` before each
    sampling call.
 
-## Environment used to produce the checksums below
+### Environment used to produce the checksums below
 
 - Python 3.12.3
 - PyTorch 2.11.0+cu130 (CUDA build 13.0), cuDNN 9.1.9 (`torch.backends.cudnn.version()` = 91900)
@@ -166,7 +190,7 @@ architecture, not necessarily across versions. What is guaranteed across
 environments is that `stable_seed(...)` itself (a `hashlib.sha256` digest)
 always returns the same integer for the same inputs.
 
-## How to reproduce
+### How to reproduce
 
 ```bash
 cd code
@@ -193,7 +217,44 @@ the 66 released files between runs), then compare MD5s -- this is exactly
 what `code/check_md5.py` does (edit its snapshot directory to point at
 your two runs' outputs).
 
-## The 66 files and their MD5 (this environment, this codebase revision)
+#### External dependencies not shipped with this release
+
+`run_pipeline.sh`'s first step, `eval_nll_clean_b1.py`, reads three
+pre-existing files under `results/generated/` that this release does not
+ship and that no script in `run_pipeline.sh` regenerates:
+
+- `results/generated/step0c_leakfree_results.json` -- LSTM (FD001/FD002/
+  FD004) clean-condition results, produced as a byproduct of `train_lstm.py`.
+- `results/generated/stepFD003_nll_leakfree_results.json` -- the FD003
+  counterpart, produced as a byproduct of
+  `train_lstm_fd003_nll_and_mechanism.py`.
+- `results/generated/leakfree_t2/t2_transformer_nll_leakfree_results.json`
+  -- the Transformer counterpart (4 datasets), produced as a byproduct of
+  `train_transformer_nll.py`.
+
+Each is a per-seed record skeleton carrying training-time-only fields
+(`n_fit_units`, `n_val_units`, `n_val_windows`, `best_val_rmse`,
+`elapsed_train_s`) that `eval_nll_clean_b1.py` keeps as-is while
+refreshing only the fields that depend on the test-truth convention
+(rmse/score/picp/mpiw/ece). Those training-time fields cannot be
+recomputed by inference alone -- recovering them means rerunning the
+three training scripts named above, which is itself outside this
+document's reproducibility claim (see Scope, above). A from-scratch run
+of `run_pipeline.sh` on a machine that has never run those training
+scripts will fail at this first step until the three files are supplied
+by some other means. This is the concrete, structural reason the paper's
+Data Availability section states that the pipeline "reads a small number
+of intermediate files from earlier development runs that are not part of
+the release" and does not claim it "runs unchanged on another machine" --
+it is not merely an unverified generalisation.
+
+A full audit of every other file read across `run_pipeline.sh`'s ~39
+scripts found no further external dependency: every other read resolves
+to either `results/canonical_splits.json` / `results/checkpoints/` (both
+released and git-tracked) or a file an earlier step of the same pipeline
+run already wrote.
+
+### The 66 files and their MD5 (this environment, this codebase revision)
 
 ```
 e44c3ba1cb450a033c38d5265fa7b6da  results/attribution/attribution_bootstrap_by_order_exact_interp.json
@@ -267,16 +328,16 @@ fe82a360216851aa1a1d67faec927a45  results/seeds/ensemble_size_sweep_fd004_interv
 `[latency-exempt]` marks the 3 files whose only cross-run difference is
 `latency_ms_per_sample`, per the scope note above.
 
-## Numerical self-consistency of this manifest
+### Numerical self-consistency of this manifest
 
 - 63 files bit-identical across two independent reruns (2026-09-23) -- the
   MD5s above, all 66 of them `run_pipeline.sh` outputs.
 - 3 files identical except for `latency_ms_per_sample` (wall-clock timing,
-  explicitly out of scope) -- the MD5s above are from the second of the
-  two runs; a fresh run's `latency_ms_per_sample` value will differ from
-  it but every other field will match.
+  explicitly out of scope) -- the MD5s above are this release's actual
+  published values; a fresh run's `latency_ms_per_sample` value will
+  differ from them but every other field will match.
 - 66 = 63 + 3, matching the file count claimed at the top of this
-  document.
+  section.
 - 1 additional file (`results/diagnostics/A2_target_alignment_diagnostic.json`)
   exists alongside these 66 but is excluded from the reproducibility claim
   for the documented reason given above (single-run diagnostic, not
