@@ -5,7 +5,8 @@ counterfactual decomposition.
 Supersedes an earlier pooled dose-response script (not included;
 superseded) (pooled points + half-life crossover) and an earlier
 MSE-proxy decomposition script (not included; superseded, see
-results/superseded/) (MSE-proxy decomposition, rejected by the user).
+results/superseded/) (MSE-proxy decomposition, superseded; see
+Appendix A of the paper).
 
 The decomposition no longer relies on a second model (MSE) as a "pure
 mu_hat" proxy -- it uses the same NLL/CP-norm model's PICP curve directly

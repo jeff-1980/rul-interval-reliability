@@ -80,7 +80,7 @@ or was superseded by a file that is.
    read by `build_table1.py`. See `code/superseded/README.md`.
 2. **Gain injection was never actually sensor-only.** `inject_gain_fixed_pct_raw`
    multiplies each channel by `(1 +/- k)`, a factor that does not depend on
-   `full_scale_range` -- so the prior round's `sensor_only_scale()` fix
+   `full_scale_range` -- so the `sensor_only_scale()` fix
    (which zeroes `full_scale_range` on the 3 setting columns) had no effect
    on it. Gain injection kept perturbing FD002/FD004's setting columns even
    after that fix. `inject_gain_fixed_pct_raw` now takes an explicit
@@ -153,7 +153,7 @@ reproducible here). This now includes:
 any file not listed below, and anything under `results/superseded/` or
 `code/superseded/`.
 
-### Two root causes fixed in the prior round (found via the double-run diagnosis)
+### Two reproducibility defects fixed during development (found via the double-run diagnosis)
 
 The first attempt at the two-independent-reruns check in that round
 surfaced 15 of 71 files differing between runs. Per this project's
