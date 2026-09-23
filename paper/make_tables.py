@@ -1,6 +1,6 @@
 """Generate every numeric table body and text macro of the manuscript from the
 released result files. Usage: python make_tables.py <release_root>"""
-import json,sys,os,itertools
+import json,sys,os,itertools,re
 ROOT=sys.argv[1]; R=os.path.join(ROOT,'results')
 def J(p): return json.load(open(os.path.join(R,p)))
 DS=['FD001','FD002','FD003','FD004']; BB=['LSTM','Transformer']
@@ -278,3 +278,86 @@ M['IndepSigN']={0:'none',1:'one',2:'two',3:'three',4:'all four'}[sum(b['ci95_lo'
 M['IndepPosN']={0:'none',1:'one',2:'two',3:'three',4:'all four'}[sum(b['mean_diff']>0 for b in _bs)]
 with open('tables/numbers.tex','w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
+# --- controlled 2x2 effect macros (cycles / score units)
+def eff(ds,met):
+    v={q:t1[ds][q][met] for q in ['T_W','V_W','V_F','T_F']}
+    return ((v['T_W']+v['T_F'])/2-(v['V_W']+v['V_F'])/2, (v['T_W']+v['V_W'])/2-(v['T_F']+v['V_F'])/2, (v['T_W']-v['T_F'])-(v['V_W']-v['V_F']))
+D3=['FD001','FD002','FD004']
+sr=[eff(d,'rmse')[0] for d in D3]; nr=[eff(d,'rmse')[1] for d in D3]; ir_=[eff(d,'rmse')[2] for d in D3]
+ss=[eff(d,'score')[0] for d in D3]; ns=[eff(d,'score')[1] for d in D3]; is_=[eff(d,'score')[2] for d in D3]
+M['SelEffRMSE']=f"{min(sr):.2f} to {max(sr):.2f}"; M['NormEffRMSE']=f"{min(nr):.2f} to {max(nr):.2f}"; M['IntEffRMSE']=f"{min(ir_):.2f} to {max(ir_):.2f}"
+M['SelEffScore']=f"{min(ss):.0f} to {max(ss):.0f}"; M['NormEffScore']=f"{min(ns):.0f} to {max(ns):.0f}"; M['IntEffScore']=f"{min(is_):.0f} to {max(is_):.0f}"
+M['NormAbsMaxRMSE']=f"{max(abs(x) for x in nr):.2f}"; M['SelAbsMaxRMSE']=f"{max(abs(x) for x in sr):.2f}"
+M['LeakRMSEmax']=f"{max(100*(t1[d]['V_F']['rmse']/t1[d]['T_W']['rmse']-1) for d in D3):.0f}"
+M['LeakScoremax']=f"{max(100*(t1[d]['V_F']['score']/t1[d]['T_W']['score']-1) for d in D3):.0f}"
+with open('tables/numbers.tex','w') as f:
+    for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
+for k in ['SelEffRMSE','NormEffRMSE','IntEffRMSE','SelEffScore','NormEffScore','IntEffScore','NormAbsMaxRMSE','LeakRMSEmax','LeakScoremax','LeakExceptions']: print(k,M[k])
+# ---------- supplementary table bodies
+Bt2=Bt
+sup=[]
+for bb,D in [("LSTM",H),("Transformer",G)]:
+    for ds in DS:
+        for m,lab in [('NLL','Heterosc.'),('CP_norm','CP-norm')]:
+            r=D[ds][m]; A=r['order_A_freeze_sigma_first']; Bo=r['order_B_freeze_mu_first']; I=(r['C11']-r['C10'])-(r['C01']-r['C00'])
+            sup.append(f"{bb} & {ds} & {lab} & {100*r['crossover_feat_oob_exact']:.2f} & {r['C00']:.3f} & {r['C10']:.3f} & {r['C01']:.3f} & {r['C11']:.3f} & {A['mu_effect']:+.4f} & {A['sigma_effect']:+.4f} & {Bo['mu_effect']:+.4f} & {Bo['sigma_effect']:+.4f} & {I:+.4f} & {'yes' if r['mean_dominant_both_orders'] else 'no'} \\\\")
+W('supp_s1',"\n".join(sup)+"\n")
+bl=[]
+for bb in BB:
+    for ds in DS:
+        for m,lab in [('NLL','Heterosc.'),('CP_norm','CP-norm')]:
+            xa=Bt2[bb][ds][m]['order_A_freeze_sigma_first']; xb=Bt2[bb][ds][m]['order_B_freeze_mu_first']
+            bl.append(f"{bb} & {ds} & {lab} & {xa['mean']:+.3f} [{xa['ci95_lo']:+.3f}, {xa['ci95_hi']:+.3f}] & {'yes' if xa['excludes_zero'] else 'no'} & {xb['mean']:+.3f} [{xb['ci95_lo']:+.3f}, {xb['ci95_hi']:+.3f}] & {'yes' if xb['excludes_zero'] else 'no'} \\\\")
+W('supp_boot',"\n".join(bl)+"\n")
+labm={'NLL':'Heterosc.','MSE_fixed':'Fixed var.','MC_Dropout_fixed':'MC Drop.','Deep_Ensemble':'Ensemble','CP_norm':'CP-norm'}
+conds=[('clean','Clean'),('gaussian1pct','Noise 1\\%'),('bias5pct','Bias 5\\%'),('drift5pct','Drift 5\\%')]
+ml=['NLL','MSE_fixed','MC_Dropout_fixed','Deep_Ensemble','CP_norm']
+lines=[];revs=[]
+for bb in BB:
+    for ds in DS:
+        for ck,cll in conds:
+            for L_ in ['10','20','30']:
+                costs={m:c[bb][ds][ck][m][L_]['cost_by_ratio'] for m in ml}
+                ranks={r_:{m:i+1 for i,m in enumerate(sorted(ml,key=lambda m:costs[m][r_]))} for r_ in ['5','20','100']}
+                for m in ml:
+                    r=c[bb][ds][ck][m][L_]; rul=r['true_rul_at_trigger']; rul='--' if rul is None else f"{rul:.1f}"
+                    lines.append(f"{bb} & {ds} & {cll} & {L_} & {labm[m]} & {r['overall_unrecognised_rate']:.4f} / {r['conditional_unrecognised_rate']:.3f} & {r['premature_rate']:.4f} & {rul} & {costs[m]['5']:.3f} / {costs[m]['20']:.3f} / {costs[m]['100']:.3f} & {ranks['5'][m]}/{ranks['20'][m]}/{ranks['100'][m]} \\\\")
+                o={r_:tuple(sorted(ml,key=lambda m:costs[m][r_])) for r_ in ['5','20','100']}
+                revs.append(f"{bb} & {ds} & {cll} & {L_} & {'yes' if len(set(o.values()))>1 else 'no'} & {'yes' if len({x[0] for x in o.values()})>1 else 'no'} \\\\")
+W('supp_s2',"\n".join(lines)+"\n"); W('supp_s2b',"\n".join(revs)+"\n")
+W('supp_s2c',"\n".join(f"{bb} & {ds} & {sum(1 for x in c[bb][ds]['_bootstrap_top_vs_others'].values() if x['significant'])} / {len(c[bb][ds]['_bootstrap_top_vs_others'])} \\\\" for bb in BB for ds in DS)+"\n")
+W('supp_s3',"\n".join(f"{bb} & {ds} & "+" & ".join(f"{cl(bb,ds,m)[5]:.2f}" for m in ml)+" \\\\" for bb in BB for ds in DS)+"\n")
+lat=J('latency/lstm_latency.json')
+def lt(kind):
+    out=[]
+    for ds in DS:
+        for bb in BB:
+            for bs in ['1','32','512']:
+                cells=[]
+                for m in ['NLL','MSE','CP_norm','MC_Dropout_T50','Deep_Ensemble_M5']:
+                    x=lat[ds][bb][bs][m][kind]; k=int(bs)
+                    cells.append(f"{x['median_ms']*1000/k:.2f} ({x['iqr_ms']*1000/k:.2f})")
+                out.append(f"{ds} & {bb} & {bs} & "+" & ".join(cells)+" \\\\")
+    return "\n".join(out)+"\n"
+W('supp_s4_cuda',lt('cuda_event')); W('supp_s4_wall',lt('wallclock'))
+import csv as _csv
+pv=[r for r in _csv.DictReader(open(os.path.join(R,'table_provenance.csv'),encoding='utf-8')) if not r['table'].startswith('Joint-perturbation')]
+def esc(x):
+    x=x.replace('\\','/').replace('_','\\_').replace('%','\\%').replace('&','\\&').replace('#','\\#')
+    return x.replace('\\_','\\_\\allowbreak ').replace('.py','\\allowbreak .py')
+keys=['table','generating_script','labels','evaluation_unit','engine_equal_weighted','aggregation','noise_range_reference']
+W('supp_s0',"\n".join(" & ".join(esc(r.get(k,'--')) for k in keys)+" \\\\" for r in pv)+"\n")
+def repro_bit():
+    # Read the bit-identical/total counts from REPRODUCE.md's own MD5
+    # manifest, rather than hardcoding them here -- they must always match
+    # what REPRODUCE.md actually documents and lists hashes for.
+    repro_text = open(os.path.join(ROOT, 'REPRODUCE.md'), encoding='utf-8').read()
+    m = re.search(r'## The (\d+) files and their MD5.*?```\n(.*?)```', repro_text, re.S)
+    lines = [l for l in m.group(2).splitlines() if l.strip()]
+    total = len(lines)
+    latency_exempt = sum(1 for l in lines if 'latency-exempt' in l)
+    return f"{total - latency_exempt} of the {total}"
+M['ReproBit']=repro_bit()
+with open('tables/numbers.tex','w') as f:
+    for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
+print("supp tables written")
