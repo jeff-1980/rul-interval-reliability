@@ -1,14 +1,18 @@
 """Generate every numeric table body and text macro of the manuscript from the
-released result files. Usage: python make_tables.py <release_root>"""
+released result files. Usage: python make_tables.py <release_root>
+(runnable from any working directory -- output always goes to this
+script's own tables/ subdirectory, input is read from <release_root>)"""
 import json,sys,os,itertools,re
 ROOT=sys.argv[1]; R=os.path.join(ROOT,'results')
+SCRIPT_DIR=os.path.dirname(os.path.abspath(__file__))
+TABLES_DIR=os.path.join(SCRIPT_DIR,'tables')
 def J(p): return json.load(open(os.path.join(R,p)))
 DS=['FD001','FD002','FD003','FD004']; BB=['LSTM','Transformer']
 MECH=[('MSE_fixed','Fixed variance'),('NLL','Heteroscedastic'),('MC_Dropout_fixed','MC Dropout'),('Deep_Ensemble','Deep ensemble'),('CP_norm','Split-CP (norm)')]
 M={}   # text macros
 def mac(name,val): M[name]=val
 def pct(x,d=1): return f"{100*x:.{d}f}"
-def W(name,body): open(f'tables/{name}.tex','w').write(body)
+def W(name,body): open(os.path.join(TABLES_DIR,f'{name}.tex'),'w').write(body)
 # ---------- Table I
 t1=J('clean/table1_2x2_summary.json')
 rows=[]
@@ -199,7 +203,7 @@ mac('SensPrem',f"{100*min(sens):.0f}--{100*max(sens):.0f}")
 dR=[a2[ds][bb]['clean']['RULminus1_train_convention']['rmse']-a2[ds][bb]['clean']['official_RUL_current']['rmse'] for ds in DS for bb in BB]
 dP=[a2[ds][bb]['clean']['RULminus1_train_convention']['picp']-a2[ds][bb]['clean']['official_RUL_current']['picp'] for ds in DS for bb in BB]
 mac('AlignRMSE',f"{min(dR):+.2f} to {max(dR):+.2f}"); mac('AlignPICP',f"{min(dP):+.3f} to {max(dP):+.3f}")
-with open('tables/numbers.tex','w') as f:
+with open(os.path.join(TABLES_DIR,'numbers.tex'),'w') as f:
     for k,v in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v}}}\n")
 for k,v in M.items(): print(f"{k:20s} {v}")
 # ---------- extra macros for text
@@ -254,7 +258,7 @@ grp=lambda ds:"/".join(f"{x:.1f}" for x in (ir[ds]['groups'] if isinstance(ir[ds
 M['IndepIS']=", ".join(grp(ds) for ds in DS)
 M['IndepSig']=", ".join(ds for ds in DS if ir[ds]['bootstrap_single_nll_minus_ensemble_group0'].get('ci95_lo',ir[ds]['bootstrap_single_nll_minus_ensemble_group0'].get('ci_lo',-1))>0) or "none"
 nv=J('degradation/lstm_ensemble_n5_vs_n15_variance.json'); M['NFiveFifteenRaw']=str(list(nv.keys())[:4])
-with open('tables/numbers.tex','w') as f:
+with open(os.path.join(TABLES_DIR,'numbers.tex'),'w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
 for k in ['LeakExceptions','McdISFDtwo','HeadISFDtwo','CPOutside','CPInsideN','FairRatio','DriftCovOne','DriftCovTwo','DriftCovThree','DriftCovFour','DriftFoobSix','BiasFoobSix','DriftFoobSingleMax','DriftHalfSix','BGHalfSix','NoiseMedian','ContFoob','DriftPremTwenty','AOneFDtwoSens','AOneFDtwoJoint','AOneFDfourSens','AOneFDfourJoint','AOneFDfourSet','AOneSetCov','MSweepPICP','MSweepIS','IndepIS','IndepSig','NFiveFifteenRaw']: print(f"{k:20s} {M[k]}")
 dd=J('degradation/degradation_dose_response_overlap_summary.json')
@@ -265,18 +269,18 @@ mx=max(rest,key=lambda c:c[3]); lab={'MSE_fixed':'fixed-variance','NLL':'heteros
 M['HalfMaxRestCell']=f"the {lab[mx[2]]} {mx[0]} on {mx[1]}"
 M['SelPICPsign']=""
 M['TableIFDtwoScore']=f"{t1['FD002']['T_F']['score']:.1f} against {t1['FD002']['V_F']['score']:.1f}"
-with open('tables/numbers.tex','w') as f:
+with open(os.path.join(TABLES_DIR,'numbers.tex'),'w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
 print(M['DoseMAD'],M['HalfMaxRestCell'],M['TableIFDtwoScore'])
 nv=J('degradation/lstm_ensemble_n5_vs_n15_variance.json')
 M['NFiveFifteen']=", ".join(f"{nv[ds]['picp']['std_ratio_15_over_5']:.2f}" for ds in ['FD001','FD002','FD004'])
-with open('tables/numbers.tex','w') as f:
+with open(os.path.join(TABLES_DIR,'numbers.tex'),'w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
 ir=J('seeds/ensemble_independent_replication.json')
 _bs=[ir[ds]['bootstrap_single_nll_minus_ensemble_group0'] for ds in DS]
 M['IndepSigN']={0:'none',1:'one',2:'two',3:'three',4:'all four'}[sum(b['ci95_lo']>0 for b in _bs)]
 M['IndepPosN']={0:'none',1:'one',2:'two',3:'three',4:'all four'}[sum(b['mean_diff']>0 for b in _bs)]
-with open('tables/numbers.tex','w') as f:
+with open(os.path.join(TABLES_DIR,'numbers.tex'),'w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
 # --- controlled 2x2 effect macros (cycles / score units)
 def eff(ds,met):
@@ -290,7 +294,7 @@ M['SelEffScore']=f"{min(ss):.0f} to {max(ss):.0f}"; M['NormEffScore']=f"{min(ns)
 M['NormAbsMaxRMSE']=f"{max(abs(x) for x in nr):.2f}"; M['SelAbsMaxRMSE']=f"{max(abs(x) for x in sr):.2f}"
 M['LeakRMSEmax']=f"{max(100*(t1[d]['V_F']['rmse']/t1[d]['T_W']['rmse']-1) for d in D3):.0f}"
 M['LeakScoremax']=f"{max(100*(t1[d]['V_F']['score']/t1[d]['T_W']['score']-1) for d in D3):.0f}"
-with open('tables/numbers.tex','w') as f:
+with open(os.path.join(TABLES_DIR,'numbers.tex'),'w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
 for k in ['SelEffRMSE','NormEffRMSE','IntEffRMSE','SelEffScore','NormEffScore','IntEffScore','NormAbsMaxRMSE','LeakRMSEmax','LeakScoremax','LeakExceptions']: print(k,M[k])
 # ---------- supplementary table bodies
@@ -358,6 +362,6 @@ def repro_bit():
     latency_exempt = sum(1 for l in lines if 'latency-exempt' in l)
     return f"{total - latency_exempt} of the {total}"
 M['ReproBit']=repro_bit()
-with open('tables/numbers.tex','w') as f:
+with open(os.path.join(TABLES_DIR,'numbers.tex'),'w') as f:
     for k,v_ in M.items(): f.write(f"\\newcommand{{\\N{k}}}{{{v_}}}\n")
 print("supp tables written")
